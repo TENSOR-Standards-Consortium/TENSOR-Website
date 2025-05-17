@@ -1,5 +1,7 @@
 title: "TENSOR Framework"
 markdown: kramdown
+url: "https://tensor-standards-consortium.github.io"
+baseurl: "/TENSOR-Website"
 sass:
   style: compressed
 
