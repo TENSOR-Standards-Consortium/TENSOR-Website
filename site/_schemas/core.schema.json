@@ -1,100 +1,175 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "title": "TENSOR Core Schema",
-    "type": "object",
-    "required": ["nodes", "edges"],
-    "properties": {
-      "tensorVersion": {
-        "type": "string",
-        "description": "Semver of this graph template (e.g. \"0.2.1\")."
-      },
-      "generatedAt": {
-        "type": "string",
-        "format": "date-time",
-        "description": "RFC‑3339 timestamp when this file was produced."
-      },
-      "nodes": {
-        "type": "array",
-        "description": "List of all investigative questions (the graph nodes).",
-        "items": { "$ref": "#/definitions/node" }
-      },
-      "edges": {
-        "type": "array",
-        "description": "List of all branches between questions (the graph edges).",
-        "items": { "$ref": "#/definitions/edge" }
-      }
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tensor-standards-consortium.github.io/TENSOR-Framework/releases/core/schemas/v0.20250813/tensor.core.schema.json",
+  "title": "TENSOR Framework Core Schema",
+  "description": "Canonical schema for TENSOR investigative graphs (Core module).",
+
+  "type": "object",
+  "required": [
+    "namespace",
+    "product",
+    "version",
+    "generatedAt",
+    "schemaVersion",
+    "nodes",
+    "edges"
+  ],
+
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d{8}[a-z]?$",
+      "description": "Schema release identifier <MAJOR>.<YYYYMMDD>[REV] (e.g. \"0.20250813\")."
     },
-    "additionalProperties": false,
-  
-    "definitions": {
-      "node": {
-        "type": "object",
-        "required": ["data"],
-        "properties": {
-          "data": {
-            "type": "object",
-            "required": ["id", "text", "category", "weight"],
-            "properties": {
-              "id": {
-                "type": "string",
-                "description": "Unique node identifier (e.g. \"Q1\")."
-              },
-              "text": {
-                "type": "string",
-                "description": "Full investigative question."
-              },
-              "category": {
-                "type": "string",
-                "enum": ["File", "Email", "Host", "Network", "User/Identity", "Cloud", "Application"],
-                "description": "One of the seven investigation domains."
-              },
-              "weight": {
-                "type": "integer",
-                "minimum": 1,
-                "maximum": 5,
-                "description": "Relative priority, 1 (low)–5 (high)."
-              },
-              "label": {
-                "type": "string",
-                "description": "(Optional) Short label for graph visuals."
-              }
+    "namespace": {
+      "type": "string",
+      "const": "tensor",
+      "description": "Owning namespace (always ‘tensor’ for Core)."
+    },
+    "product": {
+      "type": "string",
+      "const": "core",
+      "description": "Product / module identifier."
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d{8}[a-z]?$",
+      "description": "Graph release identifier <MAJOR>.<YYYYMMDD>[REV]."
+    },
+    "generatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "RFC 3339 timestamp this file was generated."
+    },
+
+    "locale": {
+      "type": "string",
+      "description": "Locale for human‑readable strings (BCP‑47, e.g. ‘en-US’).",
+      "default": "en-US"
+    },
+
+    "nodes": {
+      "type": "array",
+      "description": "Investigative questions (graph nodes).",
+      "items": { "$ref": "#/$defs/node" }
+    },
+    "edges": {
+      "type": "array",
+      "description": "Branches between questions (graph edges).",
+      "items": { "$ref": "#/$defs/edge" }
+    },
+
+    "extensions": {
+      "type": "object",
+      "description": "Graph‑level extensions (case metadata, vendor data, etc.).",
+      "additionalProperties": true
+    }
+  },
+
+  "unevaluatedProperties": false,
+
+  "$defs": {
+    "nodeId": {
+      "type": "string",
+      "pattern": "^Q[1-9]\\d*$",
+      "description": "Node ID — Q‑number, no leading zeros (e.g. ‘Q17’)."
+    },
+    "edgeId": {
+      "type": "string",
+      "pattern": "^Q\\d+-(yes|no|unknown)-Q\\d+$",
+      "description": "Edge ID encodes source‑decision‑target (e.g. ‘Q17-yes-Q21’)."
+    },
+
+    "node": {
+      "type": "object",
+      "required": ["data"],
+      "properties": {
+        "data": {
+          "type": "object",
+          "required": ["id", "text", "category"],
+          "properties": {
+            "id": { "$ref": "#/$defs/nodeId" },
+            "text": {
+              "type": "string",
+              "description": "Full investigative question."
             },
-            "additionalProperties": false
-          }
-        },
-        "additionalProperties": false
+            "category": {
+              "type": "string",
+              "enum": [
+                "Application",
+                "Cloud",
+                "Email",
+                "File",
+                "Host",
+                "Identity",
+                "Network"
+              ],
+              "description": "One of the seven investigation domains."
+            },
+            "label": {
+              "type": "string",
+              "description": "(Optional) Short label for graph visuals."
+            },
+            "translations": {
+              "type": "object",
+              "description": "Optional alternate‑language text/label pairs keyed by locale.",
+              "patternProperties": {
+                "^[a-z]{2}(?:-[A-Z]{2})?$": {
+                  "type": "object",
+                  "properties": {
+                    "text": { "type": "string" },
+                    "label": { "type": "string" }
+                  },
+                  "required": ["text"],
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false
+            },
+            "extensions": {
+              "type": "object",
+              "description": "Per‑node extensions (e.g. MITRE links).",
+              "additionalProperties": true
+            }
+          },
+          "additionalProperties": false
+        }
       },
-  
-      "edge": {
-        "type": "object",
-        "required": ["data"],
-        "properties": {
-          "data": {
-            "type": "object",
-            "required": ["id", "source", "target", "decision"],
-            "properties": {
-              "id": {
-                "type": "string",
-                "description": "Unique edge identifier (e.g. \"Q1-yes-Q2\")."
-              },
-              "source": {
-                "type": "string",
-                "description": "ID of the source node."
-              },
-              "target": {
-                "type": "string",
-                "description": "ID of the target node."
-              },
-              "decision": {
-                "type": ["string", "null"],
-                "enum": ["yes", "no", "unknown", null],
-                "description": "Branch decision: yes | no | unknown | null (unanswered)."
-              }
+      "additionalProperties": false
+    },
+
+    "edge": {
+      "type": "object",
+      "required": ["data"],
+      "properties": {
+        "data": {
+          "type": "object",
+          "required": ["id", "source", "target", "decision"],
+          "properties": {
+            "id": { "$ref": "#/$defs/edgeId" },
+            "source": {
+              "type": "string",
+              "description": "ID of the source node."
             },
-            "additionalProperties": false
-          }
-        },
-        "additionalProperties": false
-      }
+            "target": {
+              "type": "string",
+              "description": "ID of the target node."
+            },
+            "decision": {
+              "type": "string",
+              "enum": ["yes", "no", "unknown"],
+              "description": "Branch condition connecting source to target."
+            },
+            "extensions": {
+              "type": "object",
+              "description": "Per‑edge extensions (confidence scores, etc.).",
+              "additionalProperties": true
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
     }
   }
+}
