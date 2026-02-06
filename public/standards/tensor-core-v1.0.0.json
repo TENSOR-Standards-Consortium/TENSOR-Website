@@ -1,0 +1,33 @@
+{
+  "packageVersion": "1.0.0",
+  "publishedAt": "2026-02-06T00:00:00Z",
+  "channel": "tensor-core",
+  "governance": {
+    "owner": "TENSOR Standards Consortium",
+    "rfcsRequiredForBreakingChanges": true,
+    "decisionPolicy": "2/3 steering vote",
+    "releaseCadence": "monthly patches, quarterly minor releases"
+  },
+  "compatibility": {
+    "major": "breaking schema or semantic changes",
+    "minor": "additive, backward-compatible nodes/edges/categories",
+    "patch": "editorial fixes or non-semantic metadata updates",
+    "deprecationWindowDays": 365,
+    "minimumSupportedGraphVersion": "0.20250410",
+    "minimumSupportedSchemaVersion": "0.20250410"
+  },
+  "artifacts": {
+    "latestGraphVersion": "0.20250506",
+    "latestSchemaVersion": "0.20250813",
+    "releaseManifest": "/assets/releases/manifest.json",
+    "graphs": [
+      "/assets/releases/graphs/tensor-core-0.20250410.json",
+      "/assets/releases/graphs/tensor-core-0.20250506.json"
+    ],
+    "schemas": [
+      "/assets/releases/schemas/core.schema.0.20250410.json",
+      "/assets/releases/schemas/core.schema.0.20250813.json"
+    ],
+    "conformanceManifest": "/standards/conformance/manifest.json"
+  }
+}

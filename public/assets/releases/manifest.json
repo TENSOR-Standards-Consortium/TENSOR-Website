@@ -1,0 +1,90 @@
+{
+  "channel": "stable",
+  "generatedAt": "2026-02-06T15:24:03Z",
+  "latestGraphVersion": "0.20260206e",
+  "latestSchemaVersion": "0.20260206e",
+  "releases": [
+    {
+      "id": "core-0.20250519b",
+      "displayName": "TENSOR Core v0.20250519b",
+      "releasedAt": "2025-05-19",
+      "graphVersion": "0.20250519b",
+      "schemaVersion": "0.20250519",
+      "graphPath": "releases/core/graphs/v0.20250519b/tensor.core.graph.json",
+      "schemaPath": "releases/core/schemas/v0.20250519/tensor.core.schema.json",
+      "notes": [
+        "Initial immutable core snapshot for public release distribution.",
+        "Pairs graph v0.20250519b with schema v0.20250519."
+      ]
+    },
+    {
+      "id": "core-0.20250813",
+      "displayName": "TENSOR Core v0.20250813",
+      "releasedAt": "2025-08-13",
+      "graphVersion": "0.20250813",
+      "schemaVersion": "0.20250813",
+      "graphPath": "releases/core/graphs/v0.20250813/tensor.core.graph.json",
+      "schemaPath": "releases/core/schemas/v0.20250813/tensor.core.schema.json",
+      "notes": [
+        "Current stable core release for machine-readable clients.",
+        "Latest graph/schema pointers resolve to this release."
+      ]
+    },
+    {
+      "id": "core-0.20260206",
+      "displayName": "TENSOR Core v0.20260206",
+      "releasedAt": "2026-02-06",
+      "graphVersion": "0.20260206",
+      "schemaVersion": "0.20260206",
+      "graphPath": "releases/core/graphs/v0.20260206/tensor.core.graph.json",
+      "schemaPath": "releases/core/schemas/v0.20260206/tensor.core.schema.json",
+      "notes": [
+        "Investigation-only Core release with explicit entry nodes and stronger semantic integrity checks.",
+        "Adds flat canonical node/edge format while preserving wrapped compatibility in schema.",
+        "Enforces namespaced extensions and nodeId-constrained edge endpoints."
+      ]
+    },
+    {
+      "id": "core-0.20260206c",
+      "displayName": "TENSOR Core v0.20260206c",
+      "releasedAt": "2026-02-06",
+      "graphVersion": "0.20260206c",
+      "schemaVersion": "0.20260206c",
+      "graphPath": "releases/core/graphs/v0.20260206c/tensor.core.graph.json",
+      "schemaPath": "releases/core/schemas/v0.20260206c/tensor.core.schema.json",
+      "notes": [
+        "Full domain-first Core graph rewrite to 520 nodes / 1005 edges with deterministic yes-no-unknown branching.",
+        "Adds required node archetype in Core schema: detect, validate, classify, scope, correlate, attribute, impact, terminal.",
+        "Pre-v1 authorized exception: full Q-id reindex delivered without a major-version bump."
+      ]
+    },
+    {
+      "id": "core-0.20260206d",
+      "displayName": "TENSOR Core v0.20260206d",
+      "releasedAt": "2026-02-06",
+      "graphVersion": "0.20260206d",
+      "schemaVersion": "0.20260206d",
+      "graphPath": "releases/core/graphs/v0.20260206d/tensor.core.graph.json",
+      "schemaPath": "releases/core/schemas/v0.20260206d/tensor.core.schema.json",
+      "notes": [
+        "Graph rewrite rebalances all seven domains so each participates in full investigative progression (detect through terminal).",
+        "Removes artificial graph-size assumptions in authoring workflow; quality gates are now semantics-first (determinism, DAG, reachability, pivots, fan-in).",
+        "Expands investigative breadth in Email, Application, and File while reducing repetitive terminal-only patterns."
+      ]
+    },
+    {
+      "id": "core-0.20260206e",
+      "displayName": "TENSOR Core v0.20260206e",
+      "releasedAt": "2026-02-06",
+      "graphVersion": "0.20260206e",
+      "schemaVersion": "0.20260206e",
+      "graphPath": "releases/core/graphs/v0.20260206e/tensor.core.graph.json",
+      "schemaPath": "releases/core/schemas/v0.20260206e/tensor.core.schema.json",
+      "notes": [
+        "Replaces the Core terminal-stage archetype name from conclude to terminal to keep Core as a neutral semantic backplane.",
+        "Preserves pre-v1 non-major release cadence while maintaining deterministic DAG routing and release-contract compatibility for prior snapshots.",
+        "Clarifies entry semantics as open-ended in overlays while keeping Core entryNodeIds as canonical graph entry anchors."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { absoluteUrl, seo } from '../../data/seo';
+
+const meta = seo.extensions;
+const siteUrl = Astro.site?.toString() || 'https://tensor-standards-consortium.org/';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: meta.title,
+  description: meta.description,
+  url: absoluteUrl(siteUrl, meta.canonicalPath),
+};
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  canonicalPath={meta.canonicalPath}
+  ogType={meta.ogType}
+  jsonLd={jsonLd}
+>
+  <div class="container prose-card">
+    <h2>Extension Contract</h2>
+    <p>
+      TENSOR keeps core semantics stable while allowing additive metadata through namespaced
+      <code>extensions</code> objects on graphs, nodes, and edges.
+    </p>
+
+    <h2>Extension Boundaries</h2>
+    <ul>
+      <li><strong>Allowed:</strong> scoring hints, confidence metadata, owner fields, and control mappings.</li>
+      <li><strong>Allowed:</strong> platform-specific execution hints that do not redefine core decisions.</li>
+      <li><strong>Not allowed:</strong> changing the meaning of <code>yes</code>, <code>no</code>, or <code>unknown</code>.</li>
+      <li><strong>Not allowed:</strong> repurposing stable node IDs to new investigative questions.</li>
+    </ul>
+
+    <h2>Naming and Collision Avoidance</h2>
+    <p>
+      Prefix extension keys with your namespace. Use consistent ownership naming and publish key semantics.
+    </p>
+    <ul>
+      <li><strong>Portable extension example:</strong> <code>acme.evidenceConfidence</code></li>
+      <li><strong>Vendor-private extension example:</strong> <code>vendorx.executionHint</code></li>
+      <li><strong>Anti-pattern:</strong> <code>decisionOverride</code> that bypasses core branch semantics</li>
+    </ul>
+
+    <h2>Examples</h2>
+    <h3>Portable extension</h3>
+    <pre><code>{`{
+  "extensions": {
+    "acme.evidenceConfidence": 0.82,
+    "acme.controlMapping": ["SI-4", "IR-5"]
+  }
+}`}</code></pre>
+
+    <h3>Vendor-private extension</h3>
+    <pre><code>{`{
+  "extensions": {
+    "vendorx.ticketTemplate": "IR-HIGH-SEV",
+    "vendorx.queue": "tier2-investigations"
+  }
+}`}</code></pre>
+
+    <h3>Anti-pattern</h3>
+    <pre><code>{`{
+  "extensions": {
+    "overrideDecision": "no"
+  }
+}`}</code></pre>
+    <p>
+      The anti-pattern above silently redefines branch behavior and breaks interoperability.
+      If behavior changes are needed, propose a standards change through governance.
+    </p>
+
+    <h2>Implementation Guidance</h2>
+    <ul>
+      <li>Document every extension key and expected type in your integration docs.</li>
+      <li>Treat unknown extension keys as non-fatal unless your local policy requires strict mode.</li>
+      <li>Keep core investigative semantics in base graph artifacts.</li>
+      <li>Use overlays to activate local process variations without forking core releases.</li>
+    </ul>
+
+    <p>
+      Continue with <a href="/conformance/">Conformance Suite</a> to verify extensions do not break core contracts.
+    </p>
+  </div>
+</BaseLayout>

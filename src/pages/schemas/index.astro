@@ -1,0 +1,81 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ReleaseFeed from '../../components/ReleaseFeed.jsx';
+import CompactMetricsWidget from '../../components/CompactMetricsWidget.jsx';
+import { absoluteUrl, seo } from '../../data/seo';
+
+const meta = seo.schemas;
+const siteUrl = Astro.site?.toString() || 'https://tensor-standards-consortium.org/';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareSourceCode',
+  name: 'TENSOR Core Schema Channel',
+  description: meta.description,
+  url: absoluteUrl(siteUrl, meta.canonicalPath),
+  codeRepository: 'https://github.com/tensor-standards-consortium/tensor-framework',
+  programmingLanguage: 'JSON Schema',
+};
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  canonicalPath={meta.canonicalPath}
+  ogType={meta.ogType}
+  jsonLd={jsonLd}
+>
+  <div class="container prose-card">
+    <h2>TENSOR Core Schema Channel</h2>
+    <p>
+      Use this channel to validate graph artifacts against pinned schema versions.
+      Compatibility checks should run in CI before any runtime promotion.
+    </p>
+    <p>
+      Local copy used by Graph Studio:
+      <a href="/assets/data/core.schema.json" data-telemetry-event="artifact-schema-click" data-telemetry-location="schemas-local">
+        <code>core.schema.json</code>
+      </a>
+    </p>
+    <p>
+      Upstream release channel:
+      <a
+        href="https://tensor-standards-consortium.github.io/TENSOR-Framework/releases/core/schemas/latest/tensor.core.schema.json"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-telemetry-event="artifact-schema-upstream-click"
+        data-telemetry-location="schemas-upstream"
+      >
+        latest tensor.core.schema.json
+      </a>
+    </p>
+    <p>
+      Local standards package:
+      <a href="/standards/tensor-core-v1.0.0.json" data-telemetry-event="artifact-standards-package-click" data-telemetry-location="schemas-standards">
+        <code>tensor-core-v1.0.0.json</code>
+      </a>
+    </p>
+
+    <h2>Live Schema Release Index</h2>
+    <p>
+      This feed is fetched at runtime from the framework release index,
+      so new schema versions appear without redeploying the website.
+    </p>
+    <ReleaseFeed client:load kind="schema" />
+
+    <h2>Release Performance Snapshot</h2>
+    <p>
+      Use this summary to review release health before adopting a schema upgrade.
+    </p>
+    <CompactMetricsWidget client:load title="Schema Channel Metrics Snapshot" />
+
+    <p class="hub-links">
+      Implement next:
+      <a href="/implement/">Implementation guide</a>
+      ·
+      <a href="/conformance/">Conformance suite</a>
+      ·
+      <a href="/metrics/">Full metrics dashboard</a>
+    </p>
+  </div>
+</BaseLayout>

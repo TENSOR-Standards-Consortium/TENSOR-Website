@@ -1,0 +1,104 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { absoluteUrl, seo } from '../../data/seo';
+
+const meta = seo.aiReliability;
+const siteUrl = Astro.site?.toString() || 'https://tensor-standards-consortium.org/';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: meta.title,
+  description: meta.description,
+  url: absoluteUrl(siteUrl, meta.canonicalPath),
+};
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  canonicalPath={meta.canonicalPath}
+  ogType={meta.ogType}
+  jsonLd={jsonLd}
+>
+  <div class="container prose-card">
+    <h2>Why the Same Prompt Produces Different Answers</h2>
+    <p>
+      Large language models sample tokens from probability distributions. Even with identical prompts,
+      early token variation can shift later reasoning paths.
+    </p>
+
+    <div class="signal-grid">
+      <article class="signal-card">
+        <h3>Stochastic Decoding</h3>
+        <p>Sampling methods improve diversity, but they introduce run-to-run variance.</p>
+      </article>
+      <article class="signal-card">
+        <h3>Path Dependence</h3>
+        <p>Small early differences compound over long responses.</p>
+      </article>
+      <article class="signal-card">
+        <h3>Prompt Ambiguity</h3>
+        <p>Broad instructions allow multiple valid continuations with different operational outcomes.</p>
+      </article>
+    </div>
+
+    <h2>Research Baseline</h2>
+    <ol class="citation-list">
+      <li>
+        <a href="https://arxiv.org/abs/2005.14165" target="_blank" rel="noopener noreferrer">
+          Brown et al. (2020), Language Models are Few-Shot Learners
+        </a>
+      </li>
+      <li>
+        <a href="https://arxiv.org/abs/1904.09751" target="_blank" rel="noopener noreferrer">
+          Holtzman et al. (2019), The Curious Case of Neural Text Degeneration
+        </a>
+      </li>
+      <li>
+        <a href="https://arxiv.org/abs/2203.11171" target="_blank" rel="noopener noreferrer">
+          Wang et al. (2022), Self-Consistency Improves Chain of Thought Reasoning
+        </a>
+      </li>
+      <li>
+        <a href="https://arxiv.org/abs/2109.07958" target="_blank" rel="noopener noreferrer">
+          Lin et al. (2021), TruthfulQA
+        </a>
+      </li>
+    </ol>
+
+    <h2>Why TENSOR Helps</h2>
+    <p>
+      TENSOR does not remove model stochasticity. It constrains control flow with deterministic graph semantics,
+      so decisions are explicit and auditable.
+    </p>
+    <ul>
+      <li><strong>Stable question IDs:</strong> model outputs map to fixed investigation nodes.</li>
+      <li><strong>Explicit branch outcomes:</strong> transitions resolve to <code>yes</code>, <code>no</code>, or <code>unknown</code>.</li>
+      <li><strong>Replayable traversal:</strong> incident review can reconstruct path decisions.</li>
+      <li><strong>Adjudication boundary:</strong> model reasoning supports decisions, but does not define branch policy.</li>
+    </ul>
+
+    <h2>Integration Pattern for Operators</h2>
+    <ol>
+      <li>Run multiple model passes for high-impact investigative nodes.</li>
+      <li>Adjudicate with explicit rules or self-consistency before branch transition.</li>
+      <li>Persist candidate outputs in <code>extensions</code> for post-incident review.</li>
+      <li>Escalate unresolved disagreement as <code>unknown</code> for analyst review.</li>
+    </ol>
+
+    <blockquote>
+      AI can accelerate analysis. The control plane must remain deterministic.
+      TENSOR keeps that boundary explicit.
+    </blockquote>
+
+    <p class="hub-links">
+      Implement next:
+      <a href="/implement/">Implementation guide</a>
+      ·
+      <a href="/standards/">Standards policy</a>
+      ·
+      <a href="/conformance/">Conformance suite</a>
+    </p>
+  </div>
+</BaseLayout>

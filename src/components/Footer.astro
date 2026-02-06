@@ -1,0 +1,30 @@
+---
+import { navigation } from '../lib/navigation';
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="footer-bar">
+  <div class="container footer-inner">
+    <p class="footer-copy">© {currentYear} TENSOR Standards Consortium</p>
+    <nav class="footer-nav" aria-label="Footer">
+      <ul>
+        {navigation.map((item) => {
+          const isExternal = item.url.startsWith('http');
+
+          return (
+            <li>
+              <a
+                href={item.url}
+                target={isExternal ? '_blank' : undefined}
+                rel={isExternal ? 'noopener noreferrer' : undefined}
+              >
+                {item.title}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+  </div>
+</footer>

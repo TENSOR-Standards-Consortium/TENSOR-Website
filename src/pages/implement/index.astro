@@ -1,0 +1,129 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { absoluteUrl, seo } from '../../data/seo';
+
+const meta = seo.implement;
+const siteUrl = Astro.site?.toString() || 'https://tensor-standards-consortium.org/';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: meta.title,
+  description: meta.description,
+  url: absoluteUrl(siteUrl, meta.canonicalPath),
+};
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  canonicalPath={meta.canonicalPath}
+  ogType={meta.ogType}
+  jsonLd={jsonLd}
+>
+  <div class="container prose-card">
+    <h2>30-Minute Core Implementation Path</h2>
+    <p>
+      This path is for teams integrating TENSOR as a shared investigation contract.
+      Completion criteria are explicit so implementation claims remain verifiable.
+    </p>
+
+    <h2>Step 1: Pin Release Artifacts</h2>
+    <ul>
+      <li>
+        Schema:
+        <a href="/assets/data/core.schema.json" data-telemetry-event="artifact-schema-click" data-telemetry-location="implement-step-1">
+          <code>core.schema.json</code>
+        </a>
+      </li>
+      <li>
+        Graph:
+        <a href="/assets/data/tensor-core.json" data-telemetry-event="artifact-graph-click" data-telemetry-location="implement-step-1">
+          <code>tensor-core.json</code>
+        </a>
+      </li>
+      <li>
+        Release manifest:
+        <a href="/assets/releases/manifest.json" data-telemetry-event="artifact-manifest-click" data-telemetry-location="implement-step-1">
+          <code>releases/manifest.json</code>
+        </a>
+      </li>
+    </ul>
+    <p>
+      Expected output: your integration references explicit graph and schema versions.
+    </p>
+
+    <h2>Step 2: Validate Contract</h2>
+    <ul>
+      <li>Run schema validation on canonical graph artifacts.</li>
+      <li>Fail your build on structural violations and edge ID mismatches.</li>
+      <li>Document accepted version range in your implementation README.</li>
+    </ul>
+    <p>
+      Expected output: deterministic pass/fail validation stage in CI.
+    </p>
+
+    <h2>Step 3: Run Conformance Fixtures</h2>
+    <ul>
+      <li>
+        Manifest:
+        <a href="/standards/conformance/manifest.json" data-telemetry-event="artifact-conformance-manifest-click" data-telemetry-location="implement-step-3">
+          <code>conformance/manifest.json</code>
+        </a>
+      </li>
+      <li>
+        Valid fixture:
+        <a href="/standards/conformance/fixtures/valid/core-minimal.json" data-telemetry-event="artifact-valid-fixture-click" data-telemetry-location="implement-step-3">
+          <code>core-minimal.json</code>
+        </a>
+      </li>
+      <li>
+        Invalid fixture:
+        <a href="/standards/conformance/fixtures/invalid/edge-id-mismatch.json" data-telemetry-event="artifact-invalid-fixture-click" data-telemetry-location="implement-step-3">
+          <code>edge-id-mismatch.json</code>
+        </a>
+      </li>
+    </ul>
+    <p>
+      Expected output: valid fixture is accepted, invalid fixture is rejected with explicit error details.
+    </p>
+
+    <h2>Step 4: Enforce Deterministic Execution</h2>
+    <ul>
+      <li>Map runtime transitions to <code>yes</code>, <code>no</code>, or <code>unknown</code> only.</li>
+      <li>Store traversal state with stable node and edge IDs.</li>
+      <li>Keep model-generated reasoning as evidence, not branch policy.</li>
+    </ul>
+    <p>
+      Expected output: replayable traversal records for audits and debugging.
+    </p>
+
+    <h2>Done Criteria</h2>
+    <ul>
+      <li>All required fields validate against pinned schema.</li>
+      <li>Conformance fixtures pass/fail as expected.</li>
+      <li>Runtime traversal produces deterministic branch transitions.</li>
+      <li>Implementation documentation states supported versions and extension behavior.</li>
+    </ul>
+
+    <h2>FAQ</h2>
+    <h3>Can we implement partially?</h3>
+    <p>
+      Yes. Start at Consumer tier and publish current tier coverage. Incrementally move to Executor and Authoring Tool tiers.
+    </p>
+
+    <h3>Can we keep platform-specific metadata?</h3>
+    <p>
+      Yes. Use namespaced extensions and keep core semantics unchanged.
+    </p>
+
+    <p class="hub-links">
+      Implement next:
+      <a href="/conformance/">Conformance Suite</a>
+      ·
+      <a href="/standards/">Standards</a>
+      ·
+      <a href="/contribute/">Contribute updates</a>
+    </p>
+  </div>
+</BaseLayout>

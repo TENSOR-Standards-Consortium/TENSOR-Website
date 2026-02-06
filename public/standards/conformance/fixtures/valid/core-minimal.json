@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "0.20250813",
+  "namespace": "tensor",
+  "product": "core",
+  "version": "0.20250506",
+  "generatedAt": "2026-02-06T00:00:00Z",
+  "locale": "en-US",
+  "nodes": [
+    {
+      "data": {
+        "id": "Q1",
+        "text": "Is there an indicator of compromise?",
+        "label": "Q1: IOC present?",
+        "category": "Network"
+      }
+    },
+    {
+      "data": {
+        "id": "Q2",
+        "text": "Did endpoint telemetry confirm process execution?",
+        "label": "Q2: Process executed?",
+        "category": "Host"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "data": {
+        "id": "Q1-yes-Q2",
+        "source": "Q1",
+        "target": "Q2",
+        "decision": "yes"
+      }
+    }
+  ]
+}

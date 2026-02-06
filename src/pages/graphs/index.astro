@@ -1,0 +1,81 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ReleaseFeed from '../../components/ReleaseFeed.jsx';
+import CompactMetricsWidget from '../../components/CompactMetricsWidget.jsx';
+import { absoluteUrl, seo } from '../../data/seo';
+
+const meta = seo.graphs;
+const siteUrl = Astro.site?.toString() || 'https://tensor-standards-consortium.org/';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareSourceCode',
+  name: 'TENSOR Core Investigation Graph Channel',
+  description: meta.description,
+  url: absoluteUrl(siteUrl, meta.canonicalPath),
+  codeRepository: 'https://github.com/tensor-standards-consortium/tensor-framework',
+  programmingLanguage: 'JSON',
+};
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  canonicalPath={meta.canonicalPath}
+  ogType={meta.ogType}
+  jsonLd={jsonLd}
+>
+  <div class="container prose-card">
+    <h2>TENSOR Core Investigation Graph Channel</h2>
+    <p>
+      Use this channel to consume canonical graph artifacts and monitor release evolution.
+      Pin versions before production rollout and evaluate diffs before upgrades.
+    </p>
+    <p>
+      Local copy used by Graph Studio:
+      <a href="/assets/data/tensor-core.json" data-telemetry-event="artifact-graph-click" data-telemetry-location="graphs-local">
+        <code>tensor-core.json</code>
+      </a>
+    </p>
+    <p>
+      Upstream release channel:
+      <a
+        href="https://tensor-standards-consortium.github.io/TENSOR-Framework/releases/core/graphs/latest/tensor.core.graph.json"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-telemetry-event="artifact-graph-upstream-click"
+        data-telemetry-location="graphs-upstream"
+      >
+        latest tensor.core.graph.json
+      </a>
+    </p>
+    <p>
+      Local release timeline manifest:
+      <a href="/assets/releases/manifest.json" data-telemetry-event="artifact-manifest-click" data-telemetry-location="graphs-manifest">
+        <code>releases/manifest.json</code>
+      </a>
+    </p>
+
+    <h2>Live Graph Release Index</h2>
+    <p>
+      This feed is fetched at runtime from the framework release index,
+      so new graph versions appear without redeploying the website.
+    </p>
+    <ReleaseFeed client:load kind="graph" />
+
+    <h2>Release Performance Snapshot</h2>
+    <p>
+      Use this summary to assess compatibility confidence before promoting a graph version.
+    </p>
+    <CompactMetricsWidget client:load title="Graph Channel Metrics Snapshot" />
+
+    <p class="hub-links">
+      Implement next:
+      <a href="/implement/">Implementation guide</a>
+      ·
+      <a href="/conformance/">Conformance suite</a>
+      ·
+      <a href="/metrics/">Full metrics dashboard</a>
+    </p>
+  </div>
+</BaseLayout>

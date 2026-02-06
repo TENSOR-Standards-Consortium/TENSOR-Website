@@ -6,15 +6,14 @@
 .idea/
 *.swp
 
-# Ruby
-.bundle/
-vendor/
-!site/studio/vendor/
+# Node
+node_modules/
+.npm/
 
-# Jekyll build artefacts
-_site/
-site/_site/
-.jekyll-cache/
+# Build artifacts
+dist/
+.wrangler/
+.astro/
 
 # Logs / temp
 *.log

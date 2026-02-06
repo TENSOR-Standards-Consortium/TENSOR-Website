@@ -1,0 +1,108 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { absoluteUrl, seo } from '../../data/seo';
+
+const meta = seo.conformance;
+const siteUrl = Astro.site?.toString() || 'https://tensor-standards-consortium.org/';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: meta.title,
+  description: meta.description,
+  url: absoluteUrl(siteUrl, meta.canonicalPath),
+};
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  canonicalPath={meta.canonicalPath}
+  ogType={meta.ogType}
+  jsonLd={jsonLd}
+>
+  <div class="container prose-card">
+    <h2>Conformance Suite Overview</h2>
+    <p>
+      Conformance prevents compatibility claims from becoming subjective.
+      Use the shared fixtures as a baseline and extend for domain-specific behavior.
+    </p>
+
+    <h2>Core Suite Artifacts</h2>
+    <ul>
+      <li>
+        Suite manifest:
+        <a href="/standards/conformance/manifest.json" data-telemetry-event="artifact-conformance-manifest-click" data-telemetry-location="conformance-artifacts">
+          <code>conformance/manifest.json</code>
+        </a>
+      </li>
+      <li>
+        Valid fixture:
+        <a href="/standards/conformance/fixtures/valid/core-minimal.json" data-telemetry-event="artifact-valid-fixture-click" data-telemetry-location="conformance-artifacts">
+          <code>core-minimal.json</code>
+        </a>
+      </li>
+      <li>
+        Invalid fixture:
+        <a href="/standards/conformance/fixtures/invalid/edge-id-mismatch.json" data-telemetry-event="artifact-invalid-fixture-click" data-telemetry-location="conformance-artifacts">
+          <code>edge-id-mismatch.json</code>
+        </a>
+      </li>
+      <li>
+        Compatibility policy:
+        <a href="/standards/compatibility-policy.md" data-telemetry-event="artifact-compat-policy-click" data-telemetry-location="conformance-artifacts">
+          <code>compatibility-policy.md</code>
+        </a>
+      </li>
+    </ul>
+
+    <h2>Execution Checklist</h2>
+    <ol>
+      <li>Load fixture and schema versions from pinned release channels.</li>
+      <li>Run validation in CI and persist the result as machine-readable output.</li>
+      <li>Include failing fixture cases to verify rejection behavior.</li>
+      <li>Publish conformance tier and tested versions in release notes.</li>
+    </ol>
+
+    <h2>Pass Criteria by Tier</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Tier</th>
+          <th>Pass Requirements</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Consumer</td>
+          <td>Schema-valid input accepted; invalid IDs rejected with explicit message.</td>
+        </tr>
+        <tr>
+          <td>Executor</td>
+          <td>Branch traversal aligns with encoded decisions and replayed output is stable.</td>
+        </tr>
+        <tr>
+          <td>Authoring Tool</td>
+          <td>Produced artifacts remain schema-valid and preserve ID continuity.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Reporting Format (Recommended)</h2>
+    <ul>
+      <li>Tested graph version</li>
+      <li>Tested schema version</li>
+      <li>Fixture pass/fail summary</li>
+      <li>Known limitations and unsupported optional fields</li>
+    </ul>
+
+    <p class="hub-links">
+      Implement next:
+      <a href="/implement/">Implementation guide</a>
+      ·
+      <a href="/standards/">Standards policy</a>
+      ·
+      <a href="/contribute/">Contribute fixture improvements</a>
+    </p>
+  </div>
+</BaseLayout>

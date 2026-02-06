@@ -1,0 +1,145 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { absoluteUrl, seo } from '../../data/seo';
+
+const meta = seo.standards;
+const siteUrl = Astro.site?.toString() || 'https://tensor-standards-consortium.org/';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: meta.title,
+  description: meta.description,
+  url: absoluteUrl(siteUrl, meta.canonicalPath),
+};
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  canonicalPath={meta.canonicalPath}
+  ogType={meta.ogType}
+  jsonLd={jsonLd}
+>
+  <div class="container prose-card">
+    <h2>TENSOR Core Standards Package v1.0.0</h2>
+    <p>
+      This package defines release and compatibility rules for multi-vendor interoperability.
+      Core semantics remain consortium-managed; organization-specific behavior belongs in overlays.
+    </p>
+
+    <h2>Package Artifacts</h2>
+    <ul>
+      <li>
+        Package descriptor:
+        <a href="/standards/tensor-core-v1.0.0.json"><code>tensor-core-v1.0.0.json</code></a>
+      </li>
+      <li>
+        Compatibility policy:
+        <a href="/standards/compatibility-policy.md"><code>compatibility-policy.md</code></a>
+      </li>
+      <li>
+        Release timeline manifest:
+        <a href="/assets/releases/manifest.json"><code>releases/manifest.json</code></a>
+      </li>
+    </ul>
+
+    <h2>Conformance Tier Matrix</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Tier</th>
+          <th>Scope</th>
+          <th>Minimum Evidence</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Consumer</td>
+          <td>Read, validate, and surface graph/schema semantics.</td>
+          <td>Pass valid fixture; reject invalid fixture with explicit reason.</td>
+        </tr>
+        <tr>
+          <td>Executor</td>
+          <td>Execute branch traversal using deterministic decisions.</td>
+          <td>Replayable traversal logs with node and edge IDs.</td>
+        </tr>
+        <tr>
+          <td>Authoring Tool</td>
+          <td>Create compatible graph updates without breaking existing consumers.</td>
+          <td>Schema-valid output plus ID stability across revisions.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Conformance Starter Suite</h2>
+    <p>
+      The starter suite provides deterministic baseline checks. Extend locally for domain needs,
+      but preserve the core validation contract.
+    </p>
+    <ul>
+      <li>
+        Suite manifest:
+        <a href="/standards/conformance/manifest.json"><code>conformance/manifest.json</code></a>
+      </li>
+      <li>
+        Valid fixture:
+        <a href="/standards/conformance/fixtures/valid/core-minimal.json">
+          <code>fixtures/valid/core-minimal.json</code>
+        </a>
+      </li>
+      <li>
+        Invalid fixture:
+        <a href="/standards/conformance/fixtures/invalid/edge-id-mismatch.json">
+          <code>fixtures/invalid/edge-id-mismatch.json</code>
+        </a>
+      </li>
+    </ul>
+
+    <h2>Release and Deprecation Policy</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Change Type</th>
+          <th>Version Rule</th>
+          <th>Deprecation Expectation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Additive node/edge/category change</td>
+          <td>Minor version increment</td>
+          <td>Must not break existing compliant consumers.</td>
+        </tr>
+        <tr>
+          <td>Semantic change to existing IDs</td>
+          <td>Major version increment</td>
+          <td>Requires migration notes and deprecation window.</td>
+        </tr>
+        <tr>
+          <td>Schema constraint tightening</td>
+          <td>Minor or major based on compatibility impact</td>
+          <td>Must publish rationale and affected fixture updates.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>FAQ</h2>
+    <h3>Is TENSOR a replacement for SIEM or SOAR platforms?</h3>
+    <p>
+      No. TENSOR is a shared investigation contract above those systems.
+      It standardizes semantics, not vendor product features.
+    </p>
+
+    <h3>Can vendors innovate while staying compatible?</h3>
+    <p>
+      Yes. Core semantics remain stable while overlays and extensions carry differentiated behavior.
+    </p>
+
+    <h3>Where should we start?</h3>
+    <p>
+      Start with <a href="/implement/">Implement Core</a>, then run
+      <a href="/conformance/">Conformance Suite</a> before release.
+    </p>
+  </div>
+</BaseLayout>

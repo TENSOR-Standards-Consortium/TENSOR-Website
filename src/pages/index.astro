@@ -1,0 +1,227 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LiveVersionBadge from '../components/LiveVersionBadge.jsx';
+import MetricsPanel from '../components/MetricsPanel.jsx';
+import version from '../data/version.json';
+import { absoluteUrl, seo } from '../data/seo';
+
+const meta = seo.home;
+const siteUrl = Astro.site?.toString() || 'https://tensor-standards-consortium.org/';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'TENSOR Framework',
+  url: absoluteUrl(siteUrl, '/'),
+  description: meta.description,
+  publisher: {
+    '@type': 'Organization',
+    name: 'TENSOR Standards Consortium',
+  },
+};
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  canonicalPath={meta.canonicalPath}
+  ogType={meta.ogType}
+  hidePageTitle={true}
+  jsonLd={jsonLd}
+>
+  <section class="section-hero">
+    <div class="hero-glow hero-glow-a" aria-hidden="true"></div>
+    <div class="hero-glow hero-glow-b" aria-hidden="true"></div>
+    <div class="hero-content container">
+      <div class="hero-logo">
+        <img src="/assets/img/logo-tensor-framework.png" alt="TENSOR Framework logo" />
+      </div>
+
+      <div class="hero-text">
+        <p class="hero-kicker">Open Standard For Security Investigation Logic</p>
+        <h1 class="hero-title">Implement Once. Stay Interoperable.</h1>
+        <h2 class="hero-definition">
+          TENSOR defines a deterministic graph contract for investigations across analytics platforms,
+          automation systems, and AI-assisted workflows.
+        </h2>
+        <p class="hero-tagline">
+          Use stable node and edge semantics, run the shared conformance suite, and contribute improvements
+          without forking core behavior.
+        </p>
+        <div class="cta-group">
+          <a
+            class="btn btn-primary"
+            href="/implement/"
+            data-telemetry-event="cta-implement-core"
+            data-telemetry-location="home-hero"
+          >
+            Implement Core in 30 Minutes
+          </a>
+          <a
+            class="btn btn-secondary"
+            href="/conformance/"
+            data-telemetry-event="cta-run-conformance"
+            data-telemetry-location="home-hero"
+          >
+            Run Conformance Suite
+          </a>
+          <a
+            class="btn btn-secondary"
+            href="/contribute/"
+            data-telemetry-event="cta-propose-improvement"
+            data-telemetry-location="home-hero"
+          >
+            Propose an Improvement
+          </a>
+          <a
+            class="btn btn-secondary"
+            href="/governance/"
+            data-telemetry-event="cta-join-governance"
+            data-telemetry-location="home-hero"
+          >
+            Join Governance
+          </a>
+          <LiveVersionBadge client:load fallbackVersion={version.current} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-features container">
+    <article class="feature-card">
+      <h3>Why This Standard Exists</h3>
+      <p>
+        Most SOC stacks duplicate investigation logic across SIEM, SOAR, and custom playbooks.
+        Tool-specific branching semantics make cross-platform verification difficult.
+      </p>
+    </article>
+    <article class="feature-card">
+      <h3>Failure Mode It Targets</h3>
+      <p>
+        AI-assisted workflows can drift when branch rules are implied in prompts instead of encoded
+        in deterministic graph transitions.
+      </p>
+    </article>
+    <article class="feature-card">
+      <h3>Result</h3>
+      <p>
+        TENSOR keeps investigation intent stable while allowing implementation details to vary by
+        vendor and organization.
+      </p>
+    </article>
+  </section>
+
+  <section class="section-features container">
+    <article class="feature-card">
+      <h3>Stable IDs</h3>
+      <p>Node and edge identifiers remain portable across releases, enabling replay, diffing, and migration checks.</p>
+    </article>
+    <article class="feature-card">
+      <h3>Explicit Decisions</h3>
+      <p>Every transition resolves to <code>yes</code>, <code>no</code>, or <code>unknown</code>, so execution rules are testable.</p>
+    </article>
+    <article class="feature-card">
+      <h3>Overlay Compatibility</h3>
+      <p>Teams can layer local business logic without mutating core investigative semantics.</p>
+    </article>
+    <article class="feature-card">
+      <h3>Conformance Evidence</h3>
+      <p>Baseline fixtures and release telemetry provide objective signals for implementation readiness.</p>
+    </article>
+  </section>
+
+  <section class="container prose-card">
+    <h2>Conformance Levels</h2>
+    <p>
+      Adoption is incremental. Implement the level that matches your product role, then move upward
+      as your integration matures.
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Level</th>
+          <th>What You Support</th>
+          <th>Pass Criteria</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Consumer</td>
+          <td>Load and validate canonical graph + schema artifacts.</td>
+          <td>Accept valid fixtures and reject invalid fixtures with deterministic errors.</td>
+        </tr>
+        <tr>
+          <td>Executor</td>
+          <td>Traverse decisions using graph semantics in runtime workflows.</td>
+          <td>Produce reproducible branch transitions and audit records for traversals.</td>
+        </tr>
+        <tr>
+          <td>Authoring Tool</td>
+          <td>Create or modify graphs while preserving compatibility policy.</td>
+          <td>Emit schema-valid artifacts and maintain stable IDs across revisions.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="container path-grid">
+    <article class="prose-card">
+      <h2>Implementation Path</h2>
+      <ol>
+        <li>Load pinned schema and graph release artifacts.</li>
+        <li>Run conformance fixtures and document pass/fail output.</li>
+        <li>Map runtime execution to explicit <code>yes</code>/<code>no</code>/<code>unknown</code> transitions.</li>
+        <li>Ship with release pinning and publish your compatibility statement.</li>
+      </ol>
+      <p>
+        <a
+          href="/implement/"
+          data-telemetry-event="implementation-path-open"
+          data-telemetry-location="home-path"
+        >
+          Open the full implementation guide.
+        </a>
+      </p>
+    </article>
+    <article class="prose-card">
+      <h2>Contribution Path</h2>
+      <ol>
+        <li>Open an issue describing a concrete gap with reproducible context.</li>
+        <li>Draft an RFC-level proposal with compatibility impact.</li>
+        <li>Add or update fixtures proving behavior and edge cases.</li>
+        <li>Merge through governance review and release notes.</li>
+      </ol>
+      <p>
+        <a
+          href="/contribute/"
+          data-telemetry-event="contribution-path-open"
+          data-telemetry-location="home-path"
+        >
+          Open contribution workflow.
+        </a>
+      </p>
+    </article>
+  </section>
+
+  <MetricsPanel client:load />
+
+  <section class="section-showcase container">
+    <div class="showcase-copy">
+      <p class="section-kicker">Investigation Model Shift</p>
+      <h3>From tool-specific flows to a shared graph contract</h3>
+      <p>
+        Traditional workflows are usually linear with optional loop-backs. TENSOR preserves those patterns,
+        but encodes reusable logic once so integrators can apply the same semantics across platforms.
+      </p>
+      <p>
+        Next step: <a href="/standards/">review standards and compatibility policy</a> before implementation.
+      </p>
+    </div>
+    <div class="showcase-media">
+      <img
+        src="/assets/img/workflow-linear-vs-graph.png"
+        alt="Comparison of mostly linear workflows versus shared graph-based investigation logic"
+      />
+    </div>
+  </section>
+</BaseLayout>

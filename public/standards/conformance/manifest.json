@@ -1,0 +1,25 @@
+{
+  "suiteVersion": "1.0.0",
+  "schemaVersion": "0.20250813",
+  "description": "Baseline deterministic conformance fixtures for TENSOR graph/schema validation.",
+  "cases": [
+    {
+      "id": "valid-core-minimal",
+      "input": "/standards/conformance/fixtures/valid/core-minimal.json",
+      "expected": {
+        "valid": true,
+        "errors": []
+      }
+    },
+    {
+      "id": "invalid-edge-id-mismatch",
+      "input": "/standards/conformance/fixtures/invalid/edge-id-mismatch.json",
+      "expected": {
+        "valid": false,
+        "errorsContains": [
+          "Edge id mismatch"
+        ]
+      }
+    }
+  ]
+}

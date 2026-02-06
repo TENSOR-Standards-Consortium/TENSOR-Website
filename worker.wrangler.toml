@@ -1,0 +1,10 @@
+name = "tensor-website"
+main = "worker/index.mjs"
+compatibility_date = "2026-02-05"
+
+[assets]
+directory = "./dist"
+binding = "STATIC_ASSETS"
+not_found_handling = "404-page"
+html_handling = "auto-trailing-slash"
+run_worker_first = ["/api/*"]

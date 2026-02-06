@@ -1,0 +1,46 @@
+{
+  "name": "TENSOR Framework",
+  "short_name": "TENSOR",
+  "description": "TENSOR Framework graph-based security investigation standard and explorer.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#20252c",
+  "theme_color": "#20252c",
+  "shortcuts": [
+    {
+      "name": "Graph Studio",
+      "short_name": "Studio",
+      "url": "/studio/"
+    },
+    {
+      "name": "Documentation",
+      "short_name": "Docs",
+      "url": "/docs/"
+    },
+    {
+      "name": "AI Reliability",
+      "short_name": "Reliability",
+      "url": "/ai-reliability/"
+    }
+  ],
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

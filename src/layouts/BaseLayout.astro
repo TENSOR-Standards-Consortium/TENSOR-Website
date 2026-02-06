@@ -1,0 +1,92 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+type JsonLdObject = Record<string, unknown>;
+
+interface Props {
+  title?: string;
+  description?: string;
+  hidePageTitle?: boolean;
+  canonicalPath?: string;
+  ogImage?: string;
+  ogType?: 'website' | 'article';
+  twitterCard?: 'summary' | 'summary_large_image';
+  noindex?: boolean;
+  jsonLd?: JsonLdObject | JsonLdObject[];
+}
+
+const {
+  title = 'TENSOR Framework',
+  description = 'Threat Evaluation & Neutralization through Structured Organizational Resilience',
+  hidePageTitle = false,
+  canonicalPath = Astro.url.pathname,
+  ogImage = '/assets/img/logo-tensor-framework.png',
+  ogType = 'website',
+  twitterCard = 'summary_large_image',
+  noindex = false,
+  jsonLd,
+} = Astro.props;
+
+const siteUrl = Astro.site?.toString() || 'https://tensor-standards-consortium.org/';
+const canonicalUrl = new URL(canonicalPath, siteUrl).toString();
+const ogImageUrl = ogImage.startsWith('http') ? ogImage : new URL(ogImage, siteUrl).toString();
+const jsonLdEntries = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta name="twitter:card" content={twitterCard} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    {noindex ? <meta name="robots" content="noindex, nofollow" /> : null}
+    <meta name="theme-color" content="#20252c" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    {jsonLdEntries.map((entry) => (
+      <script is:inline type="application/ld+json" set:html={JSON.stringify(entry)} />
+    ))}
+    <script is:inline src="/assets/js/app-init.js" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <Header />
+
+      {!hidePageTitle && (
+        <section class="page-title-bar">
+          <div class="container">
+            <p class="page-eyebrow">TENSOR Framework</p>
+            <h1 class="page-title">{title}</h1>
+          </div>
+        </section>
+      )}
+
+      <main>
+        <slot />
+      </main>
+
+      <Footer />
+    </div>
+  </body>
+</html>

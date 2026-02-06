@@ -1,0 +1,94 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { absoluteUrl, organizationJsonLd, seo } from '../../data/seo';
+
+const meta = seo.governance;
+const siteUrl = Astro.site?.toString() || 'https://tensor-standards-consortium.org/';
+
+const jsonLd = [
+  organizationJsonLd(siteUrl),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'TechArticle',
+    headline: meta.title,
+    description: meta.description,
+    url: absoluteUrl(siteUrl, meta.canonicalPath),
+  },
+];
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  canonicalPath={meta.canonicalPath}
+  ogType={meta.ogType}
+  jsonLd={jsonLd}
+>
+  <div class="container prose-card">
+    <h2>Governance Principles</h2>
+    <ul>
+      <li>Core semantics are stable and intentionally conservative.</li>
+      <li>Behavior changes require explicit proposal and compatibility review.</li>
+      <li>Conformance evidence is required for impactful changes.</li>
+      <li>Release notes must describe migration impact and version policy implications.</li>
+    </ul>
+
+    <h2>Decision Flow</h2>
+    <ol>
+      <li>Open an issue with reproducible problem statement and scope.</li>
+      <li>Propose a change with compatibility impact analysis.</li>
+      <li>Attach fixture updates proving expected behavior.</li>
+      <li>Review in governance queue and record decision publicly.</li>
+      <li>Ship in release channel with migration notes where required.</li>
+    </ol>
+
+    <h2>Roles</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Role</th>
+          <th>Responsibility</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Maintainers</td>
+          <td>Steward releases, compatibility policy, and core semantics.</td>
+        </tr>
+        <tr>
+          <td>Implementers</td>
+          <td>Adopt artifacts, report integration gaps, and submit fixture evidence.</td>
+        </tr>
+        <tr>
+          <td>Contributors</td>
+          <td>Propose changes, improve docs, and participate in review.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Release Cadence and Deprecation</h2>
+    <ul>
+      <li>Minor versions for additive, backward-compatible enhancements.</li>
+      <li>Major versions for breaking semantic or schema changes.</li>
+      <li>Deprecations require migration guidance and clearly published timelines.</li>
+      <li>Implementers should pin versions and plan upgrades through published release manifests.</li>
+    </ul>
+
+    <h2>Accountability Artifacts</h2>
+    <ul>
+      <li>Release manifest: <a href="/assets/releases/manifest.json"><code>releases/manifest.json</code></a></li>
+      <li>Standards package: <a href="/standards/tensor-core-v1.0.0.json"><code>tensor-core-v1.0.0.json</code></a></li>
+      <li>Compatibility policy: <a href="/standards/compatibility-policy.md"><code>compatibility-policy.md</code></a></li>
+      <li>Repository: <a href="https://github.com/tensor-standards-consortium/tensor-framework" target="_blank" rel="noopener noreferrer">tensor-framework on GitHub</a></li>
+    </ul>
+
+    <p class="hub-links">
+      Governance next:
+      <a href="/contribute/">Contribute workflow</a>
+      ·
+      <a href="/conformance/">Conformance expectations</a>
+      ·
+      <a href="/standards/">Standards policy</a>
+    </p>
+  </div>
+</BaseLayout>

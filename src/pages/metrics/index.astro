@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import MetricsDashboard from '../../components/MetricsDashboard.jsx';
+import { absoluteUrl, seo } from '../../data/seo';
+
+const meta = seo.metrics;
+const siteUrl = Astro.site?.toString() || 'https://tensor-standards-consortium.org/';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: meta.title,
+  description: meta.description,
+  url: absoluteUrl(siteUrl, meta.canonicalPath),
+};
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  canonicalPath={meta.canonicalPath}
+  ogType={meta.ogType}
+  jsonLd={jsonLd}
+>
+  <section class="container prose-card">
+    <h2>Release Health and Compatibility Confidence</h2>
+    <p>
+      This dashboard tracks quality telemetry tied to framework release channels.
+      Use it to assess whether a release is ready for implementation, promotion, or rollback.
+    </p>
+    <ul>
+      <li><strong>Coverage:</strong> whether expected domains and archetypes are represented.</li>
+      <li><strong>Routing quality:</strong> branch correctness and traversal consistency indicators.</li>
+      <li><strong>Robustness:</strong> resilience signals across versions and fixture behavior.</li>
+      <li><strong>Publish readiness:</strong> gate summary for operational release decisions.</li>
+    </ul>
+    <p class="hub-links">
+      Implement next:
+      <a href="/implement/">Implementation guide</a>
+      ·
+      <a href="/conformance/">Conformance suite</a>
+      ·
+      <a href="/graphs/">Graph release channel</a>
+    </p>
+  </section>
+
+  <MetricsDashboard client:load />
+</BaseLayout>

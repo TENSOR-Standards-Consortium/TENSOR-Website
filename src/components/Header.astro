@@ -1,0 +1,40 @@
+---
+import { navigation } from '../lib/navigation';
+
+const pathname = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <div class="header-inner container">
+    <div class="header-logo">
+      <a href="/" aria-label="TENSOR home">
+        <img src="/assets/img/logo-tensor-icon.png" alt="TENSOR logo" />
+        <span>TENSOR</span>
+      </a>
+    </div>
+
+    <nav class="header-nav" aria-label="Primary">
+      <ul>
+        {navigation.map((item) => {
+          const isExternal = item.url.startsWith('http');
+          const isActive =
+            !isExternal &&
+            (item.url === '/' ? pathname === '/' : pathname === item.url || pathname.startsWith(item.url));
+
+          return (
+            <li>
+              <a
+                href={item.url}
+                class={isActive ? 'is-active' : ''}
+                target={isExternal ? '_blank' : undefined}
+                rel={isExternal ? 'noopener noreferrer' : undefined}
+              >
+                {item.title}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,109 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { absoluteUrl, seo } from '../../data/seo';
+
+const meta = seo.docs;
+const siteUrl = Astro.site?.toString() || 'https://tensor-standards-consortium.org/';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: meta.title,
+  description: meta.description,
+  url: absoluteUrl(siteUrl, meta.canonicalPath),
+  author: {
+    '@type': 'Organization',
+    name: 'TENSOR Standards Consortium',
+  },
+};
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  canonicalPath={meta.canonicalPath}
+  ogType={meta.ogType}
+  jsonLd={jsonLd}
+>
+  <div class="container prose-card">
+    <h2>Start Here: Implement Core v1.0</h2>
+    <p>
+      This page is the implementation contract. Start with required fields and deterministic execution semantics,
+      then layer optional metadata after you pass conformance.
+    </p>
+    <ol>
+      <li>Pin a schema version and graph version from the release channel.</li>
+      <li>Validate graph packages against the pinned schema before execution.</li>
+      <li>Traverse branches using explicit <code>yes</code>, <code>no</code>, and <code>unknown</code> decisions.</li>
+      <li>Record traversal output with stable node and edge IDs for replay.</li>
+    </ol>
+
+    <h2>Required Package Contract</h2>
+    <p>
+      A compliant graph package includes required metadata (<code>namespace</code>, <code>product</code>,
+      <code>version</code>, <code>schemaVersion</code>) and required collections
+      (<code>nodes</code>, <code>edges</code>).
+    </p>
+    <p>
+      <strong>Required:</strong> top-level metadata keys, stable IDs, valid decisions, and schema-valid structure.
+      <br />
+      <strong>Optional:</strong> localized labels, operator hints, and namespaced extension metadata.
+    </p>
+
+    <h2>Node Contract</h2>
+    <p>
+      Each node includes required <code>id</code>, <code>text</code>, and <code>category</code> fields.
+      Optional fields include <code>label</code>, <code>translations</code>, and <code>extensions</code>.
+    </p>
+    <p>
+      <strong>Required:</strong> unique ID matching <code>Q&lt;number&gt;</code>, non-empty question text, and valid category.
+      <br />
+      <strong>Optional:</strong> display labels and localized copies that do not alter semantics.
+    </p>
+
+    <h2>Edge Contract</h2>
+    <p>
+      Each edge includes required <code>source</code>, <code>target</code>, and <code>decision</code>.
+      Edge IDs must encode the same relationship (example: <code>Q12-yes-Q1</code>).
+    </p>
+    <p>
+      <strong>Required:</strong> source/target node IDs that exist, decision in allowed enum, and encoded edge ID consistency.
+      <br />
+      <strong>Optional:</strong> extension data for confidence, control mapping, or provenance.
+    </p>
+
+    <h2>Execution Semantics</h2>
+    <p>
+      TENSOR supports loops and reconvergence so investigations can revisit shared questions when new evidence arrives.
+      Deterministic branch semantics are mandatory even when model output is probabilistic.
+    </p>
+    <ul>
+      <li><strong>Branching:</strong> every transition is explicit, never implied.</li>
+      <li><strong>Re-entry:</strong> cycles are valid for iterative investigations.</li>
+      <li><strong>Unknown handling:</strong> uncertainty remains first-class through <code>unknown</code> edges.</li>
+      <li><strong>Traceability:</strong> traversals are reconstructable from node and edge IDs.</li>
+    </ul>
+
+    <h2>Compatibility and Breaking Changes</h2>
+    <p>
+      Minor versions can add categories, nodes, and edges without invalidating existing consumers.
+      Major versions may introduce breaking changes and must ship migration guidance and deprecation windows.
+    </p>
+    <p>
+      Required compatibility behavior for implementers:
+    </p>
+    <ul>
+      <li>Pin <code>schemaVersion</code> in CI and block releases on validation drift.</li>
+      <li>Do not repurpose existing IDs to new semantics.</li>
+      <li>Reject artifacts that violate encoded edge identity rules.</li>
+      <li>Document supported version range in your integration README.</li>
+    </ul>
+
+    <h2>Implementation References</h2>
+    <p>
+      Use <a href="/implement/">Implement Core</a> for the 30-minute setup path,
+      <a href="/conformance/">Conformance Suite</a> for pass criteria,
+      and <a href="/standards/">Standards</a> for compatibility policy details.
+    </p>
+  </div>
+</BaseLayout>

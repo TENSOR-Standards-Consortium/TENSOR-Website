@@ -1,0 +1,74 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { absoluteUrl, organizationJsonLd, seo } from '../../data/seo';
+
+const meta = seo.about;
+const siteUrl = Astro.site?.toString() || 'https://tensor-standards-consortium.org/';
+
+const jsonLd = [
+  organizationJsonLd(siteUrl),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'TechArticle',
+    headline: meta.title,
+    description: meta.description,
+    url: absoluteUrl(siteUrl, meta.canonicalPath),
+  },
+];
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  canonicalPath={meta.canonicalPath}
+  ogType={meta.ogType}
+  jsonLd={jsonLd}
+>
+  <div class="container prose-card">
+    <h2>The TENSOR Standard</h2>
+    <p>
+      TENSOR (Threat Evaluation & Neutralization through Structured Organizational Resilience)
+      is an open, graph-native standard for investigation logic.
+    </p>
+    <p>
+      It is not a standalone product. It is a shared contract that vendors, internal platforms,
+      and SOC teams can implement to keep investigation semantics portable.
+    </p>
+
+    <h2>Why Vendors Implement It</h2>
+    <ul>
+      <li><strong>Interoperability:</strong> one graph contract can be consumed by multiple products.</li>
+      <li><strong>Determinism:</strong> branch rules are explicit and testable.</li>
+      <li><strong>Auditability:</strong> traversals are replayable with stable IDs.</li>
+      <li><strong>Upgrade safety:</strong> release policy and conformance checks reduce integration drift.</li>
+    </ul>
+
+    <h2>Design Principles</h2>
+    <ul>
+      <li><strong>Graph-first:</strong> investigations are modeled as connected decisions, not isolated tasks.</li>
+      <li><strong>Stable semantics:</strong> core IDs and decision meanings do not change silently.</li>
+      <li><strong>Extension boundaries:</strong> vendor-specific behavior is additive, not core-breaking.</li>
+      <li><strong>Conformance evidence:</strong> compatibility claims require reproducible checks.</li>
+    </ul>
+
+    <h2>What TENSOR Is Not</h2>
+    <ul>
+      <li>Not a SIEM replacement or orchestration engine.</li>
+      <li>Not a closed vendor certification program.</li>
+      <li>Not a free-form playbook format with undefined decision semantics.</li>
+      <li>Not a shortcut around governance, versioning, or compatibility review.</li>
+    </ul>
+
+    <h2>Consortium Function</h2>
+    <p>
+      The TENSOR Standards Consortium maintains the core contract and release process so implementers can rely on
+      stable behavior while still contributing improvements.
+    </p>
+    <p>
+      Next steps:
+      <a href="/implement/">implement core</a>,
+      <a href="/conformance/">run conformance</a>,
+      then <a href="/contribute/">submit improvements</a>.
+    </p>
+  </div>
+</BaseLayout>

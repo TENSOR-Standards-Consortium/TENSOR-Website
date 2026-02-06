@@ -1099,6 +1099,75 @@ main {
   padding: 0.1rem 0.35rem;
 }
 
+.prose-card pre {
+  margin-top: 0.72rem;
+  background: var(--bg-input);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-sm);
+  padding: 0.62rem 0.7rem;
+  overflow-x: auto;
+}
+
+.prose-card pre code {
+  border: 0;
+  background: transparent;
+  color: var(--text-primary);
+  padding: 0;
+  font-size: 0.83rem;
+}
+
+.prose-card table {
+  width: 100%;
+  margin-top: 0.75rem;
+  border-collapse: collapse;
+  border: 1px solid var(--line-soft);
+  background: var(--bg-input);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.prose-card table th,
+.prose-card table td {
+  padding: 0.5rem 0.58rem;
+  border-bottom: 1px solid rgba(110, 124, 141, 0.4);
+  border-right: 1px solid rgba(110, 124, 141, 0.35);
+  vertical-align: top;
+  text-align: left;
+  font-size: 0.86rem;
+}
+
+.prose-card table th:last-child,
+.prose-card table td:last-child {
+  border-right: 0;
+}
+
+.prose-card table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.prose-card table th {
+  color: var(--text-main);
+  font-family: var(--font-heading);
+}
+
+.hub-links {
+  margin-top: 0.9rem;
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+}
+
+.path-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.path-grid .prose-card {
+  max-width: none;
+  margin-bottom: 0;
+}
+
 .prose-card blockquote {
   margin-top: 0.8rem;
   border-left: 2px solid var(--accent-cyan);
@@ -1820,6 +1889,10 @@ main {
   }
 
   .metrics-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .path-grid {
     grid-template-columns: 1fr;
   }
 

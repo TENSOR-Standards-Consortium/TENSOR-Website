@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import GraphExplorer from '../../components/GraphExplorer.jsx';
+import { absoluteUrl, seo } from '../../data/seo';
+
+const meta = seo.studio;
+const siteUrl = Astro.site?.toString() || 'https://tensor-standards-consortium.org/';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: meta.title,
+  description: meta.description,
+  url: absoluteUrl(siteUrl, meta.canonicalPath),
+};
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  canonicalPath={meta.canonicalPath}
+  ogType={meta.ogType}
+  jsonLd={jsonLd}
+>
+  <section class="studio-wrapper container">
+    <div class="studio-intro-card">
+      <p>
+        Graph Studio is a reference explorer for inspecting core graph and schema releases.
+        It helps implementers compare versions and inspect branch semantics before deployment.
+      </p>
+      <p>
+        This is not the primary implementation workflow. Use
+        <a href="/implement/"> Implement Core</a>
+        and
+        <a href="/conformance/"> Conformance Suite</a>
+        to complete integration readiness checks.
+      </p>
+      <p>
+        Click any node to inspect inbound and outbound decisions.
+        The explorer supports offline use after first load.
+      </p>
+      <p class="hub-links">
+        Next:
+        <a href="/implement/">Implementation guide</a>
+        ·
+        <a href="/conformance/">Conformance suite</a>
+        ·
+        <a href="/metrics/">Metrics dashboard</a>
+      </p>
+    </div>
+
+    <GraphExplorer client:load />
+  </section>
+</BaseLayout>
