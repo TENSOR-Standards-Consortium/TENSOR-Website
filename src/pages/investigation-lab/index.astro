@@ -1,0 +1,86 @@
+---
+import InvestigationLab from '../../components/InvestigationLab.jsx';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { absoluteUrl, seo } from '../../data/seo';
+
+const meta = seo.investigationLab;
+const siteUrl = Astro.site?.toString() || 'https://tensor-standards-consortium.org/';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: meta.title,
+  description: meta.description,
+  url: absoluteUrl(siteUrl, meta.canonicalPath),
+};
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  canonicalPath={meta.canonicalPath}
+  ogType={meta.ogType}
+  jsonLd={jsonLd}
+>
+  <section class="container prose-card lab-page-card">
+    <p class="section-kicker">Reference Workflow</p>
+    <h2>Investigation Lab Concept Demo</h2>
+    <p>
+      This page demonstrates a framework-level operating model, not a product interface.
+      It shows how deterministic graph questions, analyst judgment, and agentic assistance can operate together.
+    </p>
+    <p>
+      The goal is vendor portability: the same investigation logic can be implemented across SIEM, SOAR,
+      and internal automation stacks while retaining auditability.
+    </p>
+
+    <div class="lab-availability-grid">
+      <article>
+        <h3>Available now</h3>
+        <ul>
+          <li>Deterministic graph question flow with explicit branch semantics.</li>
+          <li>Human + agent handoff model with rationale and confidence traces.</li>
+          <li>Direct adoption path to implementation and conformance workflows.</li>
+        </ul>
+      </article>
+      <article>
+        <h3>Future state</h3>
+        <ul>
+          <li>Additional scenarios and role-specific training tracks.</li>
+          <li>Optional richer media narration and scenario packs.</li>
+          <li>Expanded multi-vendor reference adapters for runtime execution.</li>
+        </ul>
+      </article>
+    </div>
+
+    <p class="hub-links">
+      Adoption path:
+      <a href="/implement/" data-telemetry-event="lab-cta-implement" data-telemetry-location="lab-page-intro">
+        Implementation guide
+      </a>
+      ·
+      <a href="/conformance/" data-telemetry-event="lab-cta-conformance" data-telemetry-location="lab-page-intro">
+        Conformance suite
+      </a>
+      ·
+      <a href="/studio/">Graph Studio</a>
+    </p>
+  </section>
+
+  <section class="container">
+    <p class="lab-static-fallback">
+      Interactive content loads below. If JavaScript is unavailable, use
+      <a href="/implement/"> Implement Core</a>
+      and
+      <a href="/conformance/"> Conformance Suite</a>
+      for the complete framework workflow.
+    </p>
+    <InvestigationLab
+      client:load
+      defaultMode="mission"
+      scenarioId="identity-session-takeover"
+      showTraditionalContrast={true}
+      primaryCtaHref="/implement/"
+    />
+  </section>
+</BaseLayout>

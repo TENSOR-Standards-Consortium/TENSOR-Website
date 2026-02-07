@@ -1,6 +1,7 @@
 export const navigation = [
   { title: 'Home', url: '/' },
   { title: 'Implement', url: '/implement/' },
+  { title: 'Investigation Lab', url: '/investigation-lab/' },
   { title: 'Standards', url: '/standards/' },
   { title: 'Docs', url: '/docs/' },
   { title: 'Conformance', url: '/conformance/' },
