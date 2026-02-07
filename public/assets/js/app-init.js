@@ -162,16 +162,18 @@
         return;
       }
 
-      var anchor = target.closest('a[data-telemetry-event]');
-      if (!anchor) {
+      var trackedElement = target.closest('[data-telemetry-event]');
+      if (!trackedElement) {
         return;
       }
 
+      var href = trackedElement.getAttribute('href');
       sendTelemetry('cta-click', {
-        eventName: anchor.getAttribute('data-telemetry-event') || 'unknown',
-        location: anchor.getAttribute('data-telemetry-location') || window.location.pathname,
-        href: anchor.getAttribute('href') || null,
-        label: anchor.textContent ? anchor.textContent.trim() : null,
+        eventName: trackedElement.getAttribute('data-telemetry-event') || 'unknown',
+        location: trackedElement.getAttribute('data-telemetry-location') || window.location.pathname,
+        href: href || null,
+        tag: trackedElement.tagName ? trackedElement.tagName.toLowerCase() : null,
+        label: trackedElement.textContent ? trackedElement.textContent.trim() : null,
       });
     });
   }

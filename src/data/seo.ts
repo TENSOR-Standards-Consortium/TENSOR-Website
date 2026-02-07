@@ -105,6 +105,13 @@ export const seo = {
     canonicalPath: '/studio/',
     ogType: 'article',
   },
+  investigationLab: {
+    title: 'TENSOR Investigation Lab Concept Demo',
+    description:
+      'Experience a concept workflow for graph-native investigations: mission training mode, split-screen walkthrough mode, and human-agent collaboration traces for framework adoption.',
+    canonicalPath: '/investigation-lab/',
+    ogType: 'article',
+  },
   offline: {
     title: 'TENSOR Offline Mode',
     description: 'Offline mode for cached TENSOR documentation and Graph Studio assets.',
