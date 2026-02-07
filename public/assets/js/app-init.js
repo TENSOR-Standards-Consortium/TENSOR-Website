@@ -2,18 +2,45 @@
   const MAX_EVENTS = 32;
   let sentCount = 0;
 
+  function asBoolean(value) {
+    if (value === true || value === false) {
+      return value;
+    }
+    return String(value || '').toLowerCase() === 'true';
+  }
+
+  function resolveTelemetryEndpoint() {
+    const runtimeApiOrigin =
+      typeof window.__TENSOR_API_ORIGIN === 'string' ? window.__TENSOR_API_ORIGIN.trim() : '';
+    if (runtimeApiOrigin) {
+      try {
+        return new URL('/api/telemetry', runtimeApiOrigin).toString();
+      } catch (_) {
+        return '';
+      }
+    }
+
+    if (asBoolean(window.__TENSOR_USE_SAME_ORIGIN_API)) {
+      return '/api/telemetry';
+    }
+
+    return '';
+  }
+
+  const telemetryEndpoint = resolveTelemetryEndpoint();
+
   function canSend() {
     return sentCount < MAX_EVENTS;
   }
 
   function sendTelemetry(type, details, level) {
-    if (!canSend()) {
+    if (!telemetryEndpoint || !canSend()) {
       return;
     }
 
     sentCount += 1;
 
-    fetch('/api/telemetry', {
+    fetch(telemetryEndpoint, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',

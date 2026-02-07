@@ -1,5 +1,11 @@
 import { useEffect, useRef } from 'react';
 import { resolveApiOrigins } from '../lib/runtimeApi';
+import {
+  buildFrameworkAssetUrls,
+  fetchMetricsHistoryChannel,
+  fetchMetricsReportChannel,
+  fetchReleaseManifest,
+} from '../lib/frameworkDataApi';
 
 const CATEGORY_COLORS = {
   Application: '#ffd166',
@@ -19,8 +25,8 @@ const DECISION_COLORS = {
 };
 
 const DEFAULT_DECISIONS = ['yes', 'no', 'unknown'];
-const DEFAULT_GRAPH_VERSION = '0.20250506';
-const DEFAULT_SCHEMA_VERSION = '0.20250813';
+const DEFAULT_GRAPH_VERSION = '0.20260206e';
+const DEFAULT_SCHEMA_VERSION = '0.20260206e';
 
 const NODE_ID_PATTERN = /^Q[1-9]\d*$/;
 const EDGE_ID_PATTERN = /^Q\d+-(yes|no|unknown)-Q\d+$/;
@@ -45,6 +51,17 @@ function sanitizeVersion(value) {
   }
 
   return normalized;
+}
+
+function sanitizeAssetPath(value) {
+  if (typeof value !== 'string') {
+    return '';
+  }
+
+  return value
+    .trim()
+    .replace(/^\.\//, '')
+    .replace(/^\/+/, '');
 }
 
 function getNodeData(node) {
@@ -166,7 +183,29 @@ function normalizeSchemaPayload(payload) {
 
 function normalizeReleasesPayload(payload) {
   if (payload && Array.isArray(payload.releases)) {
-    return payload;
+    const releases = payload.releases.map((release) => {
+      if (!release || typeof release !== 'object') {
+        return release;
+      }
+
+      const graphPath = sanitizeAssetPath(release.graphPath);
+      const schemaPath = sanitizeAssetPath(release.schemaPath);
+      const graphUrl = release.graphUrl || buildFrameworkAssetUrls(graphPath)[0] || null;
+      const schemaUrl = release.schemaUrl || buildFrameworkAssetUrls(schemaPath)[0] || null;
+
+      return {
+        ...release,
+        graphPath: graphPath || release.graphPath || null,
+        schemaPath: schemaPath || release.schemaPath || null,
+        graphUrl,
+        schemaUrl,
+      };
+    });
+
+    return {
+      ...payload,
+      releases,
+    };
   }
 
   return {
@@ -521,10 +560,24 @@ async function fetchJsonWithFallback(sources) {
     const rawUrl = String(source.url || '').trim();
     const normalizedUrl =
       rawUrl && !rawUrl.startsWith('/') && !/^https?:\/\//i.test(rawUrl) ? `/${rawUrl}` : rawUrl;
+
+    const assetPath = normalizedUrl.replace(/^\/+/, '');
+    const remoteFrameworkUrls =
+      normalizedUrl.startsWith('/releases/') || normalizedUrl.startsWith('releases/')
+        ? buildFrameworkAssetUrls(assetPath)
+        : [];
+
     expandedSources.push({
       ...source,
       url: normalizedUrl,
     });
+    for (const remoteUrl of remoteFrameworkUrls) {
+      expandedSources.push({
+        ...source,
+        url: remoteUrl,
+        label: `${source.label} (${new URL(remoteUrl).host})`,
+      });
+    }
   }
 
   let lastError = null;
@@ -1539,10 +1592,12 @@ export default function GraphExplorer() {
     };
 
     const loadReleaseManifest = async (preserveSelection = false) => {
-      const manifestResult = await fetchJsonWithFallback([
-        { url: '/api/releases', label: 'Worker API' },
-        { url: '/assets/releases/manifest.json', label: 'Static release manifest' },
-      ]);
+      const manifestResult = await fetchReleaseManifest({
+        headers: {
+          Accept: 'application/json',
+        },
+        cache: 'no-store',
+      });
 
       state.releaseManifest = normalizeReleasesPayload(manifestResult.data);
       state.releasesSorted = sortReleasesByDate(state.releaseManifest.releases || []);
@@ -1564,16 +1619,19 @@ export default function GraphExplorer() {
     const fetchGraphForVersion = async (graphVersion) => {
       const release = state.graphVersionToRelease.get(graphVersion);
 
-      const graphResult = await fetchJsonWithFallback([
-        { url: `/api/graph?version=${encodeURIComponent(graphVersion)}`, label: 'Worker API' },
-        release?.graphUrl
-          ? { url: release.graphUrl, label: `Framework release asset ${graphVersion}` }
-          : null,
-        release?.graphPath
-          ? { url: release.graphPath, label: `Release asset ${graphVersion}` }
-          : null,
-        { url: '/assets/data/tensor-core.json', label: 'Static asset' },
-      ]);
+      const releaseSources = [
+        release?.graphUrl ? { url: release.graphUrl, label: `Framework release asset ${graphVersion}` } : null,
+        release?.graphPath ? { url: release.graphPath, label: `Release asset ${graphVersion}` } : null,
+      ].filter(Boolean);
+
+      const graphResult = await fetchJsonWithFallback(
+        releaseSources.length > 0
+          ? [{ url: `/api/graph?version=${encodeURIComponent(graphVersion)}`, label: 'Worker API' }, ...releaseSources]
+          : [
+              { url: `/api/graph?version=${encodeURIComponent(graphVersion)}`, label: 'Worker API' },
+              { url: '/assets/data/tensor-core.json', label: 'Static asset' },
+            ]
+      );
 
       return normalizeGraphPayload(graphResult.data);
     };
@@ -1581,16 +1639,23 @@ export default function GraphExplorer() {
     const fetchSchemaForVersion = async (schemaVersion) => {
       const release = state.schemaVersionToRelease.get(schemaVersion);
 
-      const schemaResult = await fetchJsonWithFallback([
-        { url: `/api/schema?version=${encodeURIComponent(schemaVersion)}`, label: 'Worker API' },
+      const releaseSources = [
         release?.schemaUrl
           ? { url: release.schemaUrl, label: `Framework release schema ${schemaVersion}` }
           : null,
         release?.schemaPath
           ? { url: release.schemaPath, label: `Release schema ${schemaVersion}` }
           : null,
-        { url: '/assets/data/core.schema.json', label: 'Static asset' },
-      ]);
+      ].filter(Boolean);
+
+      const schemaResult = await fetchJsonWithFallback(
+        releaseSources.length > 0
+          ? [{ url: `/api/schema?version=${encodeURIComponent(schemaVersion)}`, label: 'Worker API' }, ...releaseSources]
+          : [
+              { url: `/api/schema?version=${encodeURIComponent(schemaVersion)}`, label: 'Worker API' },
+              { url: '/assets/data/core.schema.json', label: 'Static asset' },
+            ]
+      );
 
       const normalized = normalizeSchemaPayload(schemaResult.data);
       if (!normalized) {
@@ -1601,13 +1666,12 @@ export default function GraphExplorer() {
     };
 
     const loadMetricsHistory = async () => {
-      const historyResult = await fetchJsonWithFallback([
-        { url: '/api/metrics/history', label: 'Worker metrics history' },
-        {
-          url: 'https://raw.githubusercontent.com/tensor-standards-consortium/tensor-framework/main/releases/core/reports/history/math-assurance-history.json',
-          label: 'Framework metrics history',
+      const historyResult = await fetchMetricsHistoryChannel({
+        headers: {
+          Accept: 'application/json',
         },
-      ]);
+        cache: 'no-store',
+      });
 
       const normalizedHistory = normalizeMetricsHistoryPayload(historyResult.data);
       const series = Array.isArray(normalizedHistory.series) ? [...normalizedHistory.series] : [];
@@ -1630,16 +1694,12 @@ export default function GraphExplorer() {
         return state.metricsByVersion.get(normalizedVersion);
       }
 
-      const reportResult = await fetchJsonWithFallback([
-        {
-          url: `/api/metrics/report?version=${encodeURIComponent(normalizedVersion)}&type=math-assurance`,
-          label: `Worker metrics ${normalizedVersion}`,
+      const reportResult = await fetchMetricsReportChannel(normalizedVersion, 'math-assurance', {
+        headers: {
+          Accept: 'application/json',
         },
-        {
-          url: `https://raw.githubusercontent.com/tensor-standards-consortium/tensor-framework/main/releases/core/reports/v${normalizedVersion}/math-assurance.json`,
-          label: `Framework metrics ${normalizedVersion}`,
-        },
-      ]);
+        cache: 'no-store',
+      });
 
       const report = normalizeMetricsReportPayload(reportResult.data);
       if (!report) {

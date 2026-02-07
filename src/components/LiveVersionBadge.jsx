@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { fetchApiJson } from '../lib/runtimeApi';
+import { fetchVersionChannel } from '../lib/frameworkDataApi';
 
 const REFRESH_INTERVAL_MS = 4 * 60 * 1000;
 
@@ -15,7 +15,7 @@ function extractVersion(payload) {
   return '';
 }
 
-export default function LiveVersionBadge({ fallbackVersion = '0.20250506' }) {
+export default function LiveVersionBadge({ fallbackVersion = '0.20260206e' }) {
   const [state, setState] = useState({
     version: fallbackVersion,
     sourceName: 'local fallback',
@@ -27,7 +27,7 @@ export default function LiveVersionBadge({ fallbackVersion = '0.20250506' }) {
 
     async function loadVersion() {
       try {
-        const { data: payload, requestUrl } = await fetchApiJson('/api/version', {
+        const { data: payload, requestUrl } = await fetchVersionChannel({
           headers: { accept: 'application/json' },
           cache: 'no-store',
         });

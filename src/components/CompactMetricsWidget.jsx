@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { fetchApiJson } from '../lib/runtimeApi';
+import { fetchMetricsHistoryChannel, fetchMetricsLatestChannel } from '../lib/frameworkDataApi';
 
 const REFRESH_INTERVAL_MS = 4 * 60 * 1000;
 
@@ -52,11 +52,11 @@ export default function CompactMetricsWidget({ title = 'Latest Framework Metrics
     async function load() {
       try {
         const [latestResult, historyResult] = await Promise.all([
-          fetchApiJson('/api/metrics/latest', {
+          fetchMetricsLatestChannel({
             headers: { accept: 'application/json' },
             cache: 'no-store',
           }),
-          fetchApiJson('/api/metrics/history', {
+          fetchMetricsHistoryChannel({
             headers: { accept: 'application/json' },
             cache: 'no-store',
           }),

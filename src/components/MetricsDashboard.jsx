@@ -1,5 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { fetchApiJson } from '../lib/runtimeApi';
+import {
+  fetchMetricsHistoryChannel,
+  fetchMetricsReportChannel,
+  fetchReleaseManifest,
+} from '../lib/frameworkDataApi';
 
 const REFRESH_INTERVAL_MS = 4 * 60 * 1000;
 const CHART_WIDTH = 980;
@@ -59,12 +63,27 @@ function normalizeHistoryPayload(payload) {
 }
 
 function normalizeReportPayload(payload) {
-  if (payload?.report && payload.report.version) {
-    return payload.report;
+  const candidate =
+    payload?.report && typeof payload.report === 'object'
+      ? payload.report
+      : payload && typeof payload === 'object'
+        ? payload
+        : null;
+
+  if (!candidate) {
+    return null;
   }
 
-  if (payload?.version && payload?.summary) {
-    return payload;
+  if (candidate.summary && typeof candidate.summary === 'object') {
+    return candidate;
+  }
+
+  if (Array.isArray(candidate.domains) || Array.isArray(candidate.dimensions)) {
+    return candidate;
+  }
+
+  if (candidate.metrics && typeof candidate.metrics === 'object') {
+    return candidate;
   }
 
   return null;
@@ -185,11 +204,11 @@ export default function MetricsDashboard() {
     async function loadBase() {
       try {
         const [releaseResult, historyResult] = await Promise.all([
-          fetchApiJson('/api/releases', {
+          fetchReleaseManifest({
             headers: { accept: 'application/json' },
             cache: 'no-store',
           }),
-          fetchApiJson('/api/metrics/history', {
+          fetchMetricsHistoryChannel({
             headers: { accept: 'application/json' },
             cache: 'no-store',
           }),
@@ -268,18 +287,18 @@ export default function MetricsDashboard() {
       }));
 
       const reportRequests = [
-        fetchApiJson(
-          `/api/metrics/report?version=${encodeURIComponent(selectedVersion)}&type=math-assurance`,
-          { headers: { accept: 'application/json' }, cache: 'no-store' }
-        ),
-        fetchApiJson(
-          `/api/metrics/report?version=${encodeURIComponent(selectedVersion)}&type=graph-quality`,
-          { headers: { accept: 'application/json' }, cache: 'no-store' }
-        ),
-        fetchApiJson(
-          `/api/metrics/report?version=${encodeURIComponent(selectedVersion)}&type=coverage-matrix`,
-          { headers: { accept: 'application/json' }, cache: 'no-store' }
-        ),
+        fetchMetricsReportChannel(selectedVersion, 'math-assurance', {
+          headers: { accept: 'application/json' },
+          cache: 'no-store',
+        }),
+        fetchMetricsReportChannel(selectedVersion, 'graph-quality', {
+          headers: { accept: 'application/json' },
+          cache: 'no-store',
+        }),
+        fetchMetricsReportChannel(selectedVersion, 'coverage-matrix', {
+          headers: { accept: 'application/json' },
+          cache: 'no-store',
+        }),
       ];
 
       const [mathResult, qualityResult, coverageResult] = await Promise.allSettled(reportRequests);

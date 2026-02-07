@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tensor-pwa-v7';
+const CACHE_NAME = 'tensor-pwa-v9';
 const PRECACHE_URLS = [
   '/',
   '/offline/',
@@ -15,11 +15,6 @@ const PRECACHE_URLS = [
   '/icons/icon-512.png',
   '/assets/data/tensor-core.json',
   '/assets/data/core.schema.json',
-  '/assets/releases/manifest.json',
-  '/assets/releases/graphs/tensor-core-0.20250410.json',
-  '/assets/releases/graphs/tensor-core-0.20250506.json',
-  '/assets/releases/schemas/core.schema.0.20250410.json',
-  '/assets/releases/schemas/core.schema.0.20250813.json',
   '/assets/js/app-init.js',
   '/assets/img/logo-tensor-icon.png',
   '/assets/img/logo-tensor-framework.png'
@@ -142,13 +137,18 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+  if (url.pathname === '/assets/releases/manifest.json') {
+    event.respondWith(networkFirst(request));
+    return;
+  }
+
   if (url.pathname.startsWith('/assets/data/')) {
-    event.respondWith(cacheFirst(request));
+    event.respondWith(staleWhileRevalidate(request));
     return;
   }
 
   if (url.pathname.startsWith('/assets/releases/')) {
-    event.respondWith(cacheFirst(request));
+    event.respondWith(staleWhileRevalidate(request));
     return;
   }
 

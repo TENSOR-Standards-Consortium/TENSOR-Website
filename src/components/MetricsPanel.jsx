@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { fetchApiJson } from '../lib/runtimeApi';
+import { fetchMetricsHistoryChannel, fetchMetricsLatestChannel } from '../lib/frameworkDataApi';
 
 const REFRESH_INTERVAL_MS = 4 * 60 * 1000;
 const HISTORY_LIMIT = 16;
@@ -174,11 +174,11 @@ export default function MetricsPanel() {
     async function loadMetrics() {
       try {
         const [latestResult, historyResult] = await Promise.all([
-          fetchApiJson('/api/metrics/latest', {
+          fetchMetricsLatestChannel({
             headers: { accept: 'application/json' },
             cache: 'no-store',
           }),
-          fetchApiJson('/api/metrics/history', {
+          fetchMetricsHistoryChannel({
             headers: { accept: 'application/json' },
             cache: 'no-store',
           }),
@@ -187,7 +187,12 @@ export default function MetricsPanel() {
         const latestPayload = latestResult.data;
         const historyPayload = historyResult.data;
 
-        const historySeries = normalizeSeries(historyPayload?.report?.series || []).slice(-HISTORY_LIMIT);
+        const historySeriesRaw = Array.isArray(historyPayload?.report?.series)
+          ? historyPayload.report.series
+          : Array.isArray(historyPayload?.series)
+            ? historyPayload.series
+            : [];
+        const historySeries = normalizeSeries(historySeriesRaw).slice(-HISTORY_LIMIT);
         const latestFromSummary = extractLatestFromPayload(latestPayload);
         const latestFromSeries = extractLatestFromSeries(historySeries, latestFromSummary.version);
         const latest = latestFromSeries || latestFromSummary;

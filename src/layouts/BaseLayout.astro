@@ -33,6 +33,10 @@ const siteUrl = Astro.site?.toString() || 'https://tensor-standards-consortium.o
 const canonicalUrl = new URL(canonicalPath, siteUrl).toString();
 const ogImageUrl = ogImage.startsWith('http') ? ogImage : new URL(ogImage, siteUrl).toString();
 const jsonLdEntries = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
+const configuredApiOrigin = import.meta.env.PUBLIC_TENSOR_API_ORIGIN
+  ? String(import.meta.env.PUBLIC_TENSOR_API_ORIGIN).trim()
+  : '';
+const useSameOriginApi = String(import.meta.env.PUBLIC_TENSOR_USE_SAME_ORIGIN_API || '').toLowerCase() === 'true';
 ---
 
 <!doctype html>
@@ -67,6 +71,12 @@ const jsonLdEntries = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
     {jsonLdEntries.map((entry) => (
       <script is:inline type="application/ld+json" set:html={JSON.stringify(entry)} />
     ))}
+    {configuredApiOrigin ? (
+      <script is:inline set:html={`window.__TENSOR_API_ORIGIN = ${JSON.stringify(configuredApiOrigin)};`} />
+    ) : null}
+    {useSameOriginApi ? (
+      <script is:inline set:html={`window.__TENSOR_USE_SAME_ORIGIN_API = true;`} />
+    ) : null}
     <script is:inline src="/assets/js/app-init.js" defer></script>
   </head>
   <body>

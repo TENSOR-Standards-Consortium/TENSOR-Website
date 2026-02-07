@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { fetchApiJson } from '../lib/runtimeApi';
+import { fetchReleaseManifest } from '../lib/frameworkDataApi';
 
 function normalizeReleasesPayload(payload) {
   if (!payload || !Array.isArray(payload.releases)) {
@@ -43,7 +43,7 @@ export default function ReleaseFeed({ kind = 'graph' }) {
 
     const load = async () => {
       try {
-        const { data: payload, requestUrl } = await fetchApiJson('/api/releases', {
+        const { data: payload, requestUrl } = await fetchReleaseManifest({
           headers: {
             accept: 'application/json',
           },
