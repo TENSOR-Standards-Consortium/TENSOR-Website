@@ -2,6 +2,15 @@ const LOCAL_RELEASE_MANIFEST_PATH = '/assets/releases/manifest.json';
 const LEGACY_GRAPH_PATH = '/assets/data/tensor-core.json';
 const LEGACY_SCHEMA_PATH = '/assets/data/core.schema.json';
 const REPORT_TYPES = new Set(['math-assurance', 'graph-quality', 'coverage-matrix']);
+const TELEMETRY_LEVELS = new Set(['info', 'warn', 'error']);
+const TELEMETRY_MAX_PAYLOAD_BYTES = 8_000;
+const TELEMETRY_MAX_DETAILS_BYTES = 4_000;
+
+const DEFAULT_RELEASE_ALLOWED_HOSTS = [
+  'raw.githubusercontent.com',
+  'tensor-standards-consortium.github.io',
+  'tensor-standards-consortium.org',
+];
 
 const REMOTE_MANIFEST_SOURCES = [
   {
@@ -23,20 +32,208 @@ const REMOTE_MANIFEST_SOURCES = [
   },
 ];
 
+const PUBLIC_API_CORS_HEADERS = {
+  'access-control-allow-origin': '*',
+  'access-control-allow-methods': 'GET,OPTIONS',
+  'access-control-allow-headers': 'content-type,accept',
+};
+
 function unique(values) {
   return [...new Set(values.filter(Boolean))];
 }
 
-function jsonResponse(payload, status = 200, headers = {}) {
+function parseCsv(rawValue) {
+  if (typeof rawValue !== 'string' || rawValue.trim() === '') {
+    return [];
+  }
+
+  return rawValue
+    .split(',')
+    .map((value) => value.trim())
+    .filter(Boolean);
+}
+
+function tryParseUrl(value) {
+  try {
+    return new URL(value);
+  } catch {
+    return null;
+  }
+}
+
+function normalizeHost(value) {
+  if (typeof value !== 'string') {
+    return '';
+  }
+
+  const trimmed = value.trim().toLowerCase();
+  if (!trimmed) {
+    return '';
+  }
+
+  const parsed = tryParseUrl(trimmed.includes('://') ? trimmed : `https://${trimmed}`);
+  return parsed?.hostname?.toLowerCase() || '';
+}
+
+function normalizeOrigin(value) {
+  if (typeof value !== 'string') {
+    return '';
+  }
+
+  const parsed = tryParseUrl(value.trim());
+  if (!parsed) {
+    return '';
+  }
+
+  if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+    return '';
+  }
+
+  return parsed.origin;
+}
+
+function getReleaseAllowedHosts(env, requestUrl) {
+  const hosts = new Set(DEFAULT_RELEASE_ALLOWED_HOSTS.map((host) => host.toLowerCase()));
+
+  for (const value of parseCsv(env?.RELEASE_ALLOWED_HOSTS)) {
+    const host = normalizeHost(value);
+    if (host) {
+      hosts.add(host);
+    }
+  }
+
+  const requestHost = tryParseUrl(requestUrl)?.hostname?.toLowerCase();
+  if (requestHost) {
+    hosts.add(requestHost);
+  }
+
+  return hosts;
+}
+
+function getTelemetryAllowedOrigins(env, requestUrl) {
+  const requestedOrigins = parseCsv(env?.TELEMETRY_ALLOWED_ORIGINS)
+    .map(normalizeOrigin)
+    .filter(Boolean);
+
+  if (requestedOrigins.length > 0) {
+    return new Set(requestedOrigins);
+  }
+
+  return new Set([new URL(requestUrl).origin]);
+}
+
+function isAllowedTelemetryOrigin(request, env, requestUrl) {
+  const originHeader = request.headers.get('origin');
+  if (!originHeader) {
+    return true;
+  }
+
+  const normalizedOrigin = normalizeOrigin(originHeader);
+  if (!normalizedOrigin) {
+    return false;
+  }
+
+  const allowedOrigins = getTelemetryAllowedOrigins(env, requestUrl);
+  return allowedOrigins.has(normalizedOrigin);
+}
+
+function buildTelemetryCorsHeaders(request, env, requestUrl) {
+  const originHeader = request.headers.get('origin');
+  const normalizedOrigin = normalizeOrigin(originHeader);
+  const requestOrigin = new URL(requestUrl).origin;
+
+  if (normalizedOrigin && isAllowedTelemetryOrigin(request, env, requestUrl)) {
+    return {
+      'access-control-allow-origin': normalizedOrigin,
+      'access-control-allow-methods': 'POST,OPTIONS',
+      'access-control-allow-headers': 'content-type,accept',
+      vary: 'Origin',
+    };
+  }
+
+  if (!originHeader) {
+    return {
+      'access-control-allow-origin': requestOrigin,
+      'access-control-allow-methods': 'POST,OPTIONS',
+      'access-control-allow-headers': 'content-type,accept',
+      vary: 'Origin',
+    };
+  }
+
+  return null;
+}
+
+function validateTrustedHttpsUrl(value, allowedHosts) {
+  if (typeof value !== 'string' || !value.trim()) {
+    return {
+      ok: false,
+      reason: 'invalid-url',
+    };
+  }
+
+  const parsed = tryParseUrl(value.trim());
+  if (!parsed) {
+    return {
+      ok: false,
+      reason: 'invalid-url',
+    };
+  }
+
+  if (parsed.protocol !== 'https:') {
+    return {
+      ok: false,
+      reason: `non-https:${parsed.protocol}`,
+    };
+  }
+
+  const host = parsed.hostname.toLowerCase();
+  if (!allowedHosts.has(host)) {
+    return {
+      ok: false,
+      reason: `host-not-allowed:${host}`,
+    };
+  }
+
+  return {
+    ok: true,
+    value: parsed.toString(),
+  };
+}
+
+function noteBlockedSource(blockedReasons, reason) {
+  if (!blockedReasons || !reason) {
+    return;
+  }
+
+  blockedReasons.add(reason);
+}
+
+function sourceGuardMeta(blockedReasons) {
+  const reasons = [...blockedReasons];
+  return {
+    sourceBlockedCount: reasons.length,
+    blockedReasons: reasons.slice(0, 20),
+  };
+}
+
+function pushTrustedUrl(urls, candidateUrl, allowedHosts, blockedReasons) {
+  const result = validateTrustedHttpsUrl(candidateUrl, allowedHosts);
+  if (!result.ok) {
+    noteBlockedSource(blockedReasons, result.reason);
+    return;
+  }
+
+  urls.push(result.value);
+}
+
+function jsonResponse(payload, status = 200, headers = {}, corsHeaders = PUBLIC_API_CORS_HEADERS) {
   return new Response(JSON.stringify(payload), {
     status,
     headers: {
       'content-type': 'application/json; charset=utf-8',
       'cache-control': 'public, max-age=60',
-      'access-control-allow-origin': '*',
-      'access-control-allow-methods': 'GET,POST,OPTIONS',
-      'access-control-allow-headers': 'content-type,accept',
       'x-content-type-options': 'nosniff',
+      ...(corsHeaders || {}),
       ...headers,
     },
   });
@@ -133,17 +330,28 @@ async function loadLocalAssetJson(env, requestUrl, assetPath) {
   return assetResponse.json();
 }
 
-async function loadManifestContext(env, requestUrl) {
+async function loadManifestContext(env, requestUrl, allowedHosts, blockedReasons) {
   for (const source of REMOTE_MANIFEST_SOURCES) {
+    const manifestCheck = validateTrustedHttpsUrl(source.manifestUrl, allowedHosts);
+    const rootCheck = validateTrustedHttpsUrl(source.rootUrl, allowedHosts);
+    if (!manifestCheck.ok) {
+      noteBlockedSource(blockedReasons, `manifest-source:${source.name}:${manifestCheck.reason}`);
+      continue;
+    }
+    if (!rootCheck.ok) {
+      noteBlockedSource(blockedReasons, `manifest-root:${source.name}:${rootCheck.reason}`);
+      continue;
+    }
+
     try {
-      const manifest = await fetchRemoteJson(source.manifestUrl);
+      const manifest = await fetchRemoteJson(manifestCheck.value);
       if (Array.isArray(manifest?.releases)) {
         return {
           manifest,
           source: 'remote',
           sourceName: source.name,
-          sourceRootUrl: source.rootUrl,
-          manifestUrl: source.manifestUrl,
+          sourceRootUrl: rootCheck.value,
+          manifestUrl: manifestCheck.value,
         };
       }
     } catch {
@@ -178,7 +386,7 @@ function findReleaseByVersion(manifest, kind, version) {
   return manifest.releases.find((release) => release?.[key] === version) || null;
 }
 
-function buildReleaseAssetUrls(release, kind, manifestContext) {
+function buildReleaseAssetUrls(release, kind, manifestContext, allowedHosts, blockedReasons) {
   if (!release) {
     return [];
   }
@@ -188,30 +396,40 @@ function buildReleaseAssetUrls(release, kind, manifestContext) {
 
   const urls = [];
   if (isHttpUrl(release?.[urlKey])) {
-    urls.push(release[urlKey]);
+    pushTrustedUrl(urls, release[urlKey], allowedHosts, blockedReasons);
   }
 
   const pathValue = release?.[pathKey];
   if (typeof pathValue === 'string' && pathValue.trim()) {
     if (isHttpUrl(pathValue)) {
-      urls.push(pathValue);
+      pushTrustedUrl(urls, pathValue, allowedHosts, blockedReasons);
     } else {
       const normalized = normalizeAssetPath(pathValue);
       if (normalized) {
         if (manifestContext?.sourceRootUrl) {
-          urls.push(toAbsoluteUrl(manifestContext.sourceRootUrl, normalized));
+          pushTrustedUrl(
+            urls,
+            toAbsoluteUrl(manifestContext.sourceRootUrl, normalized),
+            allowedHosts,
+            blockedReasons
+          );
         }
 
         if (manifestContext?.manifestUrl) {
           try {
-            urls.push(new URL(pathValue, manifestContext.manifestUrl).toString());
+            pushTrustedUrl(
+              urls,
+              new URL(pathValue, manifestContext.manifestUrl).toString(),
+              allowedHosts,
+              blockedReasons
+            );
           } catch {
-            // ignored
+            noteBlockedSource(blockedReasons, 'invalid-manifest-relative-url');
           }
         }
 
         for (const source of REMOTE_MANIFEST_SOURCES) {
-          urls.push(toAbsoluteUrl(source.rootUrl, normalized));
+          pushTrustedUrl(urls, toAbsoluteUrl(source.rootUrl, normalized), allowedHosts, blockedReasons);
         }
       }
     }
@@ -247,7 +465,7 @@ function parseReportType(rawValue) {
   return value;
 }
 
-function buildReportCandidates(manifestContext, reportPaths) {
+function buildReportCandidates(manifestContext, reportPaths, allowedHosts, blockedReasons) {
   const remoteUrls = [];
   const localPaths = [];
 
@@ -257,7 +475,7 @@ function buildReportCandidates(manifestContext, reportPaths) {
     }
 
     if (isHttpUrl(reportPath)) {
-      remoteUrls.push(reportPath);
+      pushTrustedUrl(remoteUrls, reportPath, allowedHosts, blockedReasons);
       continue;
     }
 
@@ -267,19 +485,29 @@ function buildReportCandidates(manifestContext, reportPaths) {
     }
 
     if (manifestContext?.sourceRootUrl) {
-      remoteUrls.push(toAbsoluteUrl(manifestContext.sourceRootUrl, normalized));
+      pushTrustedUrl(
+        remoteUrls,
+        toAbsoluteUrl(manifestContext.sourceRootUrl, normalized),
+        allowedHosts,
+        blockedReasons
+      );
     }
 
     if (manifestContext?.manifestUrl) {
       try {
-        remoteUrls.push(new URL(reportPath, manifestContext.manifestUrl).toString());
+        pushTrustedUrl(
+          remoteUrls,
+          new URL(reportPath, manifestContext.manifestUrl).toString(),
+          allowedHosts,
+          blockedReasons
+        );
       } catch {
-        // ignored
+        noteBlockedSource(blockedReasons, 'invalid-report-relative-url');
       }
     }
 
     for (const source of REMOTE_MANIFEST_SOURCES) {
-      remoteUrls.push(toAbsoluteUrl(source.rootUrl, normalized));
+      pushTrustedUrl(remoteUrls, toAbsoluteUrl(source.rootUrl, normalized), allowedHosts, blockedReasons);
     }
 
     localPaths.push(`/${normalized}`);
@@ -294,7 +522,7 @@ function buildReportCandidates(manifestContext, reportPaths) {
   };
 }
 
-function resolveReleaseAsset(manifestContext, kind, requestedVersion) {
+function resolveReleaseAsset(manifestContext, kind, requestedVersion, allowedHosts, blockedReasons) {
   const requested = sanitizeVersion(requestedVersion);
   const manifest = manifestContext?.manifest;
   const latestVersion = sanitizeVersion(
@@ -316,7 +544,7 @@ function resolveReleaseAsset(manifestContext, kind, requestedVersion) {
     version: effectiveVersion,
     release,
     pathHint: release ? release[kind === 'graph' ? 'graphPath' : 'schemaPath'] || null : null,
-    remoteUrls: buildReleaseAssetUrls(release, kind, manifestContext),
+    remoteUrls: buildReleaseAssetUrls(release, kind, manifestContext, allowedHosts, blockedReasons),
     localPaths: buildLocalFallbackPaths(kind, effectiveVersion),
   };
 }
@@ -377,11 +605,11 @@ function unwrapSchemaPayload(data) {
   throw new Error('Schema payload is invalid');
 }
 
-function decorateRelease(release, manifestContext) {
+function decorateRelease(release, manifestContext, allowedHosts, blockedReasons) {
   return {
     ...release,
-    graphUrl: buildReleaseAssetUrls(release, 'graph', manifestContext)[0] || null,
-    schemaUrl: buildReleaseAssetUrls(release, 'schema', manifestContext)[0] || null,
+    graphUrl: buildReleaseAssetUrls(release, 'graph', manifestContext, allowedHosts, blockedReasons)[0] || null,
+    schemaUrl: buildReleaseAssetUrls(release, 'schema', manifestContext, allowedHosts, blockedReasons)[0] || null,
   };
 }
 
@@ -450,17 +678,111 @@ function withNoStore(response) {
   });
 }
 
+function sanitizeTelemetryString(value, fallback, maxLength = 120, pattern = /^[a-z0-9_./:-]+$/i) {
+  if (typeof value !== 'string') {
+    return fallback;
+  }
+
+  const trimmed = value.trim();
+  if (!trimmed || trimmed.length > maxLength) {
+    return fallback;
+  }
+
+  if (!pattern.test(trimmed)) {
+    return fallback;
+  }
+
+  return trimmed;
+}
+
+function sanitizeTelemetryDetails(value, depth = 0) {
+  if (depth > 2) {
+    return '[truncated]';
+  }
+
+  if (value === null) {
+    return null;
+  }
+
+  if (typeof value === 'string') {
+    return value.length > 256 ? `${value.slice(0, 253)}...` : value;
+  }
+
+  if (typeof value === 'number') {
+    return Number.isFinite(value) ? value : null;
+  }
+
+  if (typeof value === 'boolean') {
+    return value;
+  }
+
+  if (Array.isArray(value)) {
+    return value.slice(0, 20).map((entry) => sanitizeTelemetryDetails(entry, depth + 1));
+  }
+
+  if (typeof value === 'object') {
+    const entries = Object.entries(value).slice(0, 20);
+    const normalized = {};
+    for (const [key, entry] of entries) {
+      const safeKey = sanitizeTelemetryString(key, 'field', 64, /^[a-z0-9_.-]+$/i);
+      normalized[safeKey] = sanitizeTelemetryDetails(entry, depth + 1);
+    }
+    return normalized;
+  }
+
+  return null;
+}
+
+function sanitizeTelemetryPayload(payload) {
+  const safePayload = payload && typeof payload === 'object' && !Array.isArray(payload) ? payload : {};
+  const levelRaw = sanitizeTelemetryString(safePayload.level, 'info', 16, /^[a-z]+$/i).toLowerCase();
+  const details = sanitizeTelemetryDetails(safePayload.details ?? {});
+  const serializedDetails = JSON.stringify(details);
+
+  return {
+    type: sanitizeTelemetryString(safePayload.type, 'client-event', 80),
+    level: TELEMETRY_LEVELS.has(levelRaw) ? levelRaw : 'info',
+    page: sanitizeTelemetryString(safePayload.page, 'unknown', 200, /^[-a-z0-9_./:?=&%#]+$/i),
+    details:
+      serializedDetails.length <= TELEMETRY_MAX_DETAILS_BYTES
+        ? details
+        : { truncated: true, message: 'details-payload-truncated' },
+  };
+}
+
+function buildSourceMeta(blockedReasons) {
+  return sourceGuardMeta(blockedReasons);
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
     if (request.method === 'OPTIONS' && url.pathname.startsWith('/api/')) {
+      if (url.pathname === '/api/telemetry') {
+        if (!isAllowedTelemetryOrigin(request, env, request.url)) {
+          return new Response(null, {
+            status: 403,
+            headers: {
+              'cache-control': 'no-store',
+            },
+          });
+        }
+
+        const telemetryCorsHeaders = buildTelemetryCorsHeaders(request, env, request.url);
+        return new Response(null, {
+          status: 204,
+          headers: {
+            ...telemetryCorsHeaders,
+            'access-control-max-age': '86400',
+          },
+        });
+      }
+
       return new Response(null, {
         status: 204,
         headers: {
-          'access-control-allow-origin': '*',
-          'access-control-allow-methods': 'GET,POST,OPTIONS',
-          'access-control-allow-headers': 'content-type,accept',
+          ...PUBLIC_API_CORS_HEADERS,
           'access-control-max-age': '86400',
         },
       });
@@ -475,41 +797,108 @@ export default {
     }
 
     if (url.pathname === '/api/telemetry' && request.method === 'POST') {
-      try {
-        const payload = await request.json();
-        const compactPayload = JSON.stringify(payload);
-        if (compactPayload.length > 8_000) {
-          return jsonResponse({ error: 'Telemetry payload too large' }, 413, {
-            'cache-control': 'no-store',
-          });
-        }
+      const telemetryCorsHeaders = buildTelemetryCorsHeaders(request, env, request.url);
 
-        const event = {
-          ts: new Date().toISOString(),
-          type: payload?.type || 'client-event',
-          level: payload?.level || 'info',
-          page: payload?.page || 'unknown',
-          details: payload?.details || {},
-          userAgent: request.headers.get('user-agent') || 'unknown',
-        };
-
-        console.log(`[telemetry] ${JSON.stringify(event)}`);
-        return jsonResponse({ ok: true }, 202, { 'cache-control': 'no-store' });
-      } catch (error) {
+      if (!isAllowedTelemetryOrigin(request, env, request.url)) {
         return jsonResponse(
           {
-            error: 'Telemetry parse failed',
-            message: String(error),
+            error: 'Telemetry origin not allowed',
+            code: 'TELEMETRY_ORIGIN_NOT_ALLOWED',
           },
-          400,
-          { 'cache-control': 'no-store' }
+          403,
+          { 'cache-control': 'no-store' },
+          telemetryCorsHeaders
         );
       }
+
+      const contentType = String(request.headers.get('content-type') || '').toLowerCase();
+      if (!contentType.includes('application/json')) {
+        return jsonResponse(
+          {
+            error: 'Telemetry content type must be application/json',
+            code: 'TELEMETRY_UNSUPPORTED_CONTENT_TYPE',
+          },
+          415,
+          { 'cache-control': 'no-store' },
+          telemetryCorsHeaders
+        );
+      }
+
+      const contentLength = Number.parseInt(request.headers.get('content-length') || '', 10);
+      if (Number.isFinite(contentLength) && contentLength > TELEMETRY_MAX_PAYLOAD_BYTES) {
+        return jsonResponse(
+          {
+            error: 'Telemetry payload too large',
+            code: 'TELEMETRY_PAYLOAD_TOO_LARGE',
+          },
+          413,
+          { 'cache-control': 'no-store' },
+          telemetryCorsHeaders
+        );
+      }
+
+      const rawPayload = await request.text();
+      if (rawPayload.length > TELEMETRY_MAX_PAYLOAD_BYTES) {
+        return jsonResponse(
+          {
+            error: 'Telemetry payload too large',
+            code: 'TELEMETRY_PAYLOAD_TOO_LARGE',
+          },
+          413,
+          { 'cache-control': 'no-store' },
+          telemetryCorsHeaders
+        );
+      }
+
+      let payload = {};
+      if (rawPayload.trim().length > 0) {
+        try {
+          payload = JSON.parse(rawPayload);
+        } catch {
+          return jsonResponse(
+            {
+              error: 'Telemetry payload is invalid JSON',
+              code: 'TELEMETRY_INVALID_JSON',
+            },
+            400,
+            { 'cache-control': 'no-store' },
+            telemetryCorsHeaders
+          );
+        }
+      }
+
+      if (!payload || typeof payload !== 'object' || Array.isArray(payload)) {
+        return jsonResponse(
+          {
+            error: 'Telemetry payload must be an object',
+            code: 'TELEMETRY_INVALID_PAYLOAD',
+          },
+          400,
+          { 'cache-control': 'no-store' },
+          telemetryCorsHeaders
+        );
+      }
+
+      const sanitized = sanitizeTelemetryPayload(payload);
+      const event = {
+        ts: new Date().toISOString(),
+        type: sanitized.type,
+        level: sanitized.level,
+        page: sanitized.page,
+        details: sanitized.details,
+        userAgent: sanitizeTelemetryString(request.headers.get('user-agent') || '', 'unknown', 300, /./),
+      };
+
+      console.log(`[telemetry] ${JSON.stringify(event)}`);
+      return jsonResponse({ ok: true }, 202, { 'cache-control': 'no-store' }, telemetryCorsHeaders);
     }
 
     if (url.pathname === '/api/releases') {
+      const allowedHosts = getReleaseAllowedHosts(env, request.url);
+      const blockedReasons = new Set();
+
       try {
-        const manifestContext = await loadManifestContext(env, request.url);
+        const manifestContext = await loadManifestContext(env, request.url, allowedHosts, blockedReasons);
         if (!manifestContext) {
           return jsonResponse(
             {
@@ -519,6 +908,7 @@ export default {
               latestSchemaVersion: null,
               releases: [],
               source: 'unavailable',
+              ...buildSourceMeta(blockedReasons),
             },
             503,
             { 'cache-control': 'no-store' }
@@ -531,14 +921,17 @@ export default {
           sourceName: manifestContext.sourceName,
           manifestUrl: manifestContext.manifestUrl,
           releases: (manifestContext.manifest.releases || []).map((release) =>
-            decorateRelease(release, manifestContext)
+            decorateRelease(release, manifestContext, allowedHosts, blockedReasons)
           ),
+          ...buildSourceMeta(blockedReasons),
         });
       } catch (error) {
+        console.error('Release manifest unavailable', error);
         return jsonResponse(
           {
             error: 'Release manifest unavailable',
-            message: String(error),
+            code: 'RELEASE_MANIFEST_UNAVAILABLE',
+            ...buildSourceMeta(blockedReasons),
           },
           500,
           { 'cache-control': 'no-store' }
@@ -547,14 +940,18 @@ export default {
     }
 
     if (url.pathname === '/api/version') {
+      const allowedHosts = getReleaseAllowedHosts(env, request.url);
+      const blockedReasons = new Set();
+
       try {
-        const manifestContext = await loadManifestContext(env, request.url);
+        const manifestContext = await loadManifestContext(env, request.url, allowedHosts, blockedReasons);
         if (!manifestContext) {
           return jsonResponse(
             {
               latestGraphVersion: null,
               latestSchemaVersion: null,
               source: 'unavailable',
+              ...buildSourceMeta(blockedReasons),
             },
             503,
             { 'cache-control': 'no-store' }
@@ -568,12 +965,15 @@ export default {
           source: manifestContext.source,
           sourceName: manifestContext.sourceName,
           manifestUrl: manifestContext.manifestUrl,
+          ...buildSourceMeta(blockedReasons),
         });
       } catch (error) {
+        console.error('Version endpoint unavailable', error);
         return jsonResponse(
           {
             error: 'Version endpoint unavailable',
-            message: String(error),
+            code: 'VERSION_ENDPOINT_UNAVAILABLE',
+            ...buildSourceMeta(blockedReasons),
           },
           500,
           { 'cache-control': 'no-store' }
@@ -582,9 +982,12 @@ export default {
     }
 
     if (url.pathname === '/api/metrics/latest') {
+      const allowedHosts = getReleaseAllowedHosts(env, request.url);
+      const blockedReasons = new Set();
+
       try {
         const reportType = parseReportType(url.searchParams.get('type')) || 'math-assurance';
-        const manifestContext = await loadManifestContext(env, request.url);
+        const manifestContext = await loadManifestContext(env, request.url, allowedHosts, blockedReasons);
         const latestVersion = sanitizeVersion(manifestContext?.manifest?.latestGraphVersion) || null;
 
         const reportPaths = [];
@@ -599,13 +1002,15 @@ export default {
           return jsonResponse(
             {
               error: 'No latest release version available for metrics lookup',
+              code: 'METRICS_LATEST_VERSION_UNAVAILABLE',
+              ...buildSourceMeta(blockedReasons),
             },
             503,
             { 'cache-control': 'no-store' }
           );
         }
 
-        const candidates = buildReportCandidates(manifestContext, reportPaths);
+        const candidates = buildReportCandidates(manifestContext, reportPaths, allowedHosts, blockedReasons);
         const loaded = await loadJsonByCandidates(
           env,
           request.url,
@@ -622,12 +1027,15 @@ export default {
           sourceUrl: loaded.sourceType === 'remote' ? loaded.source : null,
           sourceType: loaded.sourceType,
           manifestSource: manifestContext?.sourceName || null,
+          ...buildSourceMeta(blockedReasons),
         });
       } catch (error) {
+        console.error('Latest metrics unavailable', error);
         return jsonResponse(
           {
             error: 'Latest metrics unavailable',
-            message: String(error),
+            code: 'LATEST_METRICS_UNAVAILABLE',
+            ...buildSourceMeta(blockedReasons),
           },
           500,
           { 'cache-control': 'no-store' }
@@ -636,11 +1044,17 @@ export default {
     }
 
     if (url.pathname === '/api/metrics/history') {
+      const allowedHosts = getReleaseAllowedHosts(env, request.url);
+      const blockedReasons = new Set();
+
       try {
-        const manifestContext = await loadManifestContext(env, request.url);
-        const candidates = buildReportCandidates(manifestContext, [
-          'releases/core/reports/history/math-assurance-history.json',
-        ]);
+        const manifestContext = await loadManifestContext(env, request.url, allowedHosts, blockedReasons);
+        const candidates = buildReportCandidates(
+          manifestContext,
+          ['releases/core/reports/history/math-assurance-history.json'],
+          allowedHosts,
+          blockedReasons
+        );
         const loaded = await loadJsonByCandidates(
           env,
           request.url,
@@ -655,12 +1069,15 @@ export default {
           sourceUrl: loaded.sourceType === 'remote' ? loaded.source : null,
           sourceType: loaded.sourceType,
           manifestSource: manifestContext?.sourceName || null,
+          ...buildSourceMeta(blockedReasons),
         });
       } catch (error) {
+        console.error('Metrics history unavailable', error);
         return jsonResponse(
           {
             error: 'Metrics history unavailable',
-            message: String(error),
+            code: 'METRICS_HISTORY_UNAVAILABLE',
+            ...buildSourceMeta(blockedReasons),
           },
           500,
           { 'cache-control': 'no-store' }
@@ -669,12 +1086,16 @@ export default {
     }
 
     if (url.pathname === '/api/metrics/report') {
+      const allowedHosts = getReleaseAllowedHosts(env, request.url);
+      const blockedReasons = new Set();
+
       try {
         const requestedVersion = sanitizeVersion(url.searchParams.get('version'));
         if (!requestedVersion) {
           return jsonResponse(
             {
               error: 'version query parameter is required',
+              code: 'METRICS_VERSION_REQUIRED',
             },
             400,
             { 'cache-control': 'no-store' }
@@ -682,10 +1103,13 @@ export default {
         }
 
         const reportType = parseReportType(url.searchParams.get('type')) || 'math-assurance';
-        const manifestContext = await loadManifestContext(env, request.url);
-        const candidates = buildReportCandidates(manifestContext, [
-          `releases/core/reports/v${requestedVersion}/${reportType}.json`,
-        ]);
+        const manifestContext = await loadManifestContext(env, request.url, allowedHosts, blockedReasons);
+        const candidates = buildReportCandidates(
+          manifestContext,
+          [`releases/core/reports/v${requestedVersion}/${reportType}.json`],
+          allowedHosts,
+          blockedReasons
+        );
         const loaded = await loadJsonByCandidates(
           env,
           request.url,
@@ -702,12 +1126,15 @@ export default {
           sourceUrl: loaded.sourceType === 'remote' ? loaded.source : null,
           sourceType: loaded.sourceType,
           manifestSource: manifestContext?.sourceName || null,
+          ...buildSourceMeta(blockedReasons),
         });
       } catch (error) {
+        console.error('Version metrics unavailable', error);
         return jsonResponse(
           {
             error: 'Version metrics unavailable',
-            message: String(error),
+            code: 'VERSION_METRICS_UNAVAILABLE',
+            ...buildSourceMeta(blockedReasons),
           },
           500,
           { 'cache-control': 'no-store' }
@@ -716,11 +1143,27 @@ export default {
     }
 
     if (url.pathname === '/api/graph') {
+      const allowedHosts = getReleaseAllowedHosts(env, request.url);
+      const blockedReasons = new Set();
+
       try {
-        const manifestContext = await loadManifestContext(env, request.url);
-        const asset = resolveReleaseAsset(manifestContext, 'graph', url.searchParams.get('version'));
+        const manifestContext = await loadManifestContext(env, request.url, allowedHosts, blockedReasons);
+        const asset = resolveReleaseAsset(
+          manifestContext,
+          'graph',
+          url.searchParams.get('version'),
+          allowedHosts,
+          blockedReasons
+        );
         if (asset.error) {
-          return jsonResponse({ error: asset.error }, asset.status, { 'cache-control': 'no-store' });
+          return jsonResponse(
+            {
+              error: asset.error,
+              ...buildSourceMeta(blockedReasons),
+            },
+            asset.status,
+            { 'cache-control': 'no-store' }
+          );
         }
 
         const loaded = await loadJsonByCandidates(env, request.url, asset.remoteUrls, asset.localPaths);
@@ -731,17 +1174,20 @@ export default {
           stats: summarizeGraph(graph),
           requestedVersion: asset.requestedVersion,
           resolvedVersion: asset.version || graph.version || null,
-          release: asset.release ? decorateRelease(asset.release, manifestContext) : null,
+          release: asset.release ? decorateRelease(asset.release, manifestContext, allowedHosts, blockedReasons) : null,
           sourcePath: asset.pathHint || loaded.source,
           sourceUrl: loaded.sourceType === 'remote' ? loaded.source : null,
           sourceType: loaded.sourceType,
           manifestSource: manifestContext?.sourceName || null,
+          ...buildSourceMeta(blockedReasons),
         });
       } catch (error) {
+        console.error('Graph data unavailable', error);
         return jsonResponse(
           {
             error: 'Graph data unavailable',
-            message: String(error),
+            code: 'GRAPH_DATA_UNAVAILABLE',
+            ...buildSourceMeta(blockedReasons),
           },
           500,
           { 'cache-control': 'no-store' }
@@ -750,11 +1196,27 @@ export default {
     }
 
     if (url.pathname === '/api/schema') {
+      const allowedHosts = getReleaseAllowedHosts(env, request.url);
+      const blockedReasons = new Set();
+
       try {
-        const manifestContext = await loadManifestContext(env, request.url);
-        const asset = resolveReleaseAsset(manifestContext, 'schema', url.searchParams.get('version'));
+        const manifestContext = await loadManifestContext(env, request.url, allowedHosts, blockedReasons);
+        const asset = resolveReleaseAsset(
+          manifestContext,
+          'schema',
+          url.searchParams.get('version'),
+          allowedHosts,
+          blockedReasons
+        );
         if (asset.error) {
-          return jsonResponse({ error: asset.error }, asset.status, { 'cache-control': 'no-store' });
+          return jsonResponse(
+            {
+              error: asset.error,
+              ...buildSourceMeta(blockedReasons),
+            },
+            asset.status,
+            { 'cache-control': 'no-store' }
+          );
         }
 
         const loaded = await loadJsonByCandidates(env, request.url, asset.remoteUrls, asset.localPaths);
@@ -764,17 +1226,20 @@ export default {
           schema,
           requestedVersion: asset.requestedVersion,
           resolvedVersion: asset.version || null,
-          release: asset.release ? decorateRelease(asset.release, manifestContext) : null,
+          release: asset.release ? decorateRelease(asset.release, manifestContext, allowedHosts, blockedReasons) : null,
           sourcePath: asset.pathHint || loaded.source,
           sourceUrl: loaded.sourceType === 'remote' ? loaded.source : null,
           sourceType: loaded.sourceType,
           manifestSource: manifestContext?.sourceName || null,
+          ...buildSourceMeta(blockedReasons),
         });
       } catch (error) {
+        console.error('Schema data unavailable', error);
         return jsonResponse(
           {
             error: 'Schema data unavailable',
-            message: String(error),
+            code: 'SCHEMA_DATA_UNAVAILABLE',
+            ...buildSourceMeta(blockedReasons),
           },
           500,
           { 'cache-control': 'no-store' }
@@ -783,26 +1248,33 @@ export default {
     }
 
     if (url.pathname === '/api/diff') {
+      const allowedHosts = getReleaseAllowedHosts(env, request.url);
+      const blockedReasons = new Set();
+
       try {
         const fromVersion = sanitizeVersion(url.searchParams.get('from'));
         const toVersion = sanitizeVersion(url.searchParams.get('to'));
 
         if (!fromVersion || !toVersion) {
           return jsonResponse(
-            { error: 'from and to query parameters are required versions' },
+            {
+              error: 'from and to query parameters are required versions',
+              code: 'DIFF_VERSIONS_REQUIRED',
+            },
             400,
             { 'cache-control': 'no-store' }
           );
         }
 
-        const manifestContext = await loadManifestContext(env, request.url);
-        const fromAsset = resolveReleaseAsset(manifestContext, 'graph', fromVersion);
-        const toAsset = resolveReleaseAsset(manifestContext, 'graph', toVersion);
+        const manifestContext = await loadManifestContext(env, request.url, allowedHosts, blockedReasons);
+        const fromAsset = resolveReleaseAsset(manifestContext, 'graph', fromVersion, allowedHosts, blockedReasons);
+        const toAsset = resolveReleaseAsset(manifestContext, 'graph', toVersion, allowedHosts, blockedReasons);
 
         if (fromAsset.error || toAsset.error) {
           return jsonResponse(
             {
               error: fromAsset.error || toAsset.error,
+              ...buildSourceMeta(blockedReasons),
             },
             404,
             { 'cache-control': 'no-store' }
@@ -820,21 +1292,26 @@ export default {
         return jsonResponse({
           from: {
             version: fromAsset.version,
-            release: fromAsset.release ? decorateRelease(fromAsset.release, manifestContext) : null,
+            release: fromAsset.release
+              ? decorateRelease(fromAsset.release, manifestContext, allowedHosts, blockedReasons)
+              : null,
             sourceUrl: fromLoaded.sourceType === 'remote' ? fromLoaded.source : null,
           },
           to: {
             version: toAsset.version,
-            release: toAsset.release ? decorateRelease(toAsset.release, manifestContext) : null,
+            release: toAsset.release ? decorateRelease(toAsset.release, manifestContext, allowedHosts, blockedReasons) : null,
             sourceUrl: toLoaded.sourceType === 'remote' ? toLoaded.source : null,
           },
           diff: computeGraphDiff(fromGraph, toGraph),
+          ...buildSourceMeta(blockedReasons),
         });
       } catch (error) {
+        console.error('Diff computation unavailable', error);
         return jsonResponse(
           {
             error: 'Diff computation unavailable',
-            message: String(error),
+            code: 'DIFF_COMPUTATION_UNAVAILABLE',
+            ...buildSourceMeta(blockedReasons),
           },
           500,
           { 'cache-control': 'no-store' }

@@ -37,6 +37,11 @@ const configuredApiOrigin = import.meta.env.PUBLIC_TENSOR_API_ORIGIN
   ? String(import.meta.env.PUBLIC_TENSOR_API_ORIGIN).trim()
   : '';
 const useSameOriginApi = String(import.meta.env.PUBLIC_TENSOR_USE_SAME_ORIGIN_API || '').toLowerCase() === 'true';
+const configuredReleaseAllowedHosts = import.meta.env.RELEASE_ALLOWED_HOSTS
+  ? String(import.meta.env.RELEASE_ALLOWED_HOSTS).trim()
+  : import.meta.env.PUBLIC_RELEASE_ALLOWED_HOSTS
+    ? String(import.meta.env.PUBLIC_RELEASE_ALLOWED_HOSTS).trim()
+    : '';
 ---
 
 <!doctype html>
@@ -69,17 +74,15 @@ const useSameOriginApi = String(import.meta.env.PUBLIC_TENSOR_USE_SAME_ORIGIN_AP
       rel="stylesheet"
     />
     {jsonLdEntries.map((entry) => (
-      <script is:inline type="application/ld+json" set:html={JSON.stringify(entry)} />
+      <script type="application/ld+json" is:inline set:text={JSON.stringify(entry)} />
     ))}
-    {configuredApiOrigin ? (
-      <script is:inline set:html={`window.__TENSOR_API_ORIGIN = ${JSON.stringify(configuredApiOrigin)};`} />
-    ) : null}
-    {useSameOriginApi ? (
-      <script is:inline set:html={`window.__TENSOR_USE_SAME_ORIGIN_API = true;`} />
-    ) : null}
     <script is:inline src="/assets/js/app-init.js" defer></script>
   </head>
-  <body>
+  <body
+    data-tensor-api-origin={configuredApiOrigin || undefined}
+    data-tensor-use-same-origin-api={useSameOriginApi ? 'true' : undefined}
+    data-release-allowed-hosts={configuredReleaseAllowedHosts || undefined}
+  >
     <div class="app-shell">
       <Header />
 

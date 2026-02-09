@@ -44,6 +44,15 @@ self.addEventListener('activate', (event) => {
   );
 });
 
+function shouldCacheResponse(response) {
+  if (!response || !response.ok) {
+    return false;
+  }
+
+  const cacheControl = String(response.headers.get('cache-control') || '').toLowerCase();
+  return !cacheControl.includes('no-store');
+}
+
 async function cacheFirst(request) {
   const cache = await caches.open(CACHE_NAME);
   const cached = await cache.match(request);
@@ -52,7 +61,7 @@ async function cacheFirst(request) {
   }
 
   const response = await fetch(request);
-  if (response.ok) {
+  if (shouldCacheResponse(response)) {
     cache.put(request, response.clone());
   }
   return response;
@@ -64,7 +73,7 @@ async function staleWhileRevalidate(request) {
 
   const networkPromise = fetch(request)
     .then((response) => {
-      if (response && response.ok) {
+      if (shouldCacheResponse(response)) {
         cache.put(request, response.clone());
       }
       return response;
@@ -78,7 +87,7 @@ async function networkFirstNavigation(request) {
   const cache = await caches.open(CACHE_NAME);
   try {
     const response = await fetch(request);
-    if (response && response.ok) {
+    if (shouldCacheResponse(response)) {
       cache.put(request, response.clone());
     }
     return response;
@@ -103,7 +112,7 @@ async function networkFirst(request) {
   const cache = await caches.open(CACHE_NAME);
   try {
     const response = await fetch(request);
-    if (response && response.ok) {
+    if (shouldCacheResponse(response)) {
       cache.put(request, response.clone());
     }
     return response;
@@ -112,6 +121,14 @@ async function networkFirst(request) {
     if (cachedMatch) {
       return cachedMatch;
     }
+    return Response.error();
+  }
+}
+
+async function networkOnly(request) {
+  try {
+    return await fetch(request);
+  } catch {
     return Response.error();
   }
 }
@@ -133,7 +150,7 @@ self.addEventListener('fetch', (event) => {
   }
 
   if (url.pathname.startsWith('/api/')) {
-    event.respondWith(networkFirst(request));
+    event.respondWith(networkOnly(request));
     return;
   }
 

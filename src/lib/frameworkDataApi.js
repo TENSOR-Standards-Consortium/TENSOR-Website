@@ -5,6 +5,11 @@ const FRAMEWORK_RELEASE_ROOTS = [
   'https://raw.githubusercontent.com/tensor-standards-consortium/tensor-framework/master/',
   'https://tensor-standards-consortium.github.io/TENSOR-Framework/',
 ];
+const DEFAULT_RELEASE_ALLOWED_HOSTS = [
+  'raw.githubusercontent.com',
+  'tensor-standards-consortium.github.io',
+  'tensor-standards-consortium.org',
+];
 
 const RELEASE_MANIFEST_PATH = 'releases/manifest.json';
 const METRICS_HISTORY_PATH = 'releases/core/reports/history/math-assurance-history.json';
@@ -22,6 +27,90 @@ function sanitizeAssetPath(value) {
     .trim()
     .replace(/^\.\//, '')
     .replace(/^\/+/, '');
+}
+
+function parseCsv(value) {
+  if (typeof value !== 'string' || value.trim() === '') {
+    return [];
+  }
+
+  return value
+    .split(',')
+    .map((entry) => entry.trim())
+    .filter(Boolean);
+}
+
+function tryParseUrl(value) {
+  try {
+    return new URL(value);
+  } catch {
+    return null;
+  }
+}
+
+function normalizeHost(value) {
+  if (typeof value !== 'string') {
+    return '';
+  }
+
+  const trimmed = value.trim().toLowerCase();
+  if (!trimmed) {
+    return '';
+  }
+
+  const parsed = tryParseUrl(trimmed.includes('://') ? trimmed : `https://${trimmed}`);
+  return parsed?.hostname?.toLowerCase() || '';
+}
+
+function resolveReleaseAllowedHosts() {
+  const hosts = new Set(DEFAULT_RELEASE_ALLOWED_HOSTS.map((host) => host.toLowerCase()));
+
+  const buildTimeValue =
+    import.meta.env.PUBLIC_RELEASE_ALLOWED_HOSTS || import.meta.env.RELEASE_ALLOWED_HOSTS || '';
+  for (const hostValue of parseCsv(buildTimeValue)) {
+    const host = normalizeHost(hostValue);
+    if (host) {
+      hosts.add(host);
+    }
+  }
+
+  if (typeof document !== 'undefined' && document.body?.dataset?.releaseAllowedHosts) {
+    for (const hostValue of parseCsv(document.body.dataset.releaseAllowedHosts)) {
+      const host = normalizeHost(hostValue);
+      if (host) {
+        hosts.add(host);
+      }
+    }
+  }
+
+  if (typeof window !== 'undefined' && window.location?.hostname) {
+    hosts.add(window.location.hostname.toLowerCase());
+  }
+
+  return hosts;
+}
+
+export function isTrustedReleaseUrl(value) {
+  if (typeof value !== 'string' || value.trim() === '') {
+    return false;
+  }
+
+  const normalized = value.trim();
+  if (normalized.startsWith('/')) {
+    return true;
+  }
+
+  const parsed = tryParseUrl(normalized);
+  if (!parsed) {
+    return false;
+  }
+
+  if (parsed.protocol !== 'https:') {
+    return false;
+  }
+
+  const allowedHosts = resolveReleaseAllowedHosts();
+  return allowedHosts.has(parsed.hostname.toLowerCase());
 }
 
 function withAcceptHeader(init = {}) {
@@ -117,7 +206,8 @@ export function buildFrameworkAssetUrls(assetPath) {
   return unique(
     FRAMEWORK_RELEASE_ROOTS.map((root) => {
       try {
-        return new URL(normalized, root).toString();
+        const candidate = new URL(normalized, root).toString();
+        return isTrustedReleaseUrl(candidate) ? candidate : '';
       } catch {
         return '';
       }
@@ -132,8 +222,8 @@ function mapReleaseWithPortableUrls(release) {
 
   const graphPath = sanitizeAssetPath(release.graphPath);
   const schemaPath = sanitizeAssetPath(release.schemaPath);
-  const graphUrls = unique([release.graphUrl, ...buildFrameworkAssetUrls(graphPath)]);
-  const schemaUrls = unique([release.schemaUrl, ...buildFrameworkAssetUrls(schemaPath)]);
+  const graphUrls = unique([release.graphUrl, ...buildFrameworkAssetUrls(graphPath)]).filter(isTrustedReleaseUrl);
+  const schemaUrls = unique([release.schemaUrl, ...buildFrameworkAssetUrls(schemaPath)]).filter(isTrustedReleaseUrl);
 
   return {
     ...release,
@@ -156,7 +246,7 @@ function normalizeReleaseManifest(payload, sourceName) {
     releases,
     source: source.source || null,
     sourceName: source.sourceName || source.source || sourceName || null,
-    manifestUrl: source.manifestUrl || null,
+    manifestUrl: isTrustedReleaseUrl(source.manifestUrl || '') ? source.manifestUrl : null,
   };
 }
 
@@ -166,6 +256,11 @@ async function fetchJsonFromSources(sources, init = {}) {
 
   for (const source of sources) {
     if (!source?.url) {
+      continue;
+    }
+
+    if (!isTrustedReleaseUrl(source.url)) {
+      lastError = new Error(`${source.label} blocked by release URL policy`);
       continue;
     }
 
@@ -199,6 +294,11 @@ async function fetchFreshestManifestFromSources(sources, init = {}) {
 
   for (const source of sources) {
     if (!source?.url) {
+      continue;
+    }
+
+    if (!isTrustedReleaseUrl(source.url)) {
+      lastError = new Error(`${source.label} blocked by release URL policy`);
       continue;
     }
 

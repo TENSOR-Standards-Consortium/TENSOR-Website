@@ -9,7 +9,32 @@ function unique(values) {
   return [...new Set(values.filter(Boolean))];
 }
 
+function readRuntimeDataset() {
+  if (typeof document === 'undefined') {
+    return {
+      configuredApiOrigin: '',
+      useSameOriginApi: false,
+    };
+  }
+
+  const body = document.body;
+  const configuredApiOrigin =
+    body && typeof body.dataset.tensorApiOrigin === 'string'
+      ? body.dataset.tensorApiOrigin.trim()
+      : '';
+  const useSameOriginApi =
+    body &&
+    (body.dataset.tensorUseSameOriginApi === 'true' ||
+      body.dataset.tensorUseSameOriginApi === '1');
+
+  return {
+    configuredApiOrigin,
+    useSameOriginApi,
+  };
+}
+
 export function resolveApiOrigins() {
+  const dataset = readRuntimeDataset();
   const configuredRuntimeOrigin =
     typeof window !== 'undefined' && typeof window.__TENSOR_API_ORIGIN === 'string'
       ? window.__TENSOR_API_ORIGIN.trim()
@@ -20,15 +45,15 @@ export function resolveApiOrigins() {
       String(window.__TENSOR_USE_SAME_ORIGIN_API || '').toLowerCase() === 'true');
 
   if (typeof window === 'undefined') {
-    return unique([configuredRuntimeOrigin, BUILD_TIME_API_ORIGIN]);
+    return unique([dataset.configuredApiOrigin, configuredRuntimeOrigin, BUILD_TIME_API_ORIGIN]);
   }
 
-  const origins = unique([configuredRuntimeOrigin, BUILD_TIME_API_ORIGIN]);
+  const origins = unique([dataset.configuredApiOrigin, configuredRuntimeOrigin, BUILD_TIME_API_ORIGIN]);
   if (origins.length > 0) {
     return origins;
   }
 
-  if (runtimeUseSameOrigin || BUILD_TIME_USE_SAME_ORIGIN_API) {
+  if (dataset.useSameOriginApi || runtimeUseSameOrigin || BUILD_TIME_USE_SAME_ORIGIN_API) {
     return unique([window.location.origin]);
   }
 

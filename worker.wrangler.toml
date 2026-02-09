@@ -8,3 +8,9 @@ binding = "STATIC_ASSETS"
 not_found_handling = "404-page"
 html_handling = "auto-trailing-slash"
 run_worker_first = ["/api/*"]
+
+[vars]
+# Comma-separated origins allowed to POST telemetry. Empty means same-origin only.
+TELEMETRY_ALLOWED_ORIGINS = ""
+# Comma-separated HTTPS hosts allowed for remote release/manifest fetches.
+RELEASE_ALLOWED_HOSTS = "raw.githubusercontent.com,tensor-standards-consortium.github.io,tensor-standards-consortium.org"

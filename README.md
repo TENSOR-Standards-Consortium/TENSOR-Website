@@ -128,6 +128,21 @@ Required repository secrets:
 - `CLOUDFLARE_API_TOKEN`
 - `CLOUDFLARE_ACCOUNT_ID`
 
+Token scope guidance:
+
+- Scope `CLOUDFLARE_API_TOKEN` to the minimum required permissions for this project (Pages deploy and Worker deploy only).
+- Avoid account-wide admin tokens for CI.
+- Rotate deployment tokens on a regular schedule and after contributor/offboarding changes.
+- Enable branch protection for `main` to require at least one CODEOWNER approval on security-critical paths.
+
+Optional security environment variables:
+
+- `TELEMETRY_ALLOWED_ORIGINS`: comma-separated origin allowlist for `/api/telemetry` POST requests.
+  - Default: same-origin only.
+- `RELEASE_ALLOWED_HOSTS`: comma-separated host allowlist for release manifest and release artifact HTTPS fetches.
+  - Default: `raw.githubusercontent.com,tensor-standards-consortium.github.io,tensor-standards-consortium.org`.
+- `PUBLIC_RELEASE_ALLOWED_HOSTS`: optional frontend runtime host allowlist override (same format as `RELEASE_ALLOWED_HOSTS`).
+
 ## Key Paths
 
 - Astro pages: `src/pages/`

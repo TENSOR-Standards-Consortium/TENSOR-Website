@@ -9,9 +9,28 @@
     return String(value || '').toLowerCase() === 'true';
   }
 
-  function resolveTelemetryEndpoint() {
-    const runtimeApiOrigin =
+  function readRuntimeConfig() {
+    var body = document.body;
+    var bodyApiOrigin =
+      body && body.dataset && typeof body.dataset.tensorApiOrigin === 'string'
+        ? body.dataset.tensorApiOrigin.trim()
+        : '';
+    var bodyUseSameOrigin =
+      body && body.dataset && (body.dataset.tensorUseSameOriginApi === 'true' || body.dataset.tensorUseSameOriginApi === '1');
+
+    var runtimeApiOrigin =
       typeof window.__TENSOR_API_ORIGIN === 'string' ? window.__TENSOR_API_ORIGIN.trim() : '';
+    var runtimeUseSameOrigin = asBoolean(window.__TENSOR_USE_SAME_ORIGIN_API);
+
+    return {
+      apiOrigin: bodyApiOrigin || runtimeApiOrigin,
+      useSameOriginApi: bodyUseSameOrigin || runtimeUseSameOrigin,
+    };
+  }
+
+  function resolveTelemetryEndpoint() {
+    const runtimeConfig = readRuntimeConfig();
+    const runtimeApiOrigin = runtimeConfig.apiOrigin;
     if (runtimeApiOrigin) {
       try {
         return new URL('/api/telemetry', runtimeApiOrigin).toString();
@@ -20,7 +39,7 @@
       }
     }
 
-    if (asBoolean(window.__TENSOR_USE_SAME_ORIGIN_API)) {
+    if (runtimeConfig.useSameOriginApi) {
       return '/api/telemetry';
     }
 

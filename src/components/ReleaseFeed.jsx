@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { fetchReleaseManifest } from '../lib/frameworkDataApi';
+import { fetchReleaseManifest, isTrustedReleaseUrl } from '../lib/frameworkDataApi';
 
 function normalizeReleasesPayload(payload) {
   if (!payload || !Array.isArray(payload.releases)) {
@@ -112,6 +112,7 @@ export default function ReleaseFeed({ kind = 'graph' }) {
         {sortedReleases.map((release) => {
           const version = kind === 'schema' ? release.schemaVersion : release.graphVersion;
           const url = kind === 'schema' ? release.schemaUrl || release.schemaPath : release.graphUrl || release.graphPath;
+          const trustedUrl = isTrustedReleaseUrl(url || '') ? url : null;
 
           return (
             <li key={`${release.id}-${kind}`} className="release-feed-item">
@@ -119,8 +120,8 @@ export default function ReleaseFeed({ kind = 'graph' }) {
                 <strong>{release.displayName || release.id}</strong>
                 <p>{label} version {version || 'unknown'} · Released {formatDate(release.releasedAt)}</p>
               </div>
-              {url ? (
-                <a href={url} target="_blank" rel="noopener noreferrer">
+              {trustedUrl ? (
+                <a href={trustedUrl} target="_blank" rel="noopener noreferrer">
                   Open {label}
                 </a>
               ) : (

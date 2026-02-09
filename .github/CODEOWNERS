@@ -1,0 +1,9 @@
+# Security-critical paths. Configure branch protection to require at least 1 approving review
+# from CODEOWNERS before merge.
+
+/worker/index.mjs @johnsu @tensor-standards-consortium/security
+/public/_headers @johnsu @tensor-standards-consortium/security
+/public/sw.js @johnsu @tensor-standards-consortium/security
+/.github/workflows/* @johnsu @tensor-standards-consortium/security
+/src/lib/runtimeApi.js @johnsu @tensor-standards-consortium/security
+/src/lib/frameworkDataApi.js @johnsu @tensor-standards-consortium/security

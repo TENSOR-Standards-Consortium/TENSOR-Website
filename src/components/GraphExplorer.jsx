@@ -5,6 +5,7 @@ import {
   fetchMetricsHistoryChannel,
   fetchMetricsReportChannel,
   fetchReleaseManifest,
+  isTrustedReleaseUrl,
 } from '../lib/frameworkDataApi';
 
 const CATEGORY_COLORS = {
@@ -190,8 +191,14 @@ function normalizeReleasesPayload(payload) {
 
       const graphPath = sanitizeAssetPath(release.graphPath);
       const schemaPath = sanitizeAssetPath(release.schemaPath);
-      const graphUrl = release.graphUrl || buildFrameworkAssetUrls(graphPath)[0] || null;
-      const schemaUrl = release.schemaUrl || buildFrameworkAssetUrls(schemaPath)[0] || null;
+      const graphUrl =
+        (isTrustedReleaseUrl(release.graphUrl || '') ? release.graphUrl : null) ||
+        buildFrameworkAssetUrls(graphPath)[0] ||
+        null;
+      const schemaUrl =
+        (isTrustedReleaseUrl(release.schemaUrl || '') ? release.schemaUrl : null) ||
+        buildFrameworkAssetUrls(schemaPath)[0] ||
+        null;
 
       return {
         ...release,
@@ -560,6 +567,10 @@ async function fetchJsonWithFallback(sources) {
     const rawUrl = String(source.url || '').trim();
     const normalizedUrl =
       rawUrl && !rawUrl.startsWith('/') && !/^https?:\/\//i.test(rawUrl) ? `/${rawUrl}` : rawUrl;
+    const isAbsoluteHttpUrl = /^https?:\/\//i.test(normalizedUrl);
+    if (isAbsoluteHttpUrl && !isTrustedReleaseUrl(normalizedUrl)) {
+      continue;
+    }
 
     const assetPath = normalizedUrl.replace(/^\/+/, '');
     const remoteFrameworkUrls =

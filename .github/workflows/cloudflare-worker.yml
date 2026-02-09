@@ -3,14 +3,17 @@ name: Deploy Cloudflare Worker
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: 22
           cache: npm
@@ -18,11 +21,29 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Run dependency audit
+        run: npm audit --omit=dev
+
+      - name: Enforce URL scheme policy
+        run: |
+          if grep -R -n --fixed-strings "javascript:" worker/index.mjs src/lib/frameworkDataApi.js src/components/GraphExplorer.jsx; then
+            echo "Forbidden javascript: URL scheme detected"
+            exit 1
+          fi
+          if grep -R -n --fixed-strings "data:text/html" worker/index.mjs src/lib/frameworkDataApi.js src/components/GraphExplorer.jsx; then
+            echo "Forbidden data:text/html URL scheme detected"
+            exit 1
+          fi
+          if grep -R -n --fixed-strings "file://" worker/index.mjs src/lib/frameworkDataApi.js src/components/GraphExplorer.jsx; then
+            echo "Forbidden file:// URL scheme detected"
+            exit 1
+          fi
+
       - name: Build site
         run: npm run build
 
       - name: Deploy Worker + Static Assets
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@da0e0dfe58b7a431659754fdf3f186c529afbe65
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
