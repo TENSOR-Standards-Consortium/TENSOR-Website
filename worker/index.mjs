@@ -239,17 +239,153 @@ function jsonResponse(payload, status = 200, headers = {}, corsHeaders = PUBLIC_
   });
 }
 
+function graphNodeData(node) {
+  if (!node || typeof node !== 'object' || Array.isArray(node)) {
+    return {};
+  }
+
+  if (node.data && typeof node.data === 'object' && !Array.isArray(node.data)) {
+    return node.data;
+  }
+
+  return node;
+}
+
+function graphEdgeData(edge) {
+  if (!edge || typeof edge !== 'object' || Array.isArray(edge)) {
+    return {};
+  }
+
+  if (edge.data && typeof edge.data === 'object' && !Array.isArray(edge.data)) {
+    return edge.data;
+  }
+
+  return edge;
+}
+
+function pickString(...values) {
+  for (const value of values) {
+    if (typeof value === 'string') {
+      const trimmed = value.trim();
+      if (trimmed) {
+        return trimmed;
+      }
+    }
+  }
+
+  return '';
+}
+
+function getManifestReleases(manifest) {
+  if (Array.isArray(manifest?.releases)) {
+    return manifest.releases;
+  }
+
+  if (Array.isArray(manifest?.versions)) {
+    return manifest.versions;
+  }
+
+  if (Array.isArray(manifest?.artifacts)) {
+    return manifest.artifacts;
+  }
+
+  return [];
+}
+
+function readNestedRecord(container, key) {
+  const candidate = container?.[key];
+  return candidate && typeof candidate === 'object' && !Array.isArray(candidate) ? candidate : null;
+}
+
+function readNestedValue(container, key) {
+  if (!container || typeof container !== 'object' || Array.isArray(container)) {
+    return '';
+  }
+  return typeof container[key] === 'string' ? container[key] : '';
+}
+
+function extractReleaseAssetInfo(release, kind) {
+  const root = release && typeof release === 'object' && !Array.isArray(release) ? release : {};
+  const kindRecord = readNestedRecord(root, kind);
+  const assetsRecord = readNestedRecord(readNestedRecord(root, 'assets'), kind);
+  const pathsRecord = readNestedRecord(root, 'paths');
+  const urlsRecord = readNestedRecord(root, 'urls');
+  const filesRecord = readNestedRecord(root, 'files');
+  const linksRecord = readNestedRecord(root, 'links');
+
+  const version = sanitizeVersion(
+    pickString(
+      root?.[`${kind}Version`],
+      root?.version,
+      root?.releaseVersion,
+      kindRecord?.version,
+      assetsRecord?.version
+    )
+  );
+
+  const path = pickString(
+    root?.[`${kind}Path`],
+    kindRecord?.path,
+    kindRecord?.assetPath,
+    kindRecord?.file,
+    assetsRecord?.path,
+    assetsRecord?.assetPath,
+    assetsRecord?.file,
+    readNestedValue(pathsRecord, kind),
+    readNestedValue(filesRecord, kind)
+  );
+
+  const url = pickString(
+    root?.[`${kind}Url`],
+    kindRecord?.url,
+    kindRecord?.href,
+    assetsRecord?.url,
+    assetsRecord?.href,
+    readNestedValue(urlsRecord, kind),
+    readNestedValue(linksRecord, kind)
+  );
+
+  return {
+    version: version || null,
+    path: path || null,
+    url: url || null,
+  };
+}
+
+function normalizeManifestRelease(release) {
+  if (!release || typeof release !== 'object' || Array.isArray(release)) {
+    return null;
+  }
+
+  const graph = extractReleaseAssetInfo(release, 'graph');
+  const schema = extractReleaseAssetInfo(release, 'schema');
+
+  return {
+    ...release,
+    graphVersion: graph.version,
+    schemaVersion: schema.version,
+    graphPath: graph.path,
+    schemaPath: schema.path,
+    graphUrl: graph.url,
+    schemaUrl: schema.url,
+  };
+}
+
+function listNormalizedManifestReleases(manifest) {
+  return getManifestReleases(manifest).map(normalizeManifestRelease).filter(Boolean);
+}
+
 function summarizeGraph(graph) {
   const categoryCounts = {};
   const decisionCounts = { yes: 0, no: 0, unknown: 0 };
 
   for (const node of graph.nodes ?? []) {
-    const category = node?.data?.category ?? 'Uncategorized';
+    const category = graphNodeData(node).category ?? 'Uncategorized';
     categoryCounts[category] = (categoryCounts[category] ?? 0) + 1;
   }
 
   for (const edge of graph.edges ?? []) {
-    const decision = edge?.data?.decision;
+    const decision = graphEdgeData(edge).decision;
     if (decision in decisionCounts) {
       decisionCounts[decision] += 1;
     }
@@ -278,6 +414,58 @@ function sanitizeVersion(rawValue) {
   }
 
   return value;
+}
+
+function buildVersionScore(version) {
+  const normalized = sanitizeVersion(version);
+  if (!normalized) {
+    return 0;
+  }
+
+  const [majorRaw, releaseRaw] = normalized.split('.');
+  const major = Number.parseInt(majorRaw, 10);
+  const releaseMatch = String(releaseRaw || '').match(/^(\d{8})([a-z]?)$/i);
+  if (!Number.isFinite(major) || !releaseMatch) {
+    return 0;
+  }
+
+  const releaseDate = Number.parseInt(releaseMatch[1], 10);
+  const suffix = String(releaseMatch[2] || '').toLowerCase();
+  const suffixScore = suffix ? suffix.charCodeAt(0) - 96 : 0;
+
+  if (!Number.isFinite(releaseDate)) {
+    return 0;
+  }
+
+  return major * 1_000_000_000_000 + releaseDate * 100 + Math.max(0, suffixScore);
+}
+
+function latestReleaseVersion(manifest, kind, releases = listNormalizedManifestReleases(manifest)) {
+  const explicit = sanitizeVersion(
+    kind === 'graph' ? manifest?.latestGraphVersion : manifest?.latestSchemaVersion
+  );
+  if (explicit) {
+    return explicit;
+  }
+
+  const key = kind === 'graph' ? 'graphVersion' : 'schemaVersion';
+  let bestVersion = '';
+  let bestScore = 0;
+
+  for (const release of releases) {
+    const version = sanitizeVersion(release?.[key]);
+    if (!version) {
+      continue;
+    }
+
+    const score = buildVersionScore(version);
+    if (score > bestScore) {
+      bestScore = score;
+      bestVersion = version;
+    }
+  }
+
+  return bestVersion || null;
 }
 
 function normalizeAssetPath(path) {
@@ -345,7 +533,7 @@ async function loadManifestContext(env, requestUrl, allowedHosts, blockedReasons
 
     try {
       const manifest = await fetchRemoteJson(manifestCheck.value);
-      if (Array.isArray(manifest?.releases)) {
+      if (listNormalizedManifestReleases(manifest).length > 0) {
         return {
           manifest,
           source: 'remote',
@@ -361,7 +549,7 @@ async function loadManifestContext(env, requestUrl, allowedHosts, blockedReasons
 
   try {
     const manifest = await loadLocalAssetJson(env, requestUrl, LOCAL_RELEASE_MANIFEST_PATH);
-    if (Array.isArray(manifest?.releases)) {
+    if (listNormalizedManifestReleases(manifest).length > 0) {
       return {
         manifest,
         source: 'local',
@@ -377,13 +565,13 @@ async function loadManifestContext(env, requestUrl, allowedHosts, blockedReasons
   return null;
 }
 
-function findReleaseByVersion(manifest, kind, version) {
-  if (!manifest) {
+function findReleaseByVersion(releases, kind, version) {
+  if (!Array.isArray(releases) || releases.length === 0) {
     return null;
   }
 
   const key = kind === 'graph' ? 'graphVersion' : 'schemaVersion';
-  return manifest.releases.find((release) => release?.[key] === version) || null;
+  return releases.find((release) => sanitizeVersion(release?.[key]) === version) || null;
 }
 
 function buildReleaseAssetUrls(release, kind, manifestContext, allowedHosts, blockedReasons) {
@@ -391,15 +579,13 @@ function buildReleaseAssetUrls(release, kind, manifestContext, allowedHosts, blo
     return [];
   }
 
-  const urlKey = kind === 'graph' ? 'graphUrl' : 'schemaUrl';
-  const pathKey = kind === 'graph' ? 'graphPath' : 'schemaPath';
-
+  const assetInfo = extractReleaseAssetInfo(release, kind);
   const urls = [];
-  if (isHttpUrl(release?.[urlKey])) {
-    pushTrustedUrl(urls, release[urlKey], allowedHosts, blockedReasons);
+  if (isHttpUrl(assetInfo.url)) {
+    pushTrustedUrl(urls, assetInfo.url, allowedHosts, blockedReasons);
   }
 
-  const pathValue = release?.[pathKey];
+  const pathValue = assetInfo.path;
   if (typeof pathValue === 'string' && pathValue.trim()) {
     if (isHttpUrl(pathValue)) {
       pushTrustedUrl(urls, pathValue, allowedHosts, blockedReasons);
@@ -525,14 +711,13 @@ function buildReportCandidates(manifestContext, reportPaths, allowedHosts, block
 function resolveReleaseAsset(manifestContext, kind, requestedVersion, allowedHosts, blockedReasons) {
   const requested = sanitizeVersion(requestedVersion);
   const manifest = manifestContext?.manifest;
-  const latestVersion = sanitizeVersion(
-    kind === 'graph' ? manifest?.latestGraphVersion : manifest?.latestSchemaVersion
-  );
+  const releases = listNormalizedManifestReleases(manifest);
+  const latestVersion = latestReleaseVersion(manifest, kind, releases);
   const effectiveVersion = requested || latestVersion || null;
 
-  const release = effectiveVersion && manifest ? findReleaseByVersion(manifest, kind, effectiveVersion) : null;
+  const release = effectiveVersion ? findReleaseByVersion(releases, kind, effectiveVersion) : null;
 
-  if (requested && manifest && !release) {
+  if (requested && releases.length > 0 && !release) {
     return {
       error: `Requested ${kind} version ${requested} was not found in the release manifest`,
       status: 404,
@@ -543,7 +728,7 @@ function resolveReleaseAsset(manifestContext, kind, requestedVersion, allowedHos
     requestedVersion: requested || null,
     version: effectiveVersion,
     release,
-    pathHint: release ? release[kind === 'graph' ? 'graphPath' : 'schemaPath'] || null : null,
+    pathHint: release ? extractReleaseAssetInfo(release, kind).path || null : null,
     remoteUrls: buildReleaseAssetUrls(release, kind, manifestContext, allowedHosts, blockedReasons),
     localPaths: buildLocalFallbackPaths(kind, effectiveVersion),
   };
@@ -614,11 +799,27 @@ function decorateRelease(release, manifestContext, allowedHosts, blockedReasons)
 }
 
 function computeGraphDiff(previousGraph, nextGraph) {
-  const previousNodes = new Map((previousGraph.nodes ?? []).map((node) => [node?.data?.id, node]));
-  const nextNodes = new Map((nextGraph.nodes ?? []).map((node) => [node?.data?.id, node]));
+  const previousNodes = new Map(
+    (previousGraph.nodes ?? [])
+      .map((node) => [graphNodeData(node).id, graphNodeData(node)])
+      .filter(([nodeId]) => Boolean(nodeId))
+  );
+  const nextNodes = new Map(
+    (nextGraph.nodes ?? [])
+      .map((node) => [graphNodeData(node).id, graphNodeData(node)])
+      .filter(([nodeId]) => Boolean(nodeId))
+  );
 
-  const previousEdges = new Map((previousGraph.edges ?? []).map((edge) => [edge?.data?.id, edge]));
-  const nextEdges = new Map((nextGraph.edges ?? []).map((edge) => [edge?.data?.id, edge]));
+  const previousEdges = new Map(
+    (previousGraph.edges ?? [])
+      .map((edge) => [graphEdgeData(edge).id, graphEdgeData(edge)])
+      .filter(([edgeId]) => Boolean(edgeId))
+  );
+  const nextEdges = new Map(
+    (nextGraph.edges ?? [])
+      .map((edge) => [graphEdgeData(edge).id, graphEdgeData(edge)])
+      .filter(([edgeId]) => Boolean(edgeId))
+  );
 
   const addedNodes = [];
   const removedNodes = [];
@@ -631,8 +832,8 @@ function computeGraphDiff(previousGraph, nextGraph) {
     }
 
     const previous = previousNodes.get(nodeId);
-    const before = JSON.stringify(previous?.data ?? {});
-    const after = JSON.stringify(node?.data ?? {});
+    const before = JSON.stringify(previous ?? {});
+    const after = JSON.stringify(node ?? {});
     if (before !== after) {
       changedNodes.push(nodeId);
     }
@@ -899,6 +1100,9 @@ export default {
 
       try {
         const manifestContext = await loadManifestContext(env, request.url, allowedHosts, blockedReasons);
+        const releases = listNormalizedManifestReleases(manifestContext?.manifest);
+        const latestGraphVersion = latestReleaseVersion(manifestContext?.manifest, 'graph', releases);
+        const latestSchemaVersion = latestReleaseVersion(manifestContext?.manifest, 'schema', releases);
         if (!manifestContext) {
           return jsonResponse(
             {
@@ -920,7 +1124,9 @@ export default {
           source: manifestContext.source,
           sourceName: manifestContext.sourceName,
           manifestUrl: manifestContext.manifestUrl,
-          releases: (manifestContext.manifest.releases || []).map((release) =>
+          latestGraphVersion,
+          latestSchemaVersion,
+          releases: releases.map((release) =>
             decorateRelease(release, manifestContext, allowedHosts, blockedReasons)
           ),
           ...buildSourceMeta(blockedReasons),
@@ -958,9 +1164,10 @@ export default {
           );
         }
 
+        const releases = listNormalizedManifestReleases(manifestContext.manifest);
         return jsonResponse({
-          latestGraphVersion: sanitizeVersion(manifestContext.manifest?.latestGraphVersion) || null,
-          latestSchemaVersion: sanitizeVersion(manifestContext.manifest?.latestSchemaVersion) || null,
+          latestGraphVersion: latestReleaseVersion(manifestContext.manifest, 'graph', releases),
+          latestSchemaVersion: latestReleaseVersion(manifestContext.manifest, 'schema', releases),
           generatedAt: manifestContext.manifest?.generatedAt || null,
           source: manifestContext.source,
           sourceName: manifestContext.sourceName,
@@ -988,7 +1195,7 @@ export default {
       try {
         const reportType = parseReportType(url.searchParams.get('type')) || 'math-assurance';
         const manifestContext = await loadManifestContext(env, request.url, allowedHosts, blockedReasons);
-        const latestVersion = sanitizeVersion(manifestContext?.manifest?.latestGraphVersion) || null;
+        const latestVersion = latestReleaseVersion(manifestContext?.manifest, 'graph') || null;
 
         const reportPaths = [];
         if (reportType === 'math-assurance') {

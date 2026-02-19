@@ -161,9 +161,12 @@ function normalizeGraphPayload(payload) {
 
 function normalizeSchemaPayload(payload) {
   if (payload && payload.$schema) {
+    const idMatch = String(payload.$id || '').match(/v(\d+\.\d{8}[a-z]?)/);
     return {
       schema: payload,
-      version: sanitizeVersion(payload?.properties?.schemaVersion?.default || '') || null,
+      version:
+        sanitizeVersion(payload?.properties?.schemaVersion?.default || '') ||
+        (idMatch ? idMatch[1] : null),
       sourcePath: null,
       release: null,
     };
@@ -278,6 +281,97 @@ function slugify(value) {
     .slice(0, 48);
 }
 
+function readSchemaDefByRef(schema, ref) {
+  if (!isRecord(schema) || typeof ref !== 'string') {
+    return null;
+  }
+
+  const match = ref.match(/^#\/\$defs\/(.+)$/);
+  if (!match) {
+    return null;
+  }
+
+  const definition = schema?.$defs?.[match[1]];
+  return isRecord(definition) ? definition : null;
+}
+
+function resolveSchemaPropertiesFromDefinition(schema, definition) {
+  if (!isRecord(definition)) {
+    return null;
+  }
+
+  const directDataProperties = definition?.properties?.data?.properties;
+  if (isRecord(directDataProperties) && Object.keys(directDataProperties).length > 0) {
+    return directDataProperties;
+  }
+
+  const dataRef = definition?.properties?.data?.$ref;
+  const referencedData = readSchemaDefByRef(schema, dataRef);
+  if (referencedData) {
+    const resolvedFromRef = resolveSchemaPropertiesFromDefinition(schema, referencedData);
+    if (resolvedFromRef && Object.keys(resolvedFromRef).length > 0) {
+      return resolvedFromRef;
+    }
+  }
+
+  const directProperties = definition?.properties;
+  if (isRecord(directProperties) && Object.keys(directProperties).length > 0) {
+    return directProperties;
+  }
+
+  return null;
+}
+
+function resolveSchemaEntityProperties(schema, entityKey, collectionKey) {
+  if (!isRecord(schema)) {
+    return {};
+  }
+
+  const candidateDefinitions = [];
+  const defs = isRecord(schema.$defs) ? schema.$defs : {};
+  for (const key of [entityKey, `${entityKey}Flat`, `${entityKey}Wrapped`]) {
+    if (isRecord(defs[key])) {
+      candidateDefinitions.push(defs[key]);
+    }
+  }
+
+  const itemDefs = [];
+  const items = schema?.properties?.[collectionKey]?.items;
+  if (isRecord(items)) {
+    if (typeof items.$ref === 'string') {
+      const referenced = readSchemaDefByRef(schema, items.$ref);
+      if (referenced) {
+        itemDefs.push(referenced);
+      }
+    }
+
+    if (Array.isArray(items.oneOf)) {
+      for (const option of items.oneOf) {
+        if (!isRecord(option)) {
+          continue;
+        }
+        if (typeof option.$ref === 'string') {
+          const referenced = readSchemaDefByRef(schema, option.$ref);
+          if (referenced) {
+            itemDefs.push(referenced);
+          }
+        } else {
+          itemDefs.push(option);
+        }
+      }
+    }
+  }
+
+  for (const definition of [...candidateDefinitions, ...itemDefs]) {
+    const resolved = resolveSchemaPropertiesFromDefinition(schema, definition);
+    if (resolved && Object.keys(resolved).length > 0) {
+      return resolved;
+    }
+  }
+
+  return {};
+}
+
 function validateGraph(graph, schema) {
   if (!schema) {
     return {
@@ -290,10 +384,8 @@ function validateGraph(graph, schema) {
   const requiredTopLevel = Array.isArray(schema.required)
     ? schema.required
     : ['namespace', 'product', 'version', 'generatedAt', 'schemaVersion', 'nodes', 'edges'];
-  const schemaNodeProperties =
-    schema?.$defs?.node?.properties?.data?.properties || schema?.$defs?.node?.properties || {};
-  const schemaEdgeProperties =
-    schema?.$defs?.edge?.properties?.data?.properties || schema?.$defs?.edge?.properties || {};
+  const schemaNodeProperties = resolveSchemaEntityProperties(schema, 'node', 'nodes');
+  const schemaEdgeProperties = resolveSchemaEntityProperties(schema, 'edge', 'edges');
   const allowedCategories =
     schemaNodeProperties?.category?.enum ||
     ['Application', 'Cloud', 'Email', 'File', 'Host', 'Identity', 'Network'];

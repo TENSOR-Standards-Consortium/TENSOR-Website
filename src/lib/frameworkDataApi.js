@@ -18,6 +18,45 @@ function unique(values) {
   return [...new Set(values.filter(Boolean))];
 }
 
+function pickString(...values) {
+  for (const value of values) {
+    if (typeof value === 'string') {
+      const trimmed = value.trim();
+      if (trimmed) {
+        return trimmed;
+      }
+    }
+  }
+
+  return '';
+}
+
+function readNestedRecord(container, key) {
+  const candidate = container?.[key];
+  return candidate && typeof candidate === 'object' && !Array.isArray(candidate) ? candidate : null;
+}
+
+function readNestedValue(container, key) {
+  if (!container || typeof container !== 'object' || Array.isArray(container)) {
+    return '';
+  }
+
+  return typeof container[key] === 'string' ? container[key] : '';
+}
+
+function manifestReleaseArray(source) {
+  if (Array.isArray(source?.releases)) {
+    return source.releases;
+  }
+  if (Array.isArray(source?.versions)) {
+    return source.versions;
+  }
+  if (Array.isArray(source?.artifacts)) {
+    return source.artifacts;
+  }
+  return [];
+}
+
 function sanitizeAssetPath(value) {
   if (typeof value !== 'string') {
     return '';
@@ -161,6 +200,30 @@ function buildVersionScore(version) {
   return major * 1_000_000_000_000 + releaseDate * 100 + Math.max(0, suffixScore);
 }
 
+function latestVersionFromReleases(releases, key) {
+  if (!Array.isArray(releases) || releases.length === 0) {
+    return '';
+  }
+
+  let bestVersion = '';
+  let bestScore = 0;
+
+  for (const release of releases) {
+    const version = parseVersion(release?.[key]);
+    if (!version) {
+      continue;
+    }
+
+    const score = buildVersionScore(version);
+    if (score > bestScore) {
+      bestVersion = version;
+      bestScore = score;
+    }
+  }
+
+  return bestVersion;
+}
+
 function rankManifestFreshness(manifest) {
   if (!manifest || typeof manifest !== 'object') {
     return { versionScore: 0, generatedAtScore: 0, releaseCount: 0 };
@@ -171,7 +234,7 @@ function rankManifestFreshness(manifest) {
     buildVersionScore(manifest.latestSchemaVersion)
   );
   const generatedAtScore = resolveTimestamp(manifest.generatedAt);
-  const releaseCount = Array.isArray(manifest.releases) ? manifest.releases.length : 0;
+  const releaseCount = manifestReleaseArray(manifest).length;
 
   return {
     versionScore,
@@ -215,20 +278,70 @@ export function buildFrameworkAssetUrls(assetPath) {
   );
 }
 
+function extractReleaseAssetInfo(release, kind) {
+  const root = release && typeof release === 'object' && !Array.isArray(release) ? release : {};
+  const kindRecord = readNestedRecord(root, kind);
+  const assetsRecord = readNestedRecord(readNestedRecord(root, 'assets'), kind);
+  const pathsRecord = readNestedRecord(root, 'paths');
+  const urlsRecord = readNestedRecord(root, 'urls');
+  const filesRecord = readNestedRecord(root, 'files');
+  const linksRecord = readNestedRecord(root, 'links');
+
+  const version = parseVersion(
+    pickString(
+      root?.[`${kind}Version`],
+      root?.version,
+      root?.releaseVersion,
+      kindRecord?.version,
+      assetsRecord?.version
+    )
+  );
+  const path = pickString(
+    root?.[`${kind}Path`],
+    kindRecord?.path,
+    kindRecord?.assetPath,
+    kindRecord?.file,
+    assetsRecord?.path,
+    assetsRecord?.assetPath,
+    assetsRecord?.file,
+    readNestedValue(pathsRecord, kind),
+    readNestedValue(filesRecord, kind)
+  );
+  const url = pickString(
+    root?.[`${kind}Url`],
+    kindRecord?.url,
+    kindRecord?.href,
+    assetsRecord?.url,
+    assetsRecord?.href,
+    readNestedValue(urlsRecord, kind),
+    readNestedValue(linksRecord, kind)
+  );
+
+  return {
+    version: version || null,
+    path: path || null,
+    url: url || null,
+  };
+}
+
 function mapReleaseWithPortableUrls(release) {
   if (!release || typeof release !== 'object') {
     return release;
   }
 
-  const graphPath = sanitizeAssetPath(release.graphPath);
-  const schemaPath = sanitizeAssetPath(release.schemaPath);
-  const graphUrls = unique([release.graphUrl, ...buildFrameworkAssetUrls(graphPath)]).filter(isTrustedReleaseUrl);
-  const schemaUrls = unique([release.schemaUrl, ...buildFrameworkAssetUrls(schemaPath)]).filter(isTrustedReleaseUrl);
+  const graphAsset = extractReleaseAssetInfo(release, 'graph');
+  const schemaAsset = extractReleaseAssetInfo(release, 'schema');
+  const graphPath = sanitizeAssetPath(graphAsset.path);
+  const schemaPath = sanitizeAssetPath(schemaAsset.path);
+  const graphUrls = unique([graphAsset.url, ...buildFrameworkAssetUrls(graphPath)]).filter(isTrustedReleaseUrl);
+  const schemaUrls = unique([schemaAsset.url, ...buildFrameworkAssetUrls(schemaPath)]).filter(isTrustedReleaseUrl);
 
   return {
     ...release,
-    graphPath: graphPath || release.graphPath || null,
-    schemaPath: schemaPath || release.schemaPath || null,
+    graphVersion: graphAsset.version,
+    schemaVersion: schemaAsset.version,
+    graphPath: graphPath || graphAsset.path || null,
+    schemaPath: schemaPath || schemaAsset.path || null,
     graphUrl: graphUrls[0] || null,
     schemaUrl: schemaUrls[0] || null,
   };
@@ -236,17 +349,26 @@ function mapReleaseWithPortableUrls(release) {
 
 function normalizeReleaseManifest(payload, sourceName) {
   const source = payload && typeof payload === 'object' ? payload : {};
-  const releases = Array.isArray(source.releases) ? source.releases.map(mapReleaseWithPortableUrls) : [];
+  const releases = manifestReleaseArray(source).map(mapReleaseWithPortableUrls).filter(Boolean);
+  const latestGraphVersion =
+    parseVersion(source.latestGraphVersion) || latestVersionFromReleases(releases, 'graphVersion') || null;
+  const latestSchemaVersion =
+    parseVersion(source.latestSchemaVersion) || latestVersionFromReleases(releases, 'schemaVersion') || null;
+  const manifestUrlCandidate = pickString(
+    source.manifestUrl,
+    readNestedValue(readNestedRecord(source, 'urls'), 'manifest'),
+    readNestedValue(readNestedRecord(source, 'links'), 'manifest')
+  );
 
   return {
     channel: typeof source.channel === 'string' ? source.channel : 'stable',
     generatedAt: source.generatedAt || null,
-    latestGraphVersion: parseVersion(source.latestGraphVersion) || null,
-    latestSchemaVersion: parseVersion(source.latestSchemaVersion) || null,
+    latestGraphVersion,
+    latestSchemaVersion,
     releases,
     source: source.source || null,
     sourceName: source.sourceName || source.source || sourceName || null,
-    manifestUrl: isTrustedReleaseUrl(source.manifestUrl || '') ? source.manifestUrl : null,
+    manifestUrl: isTrustedReleaseUrl(manifestUrlCandidate) ? manifestUrlCandidate : null,
   };
 }
 
