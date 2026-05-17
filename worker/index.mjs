@@ -5,12 +5,25 @@ const REPORT_TYPES = new Set(['math-assurance', 'graph-quality', 'coverage-matri
 const TELEMETRY_LEVELS = new Set(['info', 'warn', 'error']);
 const TELEMETRY_MAX_PAYLOAD_BYTES = 8_000;
 const TELEMETRY_MAX_DETAILS_BYTES = 4_000;
+const REMOTE_JSON_MAX_BYTES = 2_000_000;
 
 const DEFAULT_RELEASE_ALLOWED_HOSTS = [
   'raw.githubusercontent.com',
   'tensor-standards-consortium.github.io',
   'tensor-standards-consortium.org',
 ];
+const DEFAULT_RELEASE_PATH_PREFIXES = new Map([
+  [
+    'raw.githubusercontent.com',
+    [
+      '/tensor-standards-consortium/tensor-framework/main/releases/',
+      '/tensor-standards-consortium/tensor-framework/master/releases/',
+    ],
+  ],
+  ['tensor-standards-consortium.github.io', ['/TENSOR-Framework/releases/']],
+  ['tensor-standards-consortium.org', ['/assets/releases/', '/releases/']],
+]);
+const SAME_ORIGIN_RELEASE_PATH_PREFIXES = ['/assets/releases/', '/releases/'];
 
 const REMOTE_MANIFEST_SOURCES = [
   {
@@ -53,9 +66,9 @@ function parseCsv(rawValue) {
     .filter(Boolean);
 }
 
-function tryParseUrl(value) {
+function tryParseUrl(value, base) {
   try {
-    return new URL(value);
+    return base ? new URL(value, base) : new URL(value);
   } catch {
     return null;
   }
@@ -163,7 +176,26 @@ function buildTelemetryCorsHeaders(request, env, requestUrl) {
   return null;
 }
 
-function validateTrustedHttpsUrl(value, allowedHosts) {
+function releasePathPrefixesForHost(host, requestHost = '') {
+  const normalizedHost = String(host || '').toLowerCase();
+  const configuredPrefixes = DEFAULT_RELEASE_PATH_PREFIXES.get(normalizedHost);
+  if (configuredPrefixes) {
+    return configuredPrefixes;
+  }
+
+  if (requestHost && requestHost === normalizedHost) {
+    return SAME_ORIGIN_RELEASE_PATH_PREFIXES;
+  }
+
+  return null;
+}
+
+function isTrustedReleasePathname(parsed, requestHost = '') {
+  const prefixes = releasePathPrefixesForHost(parsed.hostname, requestHost);
+  return !prefixes || prefixes.some((prefix) => parsed.pathname.startsWith(prefix));
+}
+
+function validateTrustedHttpsUrl(value, allowedHosts, requestUrl = '') {
   if (typeof value !== 'string' || !value.trim()) {
     return {
       ok: false,
@@ -194,6 +226,14 @@ function validateTrustedHttpsUrl(value, allowedHosts) {
     };
   }
 
+  const requestHost = tryParseUrl(requestUrl)?.hostname?.toLowerCase() || '';
+  if (!isTrustedReleasePathname(parsed, requestHost)) {
+    return {
+      ok: false,
+      reason: `path-not-allowed:${host}${parsed.pathname}`,
+    };
+  }
+
   return {
     ok: true,
     value: parsed.toString(),
@@ -216,8 +256,8 @@ function sourceGuardMeta(blockedReasons) {
   };
 }
 
-function pushTrustedUrl(urls, candidateUrl, allowedHosts, blockedReasons) {
-  const result = validateTrustedHttpsUrl(candidateUrl, allowedHosts);
+function pushTrustedUrl(urls, candidateUrl, allowedHosts, blockedReasons, requestUrl = '') {
+  const result = validateTrustedHttpsUrl(candidateUrl, allowedHosts, requestUrl);
   if (!result.ok) {
     noteBlockedSource(blockedReasons, result.reason);
     return;
@@ -473,7 +513,18 @@ function normalizeAssetPath(path) {
     return '';
   }
 
-  return path.trim().replace(/^\.\//, '').replace(/^\/+/, '');
+  const trimmed = path.trim();
+  if (!trimmed || /^https?:\/\//i.test(trimmed) || trimmed.startsWith('//') || trimmed.includes('\\')) {
+    return '';
+  }
+
+  const normalized = trimmed.replace(/^\.\//, '').replace(/^\/+/, '');
+  const segments = normalized.split('/');
+  if (segments.some((segment) => !segment || segment === '.' || segment === '..')) {
+    return '';
+  }
+
+  return normalized;
 }
 
 function isHttpUrl(value) {
@@ -504,7 +555,17 @@ async function fetchRemoteJson(url) {
     throw new Error(`Remote request failed (${response.status}) for ${url}`);
   }
 
-  return response.json();
+  const contentLength = Number.parseInt(response.headers.get('content-length') || '', 10);
+  if (Number.isFinite(contentLength) && contentLength > REMOTE_JSON_MAX_BYTES) {
+    throw new Error(`Remote JSON exceeds ${REMOTE_JSON_MAX_BYTES} bytes for ${url}`);
+  }
+
+  const buffer = await response.arrayBuffer();
+  if (buffer.byteLength > REMOTE_JSON_MAX_BYTES) {
+    throw new Error(`Remote JSON exceeds ${REMOTE_JSON_MAX_BYTES} bytes for ${url}`);
+  }
+
+  return JSON.parse(new TextDecoder().decode(buffer));
 }
 
 async function loadLocalAssetJson(env, requestUrl, assetPath) {
@@ -520,8 +581,8 @@ async function loadLocalAssetJson(env, requestUrl, assetPath) {
 
 async function loadManifestContext(env, requestUrl, allowedHosts, blockedReasons) {
   for (const source of REMOTE_MANIFEST_SOURCES) {
-    const manifestCheck = validateTrustedHttpsUrl(source.manifestUrl, allowedHosts);
-    const rootCheck = validateTrustedHttpsUrl(source.rootUrl, allowedHosts);
+    const manifestCheck = validateTrustedHttpsUrl(source.manifestUrl, allowedHosts, requestUrl);
+    const rootCheck = validateTrustedHttpsUrl(`${source.rootUrl}releases/`, allowedHosts, requestUrl);
     if (!manifestCheck.ok) {
       noteBlockedSource(blockedReasons, `manifest-source:${source.name}:${manifestCheck.reason}`);
       continue;
@@ -538,7 +599,7 @@ async function loadManifestContext(env, requestUrl, allowedHosts, blockedReasons
           manifest,
           source: 'remote',
           sourceName: source.name,
-          sourceRootUrl: rootCheck.value,
+          sourceRootUrl: source.rootUrl,
           manifestUrl: manifestCheck.value,
         };
       }
@@ -574,7 +635,7 @@ function findReleaseByVersion(releases, kind, version) {
   return releases.find((release) => sanitizeVersion(release?.[key]) === version) || null;
 }
 
-function buildReleaseAssetUrls(release, kind, manifestContext, allowedHosts, blockedReasons) {
+function buildReleaseAssetUrls(release, kind, manifestContext, allowedHosts, blockedReasons, requestUrl = '') {
   if (!release) {
     return [];
   }
@@ -582,13 +643,13 @@ function buildReleaseAssetUrls(release, kind, manifestContext, allowedHosts, blo
   const assetInfo = extractReleaseAssetInfo(release, kind);
   const urls = [];
   if (isHttpUrl(assetInfo.url)) {
-    pushTrustedUrl(urls, assetInfo.url, allowedHosts, blockedReasons);
+    pushTrustedUrl(urls, assetInfo.url, allowedHosts, blockedReasons, requestUrl);
   }
 
   const pathValue = assetInfo.path;
   if (typeof pathValue === 'string' && pathValue.trim()) {
     if (isHttpUrl(pathValue)) {
-      pushTrustedUrl(urls, pathValue, allowedHosts, blockedReasons);
+      pushTrustedUrl(urls, pathValue, allowedHosts, blockedReasons, requestUrl);
     } else {
       const normalized = normalizeAssetPath(pathValue);
       if (normalized) {
@@ -597,7 +658,8 @@ function buildReleaseAssetUrls(release, kind, manifestContext, allowedHosts, blo
             urls,
             toAbsoluteUrl(manifestContext.sourceRootUrl, normalized),
             allowedHosts,
-            blockedReasons
+            blockedReasons,
+            requestUrl
           );
         }
 
@@ -607,7 +669,8 @@ function buildReleaseAssetUrls(release, kind, manifestContext, allowedHosts, blo
               urls,
               new URL(pathValue, manifestContext.manifestUrl).toString(),
               allowedHosts,
-              blockedReasons
+              blockedReasons,
+              requestUrl
             );
           } catch {
             noteBlockedSource(blockedReasons, 'invalid-manifest-relative-url');
@@ -615,7 +678,13 @@ function buildReleaseAssetUrls(release, kind, manifestContext, allowedHosts, blo
         }
 
         for (const source of REMOTE_MANIFEST_SOURCES) {
-          pushTrustedUrl(urls, toAbsoluteUrl(source.rootUrl, normalized), allowedHosts, blockedReasons);
+          pushTrustedUrl(
+            urls,
+            toAbsoluteUrl(source.rootUrl, normalized),
+            allowedHosts,
+            blockedReasons,
+            requestUrl
+          );
         }
       }
     }
@@ -651,7 +720,7 @@ function parseReportType(rawValue) {
   return value;
 }
 
-function buildReportCandidates(manifestContext, reportPaths, allowedHosts, blockedReasons) {
+function buildReportCandidates(manifestContext, reportPaths, allowedHosts, blockedReasons, requestUrl = '') {
   const remoteUrls = [];
   const localPaths = [];
 
@@ -661,7 +730,7 @@ function buildReportCandidates(manifestContext, reportPaths, allowedHosts, block
     }
 
     if (isHttpUrl(reportPath)) {
-      pushTrustedUrl(remoteUrls, reportPath, allowedHosts, blockedReasons);
+      pushTrustedUrl(remoteUrls, reportPath, allowedHosts, blockedReasons, requestUrl);
       continue;
     }
 
@@ -675,7 +744,8 @@ function buildReportCandidates(manifestContext, reportPaths, allowedHosts, block
         remoteUrls,
         toAbsoluteUrl(manifestContext.sourceRootUrl, normalized),
         allowedHosts,
-        blockedReasons
+        blockedReasons,
+        requestUrl
       );
     }
 
@@ -685,7 +755,8 @@ function buildReportCandidates(manifestContext, reportPaths, allowedHosts, block
           remoteUrls,
           new URL(reportPath, manifestContext.manifestUrl).toString(),
           allowedHosts,
-          blockedReasons
+          blockedReasons,
+          requestUrl
         );
       } catch {
         noteBlockedSource(blockedReasons, 'invalid-report-relative-url');
@@ -693,7 +764,13 @@ function buildReportCandidates(manifestContext, reportPaths, allowedHosts, block
     }
 
     for (const source of REMOTE_MANIFEST_SOURCES) {
-      pushTrustedUrl(remoteUrls, toAbsoluteUrl(source.rootUrl, normalized), allowedHosts, blockedReasons);
+      pushTrustedUrl(
+        remoteUrls,
+        toAbsoluteUrl(source.rootUrl, normalized),
+        allowedHosts,
+        blockedReasons,
+        requestUrl
+      );
     }
 
     localPaths.push(`/${normalized}`);
@@ -708,7 +785,7 @@ function buildReportCandidates(manifestContext, reportPaths, allowedHosts, block
   };
 }
 
-function resolveReleaseAsset(manifestContext, kind, requestedVersion, allowedHosts, blockedReasons) {
+function resolveReleaseAsset(manifestContext, kind, requestedVersion, allowedHosts, blockedReasons, requestUrl = '') {
   const requested = sanitizeVersion(requestedVersion);
   const manifest = manifestContext?.manifest;
   const releases = listNormalizedManifestReleases(manifest);
@@ -729,7 +806,7 @@ function resolveReleaseAsset(manifestContext, kind, requestedVersion, allowedHos
     version: effectiveVersion,
     release,
     pathHint: release ? extractReleaseAssetInfo(release, kind).path || null : null,
-    remoteUrls: buildReleaseAssetUrls(release, kind, manifestContext, allowedHosts, blockedReasons),
+    remoteUrls: buildReleaseAssetUrls(release, kind, manifestContext, allowedHosts, blockedReasons, requestUrl),
     localPaths: buildLocalFallbackPaths(kind, effectiveVersion),
   };
 }
@@ -790,11 +867,15 @@ function unwrapSchemaPayload(data) {
   throw new Error('Schema payload is invalid');
 }
 
-function decorateRelease(release, manifestContext, allowedHosts, blockedReasons) {
+function decorateRelease(release, manifestContext, allowedHosts, blockedReasons, requestUrl = '') {
   return {
     ...release,
-    graphUrl: buildReleaseAssetUrls(release, 'graph', manifestContext, allowedHosts, blockedReasons)[0] || null,
-    schemaUrl: buildReleaseAssetUrls(release, 'schema', manifestContext, allowedHosts, blockedReasons)[0] || null,
+    graphUrl:
+      buildReleaseAssetUrls(release, 'graph', manifestContext, allowedHosts, blockedReasons, requestUrl)[0] ||
+      null,
+    schemaUrl:
+      buildReleaseAssetUrls(release, 'schema', manifestContext, allowedHosts, blockedReasons, requestUrl)[0] ||
+      null,
   };
 }
 
@@ -1127,7 +1208,7 @@ export default {
           latestGraphVersion,
           latestSchemaVersion,
           releases: releases.map((release) =>
-            decorateRelease(release, manifestContext, allowedHosts, blockedReasons)
+            decorateRelease(release, manifestContext, allowedHosts, blockedReasons, request.url)
           ),
           ...buildSourceMeta(blockedReasons),
         });
@@ -1217,7 +1298,13 @@ export default {
           );
         }
 
-        const candidates = buildReportCandidates(manifestContext, reportPaths, allowedHosts, blockedReasons);
+        const candidates = buildReportCandidates(
+          manifestContext,
+          reportPaths,
+          allowedHosts,
+          blockedReasons,
+          request.url
+        );
         const loaded = await loadJsonByCandidates(
           env,
           request.url,
@@ -1260,7 +1347,8 @@ export default {
           manifestContext,
           ['releases/core/reports/history/math-assurance-history.json'],
           allowedHosts,
-          blockedReasons
+          blockedReasons,
+          request.url
         );
         const loaded = await loadJsonByCandidates(
           env,
@@ -1315,7 +1403,8 @@ export default {
           manifestContext,
           [`releases/core/reports/v${requestedVersion}/${reportType}.json`],
           allowedHosts,
-          blockedReasons
+          blockedReasons,
+          request.url
         );
         const loaded = await loadJsonByCandidates(
           env,
@@ -1360,7 +1449,8 @@ export default {
           'graph',
           url.searchParams.get('version'),
           allowedHosts,
-          blockedReasons
+          blockedReasons,
+          request.url
         );
         if (asset.error) {
           return jsonResponse(
@@ -1381,7 +1471,9 @@ export default {
           stats: summarizeGraph(graph),
           requestedVersion: asset.requestedVersion,
           resolvedVersion: asset.version || graph.version || null,
-          release: asset.release ? decorateRelease(asset.release, manifestContext, allowedHosts, blockedReasons) : null,
+          release: asset.release
+            ? decorateRelease(asset.release, manifestContext, allowedHosts, blockedReasons, request.url)
+            : null,
           sourcePath: asset.pathHint || loaded.source,
           sourceUrl: loaded.sourceType === 'remote' ? loaded.source : null,
           sourceType: loaded.sourceType,
@@ -1413,7 +1505,8 @@ export default {
           'schema',
           url.searchParams.get('version'),
           allowedHosts,
-          blockedReasons
+          blockedReasons,
+          request.url
         );
         if (asset.error) {
           return jsonResponse(
@@ -1433,7 +1526,9 @@ export default {
           schema,
           requestedVersion: asset.requestedVersion,
           resolvedVersion: asset.version || null,
-          release: asset.release ? decorateRelease(asset.release, manifestContext, allowedHosts, blockedReasons) : null,
+          release: asset.release
+            ? decorateRelease(asset.release, manifestContext, allowedHosts, blockedReasons, request.url)
+            : null,
           sourcePath: asset.pathHint || loaded.source,
           sourceUrl: loaded.sourceType === 'remote' ? loaded.source : null,
           sourceType: loaded.sourceType,
@@ -1474,8 +1569,22 @@ export default {
         }
 
         const manifestContext = await loadManifestContext(env, request.url, allowedHosts, blockedReasons);
-        const fromAsset = resolveReleaseAsset(manifestContext, 'graph', fromVersion, allowedHosts, blockedReasons);
-        const toAsset = resolveReleaseAsset(manifestContext, 'graph', toVersion, allowedHosts, blockedReasons);
+        const fromAsset = resolveReleaseAsset(
+          manifestContext,
+          'graph',
+          fromVersion,
+          allowedHosts,
+          blockedReasons,
+          request.url
+        );
+        const toAsset = resolveReleaseAsset(
+          manifestContext,
+          'graph',
+          toVersion,
+          allowedHosts,
+          blockedReasons,
+          request.url
+        );
 
         if (fromAsset.error || toAsset.error) {
           return jsonResponse(
@@ -1500,13 +1609,15 @@ export default {
           from: {
             version: fromAsset.version,
             release: fromAsset.release
-              ? decorateRelease(fromAsset.release, manifestContext, allowedHosts, blockedReasons)
+              ? decorateRelease(fromAsset.release, manifestContext, allowedHosts, blockedReasons, request.url)
               : null,
             sourceUrl: fromLoaded.sourceType === 'remote' ? fromLoaded.source : null,
           },
           to: {
             version: toAsset.version,
-            release: toAsset.release ? decorateRelease(toAsset.release, manifestContext, allowedHosts, blockedReasons) : null,
+            release: toAsset.release
+              ? decorateRelease(toAsset.release, manifestContext, allowedHosts, blockedReasons, request.url)
+              : null,
             sourceUrl: toLoaded.sourceType === 'remote' ? toLoaded.source : null,
           },
           diff: computeGraphDiff(fromGraph, toGraph),
