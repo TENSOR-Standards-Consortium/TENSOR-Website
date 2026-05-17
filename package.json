@@ -7,21 +7,21 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "astro check"
+    "check": "astro sync && tsc --noEmit",
+    "test": "node --test tests/*.test.mjs"
   },
   "dependencies": {
-    "@astrojs/react": "^4.4.0",
-    "@astrojs/sitemap": "^3.6.0",
-    "astro": "^5.2.0",
-    "cytoscape": "^3.30.2",
+    "@astrojs/react": "^5.0.5",
+    "@astrojs/sitemap": "^3.7.2",
+    "astro": "^6.3.3",
+    "cytoscape": "^3.33.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.6",
     "typescript": "^5.9.3"
   },
   "overrides": {
-    "lodash": "4.17.23"
+    "lodash": "4.18.1"
   }
 }

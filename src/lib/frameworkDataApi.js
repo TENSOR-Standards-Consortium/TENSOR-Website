@@ -10,6 +10,19 @@ const DEFAULT_RELEASE_ALLOWED_HOSTS = [
   'tensor-standards-consortium.github.io',
   'tensor-standards-consortium.org',
 ];
+const DEFAULT_RELEASE_PATH_PREFIXES = new Map([
+  [
+    'raw.githubusercontent.com',
+    [
+      '/tensor-standards-consortium/tensor-framework/main/releases/',
+      '/tensor-standards-consortium/tensor-framework/master/releases/',
+    ],
+  ],
+  ['tensor-standards-consortium.github.io', ['/TENSOR-Framework/releases/']],
+  ['tensor-standards-consortium.org', ['/assets/releases/', '/releases/']],
+]);
+const SAME_ORIGIN_RELEASE_PATH_PREFIXES = ['/assets/releases/', '/releases/'];
+const REPORT_TYPES = new Set(['math-assurance', 'graph-quality', 'coverage-matrix']);
 
 const RELEASE_MANIFEST_PATH = 'releases/manifest.json';
 const METRICS_HISTORY_PATH = 'releases/core/reports/history/math-assurance-history.json';
@@ -62,10 +75,18 @@ function sanitizeAssetPath(value) {
     return '';
   }
 
-  return value
-    .trim()
-    .replace(/^\.\//, '')
-    .replace(/^\/+/, '');
+  const trimmed = value.trim();
+  if (!trimmed || /^https?:\/\//i.test(trimmed) || trimmed.startsWith('//') || trimmed.includes('\\')) {
+    return '';
+  }
+
+  const normalized = trimmed.replace(/^\.\//, '').replace(/^\/+/, '');
+  const segments = normalized.split('/');
+  if (segments.some((segment) => !segment || segment === '.' || segment === '..')) {
+    return '';
+  }
+
+  return normalized;
 }
 
 function parseCsv(value) {
@@ -79,9 +100,13 @@ function parseCsv(value) {
     .filter(Boolean);
 }
 
-function tryParseUrl(value) {
+function readBuildEnv(name) {
+  return import.meta.env?.[name] || '';
+}
+
+function tryParseUrl(value, base) {
   try {
-    return new URL(value);
+    return base ? new URL(value, base) : new URL(value);
   } catch {
     return null;
   }
@@ -104,8 +129,7 @@ function normalizeHost(value) {
 function resolveReleaseAllowedHosts() {
   const hosts = new Set(DEFAULT_RELEASE_ALLOWED_HOSTS.map((host) => host.toLowerCase()));
 
-  const buildTimeValue =
-    import.meta.env.PUBLIC_RELEASE_ALLOWED_HOSTS || import.meta.env.RELEASE_ALLOWED_HOSTS || '';
+  const buildTimeValue = readBuildEnv('PUBLIC_RELEASE_ALLOWED_HOSTS') || readBuildEnv('RELEASE_ALLOWED_HOSTS');
   for (const hostValue of parseCsv(buildTimeValue)) {
     const host = normalizeHost(hostValue);
     if (host) {
@@ -129,14 +153,37 @@ function resolveReleaseAllowedHosts() {
   return hosts;
 }
 
+function releasePathPrefixesForHost(host) {
+  const normalizedHost = String(host || '').toLowerCase();
+  const configuredPrefixes = DEFAULT_RELEASE_PATH_PREFIXES.get(normalizedHost);
+  if (configuredPrefixes) {
+    return configuredPrefixes;
+  }
+
+  if (typeof window !== 'undefined' && window.location?.hostname?.toLowerCase() === normalizedHost) {
+    return SAME_ORIGIN_RELEASE_PATH_PREFIXES;
+  }
+
+  return SAME_ORIGIN_RELEASE_PATH_PREFIXES;
+}
+
+function isTrustedReleasePathname(parsed) {
+  return releasePathPrefixesForHost(parsed.hostname).some((prefix) => parsed.pathname.startsWith(prefix));
+}
+
 export function isTrustedReleaseUrl(value) {
   if (typeof value !== 'string' || value.trim() === '') {
     return false;
   }
 
   const normalized = value.trim();
+  if (normalized.startsWith('//')) {
+    return false;
+  }
+
   if (normalized.startsWith('/')) {
-    return true;
+    const parsedRelative = tryParseUrl(normalized, 'https://tensor.local');
+    return Boolean(parsedRelative && isTrustedReleasePathname(parsedRelative));
   }
 
   const parsed = tryParseUrl(normalized);
@@ -149,7 +196,12 @@ export function isTrustedReleaseUrl(value) {
   }
 
   const allowedHosts = resolveReleaseAllowedHosts();
-  return allowedHosts.has(parsed.hostname.toLowerCase());
+  return allowedHosts.has(parsed.hostname.toLowerCase()) && isTrustedReleasePathname(parsed);
+}
+
+function parseReportType(value) {
+  const normalized = typeof value === 'string' ? value.trim() : '';
+  return REPORT_TYPES.has(normalized) ? normalized : 'math-assurance';
 }
 
 function withAcceptHeader(init = {}) {
@@ -589,7 +641,7 @@ export async function fetchMetricsReportChannel(version, type, init = {}) {
     throw new Error(`Invalid release version: ${version}`);
   }
 
-  const reportType = typeof type === 'string' && type.trim() ? type.trim() : 'math-assurance';
+  const reportType = parseReportType(type);
   const path = `releases/core/reports/v${normalizedVersion}/${reportType}.json`;
   const apiPath = `/api/metrics/report?version=${encodeURIComponent(normalizedVersion)}&type=${encodeURIComponent(reportType)}`;
 
