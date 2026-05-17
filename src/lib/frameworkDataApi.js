@@ -164,11 +164,12 @@ function releasePathPrefixesForHost(host) {
     return SAME_ORIGIN_RELEASE_PATH_PREFIXES;
   }
 
-  return SAME_ORIGIN_RELEASE_PATH_PREFIXES;
+  return null;
 }
 
 function isTrustedReleasePathname(parsed) {
-  return releasePathPrefixesForHost(parsed.hostname).some((prefix) => parsed.pathname.startsWith(prefix));
+  const prefixes = releasePathPrefixesForHost(parsed.hostname);
+  return !prefixes || prefixes.some((prefix) => parsed.pathname.startsWith(prefix));
 }
 
 export function isTrustedReleaseUrl(value) {

@@ -152,7 +152,7 @@ function collectArchetypes(domains) {
   return Array.from(archetypes).sort((left, right) => left.localeCompare(right));
 }
 
-const CSV_FORMULA_PREFIX = /^[=+\-@\t\r]/;
+const CSV_FORMULA_PREFIX = /^[=+\-@\t\r\n]/;
 
 function escapeCsvCell(value) {
   const rawText = String(value ?? '');

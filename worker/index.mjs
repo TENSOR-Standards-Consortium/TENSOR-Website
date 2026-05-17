@@ -187,13 +187,12 @@ function releasePathPrefixesForHost(host, requestHost = '') {
     return SAME_ORIGIN_RELEASE_PATH_PREFIXES;
   }
 
-  return SAME_ORIGIN_RELEASE_PATH_PREFIXES;
+  return null;
 }
 
 function isTrustedReleasePathname(parsed, requestHost = '') {
-  return releasePathPrefixesForHost(parsed.hostname, requestHost).some((prefix) =>
-    parsed.pathname.startsWith(prefix)
-  );
+  const prefixes = releasePathPrefixesForHost(parsed.hostname, requestHost);
+  return !prefixes || prefixes.some((prefix) => parsed.pathname.startsWith(prefix));
 }
 
 function validateTrustedHttpsUrl(value, allowedHosts, requestUrl = '') {
@@ -561,12 +560,12 @@ async function fetchRemoteJson(url) {
     throw new Error(`Remote JSON exceeds ${REMOTE_JSON_MAX_BYTES} bytes for ${url}`);
   }
 
-  const text = await response.text();
-  if (text.length > REMOTE_JSON_MAX_BYTES) {
+  const buffer = await response.arrayBuffer();
+  if (buffer.byteLength > REMOTE_JSON_MAX_BYTES) {
     throw new Error(`Remote JSON exceeds ${REMOTE_JSON_MAX_BYTES} bytes for ${url}`);
   }
 
-  return JSON.parse(text);
+  return JSON.parse(new TextDecoder().decode(buffer));
 }
 
 async function loadLocalAssetJson(env, requestUrl, assetPath) {

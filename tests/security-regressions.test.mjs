@@ -7,7 +7,7 @@ const readText = (path) => readFile(new URL(`../${path}`, import.meta.url), 'utf
 test('metrics CSV export neutralizes spreadsheet formulas before download', async () => {
   const source = await readText('src/components/MetricsDashboard.jsx');
 
-  assert.match(source, /CSV_FORMULA_PREFIX = \/\^\[=\+\\-@\\t\\r\]\//);
+  assert.match(source, /CSV_FORMULA_PREFIX = \/\^\[=\+\\-@\\t\\r\\n\]\//);
   assert.match(source, /CSV_FORMULA_PREFIX\.test\(rawText\) \? `'\$\{rawText\}` : rawText/);
   assert.match(source, /rows\.map\(\(row\) => row\.map\(escapeCsvCell\)\.join\(','\)\)/);
 });
@@ -27,8 +27,8 @@ test('worker release fetches are constrained by host, path prefix, and response 
   assert.match(source, /REMOTE_JSON_MAX_BYTES = 2_000_000/);
   assert.match(source, /path-not-allowed:\$\{host\}\$\{parsed\.pathname\}/);
   assert.match(source, /contentLength > REMOTE_JSON_MAX_BYTES/);
-  assert.match(source, /text\.length > REMOTE_JSON_MAX_BYTES/);
-  assert.match(source, /JSON\.parse\(text\)/);
+  assert.match(source, /buffer\.byteLength > REMOTE_JSON_MAX_BYTES/);
+  assert.match(source, /JSON\.parse\(new TextDecoder\(\)\.decode\(buffer\)\)/);
 });
 
 test('deployment headers and workflows enforce transport and full dependency audit gates', async () => {
