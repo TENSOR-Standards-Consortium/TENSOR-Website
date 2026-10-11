@@ -58,5 +58,7 @@ jobs:
         with:
           apiToken: ${{ secrets.TENSOR_CLOUDFLARE_WORKER_API_TOKEN }}
           accountId: ${{ vars.TENSOR_CLOUDFLARE_ACCOUNT_ID }}
-          wranglerVersion: '4.149.0'
           command: deploy --config worker.wrangler.toml
+          preCommands: |
+            git diff --exit-code
+            test -z "$(git ls-files --others --exclude-standard)"

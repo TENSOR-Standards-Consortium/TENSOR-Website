@@ -62,5 +62,7 @@ jobs:
         with:
           apiToken: ${{ secrets.TENSOR_CLOUDFLARE_API_TOKEN }}
           accountId: ${{ vars.TENSOR_CLOUDFLARE_ACCOUNT_ID }}
-          wranglerVersion: '4.149.0'
           command: pages deploy dist --project-name ${{ vars.TENSOR_CLOUDFLARE_PROJECT_NAME }} --branch main
+          preCommands: |
+            git diff --exit-code
+            test -z "$(git ls-files --others --exclude-standard)"

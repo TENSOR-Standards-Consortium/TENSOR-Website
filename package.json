@@ -24,10 +24,16 @@
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "parse5": "8.0.0",
-    "typescript": "^5.9.3"
+    "parse5": "8.0.1",
+    "typescript": "^5.9.3",
+    "wrangler": "4.149.0"
   },
   "engines": {
     "node": ">=24.0.0"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true,
+    "workerd@1.20261006.1": true,
+    "fsevents": false
   }
 }
