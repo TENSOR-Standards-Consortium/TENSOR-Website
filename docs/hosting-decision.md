@@ -22,7 +22,7 @@ As observed on 2026-10-10, `tensor-standards-consortium.org` did not resolve. Th
 
 Production workflows require the `tensor-production` GitHub environment, with `TENSOR_CLOUDFLARE_ACCOUNT_ID`, `TENSOR_CLOUDFLARE_PROJECT_NAME` (Pages), `TENSOR_SITE_URL` variables and the scoped `TENSOR_CLOUDFLARE_API_TOKEN` secret. Missing or malformed configuration fails before publication. The build receives the mandatory canonical origin as `SITE_URL`. No workflow falls back to inherited account identifiers, generic Cloudflare secrets or local OAuth.
 
-The Pages configuration does not embed an account or destination project. Destination names may differ because provider names are globally allocated. The selected account/project, control of DNS and maintainer access must be recorded and verified during [the infrastructure handoff](infrastructure-handoff.md).
+The Pages configuration includes `name = "tensor-standards"` because Wrangler requires it even with an explicit `--project-name`. It does not embed an account or credential. Production still requires its configured account and project. The selected account/project, control of DNS and maintainer access must be recorded and verified during [the infrastructure handoff](infrastructure-handoff.md).
 
 ## Build and security contract
 

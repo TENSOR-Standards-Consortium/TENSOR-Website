@@ -1,5 +1,6 @@
-# No production account or project fallback is stored here.
-# Deployment selects the dedicated TENSOR account and project from the
-# dedicated tensor-production GitHub environment. See docs/infrastructure-handoff.md.
+# Wrangler requires the name even when --project-name is supplied.
+# This project belongs to the verified dedicated TENSOR account.
+# Production still requires explicit account/project/token environment settings.
+name = "tensor-standards"
 pages_build_output_dir = "dist"
 compatibility_date = "2026-02-05"

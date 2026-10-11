@@ -75,7 +75,7 @@ The workflows use the **`tensor-production` GitHub environment** and fail before
 | `TENSOR_SITE_URL` | Variable | Verified HTTPS canonical origin; supplied to the build as `SITE_URL` |
 | `TENSOR_CLOUDFLARE_API_TOKEN` | Secret | Deployment token scoped to the intended account and deployment permissions |
 
-There is no inherited account ID, project-name fallback, generic deployment secret, or local OAuth fallback in the production workflows. `wrangler.toml` describes static build output without selecting a destination. No token belongs in source control.
+There is no inherited account ID, project-name fallback, generic deployment secret, or local OAuth fallback in the production workflows. `wrangler.toml` contains the dedicated project name required by Wrangler and the static build output; the workflow still requires an explicit account/project/token. No token belongs in source control.
 
 - `ci.yml`: audits and validates pull requests, `main`, and `codex/*` branches; no deployment.
 - `cloudflare-pages.yml`: repeats all checks and deploys `main` to the configured dedicated Pages project. Manual dispatch is restricted to `main`.
