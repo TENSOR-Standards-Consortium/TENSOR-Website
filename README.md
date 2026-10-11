@@ -20,7 +20,7 @@ The Core runtime validates representations and declared dependencies. It does no
 
 ## Local setup and checks
 
-Use **Node 22.12 or later**. The committed artifacts allow a normal build without a framework checkout or build-time network fetches.
+Use **Node 24 LTS (the exact version is pinned in `.node-version`)**. The committed artifacts allow a normal build without a framework checkout or build-time network fetches.
 
 ```sh
 npm ci
@@ -73,15 +73,16 @@ The workflows use the **`tensor-production` GitHub environment** and fail before
 | `TENSOR_CLOUDFLARE_ACCOUNT_ID` | Variable | Dedicated TENSOR account identifier |
 | `TENSOR_CLOUDFLARE_PROJECT_NAME` | Variable | Actual Pages project name in that account; required for Pages deployment |
 | `TENSOR_SITE_URL` | Variable | Verified HTTPS canonical origin; supplied to the build as `SITE_URL` |
-| `TENSOR_CLOUDFLARE_API_TOKEN` | Secret | Deployment token scoped to the intended account and deployment permissions |
+| `TENSOR_CLOUDFLARE_API_TOKEN` | Secret | Account-owned Pages Write token restricted to the dedicated TENSOR account |
+| `TENSOR_CLOUDFLARE_WORKER_API_TOKEN` | Optional secret | Separate Worker credential; unprovisioned unless the optional Worker is adopted |
 
 There is no inherited account ID, project-name fallback, generic deployment secret, or local OAuth fallback in the production workflows. `wrangler.toml` contains the dedicated project name required by Wrangler and the static build output; the workflow still requires an explicit account/project/token. No token belongs in source control.
 
 - `ci.yml`: audits and validates pull requests, `main`, and `codex/*` branches; no deployment.
 - `cloudflare-pages.yml`: repeats all checks and deploys `main` to the configured dedicated Pages project. Manual dispatch is restricted to `main`.
-- `cloudflare-worker.yml`: optionally repeats all checks and manually deploys the Worker from `main` into the same dedicated account boundary.
+- `cloudflare-worker.yml`: optionally repeats all checks and manually deploys the Worker from `main` into the same dedicated account boundary using its separate credential. It remains unprovisioned; the Pages token cannot deploy Workers.
 
-Follow [the infrastructure handoff](docs/infrastructure-handoff.md) to establish ownership, configure the environment, verify a destination preview, and cut over DNS. Missing configuration intentionally blocks publication. Local Wrangler authentication must not be substituted for production configuration.
+Production and automatic GitHub deployment are verified at [tensor-standards.pages.dev](https://tensor-standards.pages.dev). Follow [the infrastructure handoff](docs/infrastructure-handoff.md) to rotate the temporary token before October 18, maintain recovery arrangements, and plan any later custom-domain cutover. Missing configuration intentionally blocks publication. Local Wrangler authentication must not be substituted for production configuration.
 
 For a local provider-style preview, without publishing:
 
