@@ -1,6 +1,6 @@
 # Dedicated TENSOR infrastructure handoff
 
-Status: account access and destination project verified; production and domain cutover remain pending. The dedicated account is **TENSOR Standards Consortium**. Its Pages inventory was empty before creating `tensor-standards`, with production branch `main`. Candidate deployment uses `core-next-stage`; the interim provider origin is `https://tensor-standards.pages.dev`. The inherited host is retained only for historical references. Account recovery, billing contacts and domain ownership remain separate stewardship checks.
+Status as of October 11, 2026: dedicated production and automatic GitHub publication verified. The dedicated account is **TENSOR Standards Consortium**, project `tensor-standards`, production branch `main`. The owner selected `https://tensor-standards.pages.dev` as the interim public origin; no custom-domain cutover is required for this stage. The inherited host is retained only for historical references. Account recovery, billing contacts, an additional administrator and eventual domain ownership remain separate stewardship checks.
 
 ## Ownership and destination
 
@@ -10,13 +10,17 @@ Confirm the exact account identifier and authorized access, then inventory its e
 
 After account ownership, access and inventory are verified, reuse a suitable existing destination project or create one if needed, then redeploy the reviewed static build there. This plan does not assume that an inherited Pages project can be transferred in place between accounts. Cloudflare documents project creation followed by Direct Upload; configure the selected project's production branch as `main`, matching this repository's workflow. [Cloudflare Direct Upload](https://developers.cloudflare.com/pages/get-started/direct-upload/).
 
-The dedicated Pages project was created after scoped account verification. No account, credential or DNS record was created. Local authenticated access may publish a reviewed preview into the explicitly selected account; it must not be copied into CI or replace a scoped production credential.
+The dedicated Pages project was created after scoped account verification. An account-owned Pages Write credential was subsequently created with the owner's authorization and stored directly in GitHub. No new account or DNS record was created. Local OAuth must not be copied into CI or replace a scoped production credential.
 
 ## Production environment
 
-The GitHub environment `tensor-production` is created, with a custom deployment branch policy allowing only `main`. Its account/project variables point to the verified dedicated destination, and `TENSOR_SITE_URL` is `https://tensor-standards.pages.dev`, the interim address selected by the owner. Readback confirmed these values. No required-reviewer rule is configured. The scoped `TENSOR_CLOUDFLARE_API_TOKEN` secret is not configured; its owner must enter it directly in GitHub before automated production deployment. A workflow file does not configure environment protections automatically.
+The GitHub environment `tensor-production` has a custom deployment branch policy allowing only `main`. Its account/project variables point to the verified dedicated destination, and `TENSOR_SITE_URL` is `https://tensor-standards.pages.dev`. Readback confirmed these values and the presence of `TENSOR_CLOUDFLARE_API_TOKEN`. No environment required-reviewer rule is configured. [Run 38115200898, attempt 2](https://github.com/TENSOR-Standards-Consortium/TENSOR-Website/actions/runs/38115200898/attempts/2) deployed website commit `2ba2dbf8cb394b53c7baaa8d91035774c8707e88` successfully to production, with immutable receipt `https://4090473e.tensor-standards.pages.dev`. A workflow file does not configure environment or branch protections automatically.
+
+The temporary account-owned token grants **Pages Write only in the dedicated TENSOR account**. Cloudflare exposes account scope rather than individual Pages-project scope for this permission. It has no DNS, Workers, billing, user, account-read or token-management permissions and expires **October 18, 2026 at 23:59:59 UTC**. To rotate: create a replacement with the same scope, replace the same GitHub environment secret, run the workflow on `main`, verify publication and then revoke the temporary token. Never put the value in an issue, commit, log or chat. A public repository does not make GitHub environment secret values public.
 
 GitHub environment variables are referenced through the `vars` context, and secrets must be created explicitly for the environment. Configure and review them using [GitHub's environment management guidance](https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/manage-environments).
+
+The `main` branch requires a pull request, the GitHub Actions `validate` check against an up-to-date branch, and resolution of review conversations; the rule applies to administrators and disallows force-pushes and deletion. Independent approving reviews are not yet required because an independent maintainer has not accepted that role. CODEOWNERS names the existing administrator rather than nonexistent accounts or teams. Private vulnerability reporting, secret-scanning push protection and Dependabot security updates are enabled. These controls do not establish independent governance or a staffed security response service.
 
 | Setting | Required value |
 | --- | --- |
@@ -25,7 +29,7 @@ GitHub environment variables are referenced through the `vars` context, and secr
 | `vars.TENSOR_SITE_URL` | Verified canonical HTTPS origin with no path, credentials, port, query or fragment |
 | `secrets.TENSOR_CLOUDFLARE_API_TOKEN` | Token scoped to deployment permissions in the intended account |
 
-Configure only the permissions needed for the enabled workflows. The Worker is optional; do not grant Worker deployment scope or enable its route merely to publish the static website. If the optional Worker is adopted, review its name/routes in `worker.wrangler.toml` and keep it inside the same dedicated account boundary.
+Configure only the permissions needed for the enabled workflows. The Worker is optional and unprovisioned; its manual workflow requires a separate `TENSOR_CLOUDFLARE_WORKER_API_TOKEN` secret and fails preflight while that secret is absent. Do not broaden the Pages token or enable a Worker route merely to publish the static website. If the optional Worker is adopted, review its name/routes in `worker.wrangler.toml`, provision only its required permissions separately and keep it inside the same dedicated account boundary.
 
 Both production workflows reject missing account, token or canonical origin. Pages also rejects a missing/invalid project name. They pass the canonical origin to the build as `SITE_URL` and provide the explicit account/token to Wrangler. There is no fallback to an inherited account, generic Cloudflare secret or ambient OAuth. Keep account access and project existence as verified operational records; passing a format check alone does not prove control.
 

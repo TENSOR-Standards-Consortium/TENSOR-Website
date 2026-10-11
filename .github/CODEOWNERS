@@ -1,9 +1,10 @@
 # Security-critical paths. Configure branch protection to require at least 1 approving review
-# from CODEOWNERS before merge.
+# from CODEOWNERS before merge once an independent reviewer accepts the role.
+# Bootstrap ownership is concentrated in the existing repository administrator.
 
-/worker/index.mjs @johnsu @tensor-standards-consortium/security
-/public/_headers @johnsu @tensor-standards-consortium/security
-/public/sw.js @johnsu @tensor-standards-consortium/security
-/.github/workflows/* @johnsu @tensor-standards-consortium/security
-/src/lib/runtimeApi.js @johnsu @tensor-standards-consortium/security
-/src/lib/frameworkDataApi.js @johnsu @tensor-standards-consortium/security
+/worker/index.mjs @johnschieferleuhlenbrock
+/public/_headers @johnschieferleuhlenbrock
+/public/sw.js @johnschieferleuhlenbrock
+/.github/workflows/* @johnschieferleuhlenbrock
+/src/lib/runtimeApi.js @johnschieferleuhlenbrock
+/src/lib/frameworkDataApi.js @johnschieferleuhlenbrock

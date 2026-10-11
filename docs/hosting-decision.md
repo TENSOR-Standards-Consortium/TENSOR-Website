@@ -1,6 +1,6 @@
 # Website hosting decision
 
-Decision date: 2026-10-10. This records the implementation choice and observed provider state. It does not certify a new deployment.
+Decision date: 2026-10-10; operational status refreshed 2026-10-11. This records the implementation choice and observed provider state, not ratification of the standard.
 
 ## Dedicated TENSOR production, Cloudflare Pages platform
 
@@ -16,7 +16,7 @@ Sources: [Cloudflare platform guidance](https://developers.cloudflare.com/pages/
 
 ## Current publication boundary
 
-Access to the **TENSOR Standards Consortium** account is verified. Its Pages inventory was empty before creating the dedicated `tensor-standards` project with production branch `main`. The owner selected `https://tensor-standards.pages.dev` as the interim public origin; candidate previews use the `core-next-stage` branch. The dedicated GitHub environment and nonsecret account/project/origin variables are configured, with a `main`-only branch rule. Its deployment token is still absent. Preview publication is separate from production promotion and does not ratify the standard. Earlier previews on inherited infrastructure remain historical references only.
+Production is live in the **TENSOR Standards Consortium** account, in the dedicated `tensor-standards` project with production branch `main`. The owner selected `https://tensor-standards.pages.dev` as the interim public origin. The dedicated GitHub environment, account/project/origin variables and account-owned Pages Write token are configured, with a `main`-only environment branch rule. [Automatic publication succeeded on October 11](https://github.com/TENSOR-Standards-Consortium/TENSOR-Website/actions/runs/38115200898/attempts/2); all 33 public downloads matched their pinned provenance afterward. The temporary proof token expires October 18, 2026 at 23:59:59 UTC and must be rotated before then. Publication does not ratify the standard. Earlier previews on inherited infrastructure remain historical references only.
 
 As observed on 2026-10-10, `tensor-standards-consortium.org` did not resolve. The dedicated account and Pages project are verified; domain ownership, DNS control and the eventual custom canonical domain still require verification. Do not infer domain ownership or repaired DNS from a working provider preview.
 
@@ -26,9 +26,9 @@ The Pages configuration includes `name = "tensor-standards"` because Wrangler re
 
 ## Build and security contract
 
-Use Node 22.12 or later. `npm ci` installs the lockfile. `npm audit` checks the full dependency tree, including development dependencies. `npm run validate` enforces the existing release URL policy, checks types, runs tests, builds the site, and inspects the generated HTML.
+Use Node 24 LTS (the exact version is pinned in `.node-version`). All workflows read that file and use Ubuntu 24.04; action revisions are pinned to full commits using the Node 24 action runtime. These are separate from the project's Node version. Dependabot proposes weekly action and dependency updates; it does not merge or deploy them automatically. `npm ci` installs the lockfile. `npm audit` checks the full dependency tree, including development dependencies. `npm run validate` enforces the existing release URL policy, checks types, runs tests, builds the site, and inspects the generated HTML.
 
-The dependency refresh uses Astro 7.3.8 and its React integration 7.0.1 while preserving React 18. Astro 7 requires Node 22.12 or later and changes compiler/build internals, so production output and browser behavior must be checked after upgrades. [Astro 7 upgrade guide](https://docs.astro.build/en/guides/upgrade-to/v7/).
+The dependency refresh uses Astro 7.3.8 and its React integration 7.0.1 while preserving React 18. Astro 7 requires Node 24 LTS (the exact version is pinned in `.node-version`) and changes compiler/build internals, so production output and browser behavior must be checked after upgrades. [Astro 7 upgrade guide](https://docs.astro.build/en/guides/upgrade-to/v7/).
 
 Astro emits a page-specific Content Security Policy with exact hashes for its inline hydration scripts and styles. The generated-output check recalculates those hashes, rejects unsafe script sources and inline event handlers, and parses JSON-LD. The HTTP header supplies `frame-ancestors`, which a CSP meta element cannot enforce. It deliberately does not add a second `script-src` policy that would intersect with and block the page hashes. Inline style attributes remain allowed for data-driven React/Cytoscape dimensions; inline JavaScript and `unsafe-eval` remain disallowed. [Astro CSP configuration](https://docs.astro.build/en/reference/configuration-reference/#securitycsp).
 
@@ -40,7 +40,7 @@ The service worker uses a new cache generation, revalidates standards assets ove
 
 ## Publication and recovery
 
-Follow [the infrastructure handoff](infrastructure-handoff.md) before the first dedicated production deployment. It separates ownership, canonical identifiers, artifact verification, destination preview, DNS cutover and temporary-host decommissioning.
+Follow [the infrastructure handoff](infrastructure-handoff.md) for credential rotation, recovery and any later custom-domain cutover. It separates ownership, canonical identifiers, artifact verification, destination preview, DNS cutover and temporary-host decommissioning.
 
 The Pages workflow publishes only `main`, after its protected environment preflight, full audit and validation. Worker deployment remains manual and uses the same dedicated account boundary. Pull-request CI never publishes. Environment protection and authorized maintainers must be configured in GitHub; a workflow file alone does not establish those controls.
 

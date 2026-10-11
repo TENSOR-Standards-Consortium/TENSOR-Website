@@ -1,10 +1,11 @@
 ## Summary
-- 
+Explain the concrete problem, delivered behavior and important decisions.
 
-## Security Regression Checklist
-- [ ] Release/asset URLs are restricted to trusted `https` hosts.
-- [ ] `/api/telemetry` origin, content-type, and payload limits are enforced.
-- [ ] CSP remains strict (no `unsafe-inline` additions for scripts/styles).
-- [ ] Service worker does not cache `/api/*` responses.
-- [ ] Error responses avoid exposing internal exception details.
-- [ ] Any changes to worker/CSP/workflows were reviewed by a code owner.
+## Validation
+Report checks actually run and their results. For hosting or browser changes, distinguish local checks, previews and verified production behavior. Explain exclusions.
+
+## Risks and rollout
+Identify affected permissions, credentials, data, browser security policies, service-worker caches and deployment settings where relevant. State required rollout or rollback steps. For unrelated areas, do not imply they were reviewed or tested.
+
+## Known gaps
+Include only unresolved findings or deferred requirements, with evidence where available. Remove this section if none apply.
