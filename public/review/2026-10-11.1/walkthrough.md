@@ -1,5 +1,7 @@
 # A reviewer's first hour
 
+Guide revision 2 · October 11, 2026. Corrects the illustrative definition-byte field name; frozen technical source, archive and manifest are unchanged.
+
 Use the frozen source identified in README.md. The public [Investigation Lab](https://tensor-standards.pages.dev/investigation-lab/) is a convenient companion; record its downloadable provenance separately. The archive is the source of truth for this review.
 
 ## 0–10 minutes: understand the claim
@@ -14,7 +16,7 @@ In the Lab choose **An agent’s outbound transfer**. Open **Questions**, **Evid
 
 Download the bundle and validation report, then re-import the bundle using the local-file control. Check that IDs, embedded definition bytes and revision links survive. This demonstrates one implementation's round trip, not independent exchange.
 
-Offline alternative: inspect `core/v0.1.0-draft.1/examples/case-a.bundle.json` and run its CLI. `definitionJson` carries pinned definition bytes; do not reserialize it when testing a digest.
+Offline alternative: inspect `core/v0.1.0-draft.1/examples/case-a.bundle.json` and run its CLI. `definitions[].content` carries the pinned definition string; do not reserialize it when testing a digest.
 
 ## 25–40 minutes: compare a conventional investigation
 

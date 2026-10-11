@@ -3,7 +3,7 @@
   "manifestVersion": 1,
   "bindingVersion": "0.1.0-draft.1",
   "sourceRepository": "https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework",
-  "sourceCommit": "cebfa0ddc1dd0227d08dd5e98144a56a984ee0f0",
+  "sourceCommit": "399e69a0e0e224c610c19df8a2261877db444692",
   "sourceDirty": false,
   "foundingSource": "framework-repository",
   "files": [
@@ -238,8 +238,8 @@
     {
       "source": "review/2026-10-11.1/review-package.zip",
       "target": "public/review/2026-10-11.1/review-package.zip",
-      "sha256": "37ccb90c5f1cd911cf21d202a037d3bb967f749355a1c5e6b3e5c298c857f964",
-      "bytes": 467072
+      "sha256": "badb0fafc85917e909e88e38518f4c874a6b04195cb4f7c9a511f1acff273652",
+      "bytes": 467160
     },
     {
       "source": "review/2026-10-11.1/source.tar.gz",
@@ -262,8 +262,8 @@
     {
       "source": "review/2026-10-11.1/walkthrough.md",
       "target": "public/review/2026-10-11.1/walkthrough.md",
-      "sha256": "cdd207c54ef9296a2650d900ccd5a655080f494eed20de594861842769e43028",
-      "bytes": 3449
+      "sha256": "945495bb91d3e2e0d757fd315cb9263fb18e788f031fe82735942e7be1995f51",
+      "bytes": 3615
     },
     {
       "source": "LICENSE",
