@@ -29,7 +29,7 @@ const {
   jsonLd,
 } = Astro.props;
 
-const siteUrl = Astro.site?.toString() || 'https://tensor-website.pages.dev/';
+const siteUrl = Astro.site?.toString() || 'https://tensor-standards.pages.dev/';
 const canonicalUrl = new URL(canonicalPath, siteUrl).toString();
 const ogImageUrl = ogImage.startsWith('http') ? ogImage : new URL(ogImage, siteUrl).toString();
 const jsonLdEntries = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];

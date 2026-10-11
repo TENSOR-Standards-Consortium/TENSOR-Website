@@ -1,6 +1,6 @@
 # Dedicated TENSOR infrastructure handoff
 
-Status: prepared, not performed. A dedicated TENSOR account is confirmed to exist; its exact identity, access, destination resources and canonical domain require verification. The inherited host is temporary preview infrastructure and must not become TENSOR's long-term business association.
+Status: account access and destination project verified; production and domain cutover remain pending. The dedicated account is **TENSOR Standards Consortium**. Its Pages inventory was empty before creating `tensor-standards`, with production branch `main`. Candidate deployment uses `core-next-stage`; the interim provider origin is `https://tensor-standards.pages.dev`. The inherited host is retained only for historical references. Account recovery, billing contacts and domain ownership remain separate stewardship checks.
 
 ## Ownership and destination
 
@@ -10,11 +10,11 @@ Confirm the exact account identifier and authorized access, then inventory its e
 
 After account ownership, access and inventory are verified, reuse a suitable existing destination project or create one if needed, then redeploy the reviewed static build there. This plan does not assume that an inherited Pages project can be transferred in place between accounts. Cloudflare documents project creation followed by Direct Upload; configure the selected project's production branch as `main`, matching this repository's workflow. [Cloudflare Direct Upload](https://developers.cloudflare.com/pages/get-started/direct-upload/).
 
-No account, project, credential, DNS record or environment has been created by this document. Do not transplant a local OAuth session or silently reuse inherited deployment secrets.
+The dedicated Pages project was created after scoped account verification. No account, credential or DNS record was created. Local authenticated access may publish a reviewed preview into the explicitly selected account; it must not be copied into CI or replace a scoped production credential.
 
 ## Production environment
 
-Create or select the GitHub environment named `tensor-production`. Restrict deployment to reviewed `main` commits and configure its approval/access protections for the actual TENSOR maintainers. The checked-in workflow does not configure those protections automatically.
+The GitHub environment `tensor-production` is created, with a custom deployment branch policy allowing only `main`. Its account/project variables point to the verified dedicated destination, and `TENSOR_SITE_URL` is `https://tensor-standards.pages.dev`, the interim address selected by the owner. Readback confirmed these values. No required-reviewer rule is configured. The scoped `TENSOR_CLOUDFLARE_API_TOKEN` secret is not configured; its owner must enter it directly in GitHub before automated production deployment. A workflow file does not configure environment protections automatically.
 
 GitHub environment variables are referenced through the `vars` context, and secrets must be created explicitly for the environment. Configure and review them using [GitHub's environment management guidance](https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/manage-environments).
 

@@ -64,7 +64,7 @@ The offline check compares every generated file with its recorded SHA-256 and re
 
 **Production belongs in a dedicated TENSOR-controlled Cloudflare account.** Keep Cloudflare Pages for the static website and the independent [TENSOR GitHub organization](https://github.com/TENSOR-Standards-Consortium) for source, review and versioned artifacts. Provider hosting does not determine the standard's semantics or governance.
 
-The inherited Pages account is temporary preview infrastructure only. The [implementation preview](https://027ccac4.tensor-website.pages.dev/) was deployed from website commit `d2986bb`; it is not the long-term production identity. A dedicated TENSOR account already exists; its exact identity and access must be verified and its resources inventoried before any creation or deployment. As observed on 2026-10-10, `tensor-standards-consortium.org` did not resolve. Confirm the destination project and canonical domain before production cutover.
+Account access is verified for **TENSOR Standards Consortium**. Its dedicated Pages project is `tensor-standards`, with `main` reserved for production and `core-next-stage` for candidate previews. The interim provider origin is `https://tensor-standards.pages.dev`; production publication and a custom-domain cutover are separate steps. As observed on 2026-10-10, `tensor-standards-consortium.org` did not resolve. The inherited host is retained only for historical preview references; new deployments target the dedicated account.
 
 The workflows use the **`tensor-production` GitHub environment** and fail before deployment when its required configuration is missing. Configure these values only for the dedicated TENSOR destination:
 

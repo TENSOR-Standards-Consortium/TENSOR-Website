@@ -12,7 +12,7 @@ const isEntry = legacyGraph.entryNodeIds.includes(question.id);
 const previous = legacyQuestions[index - 1];
 const next = legacyQuestions[index + 1];
 const title = `${question.id} · ${question.label}`;
-const citationUrl = new URL(questionPath(question.id), Astro.site || 'https://tensor-website.pages.dev/').toString();
+const citationUrl = new URL(questionPath(question.id), Astro.site || 'https://tensor-standards.pages.dev/').toString();
 ---
 
 <BaseLayout title={title} description={question.text} canonicalPath={questionPath(question.id)}>

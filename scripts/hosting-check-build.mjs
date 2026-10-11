@@ -3,6 +3,7 @@ import { readFile, readdir } from 'node:fs/promises';
 import { resolve, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parse } from 'parse5';
+import astroConfig from '../astro.config.mjs';
 
 const attrs = (node) => Object.fromEntries((node.attrs || []).map(({ name, value }) => [name, value]));
 function walk(node, callback) {
@@ -81,17 +82,26 @@ async function htmlFiles(directory) {
   return files;
 }
 
+export function validateRobots(source, site) {
+  const sitemap = new URL('sitemap-index.xml', site).href;
+  const declared = [...source.matchAll(/^Sitemap:\s*(\S+)\s*$/gmi)].map((match) => match[1]);
+  return declared.length === 1 && declared[0] === sitemap
+    ? []
+    : [`robots.txt: expected one sitemap at the configured canonical site: ${sitemap}`];
+}
+
 export async function checkBuild(directory = resolve('dist')) {
   const files = await htmlFiles(directory);
   if (!files.length) throw new Error('No built HTML found. Run npm run build first.');
   const errors = [];
   for (const file of files) errors.push(...validateHtml(await readFile(file, 'utf8'), relative(directory, file)));
+  errors.push(...validateRobots(await readFile(resolve(directory, 'robots.txt'), 'utf8'), astroConfig.site));
   const headers = await readFile(resolve(directory, '_headers'), 'utf8');
   if (!headers.includes("Content-Security-Policy: frame-ancestors 'self'")) errors.push('_headers: missing frame-ancestors header');
   if (/Content-Security-Policy:.*(?:script-src|default-src)/.test(headers)) errors.push('_headers: a second script/default policy would intersect the built page hashes');
   if (headers.split('\n').some((line) => line.length > 2000)) errors.push('_headers: Cloudflare line limit exceeded');
   if (errors.length) throw new Error(errors.join('\n'));
-  console.log(`Built security checks passed: ${files.length} HTML pages, exact script/style hashes, JSON-LD, and hosting headers.`);
+  console.log(`Built security checks passed: ${files.length} HTML pages, exact script/style hashes, JSON-LD, hosting headers, and canonical robots sitemap.`);
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) await checkBuild(process.argv[2] ? resolve(process.argv[2]) : undefined);

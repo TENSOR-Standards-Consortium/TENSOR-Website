@@ -3,12 +3,24 @@ import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import vm from 'node:vm';
 import test from 'node:test';
-import { validateHtml } from '../scripts/hosting-check-build.mjs';
+import { validateHtml, validateRobots } from '../scripts/hosting-check-build.mjs';
+import { GET as robots } from '../src/pages/robots.txt.js';
 import astroConfig from '../astro.config.mjs';
 
 const script = 'window.example = true;';
 const digest = createHash('sha256').update(script).digest('base64');
 const document = (source = script, policy = `script-src 'self' 'sha256-${digest}'; object-src 'none'`) => `<!doctype html><html><head><meta http-equiv="content-security-policy" content="${policy}"><script>${source}</script></head><body></body></html>`;
+
+test('robots follows a new canonical origin and the build check rejects the inherited sitemap', async () => {
+  const site = new URL('https://tensor-independent.example/');
+  const response = robots({ site });
+  const source = await response.text();
+  assert.equal(response.headers.get('content-type'), 'text/plain; charset=utf-8');
+  assert.match(source, /^User-agent: \*\nAllow: \/\n/);
+  assert.deepEqual(validateRobots(source, site), []);
+  assert.match(source, /Sitemap: https:\/\/tensor-independent\.example\/sitemap-index\.xml/);
+  assert.match(validateRobots('Sitemap: https://tensor-website.pages.dev/sitemap-index.xml\n', site).join('\n'), /configured canonical site/);
+});
 
 test('built CSP accepts exact hydration bytes and rejects a modified script', () => {
   assert.deepEqual(validateHtml(document()), []);

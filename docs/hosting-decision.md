@@ -16,9 +16,9 @@ Sources: [Cloudflare platform guidance](https://developers.cloudflare.com/pages/
 
 ## Current publication boundary
 
-The [temporary implementation preview](https://027ccac4.tensor-website.pages.dev/) was deployed from website commit `d2986bb`. It demonstrates an implementation candidate, not the permanent institutional identity or a ratified standard. The inherited project's existing production alias remains temporary infrastructure pending handoff.
+Access to the **TENSOR Standards Consortium** account is verified. Its Pages inventory was empty before creating the dedicated `tensor-standards` project with production branch `main`. The owner selected `https://tensor-standards.pages.dev` as the interim public origin; candidate previews use the `core-next-stage` branch. The dedicated GitHub environment and nonsecret account/project/origin variables are configured, with a `main`-only branch rule. Its deployment token is still absent. Preview publication is separate from production promotion and does not ratify the standard. Earlier previews on inherited infrastructure remain historical references only.
 
-As observed on 2026-10-10, `tensor-standards-consortium.org` did not resolve. A dedicated TENSOR account already exists, but its exact identity/access, destination project and canonical domain still require verification. Inventory that account before creating a project or changing any resource. Do not infer domain ownership or repaired DNS from a working provider preview.
+As observed on 2026-10-10, `tensor-standards-consortium.org` did not resolve. The dedicated account and Pages project are verified; domain ownership, DNS control and the eventual custom canonical domain still require verification. Do not infer domain ownership or repaired DNS from a working provider preview.
 
 Production workflows require the `tensor-production` GitHub environment, with `TENSOR_CLOUDFLARE_ACCOUNT_ID`, `TENSOR_CLOUDFLARE_PROJECT_NAME` (Pages), `TENSOR_SITE_URL` variables and the scoped `TENSOR_CLOUDFLARE_API_TOKEN` secret. Missing or malformed configuration fails before publication. The build receives the mandatory canonical origin as `SITE_URL`. No workflow falls back to inherited account identifiers, generic Cloudflare secrets or local OAuth.
 
