@@ -277,42 +277,6 @@ function latestVersionFromReleases(releases, key) {
   return bestVersion;
 }
 
-function rankManifestFreshness(manifest) {
-  if (!manifest || typeof manifest !== 'object') {
-    return { versionScore: 0, generatedAtScore: 0, releaseCount: 0 };
-  }
-
-  const versionScore = Math.max(
-    buildVersionScore(manifest.latestGraphVersion),
-    buildVersionScore(manifest.latestSchemaVersion)
-  );
-  const generatedAtScore = resolveTimestamp(manifest.generatedAt);
-  const releaseCount = manifestReleaseArray(manifest).length;
-
-  return {
-    versionScore,
-    generatedAtScore,
-    releaseCount,
-  };
-}
-
-function isManifestFresher(candidate, current) {
-  const left = rankManifestFreshness(candidate);
-  const right = rankManifestFreshness(current);
-
-  if (left.versionScore !== right.versionScore) {
-    return left.versionScore > right.versionScore;
-  }
-  if (left.generatedAtScore !== right.generatedAtScore) {
-    return left.generatedAtScore > right.generatedAtScore;
-  }
-  if (left.releaseCount !== right.releaseCount) {
-    return left.releaseCount > right.releaseCount;
-  }
-
-  return false;
-}
-
 export function buildFrameworkAssetUrls(assetPath) {
   const normalized = sanitizeAssetPath(assetPath);
   if (!normalized) {
@@ -386,8 +350,8 @@ function mapReleaseWithPortableUrls(release) {
   const schemaAsset = extractReleaseAssetInfo(release, 'schema');
   const graphPath = sanitizeAssetPath(graphAsset.path);
   const schemaPath = sanitizeAssetPath(schemaAsset.path);
-  const graphUrls = unique([graphAsset.url, ...buildFrameworkAssetUrls(graphPath)]).filter(isTrustedReleaseUrl);
-  const schemaUrls = unique([schemaAsset.url, ...buildFrameworkAssetUrls(schemaPath)]).filter(isTrustedReleaseUrl);
+  const graphUrls = unique([...buildFrameworkAssetUrls(graphPath), graphAsset.url]).filter(isTrustedReleaseUrl);
+  const schemaUrls = unique([...buildFrameworkAssetUrls(schemaPath), schemaAsset.url]).filter(isTrustedReleaseUrl);
 
   return {
     ...release,
@@ -459,12 +423,11 @@ async function fetchJsonFromSources(sources, init = {}) {
   throw lastError || new Error('No fallback sources resolved');
 }
 
-async function fetchFreshestManifestFromSources(sources, init = {}) {
+async function fetchPreferredManifestFromSources(sources, init = {}) {
   const requestInit = withAcceptHeader({
     cache: init.cache || 'no-store',
     ...init,
   });
-  let freshest = null;
   let lastError = null;
 
   for (const source of sources) {
@@ -485,22 +448,15 @@ async function fetchFreshestManifestFromSources(sources, init = {}) {
 
       const payload = await response.json();
       const normalized = normalizeReleaseManifest(payload, source.url);
-      const candidate = {
-        data: normalized,
-        requestUrl: source.url,
-        sourceName: source.label,
-      };
-
-      if (!freshest || isManifestFresher(candidate.data, freshest.data)) {
-        freshest = candidate;
+      if (!normalized.latestGraphVersion || !normalized.latestSchemaVersion || normalized.releases.length === 0) {
+        throw new Error(`${source.label} did not contain a usable release manifest`);
       }
+      // main is the authoritative release channel. Historical mirrors are
+      // fallbacks, not competing candidates to poll after a successful load.
+      return { data: normalized, requestUrl: source.url, sourceName: source.label };
     } catch (error) {
       lastError = error;
     }
-  }
-
-  if (freshest) {
-    return freshest;
   }
 
   throw lastError || new Error('No release manifest sources resolved');
@@ -582,7 +538,7 @@ export async function fetchReleaseManifest(init = {}) {
     },
   ];
 
-  const fallbackResult = await fetchFreshestManifestFromSources(fallbackSources, init);
+  const fallbackResult = await fetchPreferredManifestFromSources(fallbackSources, init);
   return {
     data: fallbackResult.data,
     requestUrl: fallbackResult.requestUrl,

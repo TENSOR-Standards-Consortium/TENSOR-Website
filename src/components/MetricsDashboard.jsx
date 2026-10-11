@@ -12,12 +12,13 @@ const CHART_PADDING = 26;
 
 const TREND_FIELDS = [
   { key: 'overallScore', label: 'Overall', className: 'is-overall' },
-  { key: 'coverageScore', label: 'Coverage', className: 'is-coverage' },
+  { key: 'coverageScore', label: 'Structural coverage', className: 'is-coverage' },
   { key: 'routingScore', label: 'Routing', className: 'is-routing' },
   { key: 'robustnessScore', label: 'Robustness', className: 'is-robustness' },
 ];
 
 function asNumber(value) {
+  if (value === null || value === undefined || value === '' || typeof value === 'boolean') return null;
   const number = Number(value);
   return Number.isFinite(number) ? number : null;
 }
@@ -406,7 +407,7 @@ export default function MetricsDashboard() {
         'routingScore',
         'informationScore',
         'robustnessScore',
-        'publishReady',
+        'historicalPublishGatePassed',
         'failedGateCount',
       ],
     ];
@@ -545,10 +546,10 @@ export default function MetricsDashboard() {
     <section className="metrics-dashboard container">
       <div className="metrics-dashboard-shell">
         <div className="metrics-dashboard-head">
-          <p className="section-kicker">Framework Assurance</p>
-          <h2>Release Quality & Coverage Dashboard</h2>
+          <p className="section-kicker">Legacy Graph Structure</p>
+          <h2>Historical Structural Metrics</h2>
           <p>
-            Tracks current and historical release quality from framework-generated assurance artifacts.
+            Historical graph measurements only. These scores do not establish investigative effectiveness, security outcomes, or candidate Core record conformance.
           </p>
         </div>
 
@@ -615,14 +616,14 @@ export default function MetricsDashboard() {
             <p>{overallDelta === null ? 'No prior baseline' : `${overallDelta > 0 ? '+' : ''}${overallDelta.toFixed(2)} pts vs prior`}</p>
           </article>
           <article className="metrics-kpi-card">
-            <span>Coverage</span>
+            <span>Structural Coverage</span>
             <strong>{formatPercent(reportState.math?.summary?.coverageScore)}</strong>
-            <p>Domain/archetype completeness</p>
+            <p>Configured domain/archetype representation</p>
           </article>
           <article className="metrics-kpi-card">
             <span>Routing</span>
             <strong>{formatPercent(reportState.math?.summary?.routingScore)}</strong>
-            <p>Deterministic decision integrity</p>
+            <p>Configured branch consistency</p>
           </article>
           <article className="metrics-kpi-card">
             <span>Robustness</span>
@@ -633,7 +634,7 @@ export default function MetricsDashboard() {
 
         <div className="metrics-dashboard-grid">
           <article className="metrics-block metrics-block-wide">
-            <h3>Domain × Archetype Coverage Matrix</h3>
+            <h3>Domain × Archetype Representation</h3>
             <p className="metrics-block-meta">
               Source artifact: {reportState.sourceName || 'release report channel'}
             </p>
@@ -672,13 +673,13 @@ export default function MetricsDashboard() {
           </article>
 
           <article className="metrics-block">
-            <h3>Publish Gate Timeline</h3>
+            <h3>Historical Gate Timeline</h3>
             <table className="metrics-table">
               <thead>
                 <tr>
                   <th>Version</th>
                   <th>Overall</th>
-                  <th>Publish Ready</th>
+                  <th>Historical Gates Passed</th>
                   <th>Failed Gates</th>
                 </tr>
               </thead>
@@ -708,7 +709,7 @@ export default function MetricsDashboard() {
           </article>
 
           <article className="metrics-block">
-            <h3>Selected Release Gate Results</h3>
+            <h3>Selected Historical Gate Results</h3>
             <p className="metrics-block-meta">
               Version {selectedVersion || 'n/a'} · generated {formatDateTime(reportState.math?.generatedAt)}
             </p>

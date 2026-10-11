@@ -1,0 +1,463 @@
+{
+  "snapshotId": "urn:example:tensor:candidate:case-b:snapshot-1",
+  "investigationId": "urn:example:tensor:candidate:case-b:investigation",
+  "contractRef": {
+    "proposal": "0.1.0",
+    "bindingVersion": "0.1.0-draft.1",
+    "status": "candidate; unratified"
+  },
+  "producer": {
+    "label": "TENSOR synthetic fixture generator",
+    "version": "0.1.0-draft.1",
+    "implementationStatus": "Local candidate; synthetic events and actors"
+  },
+  "recordedAt": "2026-01-13T09:29:00Z",
+  "scope": {
+    "purpose": "Investigate one identity session with agent preparation and human response review.",
+    "subjectBoundary": [
+      "urn:example:tensor:candidate:case-b:session"
+    ],
+    "organization": "urn:example:tensor:candidate:case-b:organization"
+  },
+  "definitionReferences": [
+    {
+      "id": "urn:example:tensor:candidate:case-b:definition",
+      "version": "0.1.0-draft.1",
+      "sha256": "6e85c07aacf21ff813efab19b8e2a4b7ebca71ca850de42d3b6dd368cffea399",
+      "artifact": "case-b.definition.json"
+    }
+  ],
+  "dependencies": [],
+  "entries": [
+    {
+      "id": "urn:example:tensor:candidate:case-b:actor-cedar",
+      "type": "Actor",
+      "recordedAt": "2026-01-13T09:11:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:candidate:case-b:actor-cedar"
+      },
+      "kind": "agent",
+      "label": "Cedar (synthetic)",
+      "identityStatus": "selfDeclared",
+      "configurationContext": "Illustrative label; no executable model, prompt, or runtime is supplied."
+    },
+    {
+      "id": "urn:example:tensor:candidate:case-b:actor-leon",
+      "type": "Actor",
+      "recordedAt": "2026-01-13T09:11:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:candidate:case-b:actor-leon"
+      },
+      "kind": "human",
+      "label": "Leon (synthetic)",
+      "identityStatus": "selfDeclared"
+    },
+    {
+      "id": "urn:example:tensor:candidate:case-b:policy",
+      "type": "PolicyReference",
+      "recordedAt": "2026-01-13T09:11:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:candidate:case-b:actor-leon"
+      },
+      "policyIdentity": "urn:example:tensor:candidate:case-b:organization-identity-policy",
+      "version": "1.0-example",
+      "effectiveTime": {
+        "status": "known",
+        "start": "2026-01-01T00:00:00Z"
+      },
+      "applicableScope": "The bound synthetic identity session.",
+      "locatorAbsentReason": "Synthetic policy; conditions appear only in this example.",
+      "conditions": "A designated identity responder may request additional verification for an elevated-risk session, subject to local authorization."
+    },
+    {
+      "id": "urn:example:tensor:candidate:case-b:authority",
+      "type": "AuthorityAssertion",
+      "recordedAt": "2026-01-13T09:11:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:candidate:case-b:actor-leon"
+      },
+      "issuerId": "urn:example:tensor:candidate:case-b:actor-leon",
+      "granteeId": "urn:example:tensor:candidate:case-b:actor-leon",
+      "permittedOperation": "Approve an additional-verification request",
+      "scope": "urn:example:tensor:candidate:case-b:session",
+      "validityStatus": {
+        "status": "claimedValid",
+        "reason": "Leon is asserted to be the designated responder in this synthetic scenario."
+      },
+      "basisReferences": [
+        "urn:example:tensor:candidate:case-b:policy"
+      ],
+      "receiverLocalVerification": "notPerformed"
+    },
+    {
+      "id": "urn:example:tensor:candidate:case-b:evidence-signin",
+      "type": "EvidenceReference",
+      "recordedAt": "2026-01-13T09:12:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:candidate:case-b:actor-cedar"
+      },
+      "description": "Synthetic sign-in record with unfamiliar geography and an elevated provider risk flag.",
+      "source": {
+        "label": "Identity provider",
+        "provenanceStatus": "asserted in synthetic scenario"
+      },
+      "availability": "unavailable",
+      "locatorAbsentReason": "Source bytes are not distributed and no live service is referenced."
+    },
+    {
+      "id": "urn:example:tensor:candidate:case-b:evidence-gap",
+      "type": "EvidenceReference",
+      "recordedAt": "2026-01-13T09:12:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:candidate:case-b:actor-cedar"
+      },
+      "description": "Required issuer/device telemetry and complete egress inventory were not initially collected.",
+      "source": {
+        "label": "Issuer, device, and organization inventory sources",
+        "provenanceStatus": "Source systems named; material absent"
+      },
+      "availability": "unavailable",
+      "locatorAbsentReason": "Collection had not occurred; there is no artifact to locate."
+    },
+    {
+      "id": "urn:example:tensor:candidate:case-b:observation-risk",
+      "type": "Observation",
+      "recordedAt": "2026-01-13T09:13:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:candidate:case-b:actor-cedar"
+      },
+      "statement": "The provider reports elevated risk and unfamiliar geography. These source classifications alone do not establish compromise.",
+      "evidenceRefIds": [
+        "urn:example:tensor:candidate:case-b:evidence-signin"
+      ],
+      "method": "Synthetic extraction of provider-reported fields.",
+      "eventTime": {
+        "status": "bounded",
+        "start": "2026-01-13T09:00:00Z",
+        "end": "2026-01-13T09:10:00Z"
+      }
+    },
+    {
+      "id": "urn:example:tensor:candidate:case-b:instance-egress",
+      "type": "QuestionInstance",
+      "recordedAt": "2026-01-13T09:13:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:candidate:case-b:actor-cedar"
+      },
+      "definitionRef": {
+        "id": "urn:example:tensor:candidate:case-b:definition",
+        "version": "0.1.0-draft.1",
+        "sha256": "6e85c07aacf21ff813efab19b8e2a4b7ebca71ca850de42d3b6dd368cffea399",
+        "artifact": "case-b.definition.json"
+      },
+      "questionId": "urn:example:tensor:candidate:case-b:question-egress",
+      "subjectBindings": {
+        "subject": "urn:example:tensor:candidate:case-b:session"
+      },
+      "timeContext": {
+        "status": "bounded",
+        "start": "2026-01-13T09:00:00Z",
+        "end": "2026-01-13T09:10:00Z"
+      },
+      "parameterBindings": {
+        "subject": "urn:example:tensor:candidate:case-b:session",
+        "window": {
+          "status": "bounded",
+          "start": "2026-01-13T09:00:00Z",
+          "end": "2026-01-13T09:10:00Z"
+        },
+        "organization": "urn:example:tensor:candidate:case-b:organization"
+      },
+      "origin": {
+        "kind": "entry",
+        "rationale": "The provider-reported unfamiliar source warrants egress-context investigation."
+      }
+    },
+    {
+      "id": "urn:example:tensor:candidate:case-b:hypothesis-misuse",
+      "type": "Hypothesis",
+      "recordedAt": "2026-01-13T09:13:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:candidate:case-b:actor-cedar"
+      },
+      "statement": "A party misused the session token.",
+      "relatedInstanceId": "urn:example:tensor:candidate:case-b:instance-egress",
+      "status": "proposed"
+    },
+    {
+      "id": "urn:example:tensor:candidate:case-b:hypothesis-vpn",
+      "type": "Hypothesis",
+      "recordedAt": "2026-01-13T09:13:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:candidate:case-b:actor-cedar"
+      },
+      "statement": "Legitimate VPN egress explains the geography signal.",
+      "relatedInstanceId": "urn:example:tensor:candidate:case-b:instance-egress",
+      "status": "proposed"
+    },
+    {
+      "id": "urn:example:tensor:candidate:case-b:assessment-egress-unknown",
+      "type": "Assessment",
+      "recordedAt": "2026-01-13T09:14:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:candidate:case-b:actor-cedar"
+      },
+      "targetInstanceId": "urn:example:tensor:candidate:case-b:instance-egress",
+      "applicability": {
+        "status": "applicable",
+        "rationale": "Subject, interval, and required parameters are resolved."
+      },
+      "outcome": "unknown",
+      "rationale": "Available inventory does not identify whether this session used organization-managed egress.",
+      "inputs": [
+        {
+          "entryId": "urn:example:tensor:candidate:case-b:observation-risk",
+          "role": "context"
+        },
+        {
+          "entryId": "urn:example:tensor:candidate:case-b:evidence-gap",
+          "role": "supports"
+        }
+      ],
+      "method": "Evidence-linked synthetic assessment",
+      "unknownReasons": [
+        {
+          "code": "notCollected",
+          "explanation": "Complete egress inventory and correlated VPN records were not collected."
+        }
+      ]
+    },
+    {
+      "id": "urn:example:tensor:candidate:case-b:decision-open-replay",
+      "type": "Decision",
+      "recordedAt": "2026-01-13T09:15:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:candidate:case-b:actor-leon"
+      },
+      "targetInstanceId": "urn:example:tensor:candidate:case-b:instance-egress",
+      "selectedAssessmentId": "urn:example:tensor:candidate:case-b:assessment-egress-unknown",
+      "disposition": "transition",
+      "rationale": "Leon reviews the unknown assessment and opens the separate replay question. The source-risk flag alone cannot resolve it.",
+      "policyStatus": {
+        "status": "notApplicable"
+      },
+      "authorityStatus": {
+        "status": "notApplicable"
+      },
+      "selections": [
+        {
+          "transitionId": "urn:example:tensor:candidate:case-b:transition-egress-to-replay",
+          "targetInstanceId": "urn:example:tensor:candidate:case-b:instance-replay"
+        }
+      ]
+    },
+    {
+      "id": "urn:example:tensor:candidate:case-b:instance-replay",
+      "type": "QuestionInstance",
+      "recordedAt": "2026-01-13T09:15:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:candidate:case-b:actor-cedar"
+      },
+      "definitionRef": {
+        "id": "urn:example:tensor:candidate:case-b:definition",
+        "version": "0.1.0-draft.1",
+        "sha256": "6e85c07aacf21ff813efab19b8e2a4b7ebca71ca850de42d3b6dd368cffea399",
+        "artifact": "case-b.definition.json"
+      },
+      "questionId": "urn:example:tensor:candidate:case-b:question-replay",
+      "subjectBindings": {
+        "subject": "urn:example:tensor:candidate:case-b:session"
+      },
+      "timeContext": {
+        "status": "bounded",
+        "start": "2026-01-13T09:00:00Z",
+        "end": "2026-01-13T09:10:00Z"
+      },
+      "parameterBindings": {
+        "subject": "urn:example:tensor:candidate:case-b:session",
+        "window": {
+          "status": "bounded",
+          "start": "2026-01-13T09:00:00Z",
+          "end": "2026-01-13T09:10:00Z"
+        },
+        "organization": "urn:example:tensor:candidate:case-b:organization"
+      },
+      "origin": {
+        "kind": "transition",
+        "originDecisionId": "urn:example:tensor:candidate:case-b:decision-open-replay",
+        "rationale": "Opened through the exact selected unknown assessment and transition."
+      }
+    },
+    {
+      "id": "urn:example:tensor:candidate:case-b:assessment-replay-unknown",
+      "type": "Assessment",
+      "recordedAt": "2026-01-13T09:16:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:candidate:case-b:actor-cedar"
+      },
+      "targetInstanceId": "urn:example:tensor:candidate:case-b:instance-replay",
+      "applicability": {
+        "status": "applicable",
+        "rationale": "Subject, interval, and required parameters are resolved."
+      },
+      "outcome": "unknown",
+      "rationale": "The provider flag does not establish replay, and sufficient issuer/device coverage is absent.",
+      "inputs": [
+        {
+          "entryId": "urn:example:tensor:candidate:case-b:observation-risk",
+          "role": "context"
+        },
+        {
+          "entryId": "urn:example:tensor:candidate:case-b:evidence-gap",
+          "role": "supports"
+        }
+      ],
+      "method": "Evidence-linked synthetic assessment",
+      "unknownReasons": [
+        {
+          "code": "notCollected",
+          "explanation": "Issuer and device telemetry needed to assess replay is absent."
+        }
+      ]
+    },
+    {
+      "id": "urn:example:tensor:candidate:case-b:decision-verification",
+      "type": "Decision",
+      "recordedAt": "2026-01-13T09:17:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:candidate:case-b:actor-leon"
+      },
+      "targetInstanceId": "urn:example:tensor:candidate:case-b:instance-replay",
+      "selectedAssessmentId": "urn:example:tensor:candidate:case-b:assessment-replay-unknown",
+      "disposition": "approveVerificationRequest",
+      "rationale": "Leon chooses a policy-permitted request despite unresolved replay. This is not a finding that replay occurred.",
+      "policyStatus": {
+        "status": "referenced",
+        "policyRefIds": [
+          "urn:example:tensor:candidate:case-b:policy"
+        ]
+      },
+      "authorityStatus": {
+        "status": "referenced",
+        "authorityRefIds": [
+          "urn:example:tensor:candidate:case-b:authority"
+        ]
+      }
+    },
+    {
+      "id": "urn:example:tensor:candidate:case-b:action-verification-planned",
+      "type": "ActionRecord",
+      "recordedAt": "2026-01-13T09:17:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:candidate:case-b:actor-leon"
+      },
+      "operationDescription": "Request additional verification for the scoped session.",
+      "operationSubject": "urn:example:tensor:candidate:case-b:session",
+      "stage": "planned",
+      "decisionId": "urn:example:tensor:candidate:case-b:decision-verification",
+      "eventTime": {
+        "status": "unknown",
+        "reason": "No request has been executed in this snapshot."
+      }
+    },
+    {
+      "id": "urn:example:tensor:candidate:case-b:evidence-vpn",
+      "type": "EvidenceReference",
+      "recordedAt": "2026-01-13T09:25:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:candidate:case-b:actor-cedar"
+      },
+      "description": "Synthetic recovered VPN and maintenance records correlating managed egress with this session.",
+      "source": {
+        "label": "VPN service and maintenance records",
+        "provenanceStatus": "asserted in synthetic scenario"
+      },
+      "availability": "unavailable",
+      "locatorAbsentReason": "Source artifact is not distributed; no actual service exists."
+    },
+    {
+      "id": "urn:example:tensor:candidate:case-b:observation-vpn",
+      "type": "Observation",
+      "recordedAt": "2026-01-13T09:26:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:candidate:case-b:actor-cedar"
+      },
+      "statement": "Recovered records reportedly correlate the session with organization-managed egress in the bound interval.",
+      "evidenceRefIds": [
+        "urn:example:tensor:candidate:case-b:evidence-vpn"
+      ],
+      "method": "Synthetic source correlation by Cedar; not independently demonstrated.",
+      "eventTime": {
+        "status": "bounded",
+        "start": "2026-01-13T09:00:00Z",
+        "end": "2026-01-13T09:10:00Z"
+      }
+    },
+    {
+      "id": "urn:example:tensor:candidate:case-b:assessment-egress-yes",
+      "type": "Assessment",
+      "recordedAt": "2026-01-13T09:27:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:candidate:case-b:actor-cedar"
+      },
+      "targetInstanceId": "urn:example:tensor:candidate:case-b:instance-egress",
+      "applicability": {
+        "status": "applicable",
+        "rationale": "Subject, interval, and required parameters are resolved."
+      },
+      "outcome": "yes",
+      "rationale": "Later records support managed egress. This does not resolve the independent replay question.",
+      "inputs": [
+        {
+          "entryId": "urn:example:tensor:candidate:case-b:observation-vpn",
+          "role": "supports"
+        }
+      ],
+      "method": "Evidence-linked synthetic assessment",
+      "supersedes": {
+        "entryId": "urn:example:tensor:candidate:case-b:assessment-egress-unknown",
+        "reason": "Later collected egress evidence resolves the former inventory gap."
+      }
+    },
+    {
+      "id": "urn:example:tensor:candidate:case-b:review-transition-unresolved",
+      "type": "Decision",
+      "recordedAt": "2026-01-13T09:28:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:candidate:case-b:actor-leon"
+      },
+      "targetInvestigationId": "urn:example:tensor:candidate:case-b:investigation",
+      "selectedInputIds": [
+        "urn:example:tensor:candidate:case-b:assessment-egress-yes"
+      ],
+      "reviewedEntryIds": [
+        "urn:example:tensor:candidate:case-b:decision-open-replay"
+      ],
+      "triggeringEntryIds": [
+        "urn:example:tensor:candidate:case-b:assessment-egress-yes"
+      ],
+      "disposition": "unresolved",
+      "rationale": "A selected input was superseded. Renewed review of this historical decision is not yet recorded; its original input remains unchanged.",
+      "policyStatus": {
+        "status": "notApplicable"
+      },
+      "authorityStatus": {
+        "status": "notApplicable"
+      }
+    }
+  ],
+  "completeness": {
+    "exchangeScope": "full",
+    "meaning": "All referenced Core entries and definition bytes are included. External source-evidence bytes are not."
+  },
+  "omissions": [],
+  "losses": [],
+  "metadata": {
+    "synthetic": true,
+    "sourceProposal": "0.1.0",
+    "sourceExample": "case-b"
+  },
+  "view": {
+    "mode": "historical"
+  }
+}

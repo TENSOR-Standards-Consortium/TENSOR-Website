@@ -1,653 +1,211 @@
-import { useEffect, useMemo, useState } from 'react';
-import { DEFAULT_SCENARIO_ID, getInvestigationScenario } from '../data/investigationLabScenario';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { BINDING_VERSION, parseBundle, validateBundle } from '../vendor/tensor-core/index.mjs';
+import {
+  MAX_BUNDLE_BYTES, CASES, SECTIONS, asText, attributionLabel, entryTitle, getDefinitionQuestions,
+  getEntries, groupEntries, indexEntries, questionKey, serializeForLab, summarizeValidation, validateImportSize, downloadName, decodeBundleBytes, filterEntries,
+} from '../lib/investigationLab.mjs';
+import '../styles/investigation-lab.css';
 
-const AUTO_ADVANCE_MS = 9000;
+const PAGE_SIZE = 30;
 
-function sanitizeMode(value) {
-  return value === 'walkthrough' ? 'walkthrough' : 'mission';
+function Status({ value, children }) {
+  return <span className={`il-status il-status--${['pass', 'fail', 'indeterminate', 'yes', 'no', 'unknown', 'planned', 'completed'].includes(value) ? value : 'neutral'}`}>{children || asText(value)}</span>;
 }
 
-function formatConfidence(value) {
-  const numeric = Number(value);
-  if (!Number.isFinite(numeric)) {
-    return 'n/a';
-  }
-
-  return `${Math.round(numeric * 100)}%`;
+function JsonDetails({ value, label = 'Inspect complete JSON' }) {
+  return <details className="il-json"><summary>{label}</summary><pre>{JSON.stringify(value, null, 2)}</pre></details>;
 }
 
-function describeOutcome(outcome) {
-  if (outcome === 'yes') {
-    return 'Yes';
-  }
-  if (outcome === 'no') {
-    return 'No';
-  }
-  return 'Unknown';
+function Field({ label, value }) {
+  if (value === undefined || value === null || value === '') return null;
+  return <div><dt>{label}</dt><dd>{asText(value)}</dd></div>;
 }
 
-function scoreBand(value) {
-  if (value >= 85) {
-    return 'High';
-  }
-  if (value >= 70) {
-    return 'Moderate';
-  }
-  return 'Needs review';
+function EntryReference({ id, entriesById, onInspect, label }) {
+  if (!id) return null;
+  const entry = typeof id === 'string' ? entriesById.get(id) : undefined;
+  return entry
+    ? <button type="button" className="il-reference" onClick={() => onInspect(id)} title={id}>{label || entryTitle(entry)}</button>
+    : <span className="il-missing-reference">{label ? `${label}: ` : ''}{asText(id)} <small>({entriesById.has(id) ? 'ambiguous ID' : 'not included'})</small></span>;
 }
 
-function toClassNames(parts) {
-  return parts.filter(Boolean).join(' ');
+function ReferenceList({ ids, ...props }) {
+  return Array.isArray(ids) && ids.length > 0
+    ? <ul className="il-reference-list">{ids.map((id, index) => <li key={index}><EntryReference id={id} {...props} /></li>)}</ul>
+    : null;
 }
 
-function modeFromUrl(fallbackMode) {
-  if (typeof window === 'undefined') {
-    return sanitizeMode(fallbackMode);
+function EntryCard({ entry, questions, entriesById, onInspect }) {
+  const refs = { entriesById, onInspect };
+  const question = entry.type === 'QuestionInstance' ? questions.get(questionKey(entry.definitionRef, entry.questionId)) : null;
+  return <article className="il-entry">
+    <div className="il-entry-top"><span className="il-eyebrow">{asText(entry.type)}</span><Status value={entry.outcome || entry.stage || entry.availability || entry.status}>{asText(entry.outcome || entry.stage || entry.availability || entry.status || 'recorded')}</Status></div>
+    <h3>{question?.prompt ? asText(question.prompt) : entryTitle(entry)}</h3>
+    <p className="il-attribution">{attributionLabel(entry, entriesById)}<span aria-hidden="true"> · </span><time>{asText(entry.recordedAt || 'Recorded time unspecified')}</time></p>
+    {entry.type === 'QuestionInstance' && <>
+      {!question && <p className="il-caption">The exact pinned question is unavailable or ambiguous. Review the validation report and the complete instance JSON.</p>}
+      <dl className="il-fields"><Field label="Subject" value={entry.subjectBindings} /><Field label="Time context" value={entry.timeContext} /><Field label="Definition version" value={entry.definitionRef?.version} /><Field label="Origin" value={entry.origin?.rationale || entry.origin?.kind} /></dl>
+      {question && <details className="il-criteria"><summary>Question criteria and parameter bindings</summary><p>{asText(question.proposition)}</p><dl className="il-fields"><Field label="Yes" value={question.assessmentCriteria?.yes} /><Field label="No" value={question.assessmentCriteria?.no} /><Field label="Unknown" value={question.assessmentCriteria?.unknown} /><Field label="Applicability" value={question.applicabilityCriteria} /><Field label="Bindings" value={entry.parameterBindings} /></dl></details>}
+    </>}
+    {entry.type === 'EvidenceReference' && <dl className="il-fields"><Field label="Source" value={entry.source} /><Field label="Access limitation" value={entry.locatorAbsentReason} /><Field label="Restrictions" value={entry.accessRestrictions} /><Field label="Locator (not opened)" value={entry.locator} /><Field label="Integrity" value={entry.integrity} /></dl>}
+    {entry.type === 'Observation' && <><dl className="il-fields"><Field label="Method" value={entry.method} /><Field label="Event time" value={entry.eventTime} /></dl><p className="il-field-label">Evidence references</p><ReferenceList ids={entry.evidenceRefIds} {...refs} /></>}
+    {entry.type === 'Assessment' && <>
+      <p>{asText(entry.rationale)}</p><dl className="il-fields"><Field label="Applicability" value={entry.applicability} /><Field label="Method" value={entry.method} /></dl>
+      <p className="il-field-label">Question instance</p><EntryReference id={entry.targetInstanceId} {...refs} />
+      {Array.isArray(entry.inputs) && entry.inputs.length > 0 && <><p className="il-field-label">Inputs and their roles</p><ul className="il-reference-list">{entry.inputs.map((input, i) => <li key={i}><span className="il-input-role">{asText(input?.role)}</span><EntryReference id={input?.entryId} {...refs} /></li>)}</ul></>}
+      {Array.isArray(entry.unknownReasons) && <div className="il-unknown-reasons">{entry.unknownReasons.map((reason, i) => <p key={i}><strong>{asText(reason?.code)}</strong> — {asText(reason?.explanation)}</p>)}</div>}
+    </>}
+    {entry.type === 'Decision' && <>
+      <dl className="il-fields"><Field label="Disposition" value={entry.disposition} /><Field label="Policy status" value={entry.policyStatus?.status} /><Field label="Authority status" value={entry.authorityStatus?.status} /></dl>
+      <p>{asText(entry.rationale)}</p>
+      {entry.targetInstanceId && <><p className="il-field-label">Question instance</p><EntryReference id={entry.targetInstanceId} {...refs} /></>}
+      {entry.selectedAssessmentId && <><p className="il-field-label">Selected assessment</p><EntryReference id={entry.selectedAssessmentId} {...refs} /></>}
+      <ReferenceList ids={entry.selectedInputIds} {...refs} />
+      {Array.isArray(entry.selections) && <><p className="il-field-label">Explicit transition selections</p><ul className="il-reference-list">{entry.selections.map((selection, i) => <li key={i}><code>{asText(selection?.transitionId)}</code><span aria-hidden="true"> → </span><EntryReference id={selection?.targetInstanceId} {...refs} /></li>)}</ul></>}
+      {Array.isArray(entry.reviewedEntryIds) && <><p className="il-field-label">Reviews these historical entries</p><ReferenceList ids={entry.reviewedEntryIds} {...refs} /></>}
+      <ReferenceList ids={entry.policyStatus?.policyRefIds} {...refs} /><ReferenceList ids={entry.authorityStatus?.authorityRefIds} {...refs} />
+    </>}
+    {entry.type === 'ActionRecord' && <><dl className="il-fields"><Field label="Operation subject" value={entry.operationSubject} /><Field label="Event time" value={entry.eventTime} /><Field label="Reported result" value={entry.result} /></dl>{entry.decisionId && <><p className="il-field-label">Related decision</p><EntryReference id={entry.decisionId} {...refs} /></>}<p className="il-caption">An action record describes an attributed stage; importing it does not execute or authorize an operation.</p></>}
+    {entry.type === 'Actor' && <dl className="il-fields"><Field label="Actor kind" value={entry.kind} /><Field label="Asserted identity status" value={entry.identityStatus} /></dl>}
+    {entry.type === 'PolicyReference' && <dl className="il-fields"><Field label="Version" value={entry.version} /><Field label="Effective time" value={entry.effectiveTime} /><Field label="Applicable scope" value={entry.applicableScope} /><Field label="Conditions" value={entry.conditions} /><Field label="Access limitation" value={entry.locatorAbsentReason} /></dl>}
+    {entry.type === 'AuthorityAssertion' && <><dl className="il-fields"><Field label="Scope" value={entry.scope} /><Field label="Claimed validity" value={entry.validityStatus} /><Field label="Receiver verification" value={entry.receiverLocalVerification} /></dl><p className="il-field-label">Claimed issuer and grantee</p><ReferenceList ids={[entry.issuerId, entry.granteeId].filter(Boolean)} {...refs} /><p className="il-field-label">Asserted basis</p><ReferenceList ids={entry.basisReferences} {...refs} /><p className="il-caption">This records a claim of authority. Receiving it does not grant permission.</p></>}
+    {entry.type === 'Hypothesis' && <EntryReference id={entry.relatedInstanceId} {...refs} />}
+    {entry.supersedes && <div className="il-revision"><p className="il-field-label">Supersedes a retained entry</p><EntryReference id={entry.supersedes.entryId} {...refs} /><p>{asText(entry.supersedes.reason)}</p></div>}
+    <p className="il-entry-id"><span>ID</span><code>{asText(entry.id)}</code></p>
+    <JsonDetails value={entry} />
+  </article>;
+}
+
+function ValidationReport({ report, onDownload }) {
+  const [checkPage, setCheckPage] = useState(0);
+  useEffect(() => setCheckPage(0), [report]);
+  const summary = summarizeValidation(report);
+  const checks = Array.isArray(report?.checks) ? report.checks : [];
+  const ordered = [...checks].sort((a, b) => ({ fail: 0, indeterminate: 1, notRun: 2, pass: 3 }[a.status] ?? 4) - ({ fail: 0, indeterminate: 1, notRun: 2, pass: 3 }[b.status] ?? 4));
+  return <section className="il-validation" aria-labelledby="il-validation-title">
+    <div className="il-validation-heading"><div><p className="il-eyebrow">Local validation</p><h2 id="il-validation-title">{summary.title}</h2></div><Status value={report.status}>{report.status}</Status></div>
+    <p>{summary.description}</p>
+    <p className="il-check-counts">{summary.counts.pass} passed · {summary.counts.fail} failed · {summary.counts.indeterminate} indeterminate{summary.counts.notRun ? ` · ${summary.counts.notRun} not run` : ''}</p>
+    <p className="il-caption">These checks evaluate the named draft binding. They do not establish evidence truth, investigator authority, safety, effectiveness, or independent interoperability.</p>
+    <details className="il-checks" open={report.status !== 'pass'}><summary>Inspect {checks.length} check results</summary><p className="il-caption">Failures and indeterminate checks appear first. {checks.length > 50 ? `Showing ${checkPage * 50 + 1}–${Math.min((checkPage + 1) * 50, checks.length)} of ${checks.length}.` : ''}</p><ol>{ordered.slice(checkPage * 50, (checkPage + 1) * 50).map((check, index) => <li key={`${check.id}-${index}`}><div><Status value={check.status}>{asText(check.status)}</Status><strong>{asText(check.id)}</strong>{check.requirement && <span className="il-requirement">{asText(check.requirement)}</span>}</div><p>{asText(check.message)}</p>{check.path && <code>{asText(check.path)}</code>}</li>)}</ol>{checks.length > 50 && <div className="il-pagination"><button type="button" className="il-button il-button-secondary" disabled={checkPage === 0} onClick={() => setCheckPage((value) => value - 1)}>Previous checks</button><button type="button" className="il-button il-button-secondary" disabled={(checkPage + 1) * 50 >= checks.length} onClick={() => setCheckPage((value) => value + 1)}>Next checks</button></div>}</details>
+    <details className="il-checks"><summary>Validation scope and complete report</summary><p className="il-caption">{asText(report.scope?.claims)}</p><JsonDetails value={report.scope} label="Claims and exclusions" /><JsonDetails value={report} label="Machine-readable report" /></details>
+    <button type="button" className="il-text-button" onClick={onDownload}>Download validation report ↓</button>
+  </section>;
+}
+
+export default function InvestigationLab() {
+  const [bundle, setBundle] = useState(null);
+  const [report, setReport] = useState(null);
+  const [source, setSource] = useState(null);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState('');
+  const [notice, setNotice] = useState('');
+  const [section, setSection] = useState('overview');
+  const [query, setQuery] = useState('');
+  const [selectedEntryId, setSelectedEntryId] = useState('');
+  const [questions, setQuestions] = useState(() => new Map());
+  const [page, setPage] = useState(0);
+  const [paste, setPaste] = useState('');
+  const operation = useRef(0);
+  const contentRef = useRef(null);
+  const entries = useMemo(() => getEntries(bundle), [bundle]);
+  const entriesById = useMemo(() => indexEntries(entries), [entries]);
+  const groups = useMemo(() => groupEntries(entries), [entries]);
+  const visible = useMemo(() => {
+    const scoped = section === 'history' || section === 'all' ? entries : (groups[section] || []);
+    return filterEntries(scoped, query, selectedEntryId);
+  }, [entries, groups, section, query, selectedEntryId]);
+
+  async function importText(text, nextSource, ticket) {
+    validateImportSize(text);
+    const parsed = parseBundle(text, { maxBytes: MAX_BUNDLE_BYTES });
+    const [result, questionIndex] = await Promise.all([validateBundle(parsed, { maxBytes: MAX_BUNDLE_BYTES }), getDefinitionQuestions(parsed)]);
+    if (ticket !== operation.current) return;
+    setBundle(parsed); setReport(result); setSource(nextSource); setQuestions(questionIndex);
+    setSection('overview'); setQuery(''); setSelectedEntryId(''); setPage(0);
+    setNotice(`Opened ${nextSource.label}. ${summarizeValidation(result).title}.`);
   }
 
-  const rawValue = new URLSearchParams(window.location.search).get('mode');
-  return sanitizeMode(rawValue || fallbackMode);
-}
-
-function writeModeToUrl(mode, replace) {
-  if (typeof window === 'undefined') {
-    return;
+  async function runOperation(work) {
+    const ticket = ++operation.current;
+    setBusy(true); setError(''); setNotice('');
+    try { await work(ticket); }
+    catch (caught) { if (ticket === operation.current) setError(caught instanceof Error ? caught.message : 'The bundle could not be opened.'); }
+    finally { if (ticket === operation.current) setBusy(false); }
   }
 
-  const url = new URL(window.location.href);
-  url.searchParams.set('mode', mode);
-  const nextUrl = `${url.pathname}${url.search}${url.hash}`;
-  const method = replace ? 'replaceState' : 'pushState';
-  window.history[method]({}, '', nextUrl);
-}
-
-export default function InvestigationLab({
-  defaultMode = 'mission',
-  scenarioId = DEFAULT_SCENARIO_ID,
-  showTraditionalContrast = true,
-  primaryCtaHref = '/implement/',
-}) {
-  const scenario = useMemo(() => getInvestigationScenario(scenarioId), [scenarioId]);
-
-  const totalTimelineSteps = Math.max(scenario.frames.length, scenario.questions.length);
-  const maxIndex = Math.max(totalTimelineSteps - 1, 0);
-  const lastQuestionIndex = Math.max(scenario.questions.length - 1, 0);
-
-  const [mode, setMode] = useState(() => sanitizeMode(defaultMode));
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [selectedOutcomes, setSelectedOutcomes] = useState({});
-  const [shownHints, setShownHints] = useState({});
-  const [shownExplanations, setShownExplanations] = useState({});
-  const [selectedActionId, setSelectedActionId] = useState('');
-  const [pauseRevealed, setPauseRevealed] = useState(false);
-  const [startedAt, setStartedAt] = useState(null);
-  const [lastAnsweredAt, setLastAnsweredAt] = useState(null);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-
-  useEffect(() => {
-    const fallbackMode = sanitizeMode(defaultMode);
-    const parsedMode = modeFromUrl(fallbackMode);
-    setMode(parsedMode);
-
-    if (typeof window === 'undefined') {
-      return undefined;
-    }
-
-    const initialRawMode = new URLSearchParams(window.location.search).get('mode');
-    if (initialRawMode && sanitizeMode(initialRawMode) !== initialRawMode) {
-      writeModeToUrl(parsedMode, true);
-    }
-
-    const onPopState = () => {
-      setMode(modeFromUrl(fallbackMode));
-    };
-
-    window.addEventListener('popstate', onPopState);
-    return () => {
-      window.removeEventListener('popstate', onPopState);
-    };
-  }, [defaultMode]);
-
-  useEffect(() => {
-    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
-      return undefined;
-    }
-
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const applySetting = () => {
-      setPrefersReducedMotion(Boolean(mediaQuery.matches));
-    };
-
-    applySetting();
-
-    if (typeof mediaQuery.addEventListener === 'function') {
-      mediaQuery.addEventListener('change', applySetting);
-      return () => {
-        mediaQuery.removeEventListener('change', applySetting);
-      };
-    }
-
-    return undefined;
-  }, []);
-
-  useEffect(() => {
-    setActiveIndex((current) => Math.min(current, maxIndex));
-  }, [maxIndex]);
-
-  useEffect(() => {
-    if (mode !== 'walkthrough' || prefersReducedMotion || activeIndex >= maxIndex) {
-      return undefined;
-    }
-
-    const timer = window.setInterval(() => {
-      setActiveIndex((current) => (current >= maxIndex ? current : current + 1));
-    }, AUTO_ADVANCE_MS);
-
-    return () => {
-      window.clearInterval(timer);
-    };
-  }, [activeIndex, maxIndex, mode, prefersReducedMotion]);
-
-  useEffect(() => {
-    setPauseRevealed(false);
-  }, [activeIndex, mode]);
-
-  const currentStep = scenario.questions[Math.min(activeIndex, lastQuestionIndex)];
-  const currentFrame = scenario.frames[Math.min(activeIndex, Math.max(scenario.frames.length - 1, 0))];
-  const currentOutcome = currentStep ? selectedOutcomes[currentStep.id] || '' : '';
-  const currentOption = currentStep?.options.find((option) => option.outcome === currentOutcome) || null;
-
-  const currentActions = useMemo(() => {
-    if (!currentStep) {
-      return [];
-    }
-
-    return scenario.collaboration.filter((action) => action.stepId === currentStep.id);
-  }, [currentStep, scenario.collaboration]);
-
-  useEffect(() => {
-    if (currentActions.length === 0) {
-      setSelectedActionId('');
-      return;
-    }
-
-    const stillValid = currentActions.some((action) => action.id === selectedActionId);
-    if (!stillValid) {
-      setSelectedActionId(currentActions[0].id);
-    }
-  }, [currentActions, selectedActionId]);
-
-  const selectedAction =
-    currentActions.find((action) => action.id === selectedActionId) || currentActions[0] || null;
-
-  const missionComplete =
-    Boolean(currentStep) && activeIndex === lastQuestionIndex && Boolean(selectedOutcomes[currentStep.id]);
-
-  const scorecard = useMemo(() => {
-    const total = scenario.questions.length || 1;
-    let answeredCount = 0;
-    let correctCount = 0;
-    let falsePositiveCount = 0;
-
-    scenario.questions.forEach((step) => {
-      const outcome = selectedOutcomes[step.id];
-      if (!outcome) {
-        return;
-      }
-
-      answeredCount += 1;
-      if (outcome === step.expectedOutcome) {
-        correctCount += 1;
-      }
-
-      const chosenOption = step.options.find((option) => option.outcome === outcome);
-      if (chosenOption?.falsePositiveRisk) {
-        falsePositiveCount += 1;
-      }
+  function loadCase(sample) {
+    runOperation(async (ticket) => {
+      const response = await fetch(sample.path, { credentials: 'omit', redirect: 'error' });
+      if (!response.ok) throw new Error(`The example could not be loaded (${response.status}). Download it below or try again.`);
+      const declared = Number(response.headers.get('content-length'));
+      if (Number.isFinite(declared) && declared > MAX_BUNDLE_BYTES) throw new Error('The example exceeds the 2 MiB import limit.');
+      await importText(decodeBundleBytes(await response.arrayBuffer()), { label: sample.title, kind: 'synthetic' }, ticket);
     });
-
-    const correctness = Math.round((correctCount / total) * 100);
-    const falsePositiveAvoidance = Math.max(0, 100 - falsePositiveCount * 30);
-    const explanationViews = Object.values(shownExplanations).filter(Boolean).length;
-    const hintViews = Object.values(shownHints).filter(Boolean).length;
-    const reasoningQuality = Math.max(
-      45,
-      Math.min(
-        100,
-        Math.round(58 + (correctCount / total) * 32 + explanationViews * 4 - falsePositiveCount * 7 + hintViews * 2)
-      )
-    );
-
-    const elapsedSeconds =
-      startedAt && lastAnsweredAt ? Math.max(1, Math.round((lastAnsweredAt - startedAt) / 1000)) : 0;
-    const timeToConfidence =
-      elapsedSeconds === 0 ? 'Not started' : `${elapsedSeconds}s (${elapsedSeconds <= 180 ? 'fast' : 'deliberate'})`;
-
-    return {
-      answeredCount,
-      correctness,
-      falsePositiveAvoidance,
-      reasoningQuality,
-      timeToConfidence,
-    };
-  }, [lastAnsweredAt, scenario.questions, selectedOutcomes, shownExplanations, shownHints, startedAt]);
-
-  function switchMode(nextMode) {
-    const sanitizedMode = sanitizeMode(nextMode);
-    if (sanitizedMode === mode) {
-      return;
-    }
-
-    setMode(sanitizedMode);
-    writeModeToUrl(sanitizedMode, false);
   }
 
-  function selectOutcome(option) {
-    if (!currentStep) {
-      return;
-    }
-
-    const now = Date.now();
-    setSelectedOutcomes((previous) => ({
-      ...previous,
-      [currentStep.id]: option.outcome,
-    }));
-
-    setStartedAt((previous) => previous || now);
-    setLastAnsweredAt(now);
+  function importFile(event) {
+    const file = event.target.files?.[0];
+    event.target.value = '';
+    if (!file) return;
+    runOperation(async (ticket) => {
+      if (file.size > MAX_BUNDLE_BYTES) throw new Error('This file exceeds the 2 MiB import limit. The current bundle has been retained.');
+      await importText(decodeBundleBytes(await file.arrayBuffer()), { label: file.name, kind: 'import' }, ticket);
+    });
   }
 
-  function toggleHint(stepId) {
-    setShownHints((previous) => ({
-      ...previous,
-      [stepId]: !previous[stepId],
-    }));
+  function download(text, name) {
+    const blob = new Blob([text], { type: 'application/json;charset=utf-8' });
+    const href = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = href; link.download = name;
+    document.body.appendChild(link); link.click(); link.remove();
+    window.setTimeout(() => URL.revokeObjectURL(href), 1000);
+    setNotice(`Download prepared: ${name}`);
   }
 
-  function toggleExplanation(stepId) {
-    setShownExplanations((previous) => ({
-      ...previous,
-      [stepId]: !previous[stepId],
-    }));
+  function showSection(next) { setSection(next); setQuery(''); setSelectedEntryId(''); setPage(0); }
+  function inspectEntry(id) {
+    setSection('all'); setQuery(id); setSelectedEntryId(id); setPage(0);
+    window.requestAnimationFrame(() => contentRef.current?.focus({ preventScroll: false }));
   }
 
-  function goToPreviousStep() {
-    setActiveIndex((current) => (current <= 0 ? 0 : current - 1));
-  }
-
-  function goToNextStep() {
-    setActiveIndex((current) => (current >= maxIndex ? current : current + 1));
-  }
-
-  function chooseAction(actionId) {
-    setSelectedActionId(actionId);
-  }
-
-  function renderMissionPane() {
-    if (!currentStep) {
-      return <p className="lab-empty">Scenario questions are unavailable.</p>;
-    }
-
-    const hintVisible = Boolean(shownHints[currentStep.id]);
-    const explanationVisible = Boolean(shownExplanations[currentStep.id]);
-    const canAdvance = Boolean(selectedOutcomes[currentStep.id]);
-    const atLastQuestion = activeIndex >= lastQuestionIndex;
-
-    return (
-      <div className="lab-step-card">
-        <p className="lab-node-label">{currentStep.nodeId}</p>
-        <h4>{currentStep.prompt}</h4>
-
-        <div className="lab-option-grid" role="group" aria-label="Choose branch outcome">
-          {currentStep.options.map((option) => {
-            const isSelected = currentOutcome === option.outcome;
-            return (
-              <button
-                key={option.id}
-                type="button"
-                className={toClassNames(['lab-option-btn', isSelected ? 'is-selected' : '', option.falsePositiveRisk ? 'is-risky' : ''])}
-                onClick={() => selectOutcome(option)}
-              >
-                <span>{describeOutcome(option.outcome)}</span>
-                <strong>{option.label}</strong>
-              </button>
-            );
-          })}
-        </div>
-
-        {currentOption ? (
-          <div className="lab-feedback-card">
-            <p>
-              <strong>Selected branch:</strong> {describeOutcome(currentOption.outcome)}
-            </p>
-            <p>{currentOption.rationale}</p>
-          </div>
-        ) : (
-          <p className="lab-empty">Select a branch outcome to continue.</p>
-        )}
-
-        <div className="lab-reveal-row">
-          <button
-            type="button"
-            onClick={() => toggleHint(currentStep.id)}
-            data-telemetry-event="lab-hint-open"
-            data-telemetry-location="investigation-lab-mission"
-          >
-            {hintVisible ? 'Hide hint' : 'Show hint'}
-          </button>
-          <button
-            type="button"
-            onClick={() => toggleExplanation(currentStep.id)}
-            data-telemetry-event="lab-explanation-open"
-            data-telemetry-location="investigation-lab-mission"
-          >
-            {explanationVisible ? 'Hide explanation' : 'Reveal branch reasoning'}
-          </button>
-        </div>
-
-        {hintVisible ? <p className="lab-note-card"><strong>Hint:</strong> {currentStep.hint}</p> : null}
-        {explanationVisible ? (
-          <p className="lab-note-card"><strong>Why this branch:</strong> {currentStep.explanation}</p>
-        ) : null}
-
-        <div className="lab-step-nav">
-          <button
-            type="button"
-            onClick={goToPreviousStep}
-            disabled={activeIndex === 0}
-            data-telemetry-event="lab-step-advance"
-            data-telemetry-location="investigation-lab-mission"
-          >
-            Previous step
-          </button>
-          <button
-            type="button"
-            onClick={goToNextStep}
-            disabled={!canAdvance || atLastQuestion}
-            data-telemetry-event="lab-step-advance"
-            data-telemetry-location="investigation-lab-mission"
-          >
-            Next step
-          </button>
-        </div>
-
-        {missionComplete ? (
-          <section className="lab-scorecard" aria-live="polite">
-            <h5>Mission Scorecard (Conceptual)</h5>
-            <div className="lab-score-grid">
-              <article>
-                <span>Correctness</span>
-                <strong>{scorecard.correctness}%</strong>
-                <p>{scoreBand(scorecard.correctness)} confidence</p>
-              </article>
-              <article>
-                <span>Time-to-confidence</span>
-                <strong>{scorecard.timeToConfidence}</strong>
-                <p>Tracks investigation pacing</p>
-              </article>
-              <article>
-                <span>False-positive avoidance</span>
-                <strong>{scorecard.falsePositiveAvoidance}%</strong>
-                <p>Measures containment precision</p>
-              </article>
-              <article>
-                <span>Reasoning quality</span>
-                <strong>{scorecard.reasoningQuality}%</strong>
-                <p>Depth of auditable logic</p>
-              </article>
-            </div>
-            <p className="lab-score-note">
-              Conceptual metrics are intentionally framework-oriented. They show how a vendor implementation could score
-              investigation quality without product lock-in.
-            </p>
-          </section>
-        ) : null}
-      </div>
-    );
-  }
-
-  function renderWalkthroughPane() {
-    if (!currentStep) {
-      return <p className="lab-empty">Scenario questions are unavailable.</p>;
-    }
-
-    return (
-      <div className="lab-step-card">
-        <p className="lab-node-label">{currentStep.nodeId}</p>
-        <h4>{currentStep.prompt}</h4>
-        <p className="lab-note-card">
-          <strong>Expected branch:</strong> {describeOutcome(currentStep.expectedOutcome)}
-        </p>
-
-        <div className="lab-pause-card">
-          <p>{currentStep.pausePrompt}</p>
-          <button
-            type="button"
-            onClick={() => setPauseRevealed((value) => !value)}
-            data-telemetry-event="lab-explanation-open"
-            data-telemetry-location="investigation-lab-walkthrough"
-          >
-            {pauseRevealed ? 'Hide analyst + agent answer' : 'Reveal analyst + agent answer'}
-          </button>
-          {pauseRevealed ? (
-            <p className="lab-note-card">
-              <strong>Answer:</strong> {currentStep.explanation}
-            </p>
-          ) : null}
-        </div>
-
-        <div className="lab-step-nav">
-          <button
-            type="button"
-            onClick={goToPreviousStep}
-            disabled={activeIndex === 0}
-            data-telemetry-event="lab-step-advance"
-            data-telemetry-location="investigation-lab-walkthrough"
-          >
-            Previous frame
-          </button>
-          <button
-            type="button"
-            onClick={goToNextStep}
-            disabled={activeIndex >= maxIndex}
-            data-telemetry-event="lab-step-advance"
-            data-telemetry-location="investigation-lab-walkthrough"
-          >
-            Next frame
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <section className="investigation-lab" aria-label="TENSOR investigation lab">
-      <div className="lab-shell">
-        <header className="lab-header">
-          <div>
-            <p className="section-kicker">Concept Demo</p>
-            <h3>{scenario.title}</h3>
-            <p>{scenario.summary}</p>
-            <p className="lab-objective"><strong>Objective:</strong> {scenario.objective}</p>
-          </div>
-          <div className="lab-mode-tabs" role="tablist" aria-label="Investigation lab mode selector">
-            <button
-              type="button"
-              role="tab"
-              aria-selected={mode === 'mission'}
-              className={toClassNames(['lab-mode-tab', mode === 'mission' ? 'is-active' : ''])}
-              onClick={() => switchMode('mission')}
-              data-telemetry-event="lab-mode-switch"
-              data-telemetry-location="investigation-lab-header"
-            >
-              Mission Mode
-            </button>
-            <button
-              type="button"
-              role="tab"
-              aria-selected={mode === 'walkthrough'}
-              className={toClassNames(['lab-mode-tab', mode === 'walkthrough' ? 'is-active' : ''])}
-              onClick={() => switchMode('walkthrough')}
-              data-telemetry-event="lab-mode-switch"
-              data-telemetry-location="investigation-lab-header"
-            >
-              Walkthrough Mode
-            </button>
-          </div>
-        </header>
-
-        <div className="lab-grid">
-          <section className="lab-pane" aria-label="Investigation timeline">
-            <h4>Investigation Feed</h4>
-            <p className="lab-pane-copy">
-              Scripted timeline evidence on the left, deterministic graph questions on the right.
-            </p>
-            <ol className="lab-timeline-list">
-              {scenario.frames.map((frame, index) => {
-                const status = index < activeIndex ? 'is-complete' : index === activeIndex ? 'is-active' : '';
-                return (
-                  <li key={frame.id} className={toClassNames(['lab-timeline-item', status])}>
-                    <div className="lab-timeline-top">
-                      <strong>{frame.time}</strong>
-                      <span>{frame.artifact}</span>
-                    </div>
-                    <p>{frame.analystNote}</p>
-                    <p className="lab-evidence">{frame.evidenceSnippet}</p>
-                  </li>
-                );
-              })}
-            </ol>
-            {mode === 'walkthrough' ? (
-              <p className="lab-auto-note">
-                {prefersReducedMotion
-                  ? 'Auto-advance disabled due to reduced-motion preference.'
-                  : `Auto-advance active every ${Math.round(AUTO_ADVANCE_MS / 1000)} seconds.`}
-              </p>
-            ) : null}
-          </section>
-
-          <section className="lab-pane" aria-label="Graph question path">
-            <h4>Graph Question Path</h4>
-            <p className="lab-pane-copy">
-              Branches stay deterministic with explicit <code>yes</code>/<code>no</code>/<code>unknown</code> outcomes.
-            </p>
-            <ol className="lab-question-list">
-              {scenario.questions.map((step, index) => {
-                const status = index < activeIndex ? 'is-complete' : index === activeIndex ? 'is-active' : '';
-                const selectedOutcome = selectedOutcomes[step.id];
-                return (
-                  <li key={step.id} className={toClassNames(['lab-question-item', status])}>
-                    <div className="lab-question-head">
-                      <span>{step.nodeId}</span>
-                      <strong>{step.prompt}</strong>
-                    </div>
-                    <p>
-                      Expected: <code>{step.expectedOutcome}</code>
-                      {selectedOutcome ? (
-                        <>
-                          {' '}
-                          · Selected: <code>{selectedOutcome}</code>
-                        </>
-                      ) : null}
-                    </p>
-                  </li>
-                );
-              })}
-            </ol>
-            {mode === 'mission' ? renderMissionPane() : renderWalkthroughPane()}
-          </section>
-        </div>
-
-        <section className="lab-collaboration">
-          <h4>Human + Agent Collaboration Lane</h4>
-          <p className="lab-pane-copy">
-            Every recommendation keeps rationale and confidence visible so vendors can implement transparent handoffs.
-          </p>
-          <div className="lab-collaboration-grid">
-            <div className="lab-action-list" role="list">
-              {currentActions.map((action) => {
-                const isSelected = selectedAction?.id === action.id;
-                return (
-                  <button
-                    key={action.id}
-                    type="button"
-                    role="listitem"
-                    className={toClassNames(['lab-action-item', isSelected ? 'is-selected' : '', action.isOverride ? 'is-override' : ''])}
-                    onClick={() => chooseAction(action.id)}
-                    data-telemetry-event="lab-human-agent-action"
-                    data-telemetry-location="investigation-lab-collaboration"
-                  >
-                    <span>{action.actor === 'agent' ? 'Agent analyst' : 'Human analyst'}</span>
-                    <strong>{action.actionType}</strong>
-                    <em>Confidence {formatConfidence(action.confidence)}</em>
-                  </button>
-                );
-              })}
-            </div>
-
-            {selectedAction ? (
-              <article className="lab-action-detail">
-                <p>
-                  <strong>Current action:</strong> {selectedAction.actionType}
-                  {selectedAction.isOverride ? ' (human override)' : ''}
-                </p>
-                <p>{selectedAction.rationale}</p>
-                <p>
-                  <strong>Why this lead:</strong> {selectedAction.whyThisLead}
-                </p>
-              </article>
-            ) : (
-              <p className="lab-empty">No collaboration actions available for this step.</p>
-            )}
-          </div>
-        </section>
-
-        {showTraditionalContrast && currentStep ? (
-          <section className="lab-contrast">
-            <h4>Balanced Contrast: Traditional Playbooks vs Graph Questioning</h4>
-            <div className="lab-contrast-grid">
-              <article>
-                <h5>Traditional Linear Path (Useful, but often insufficient)</h5>
-                <p>{currentStep.traditionalPlaybookRisk}</p>
-              </article>
-              <article>
-                <h5>TENSOR Graph Path (Deterministic and portable)</h5>
-                <p>{currentStep.graphBranchBenefit}</p>
-              </article>
-            </div>
-          </section>
-        ) : null}
-
-        <section className="lab-conversion">
-          <h4>Framework Adoption Path</h4>
-          <p>
-            Use this concept flow to align your implementation with the shared contract, then validate via
-            conformance before production rollout.
-          </p>
-          <div className="cta-group">
-            <a
-              className="btn btn-primary"
-              href={primaryCtaHref}
-              data-telemetry-event="lab-cta-implement"
-              data-telemetry-location="investigation-lab-conversion"
-            >
-              Implement Core
-            </a>
-            <a
-              className="btn btn-secondary"
-              href="/conformance/"
-              data-telemetry-event="lab-cta-conformance"
-              data-telemetry-location="investigation-lab-conversion"
-            >
-              Run Conformance Suite
-            </a>
-          </div>
-          <p className="lab-footnote">
-            Mission progress: {scorecard.answeredCount}/{scenario.questions.length} answered · Current frame:{' '}
-            {currentFrame ? currentFrame.time : 'n/a'}
-          </p>
-        </section>
-      </div>
+  return <div className="tensor-investigation-lab" aria-busy={busy}>
+    <section className="il-start" aria-labelledby="il-start-title">
+      <div className="il-start-heading"><div><p className="il-eyebrow">One record. A shared basis for review.</p><h2 id="il-start-title">Open an investigation</h2></div><span className="il-version">Core {BINDING_VERSION}</span></div>
+      <p className="il-lead">Follow the questions, evidence, judgments, and decisions. Then carry the same record to another tool.</p>
+      <div className="il-case-grid">{CASES.map((sample, index) => <button type="button" className={`il-case ${source?.label === sample.title ? 'is-selected' : ''}`} key={sample.id} disabled={busy} onClick={() => loadCase(sample)}><span className="il-case-number">0{index + 1} / SYNTHETIC CASE</span><strong>{sample.title}</strong><span>{sample.description}</span><span className="il-case-action">Open reference case <span aria-hidden="true">↗</span></span></button>)}</div>
+      <div className="il-import-row"><div><label htmlFor="il-bundle-file" className="il-file-label">Import a local bundle</label><input id="il-bundle-file" type="file" accept=".json,application/json" onChange={importFile} disabled={busy} aria-describedby="il-privacy" /></div><p id="il-privacy">JSON · up to 2 MiB. Your file is read in this browser and is not uploaded. Evidence locations are never opened and recorded actions are never executed.</p></div>
+      <details className="il-paste"><summary>Or paste bundle JSON</summary><form onSubmit={(event) => { event.preventDefault(); runOperation((ticket) => importText(paste, { label: 'Pasted bundle', kind: 'import' }, ticket)); }}><label htmlFor="il-json-paste">Bundle JSON to open</label><textarea id="il-json-paste" value={paste} onChange={(event) => setPaste(event.target.value)} spellCheck="false" rows={7} placeholder='{ "format": "tensor-investigation-bundle", … }' maxLength={MAX_BUNDLE_BYTES} /><button type="submit" className="il-button" disabled={busy || !paste.trim()}>Open pasted bundle</button></form></details>
+      <div className="il-live" aria-live="polite" aria-atomic="true">{busy ? 'Reading and validating the bundle locally…' : notice}</div>
+      {error && <div className="il-error" role="alert"><strong>Could not open this bundle</strong><p>{error}</p>{bundle && <p>The previously opened record is unchanged.</p>}</div>}
     </section>
-  );
+
+    {bundle && <>
+      <section className="il-workspace-bar" aria-label="Open bundle"><div><span className="il-eyebrow">{source.kind === 'synthetic' ? 'Synthetic reference case' : 'Imported record · assertions unverified'}</span><h2>{source.label}</h2><p>{asText(bundle.record?.scope?.purpose || 'No readable scope purpose supplied.')}</p></div><div className="il-workspace-actions"><button type="button" className="il-button il-button-secondary" disabled={busy} onClick={() => runOperation(async (ticket) => { const result = await validateBundle(bundle, { maxBytes: MAX_BUNDLE_BYTES }); if (ticket === operation.current) { setReport(result); setNotice(summarizeValidation(result).title); } })}>Run checks again</button><button type="button" className="il-button" onClick={() => { try { download(serializeForLab(bundle), downloadName(bundle)); } catch (caught) { setError(caught instanceof Error ? caught.message : 'Export failed.'); } }}>Download bundle ↓</button></div></section>
+      {report && <ValidationReport report={report} onDownload={() => download(JSON.stringify(report, null, 2), downloadName(bundle, 'validation'))} />}
+      <div className="il-workbench">
+        <nav className="il-sections" aria-label="Investigation sections">{SECTIONS.map((item) => <button type="button" key={item.id} className={section === item.id ? 'is-active' : ''} aria-current={section === item.id ? 'page' : undefined} onClick={() => showSection(item.id)}><span>{item.label}</span>{item.id !== 'overview' && <span className="il-count">{item.id === 'all' || item.id === 'history' ? entries.length : (groups[item.id]?.length || 0)}</span>}</button>)}<p>The record preserves attributed assertions. A newer entry does not silently replace an earlier one.</p></nav>
+        <section className="il-content" ref={contentRef} tabIndex={-1} aria-label={SECTIONS.find((item) => item.id === section)?.label || 'Record contents'}>
+          {section === 'overview' ? <>
+            <div className="il-content-heading"><p className="il-eyebrow">Investigation context</p><h2>Scope and handoff</h2></div>
+            <div className="il-overview-metrics"><div><strong>{entries.length}</strong><span>inspectable entries</span></div><div><strong>{groups.QuestionInstance?.length || 0}</strong><span>question instances</span></div><div><strong>{groups.Actor?.length || 0}</strong><span>actor entries</span></div></div>
+            <article className="il-overview-card"><h3>Record boundary</h3><dl className="il-fields"><Field label="Purpose" value={bundle.record?.scope?.purpose} /><Field label="Subjects" value={bundle.record?.scope?.subjectBoundary} /><Field label="Exchange scope" value={bundle.record?.completeness?.exchangeScope} /><Field label="Completeness meaning" value={bundle.record?.completeness?.meaning} /><Field label="Investigation ID" value={bundle.record?.investigationId} /><Field label="Snapshot ID" value={bundle.record?.snapshotId} /><Field label="Recorded at" value={bundle.record?.recordedAt} /><Field label="Producer" value={bundle.record?.producer} /></dl><JsonDetails value={bundle.record?.scope} label="Complete scope" /></article>
+            <article className="il-overview-card"><h3>Exact definition artifacts</h3><p>Each attached definition retains its original content string. The validator checks the record’s digest references against those bytes.</p>{Array.isArray(bundle.definitions) && bundle.definitions.map((definition, index) => <details className="il-definition" key={index}><summary>{asText(definition?.path)}</summary><pre>{asText(definition?.content)}</pre></details>)}</article>
+            <article className="il-overview-card"><h3>Limits and outstanding review</h3><p>Missing source evidence can remain explicit in a complete Core exchange. A structurally valid record can still contain unknown assessments or unresolved decisions.</p><dl className="il-fields"><Field label="Omissions" value={bundle.record?.omissions} /><Field label="Transformation losses" value={bundle.record?.losses} /></dl>{report?.unresolvedReviews && <JsonDetails value={report.unresolvedReviews} label="Recorded review dependencies" />}</article>
+            <JsonDetails value={bundle} label="Inspect complete bundle, including opaque metadata" />
+          </> : <>
+            <div className="il-content-heading"><p className="il-eyebrow">{section === 'history' ? 'Preserved record order' : 'Inspectable assertions'}</p><h2>{SECTIONS.find((item) => item.id === section)?.label}</h2></div>
+            {section === 'history' && <p className="il-caption">Shown in file order. Timestamps describe recorded time and do not establish causality. Supersession links retain the earlier entry.</p>}
+            <label className="il-search-label" htmlFor="il-entry-search">Find text or an entry ID</label><input id="il-entry-search" className="il-search" type="search" value={query} onChange={(event) => { setQuery(event.target.value); setSelectedEntryId(''); setPage(0); }} />
+            <p className="il-results">{visible.length} {visible.length === 1 ? 'entry' : 'entries'}{query ? ' matching your search' : ''}</p>
+            {visible.length === 0 && <p className="il-empty">No entries in this view. Try another section or clear the search.</p>}
+            {section === 'history' ? <ol className="il-history" start={page * PAGE_SIZE + 1}>{visible.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE).map((entry, index) => <li key={index}><div><span className="il-eyebrow">{asText(entry.type)}</span><time>{asText(entry.recordedAt)}</time></div><EntryReference id={entry.id} {...{ entriesById, onInspect: inspectEntry }} /><p>{attributionLabel(entry, entriesById)}</p>{entry.supersedes && <p className="il-caption">Supersedes <code>{asText(entry.supersedes.entryId)}</code></p>}</li>)}</ol> : visible.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE).map((entry, index) => <EntryCard key={index} entry={entry} questions={questions} entriesById={entriesById} onInspect={inspectEntry} />)}
+            {visible.length > PAGE_SIZE && <div className="il-pagination"><button type="button" className="il-button il-button-secondary" disabled={page === 0} onClick={() => setPage((value) => value - 1)}>Previous entries</button><span>Page {page + 1} of {Math.ceil(visible.length / PAGE_SIZE)}</span><button type="button" className="il-button il-button-secondary" disabled={(page + 1) * PAGE_SIZE >= visible.length} onClick={() => setPage((value) => value + 1)}>Next entries</button></div>}
+          </>}
+        </section>
+      </div>
+      <p className="il-export-note">Download preserves the imported record, identities, attached definition strings, and unknown metadata. JSON formatting may change. Reopening your own export tests this implementation’s round trip; independent exchange requires another implementation.</p>
+    </>}
+  </div>;
 }

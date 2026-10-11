@@ -8,107 +8,107 @@ export interface RouteSeo {
 
 export const seo = {
   home: {
-    title: 'TENSOR | Open Security Investigation Graph Standard',
+    title: 'TENSOR | A Public Standard for Cyber Investigations',
     description:
-      'TENSOR is an open standard for security investigation logic. Implement a stable graph contract, run conformance checks, and contribute improvements across vendors.',
+      'A shared investigative layer for humans and agents. Explore portable questions, evidence, decisions, and revisions in the TENSOR Core implementation candidate.',
     canonicalPath: '/',
     ogType: 'website',
   },
   implement: {
-    title: 'Implement TENSOR Core in 30 Minutes',
+    title: 'Implement the TENSOR Core Candidate',
     description:
-      'Follow the implementation path for TENSOR Core: load schema and graph artifacts, validate compatibility, run conformance fixtures, and ship an interoperable integration.',
+      'Validate synthetic investigation bundles with the TENSOR reference CLI, pin candidate artifacts, and test a scoped integration for portable investigative meaning.',
     canonicalPath: '/implement/',
     ogType: 'article',
   },
   standards: {
-    title: 'TENSOR Standards and Conformance',
+    title: 'TENSOR and Existing Standards',
     description:
-      'Review TENSOR core standards, conformance tiers, release policy, compatibility guarantees, and deprecation windows for multi-vendor interoperability.',
+      'Review proposed TENSOR boundaries alongside ATT&CK, D3FEND, ATLAS, CASE/UCO, STIX, Attack Flow, CACAO, and OCSF. Mappings remain subject to exchange evidence.',
     canonicalPath: '/standards/',
     ogType: 'article',
   },
   docs: {
-    title: 'TENSOR Documentation for Implementers',
+    title: 'TENSOR Documentation',
     description:
-      'Technical documentation for implementing the TENSOR object model, node and edge contracts, execution semantics, compatibility handling, and AI integration controls.',
+      'Find the Core contract, candidate binding, schemas, validation coverage, public governance proposal, and preserved legacy investigation graph.',
     canonicalPath: '/docs/',
     ogType: 'article',
   },
   conformance: {
-    title: 'TENSOR Conformance Suite',
+    title: 'TENSOR Validation and Conformance',
     description:
-      'Run the TENSOR conformance suite with baseline fixtures and pass criteria for consumer, executor, and authoring-tool integrations.',
+      'Run candidate reference checks and report their scope. Distinguish structural and semantic validation from independent interoperability and certification.',
     canonicalPath: '/conformance/',
     ogType: 'article',
   },
   governance: {
-    title: 'TENSOR Governance',
+    title: 'Proposed TENSOR Governance',
     description:
-      'Understand TENSOR governance: decision process, release cadence, deprecation policy, and how changes move from proposal to adopted standard.',
+      'Review proposed public stewardship, open roles, independent review, conflicts, appeals, and the evidence required before a stable TENSOR Core release.',
     canonicalPath: '/governance/',
     ogType: 'article',
   },
   contribute: {
     title: 'Contribute to TENSOR',
     description:
-      'Contribute to TENSOR through documentation updates, fixtures, schema proposals, and governance participation using a transparent quality bar.',
+      'Bring a synthetic investigation case, independent implementation, standards mapping, or technical review to help make cyber investigations portable.',
     canonicalPath: '/contribute/',
     ogType: 'article',
   },
   about: {
-    title: 'About the TENSOR Standard',
+    title: 'About TENSOR',
     description:
-      'Learn why TENSOR exists, which interoperability problems it solves, what it does not solve, and why vendors implement it as a shared investigation contract.',
+      'TENSOR is a public standard initiative for all cyber investigations, with one shared Core for humans and agents and vendor and business layers above it.',
     canonicalPath: '/about/',
     ogType: 'article',
   },
   aiReliability: {
-    title: 'AI Reliability in TENSOR',
+    title: 'Human and Agent Investigations with TENSOR',
     description:
-      'Use TENSOR to keep AI-assisted investigations deterministic: explicit branch decisions, replayable paths, and auditable adjudication patterns.',
+      'Represent questions, evidence, attribution, disagreement, decisions, and revisions consistently across human, agent, and mixed investigative teams.',
     canonicalPath: '/ai-reliability/',
     ogType: 'article',
   },
   metrics: {
-    title: 'TENSOR Metrics and Release Health',
+    title: 'TENSOR Legacy Graph Metrics',
     description:
-      'Inspect release quality telemetry, coverage trends, and publish gate outcomes that indicate ecosystem readiness for TENSOR standard adoption.',
+      'Inspect structural properties and release checks for the legacy TENSOR graph. These diagnostics do not measure security effectiveness or adoption.',
     canonicalPath: '/metrics/',
     ogType: 'article',
   },
   schemas: {
-    title: 'TENSOR Schema Release Channel',
+    title: 'TENSOR Candidate and Legacy Schemas',
     description:
-      'Track the TENSOR schema release channel, access current and historical schema artifacts, and verify compatibility before integrating new versions.',
+      'Access versioned candidate schemas for investigation bundles, definitions, and records, plus the preserved legacy graph schema archive.',
     canonicalPath: '/schemas/',
     ogType: 'article',
   },
   graphs: {
-    title: 'TENSOR Graph Release Channel',
+    title: 'TENSOR Legacy Graph Releases',
     description:
-      'Track the TENSOR graph release channel, compare versions, and use canonical graph artifacts to keep investigation logic interoperable.',
+      'Explore the preserved TENSOR question graph and release archive, with explicit semantic review requirements for migration to the new Core candidate.',
     canonicalPath: '/graphs/',
     ogType: 'article',
   },
   extensions: {
-    title: 'TENSOR Extension Contract',
+    title: 'TENSOR Profiles and Extensions',
     description:
-      'Implement TENSOR extensions safely with namespaced keys, portability boundaries, and anti-pattern guidance that preserves core interoperability.',
+      'Build public profiles, vendor tools, and business policy above TENSOR Core while declaring semantic dependencies, unsupported content, and exchange losses.',
     canonicalPath: '/extensions/',
     ogType: 'article',
   },
   studio: {
-    title: 'TENSOR Graph Studio',
+    title: 'TENSOR Legacy Graph Studio',
     description:
-      'Explore TENSOR graph and schema releases in a reference sandbox, inspect decision paths, and compare version diffs before production rollout.',
+      'Inspect the earlier TENSOR graph and schema releases. Legacy Graph Studio uses the graph-only model, separate from the new Core investigation record candidate.',
     canonicalPath: '/studio/',
     ogType: 'article',
   },
   investigationLab: {
-    title: 'TENSOR Investigation Lab Concept Demo',
+    title: 'TENSOR Investigation Lab',
     description:
-      'Experience a concept workflow for graph-native investigations: mission training mode, split-screen walkthrough mode, and human-agent collaboration traces for framework adoption.',
+      'Inspect, import, validate, and export synthetic investigation bundles using the TENSOR Core candidate contract for humans and agents.',
     canonicalPath: '/investigation-lab/',
     ogType: 'article',
   },
@@ -136,7 +136,7 @@ export function organizationJsonLd(siteUrl: string) {
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'TENSOR Standards Consortium',
+    name: 'TENSOR public standard initiative',
     url: absoluteUrl(siteUrl, '/'),
     sameAs: ['https://github.com/tensor-standards-consortium/tensor-framework'],
   };

@@ -1,7 +1,7 @@
 {
   "name": "TENSOR Framework",
   "short_name": "TENSOR",
-  "description": "TENSOR Framework graph-based security investigation standard and explorer.",
+  "description": "A public investigation standard for humans and agents, with reusable questions, evidence and decisions.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
@@ -20,9 +20,9 @@
       "url": "/docs/"
     },
     {
-      "name": "AI Reliability",
-      "short_name": "Reliability",
-      "url": "/ai-reliability/"
+      "name": "Investigation Lab",
+      "short_name": "Lab",
+      "url": "/investigation-lab/"
     }
   ],
   "icons": [

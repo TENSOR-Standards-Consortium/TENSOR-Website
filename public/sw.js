@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tensor-pwa-v9';
+const CACHE_NAME = 'tensor-pwa-v10';
 const PRECACHE_URLS = [
   '/',
   '/offline/',
@@ -10,6 +10,7 @@ const PRECACHE_URLS = [
   '/graphs/',
   '/schemas/',
   '/studio/',
+  '/investigation-lab/',
   '/manifest.webmanifest',
   '/icons/icon-192.png',
   '/icons/icon-512.png',
@@ -80,7 +81,7 @@ async function staleWhileRevalidate(request) {
     })
     .catch(() => null);
 
-  return cached || networkPromise || Response.error();
+  return cached || (await networkPromise) || Response.error();
 }
 
 async function networkFirstNavigation(request) {
@@ -144,13 +145,18 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+  if (url.pathname.startsWith('/api/')) {
+    event.respondWith(networkOnly(request));
+    return;
+  }
+
   if (request.mode === 'navigate') {
     event.respondWith(networkFirstNavigation(request));
     return;
   }
 
-  if (url.pathname.startsWith('/api/')) {
-    event.respondWith(networkOnly(request));
+  if (url.pathname.startsWith('/standards/')) {
+    event.respondWith(networkFirst(request));
     return;
   }
 

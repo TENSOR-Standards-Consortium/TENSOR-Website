@@ -1,94 +1,50 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { absoluteUrl, organizationJsonLd, seo } from '../../data/seo';
+import { absoluteUrl, seo } from '../../data/seo';
 
 const meta = seo.governance;
-const siteUrl = Astro.site?.toString() || 'https://tensor-standards-consortium.org/';
-
-const jsonLd = [
-  organizationJsonLd(siteUrl),
-  {
-    '@context': 'https://schema.org',
-    '@type': 'TechArticle',
-    headline: meta.title,
-    description: meta.description,
-    url: absoluteUrl(siteUrl, meta.canonicalPath),
-  },
-];
+const siteUrl = Astro.site?.toString() || 'https://tensor-website.pages.dev/';
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: meta.title,
+  description: meta.description,
+  url: absoluteUrl(siteUrl, meta.canonicalPath),
+};
 ---
 
-<BaseLayout
-  title={meta.title}
-  description={meta.description}
-  canonicalPath={meta.canonicalPath}
-  ogType={meta.ogType}
-  jsonLd={jsonLd}
->
+<BaseLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
   <div class="container prose-card">
-    <h2>Governance Principles</h2>
-    <ul>
-      <li>Core semantics are stable and intentionally conservative.</li>
-      <li>Behavior changes require explicit proposal and compatibility review.</li>
-      <li>Conformance evidence is required for impactful changes.</li>
-      <li>Release notes must describe migration impact and version policy implications.</li>
-    </ul>
+    <p class="section-kicker">Proposed public stewardship</p>
+    <h2>A public standard needs accountable decisions</h2>
+    <p>TENSOR's intended specification, essential public profiles, schemas, and basic conformance materials should be accessible without buying a product or sponsorship. Vendor participation is welcome; funding must not purchase control over shared meaning.</p>
+    <p><strong>The governance proposal is not yet adopted.</strong> It does not appoint a council, create a legal entity, grant new intellectual-property rights, or establish institutional backing. Repository access alone is not independent oversight.</p>
+    <p><a href="/founding/02-governance.md">Download the complete governance proposal</a> · <a href="/founding/00-charter.md">Read the founding charter</a></p>
 
-    <h2>Decision Flow</h2>
-    <ol>
-      <li>Open an issue with reproducible problem statement and scope.</li>
-      <li>Propose a change with compatibility impact analysis.</li>
-      <li>Attach fixture updates proving expected behavior.</li>
-      <li>Review in governance queue and record decision publicly.</li>
-      <li>Ship in release channel with migration notes where required.</li>
-    </ol>
-
-    <h2>Roles</h2>
+    <h2>Bootstrap roles are open</h2>
     <table>
-      <thead>
-        <tr>
-          <th>Role</th>
-          <th>Responsibility</th>
-        </tr>
-      </thead>
+      <thead><tr><th>Role</th><th>Responsibility</th><th>Status</th></tr></thead>
       <tbody>
-        <tr>
-          <td>Maintainers</td>
-          <td>Steward releases, compatibility policy, and core semantics.</td>
-        </tr>
-        <tr>
-          <td>Implementers</td>
-          <td>Adopt artifacts, report integration gaps, and submit fixture evidence.</td>
-        </tr>
-        <tr>
-          <td>Contributors</td>
-          <td>Propose changes, improve docs, and participate in review.</td>
-        </tr>
+        <tr><td>Convenor</td><td>Reviews, decisions, appeals, and scope.</td><td>Unassigned in the proposal</td></tr>
+        <tr><td>Core editor</td><td>Consistent semantics and specification text.</td><td>Unassigned in the proposal</td></tr>
+        <tr><td>Conformance maintainer</td><td>Fixtures, validation coverage, and implementation evidence.</td><td>Unassigned in the proposal</td></tr>
+        <tr><td>Profile editors</td><td>Domain content and source quality.</td><td>Unassigned in the proposal</td></tr>
+        <tr><td>Independent reviewers</td><td>Practitioner, research, and implementation challenge.</td><td>Open participation</td></tr>
       </tbody>
     </table>
 
-    <h2>Release Cadence and Deprecation</h2>
-    <ul>
-      <li>Minor versions for additive, backward-compatible enhancements.</li>
-      <li>Major versions for breaking semantic or schema changes.</li>
-      <li>Deprecations require migration guidance and clearly published timelines.</li>
-      <li>Implementers should pin versions and plan upgrades through published release manifests.</li>
-    </ul>
+    <h2>Proposed decision process</h2>
+    <ol>
+      <li>Publish a numbered proposal with the problem, examples, alternatives, compatibility effects, and acceptance evidence.</li>
+      <li>Allow at least 14 days for technical review and 30 days for breaking, charter, or governance changes.</li>
+      <li>Record substantive objections and their disposition. Material revisions restart review.</li>
+      <li>Publish the decision, rationale, reviewers, conflicts, and unresolved issues.</li>
+      <li>Archive approved text, schemas, fixtures, and migration guidance together.</li>
+    </ol>
+    <p>Before a first stable release, the proposal requires substantive assessments from at least two reviewers independent of the principal authors and each other. A later five-person council is a proposed transition, not a claim of current representation.</p>
 
-    <h2>Accountability Artifacts</h2>
-    <ul>
-      <li>Release manifest: <a href="/assets/releases/manifest.json"><code>releases/manifest.json</code></a></li>
-      <li>Standards package: <a href="/standards/tensor-core-v1.0.0.json"><code>tensor-core-v1.0.0.json</code></a></li>
-      <li>Compatibility policy: <a href="/standards/compatibility-policy.md"><code>compatibility-policy.md</code></a></li>
-      <li>Repository: <a href="https://github.com/tensor-standards-consortium/tensor-framework" target="_blank" rel="noopener noreferrer">tensor-framework on GitHub</a></li>
-    </ul>
-
-    <p class="hub-links">
-      Governance next:
-      <a href="/contribute/">Contribute workflow</a>
-      ·
-      <a href="/conformance/">Conformance expectations</a>
-      ·
-      <a href="/standards/">Standards policy</a>
-    </p>
+    <h2>Participation without privileged status</h2>
+    <p>Disclose affiliations and conflicts. Keep funding conditions visible. Record dissent and appeals. Use synthetic or authorized de-identified cases. Existing licenses remain applicable to existing materials; contribution, patent, and stewardship policies need explicit review before adoption.</p>
+    <p><a href="/contribute/">Contribute a review or implementation</a> · <a href="/founding/05-review-plan.md">Review the evidence gates</a></p>
   </div>
 </BaseLayout>

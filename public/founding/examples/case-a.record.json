@@ -1,0 +1,460 @@
+{
+  "snapshotId": "urn:example:tensor:case-a:snapshot-1",
+  "investigationId": "urn:example:tensor:case-a:investigation",
+  "contractRef": {
+    "proposal": "0.1.0",
+    "document": "../01-core-contract.md",
+    "status": "unratified proposal"
+  },
+  "producer": {
+    "label": "Tool A",
+    "implementationStatus": "Illustrative label; no implementation is supplied"
+  },
+  "recordedAt": "2026-01-12T10:24:00Z",
+  "scope": {
+    "purpose": "Investigate a suspected restricted transfer by one agent job.",
+    "subjectBoundary": [
+      "urn:example:tensor:case-a:job"
+    ]
+  },
+  "definitionReferences": [
+    {
+      "id": "urn:example:tensor:case-a:definition",
+      "version": "0.1.0-example",
+      "sha256": "43e7ef0537db404fcbc2c0936b9842ad20a3c873bc640223df4dbcd262d50db7",
+      "artifact": "case-a.definition.json"
+    }
+  ],
+  "dependencies": [],
+  "entries": [
+    {
+      "id": "urn:example:tensor:case-a:actor-maya",
+      "type": "Actor",
+      "recordedAt": "2026-01-12T10:06:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:case-a:actor-maya"
+      },
+      "kind": "human",
+      "label": "Maya (synthetic)",
+      "identityStatus": "selfDeclared"
+    },
+    {
+      "id": "urn:example:tensor:case-a:policy",
+      "type": "PolicyReference",
+      "recordedAt": "2026-01-12T10:06:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:case-a:actor-maya"
+      },
+      "policyIdentity": "urn:example:tensor:case-a:organization-export-policy",
+      "version": "1.0-example",
+      "effectiveTime": {
+        "status": "known",
+        "start": "2026-01-01T00:00:00Z"
+      },
+      "applicableScope": "The bound synthetic job and connector.",
+      "locatorAbsentReason": "Synthetic policy; its conditions appear only in this example.",
+      "conditions": "Ticket summaries are allowed. Attachment R is restricted. A designated incident lead may approve a scoped connector pause pending investigation."
+    },
+    {
+      "id": "urn:example:tensor:case-a:authority",
+      "type": "AuthorityAssertion",
+      "recordedAt": "2026-01-12T10:06:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:case-a:actor-maya"
+      },
+      "issuerId": "urn:example:tensor:case-a:actor-maya",
+      "granteeId": "urn:example:tensor:case-a:actor-maya",
+      "permittedOperation": "Approve a scoped connector pause",
+      "scope": "urn:example:tensor:case-a:job",
+      "validityStatus": {
+        "status": "claimedValid",
+        "reason": "Maya is asserted to be the designated incident lead in this synthetic scenario."
+      },
+      "basisReferences": [
+        "urn:example:tensor:case-a:policy"
+      ],
+      "receiverLocalVerification": "notPerformed"
+    },
+    {
+      "id": "urn:example:tensor:case-a:evidence-egress",
+      "type": "EvidenceReference",
+      "recordedAt": "2026-01-12T10:07:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:case-a:actor-maya"
+      },
+      "description": "Synthetic correlated job and gateway logs without retained outbound payload.",
+      "source": {
+        "label": "Job runtime and egress gateway",
+        "provenanceStatus": "asserted in synthetic scenario"
+      },
+      "availability": "unavailable",
+      "locatorAbsentReason": "Source bytes are not distributed in this example; no actual evidence service exists."
+    },
+    {
+      "id": "urn:example:tensor:case-a:observation-egress",
+      "type": "Observation",
+      "recordedAt": "2026-01-12T10:08:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:case-a:actor-maya"
+      },
+      "statement": "The source bundle reports outbound bytes for this job and destination; it contains no retained payload.",
+      "evidenceRefIds": [
+        "urn:example:tensor:case-a:evidence-egress"
+      ],
+      "method": "Synthetic source-record correlation; not independently demonstrated here.",
+      "eventTime": {
+        "status": "bounded",
+        "start": "2026-01-12T10:00:00Z",
+        "end": "2026-01-12T10:05:00Z"
+      }
+    },
+    {
+      "id": "urn:example:tensor:case-a:instance-transfer",
+      "type": "QuestionInstance",
+      "recordedAt": "2026-01-12T10:08:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:case-a:actor-maya"
+      },
+      "definitionRef": {
+        "id": "urn:example:tensor:case-a:definition",
+        "version": "0.1.0-example",
+        "sha256": "43e7ef0537db404fcbc2c0936b9842ad20a3c873bc640223df4dbcd262d50db7",
+        "artifact": "case-a.definition.json"
+      },
+      "questionId": "urn:example:tensor:case-a:question-transfer",
+      "subjectBindings": {
+        "subject": "urn:example:tensor:case-a:job"
+      },
+      "timeContext": {
+        "status": "bounded",
+        "start": "2026-01-12T10:00:00Z",
+        "end": "2026-01-12T10:05:00Z"
+      },
+      "parameterBindings": {
+        "subject": "urn:example:tensor:case-a:job",
+        "window": {
+          "status": "bounded",
+          "start": "2026-01-12T10:00:00Z",
+          "end": "2026-01-12T10:05:00Z"
+        },
+        "destination": "urn:example:tensor:case-a:processing-service"
+      },
+      "origin": {
+        "kind": "entry",
+        "rationale": "Monitoring reported outbound data for this bounded job."
+      }
+    },
+    {
+      "id": "urn:example:tensor:case-a:assessment-transfer-yes",
+      "type": "Assessment",
+      "recordedAt": "2026-01-12T10:09:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:case-a:actor-maya"
+      },
+      "targetInstanceId": "urn:example:tensor:case-a:instance-transfer",
+      "applicability": {
+        "status": "applicable",
+        "rationale": "Subject, interval, and required parameters are resolved."
+      },
+      "outcome": "yes",
+      "rationale": "Correlated records support outbound transfer for this job; content and intent remain separate questions.",
+      "inputs": [
+        {
+          "entryId": "urn:example:tensor:case-a:observation-egress",
+          "role": "supports"
+        }
+      ],
+      "method": "Evidence-linked synthetic assessment"
+    },
+    {
+      "id": "urn:example:tensor:case-a:decision-open-content",
+      "type": "Decision",
+      "recordedAt": "2026-01-12T10:09:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:case-a:actor-maya"
+      },
+      "targetInstanceId": "urn:example:tensor:case-a:instance-transfer",
+      "selectedAssessmentId": "urn:example:tensor:case-a:assessment-transfer-yes",
+      "disposition": "transition",
+      "rationale": "Inspect content after the bounded outbound-transfer finding.",
+      "policyStatus": {
+        "status": "notApplicable"
+      },
+      "authorityStatus": {
+        "status": "notApplicable"
+      },
+      "selections": [
+        {
+          "transitionId": "urn:example:tensor:case-a:transition-transfer-to-content",
+          "targetInstanceId": "urn:example:tensor:case-a:instance-attachment"
+        }
+      ]
+    },
+    {
+      "id": "urn:example:tensor:case-a:instance-attachment",
+      "type": "QuestionInstance",
+      "recordedAt": "2026-01-12T10:09:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:case-a:actor-maya"
+      },
+      "definitionRef": {
+        "id": "urn:example:tensor:case-a:definition",
+        "version": "0.1.0-example",
+        "sha256": "43e7ef0537db404fcbc2c0936b9842ad20a3c873bc640223df4dbcd262d50db7",
+        "artifact": "case-a.definition.json"
+      },
+      "questionId": "urn:example:tensor:case-a:question-attachment",
+      "subjectBindings": {
+        "subject": "urn:example:tensor:case-a:job"
+      },
+      "timeContext": {
+        "status": "bounded",
+        "start": "2026-01-12T10:00:00Z",
+        "end": "2026-01-12T10:05:00Z"
+      },
+      "parameterBindings": {
+        "subject": "urn:example:tensor:case-a:job",
+        "window": {
+          "status": "bounded",
+          "start": "2026-01-12T10:00:00Z",
+          "end": "2026-01-12T10:05:00Z"
+        },
+        "destination": "urn:example:tensor:case-a:processing-service",
+        "classificationPolicy": "urn:example:tensor:case-a:policy"
+      },
+      "origin": {
+        "kind": "transition",
+        "originDecisionId": "urn:example:tensor:case-a:decision-open-content",
+        "rationale": "Selected yes transition from the transfer instance."
+      }
+    },
+    {
+      "id": "urn:example:tensor:case-a:hypothesis-restricted",
+      "type": "Hypothesis",
+      "recordedAt": "2026-01-12T10:09:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:case-a:actor-maya"
+      },
+      "statement": "The transfer included restricted attachment R.",
+      "relatedInstanceId": "urn:example:tensor:case-a:instance-attachment",
+      "status": "proposed"
+    },
+    {
+      "id": "urn:example:tensor:case-a:hypothesis-metadata",
+      "type": "Hypothesis",
+      "recordedAt": "2026-01-12T10:09:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:case-a:actor-maya"
+      },
+      "statement": "The transfer included permitted summary metadata only.",
+      "relatedInstanceId": "urn:example:tensor:case-a:instance-attachment",
+      "status": "proposed"
+    },
+    {
+      "id": "urn:example:tensor:case-a:assessment-attachment-unknown",
+      "type": "Assessment",
+      "recordedAt": "2026-01-12T10:10:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:case-a:actor-maya"
+      },
+      "targetInstanceId": "urn:example:tensor:case-a:instance-attachment",
+      "applicability": {
+        "status": "applicable",
+        "rationale": "Subject, interval, and required parameters are resolved."
+      },
+      "outcome": "unknown",
+      "rationale": "Outbound bytes alone do not reveal whether an attachment was included.",
+      "inputs": [
+        {
+          "entryId": "urn:example:tensor:case-a:observation-egress",
+          "role": "context"
+        }
+      ],
+      "method": "Evidence-linked synthetic assessment",
+      "unknownReasons": [
+        {
+          "code": "notCollected",
+          "explanation": "Payload and destination receipt had not been collected at assessment time."
+        }
+      ]
+    },
+    {
+      "id": "urn:example:tensor:case-a:decision-pause",
+      "type": "Decision",
+      "recordedAt": "2026-01-12T10:11:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:case-a:actor-maya"
+      },
+      "targetInstanceId": "urn:example:tensor:case-a:instance-attachment",
+      "selectedAssessmentId": "urn:example:tensor:case-a:assessment-attachment-unknown",
+      "disposition": "approveScopedPause",
+      "rationale": "The incident lead chooses a policy-permitted precaution while content remains unresolved. This does not establish exposure.",
+      "policyStatus": {
+        "status": "referenced",
+        "policyRefIds": [
+          "urn:example:tensor:case-a:policy"
+        ]
+      },
+      "authorityStatus": {
+        "status": "referenced",
+        "authorityRefIds": [
+          "urn:example:tensor:case-a:authority"
+        ]
+      }
+    },
+    {
+      "id": "urn:example:tensor:case-a:action-pause-planned",
+      "type": "ActionRecord",
+      "recordedAt": "2026-01-12T10:11:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:case-a:actor-maya"
+      },
+      "operationDescription": "Pause the connector scoped to this synthetic job.",
+      "operationSubject": "urn:example:tensor:case-a:connector",
+      "stage": "planned",
+      "decisionId": "urn:example:tensor:case-a:decision-pause",
+      "eventTime": {
+        "status": "unknown",
+        "reason": "No execution occurred at this stage."
+      }
+    },
+    {
+      "id": "urn:example:tensor:case-a:action-pause-attempted",
+      "type": "ActionRecord",
+      "recordedAt": "2026-01-12T10:12:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:case-a:actor-maya"
+      },
+      "operationDescription": "Pause the connector scoped to this synthetic job.",
+      "operationSubject": "urn:example:tensor:case-a:connector",
+      "stage": "attempted",
+      "decisionId": "urn:example:tensor:case-a:decision-pause",
+      "eventTime": {
+        "status": "known",
+        "at": "2026-01-12T10:12:00Z"
+      },
+      "result": "Control request reportedly sent; completion not yet reported. Originating-system execution authorization is not established by this synthetic record. The cited AuthorityAssertion concerns approval only and does not establish permission to execute.",
+      "supersedes": {
+        "entryId": "urn:example:tensor:case-a:action-pause-planned",
+        "reason": "The planned operation was attempted."
+      }
+    },
+    {
+      "id": "urn:example:tensor:case-a:action-pause-completed",
+      "type": "ActionRecord",
+      "recordedAt": "2026-01-12T10:13:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:case-a:actor-maya"
+      },
+      "operationDescription": "Pause the connector scoped to this synthetic job.",
+      "operationSubject": "urn:example:tensor:case-a:connector",
+      "stage": "completed",
+      "decisionId": "urn:example:tensor:case-a:decision-pause",
+      "eventTime": {
+        "status": "known",
+        "at": "2026-01-12T10:13:00Z"
+      },
+      "result": "The connector control plane reportedly returned paused. This synthetic report does not establish effectiveness.",
+      "supersedes": {
+        "entryId": "urn:example:tensor:case-a:action-pause-attempted",
+        "reason": "The attributed source subsequently reported completion."
+      }
+    },
+    {
+      "id": "urn:example:tensor:case-a:evidence-payload",
+      "type": "EvidenceReference",
+      "recordedAt": "2026-01-12T10:20:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:case-a:actor-maya"
+      },
+      "description": "Synthetic preserved body and destination receipt identifying restricted attachment R.",
+      "source": {
+        "label": "Destination receipt and transmitted body",
+        "provenanceStatus": "asserted in synthetic scenario"
+      },
+      "availability": "withheld",
+      "locatorAbsentReason": "Source content and location are withheld from the recipient; no real source bytes exist in this example.",
+      "accessRestrictions": "The originating investigator is described as having inspected material. The recipient cannot verify it from this package."
+    },
+    {
+      "id": "urn:example:tensor:case-a:observation-payload",
+      "type": "Observation",
+      "recordedAt": "2026-01-12T10:21:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:case-a:actor-maya"
+      },
+      "statement": "Maya reports that the preserved body and correlated destination receipt identify attachment R in this job transfer.",
+      "evidenceRefIds": [
+        "urn:example:tensor:case-a:evidence-payload"
+      ],
+      "method": "Synthetic originating-investigator inspection; not recipient verification.",
+      "eventTime": {
+        "status": "bounded",
+        "start": "2026-01-12T10:00:00Z",
+        "end": "2026-01-12T10:05:00Z"
+      }
+    },
+    {
+      "id": "urn:example:tensor:case-a:assessment-attachment-yes",
+      "type": "Assessment",
+      "recordedAt": "2026-01-12T10:22:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:case-a:actor-maya"
+      },
+      "targetInstanceId": "urn:example:tensor:case-a:instance-attachment",
+      "applicability": {
+        "status": "applicable",
+        "rationale": "Subject, interval, and required parameters are resolved."
+      },
+      "outcome": "yes",
+      "rationale": "Later content evidence supports restricted attachment transfer under the bound classification policy. Intent remains unresolved.",
+      "inputs": [
+        {
+          "entryId": "urn:example:tensor:case-a:observation-payload",
+          "role": "supports"
+        },
+        {
+          "entryId": "urn:example:tensor:case-a:policy",
+          "role": "context"
+        }
+      ],
+      "method": "Evidence-linked synthetic assessment",
+      "supersedes": {
+        "entryId": "urn:example:tensor:case-a:assessment-attachment-unknown",
+        "reason": "Later collected content evidence resolves the previous content gap."
+      }
+    },
+    {
+      "id": "urn:example:tensor:case-a:review-pause-unresolved",
+      "type": "Decision",
+      "recordedAt": "2026-01-12T10:23:00Z",
+      "attribution": {
+        "actorId": "urn:example:tensor:case-a:actor-maya"
+      },
+      "targetInvestigationId": "urn:example:tensor:case-a:investigation",
+      "selectedInputIds": [
+        "urn:example:tensor:case-a:assessment-attachment-yes"
+      ],
+      "reviewedEntryIds": [
+        "urn:example:tensor:case-a:decision-pause"
+      ],
+      "triggeringEntryIds": [
+        "urn:example:tensor:case-a:assessment-attachment-yes"
+      ],
+      "disposition": "unresolved",
+      "rationale": "A selected input was superseded. Renewed review of this historical decision is not yet recorded; its original input remains unchanged.",
+      "policyStatus": {
+        "status": "notApplicable"
+      },
+      "authorityStatus": {
+        "status": "notApplicable"
+      }
+    }
+  ],
+  "completeness": {
+    "exchangeScope": "full",
+    "meaning": "All referenced Core entries and definition bytes are included. External source-evidence bytes are not."
+  },
+  "omissions": [],
+  "losses": []
+}

@@ -1,0 +1,88 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { legacyGraph, legacyQuestions, legacyCategories, questionPath, LEGACY_VERSION, LEGACY_DOWNLOAD, LEGACY_SHA256, LEGACY_SOURCE } from '../../data/legacy-questions';
+const title = 'Question library';
+const description = `Browse and cite the ${legacyQuestions.length} questions in TENSOR's preserved graph release ${LEGACY_VERSION}.`;
+---
+
+<BaseLayout title={title} description={description} canonicalPath="/questions/">
+  <div class="container prose-card">
+    <p class="section-kicker">Preserved graph release · {LEGACY_VERSION}</p>
+    <h2>Inspect and cite the questions already published</h2>
+    <p>This library preserves {legacyQuestions.length} questions and {legacyGraph.edges.length} recorded routes from the existing stable graph. Each question has a version-scoped page with its original wording, classification, and outgoing routes.</p>
+    <p>These are historical graph definitions, not completed investigations or definitions converted to the new candidate contract. Applicability, assessment criteria, evidence, and investigative context are not supplied by these entries. <a href="/core/">TENSOR Core</a> adds the proposed contract for recording that meaning explicitly.</p>
+    <p><a href={LEGACY_DOWNLOAD} download>Download the original graph JSON</a> · <a href={LEGACY_SOURCE}>Inspect the pinned repository source</a></p>
+    <details class="source-details"><summary>Release identity and digest</summary><p>Graph version: <code>{LEGACY_VERSION}</code><br />SHA-256 of the exact source bytes: <code class="digest">{LEGACY_SHA256}</code></p><p>Question identifiers are scoped to this release. A matching identifier in a different graph version does not establish equivalent meaning.</p></details>
+
+    <form id="question-filters" role="search" hidden>
+      <div><label for="question-query">Find a question</label><input id="question-query" type="search" placeholder="Question ID, wording, or archetype" autocomplete="off" /></div>
+      <div><label for="question-category">Category</label><select id="question-category"><option value="">All categories</option>{legacyCategories.map((category) => <option value={category}>{category}</option>)}</select></div>
+    </form>
+    <p id="question-count" role="status" aria-live="polite">Showing {legacyQuestions.length} questions.</p>
+    <p id="question-empty" hidden>No questions match. Try a shorter phrase or another category.</p>
+    <nav class="category-links" aria-label="Jump to a question category">{legacyCategories.map((category) => <a href={`#category-${category.toLowerCase()}`}>{category}</a>)}</nav>
+    <div id="question-library">
+      {legacyCategories.map((category) => (
+        <section class="question-category" data-category={category} aria-labelledby={`category-${category.toLowerCase()}`}>
+          <h2 id={`category-${category.toLowerCase()}`}>{category}</h2>
+          <ul class="question-list">
+            {legacyQuestions.filter((question) => question.category === category).map((question) => (
+              <li data-question data-search={`${question.id} ${question.label} ${question.text} ${question.category} ${question.archetype}`.toLowerCase()} data-category={question.category}>
+                <a href={questionPath(question.id)}><span class="question-id">{question.id}</span><span>{question.text}</span></a>
+                <p class="question-meta">{question.archetype}{legacyGraph.entryNodeIds.includes(question.id) ? ' · Declared entry point' : ''}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('#question-filters');
+  const query = document.querySelector<HTMLInputElement>('#question-query');
+  const category = document.querySelector<HTMLSelectElement>('#question-category');
+  const count = document.querySelector<HTMLElement>('#question-count');
+  const empty = document.querySelector<HTMLElement>('#question-empty');
+  const questions = [...document.querySelectorAll<HTMLElement>('[data-question]')];
+  const groups = [...document.querySelectorAll<HTMLElement>('.question-category')];
+  const update = () => {
+    const terms = (query?.value || '').trim().toLowerCase().split(/\s+/).filter(Boolean);
+    let visible = 0;
+    for (const item of questions) {
+      const matches = (!category?.value || item.dataset.category === category.value) && terms.every((term) => item.dataset.search?.includes(term));
+      item.hidden = !matches;
+      if (matches) visible += 1;
+    }
+    for (const group of groups) group.hidden = !group.querySelector('[data-question]:not([hidden])');
+    if (count) count.textContent = `Showing ${visible} of ${questions.length} questions.`;
+    if (empty) empty.hidden = visible > 0;
+  };
+  if (form && query && category) {
+    form.hidden = false;
+    form.addEventListener('submit', (event) => event.preventDefault());
+    query.addEventListener('input', update);
+    category.addEventListener('change', update);
+  }
+</script>
+
+<style>
+  .source-details { margin: 1.25rem 0; padding: .75rem 1rem; border: 1px solid var(--line-soft); }
+  summary { cursor: pointer; }
+  .digest { overflow-wrap: anywhere; }
+  #question-filters:not([hidden]) { display: grid; grid-template-columns: minmax(0, 2fr) minmax(10rem, 1fr); gap: 1rem; margin: 2rem 0 1rem; }
+  label { display: block; font-weight: 600; margin-bottom: .4rem; }
+  input, select { width: 100%; min-height: 2.75rem; padding: .6rem; color: var(--text-primary); background: var(--bg-input); border: 1px solid var(--line-soft); border-radius: var(--radius-md); font: inherit; }
+  input:focus-visible, select:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 3px; }
+  .category-links { display: flex; flex-wrap: wrap; gap: .65rem 1.2rem; margin: 1.2rem 0; }
+  .question-list { list-style: none; padding-left: 0; }
+  .question-list li { padding: 1rem 0; border-bottom: 1px solid var(--line-soft); }
+  .question-list li[hidden] { display: none; }
+  .question-list a { display: flex; align-items: baseline; gap: 1rem; text-decoration: none; }
+  .question-list a:hover { text-decoration: underline; }
+  .question-id { min-width: 3.2rem; font-family: var(--font-mono); font-size: .9rem; }
+  .question-meta { margin: .35rem 0 0 4.2rem; color: var(--text-muted); font-size: .85rem; }
+  .question-category h2 { scroll-margin-top: 8rem; }
+  @media (max-width: 600px) { #question-filters:not([hidden]) { grid-template-columns: 1fr; } }
+</style>

@@ -1,74 +1,43 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { absoluteUrl, organizationJsonLd, seo } from '../../data/seo';
+import { absoluteUrl, seo } from '../../data/seo';
 
 const meta = seo.about;
-const siteUrl = Astro.site?.toString() || 'https://tensor-standards-consortium.org/';
-
-const jsonLd = [
-  organizationJsonLd(siteUrl),
-  {
-    '@context': 'https://schema.org',
-    '@type': 'TechArticle',
-    headline: meta.title,
-    description: meta.description,
-    url: absoluteUrl(siteUrl, meta.canonicalPath),
-  },
-];
+const siteUrl = Astro.site?.toString() || 'https://tensor-website.pages.dev/';
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: meta.title,
+  description: meta.description,
+  url: absoluteUrl(siteUrl, meta.canonicalPath),
+};
 ---
 
-<BaseLayout
-  title={meta.title}
-  description={meta.description}
-  canonicalPath={meta.canonicalPath}
-  ogType={meta.ogType}
-  jsonLd={jsonLd}
->
+<BaseLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
   <div class="container prose-card">
-    <h2>The TENSOR Standard</h2>
-    <p>
-      TENSOR (Threat Evaluation & Neutralization through Structured Organizational Resilience)
-      is an open, graph-native standard for investigation logic.
-    </p>
-    <p>
-      It is not a standalone product. It is a shared contract that vendors, internal platforms,
-      and SOC teams can implement to keep investigation semantics portable.
-    </p>
+    <p class="section-kicker">One public investigative layer</p>
+    <h2>Shared meaning for every cyber investigation</h2>
+    <p>TENSOR is being developed as a public standard for cyber investigations. Humans, agents, and mixed teams use the same model to describe questions, evidence, uncertainty, assessments, decisions, and revisions. Those meanings should survive a handoff between people, organizations, and tools.</p>
+    <p>The scope includes incident response, threat hunting, forensics, identity, cloud, network, endpoint, application, and AI-system investigations. AI security teams governing agents and autonomous systems are the first adoption community; they do not define the limits of Core.</p>
 
-    <h2>Why Vendors Implement It</h2>
-    <ul>
-      <li><strong>Interoperability:</strong> one graph contract can be consumed by multiple products.</li>
-      <li><strong>Determinism:</strong> branch rules are explicit and testable.</li>
-      <li><strong>Auditability:</strong> traversals are replayable with stable IDs.</li>
-      <li><strong>Upgrade safety:</strong> release policy and conformance checks reduce integration drift.</li>
-    </ul>
+    <h2>What stays at the center</h2>
+    <p>The existing investigative questions and explicit <code>yes</code>, <code>no</code>, and <code>unknown</code> outcomes remain useful. Core now distinguishes a reusable investigation definition from the record of a particular investigation. A question instance binds a question to a subject, time, and parameters.</p>
+    <p>The <a href="/questions/">legacy question catalog</a> and <a href="/graphs/">published graph releases</a> remain available. Their content needs semantic review before it can become a candidate definition; no historic record or evidence has been invented during migration.</p>
 
-    <h2>Design Principles</h2>
-    <ul>
-      <li><strong>Graph-first:</strong> investigations are modeled as connected decisions, not isolated tasks.</li>
-      <li><strong>Stable semantics:</strong> core IDs and decision meanings do not change silently.</li>
-      <li><strong>Extension boundaries:</strong> vendor-specific behavior is additive, not core-breaking.</li>
-      <li><strong>Conformance evidence:</strong> compatibility claims require reproducible checks.</li>
-    </ul>
+    <h2>Public Core, open room to build</h2>
+    <table>
+      <thead><tr><th>Layer</th><th>Responsibility</th></tr></thead>
+      <tbody>
+        <tr><td>Public TENSOR Core</td><td>Identity, context, attribution, provenance, uncertainty, decisions, revisions, and exchange.</td></tr>
+        <tr><td>Public domain profiles</td><td>Reviewed questions, evidence requirements, vocabulary, and standards references.</td></tr>
+        <tr><td>Vendor layer</td><td>Interfaces, connectors, storage, analytics, and execution systems.</td></tr>
+        <tr><td>Business layer</td><td>Organizational policy, authority, thresholds, escalation, and retention.</td></tr>
+      </tbody>
+    </table>
+    <p>Vendor and business layers may specialize behavior. They must not silently rewrite shared meaning. Core does not require a particular platform, interface, model provider, or execution engine.</p>
 
-    <h2>What TENSOR Is Not</h2>
-    <ul>
-      <li>Not a SIEM replacement or orchestration engine.</li>
-      <li>Not a closed vendor certification program.</li>
-      <li>Not a free-form playbook format with undefined decision semantics.</li>
-      <li>Not a shortcut around governance, versioning, or compatibility review.</li>
-    </ul>
-
-    <h2>Consortium Function</h2>
-    <p>
-      The TENSOR Standards Consortium maintains the core contract and release process so implementers can rely on
-      stable behavior while still contributing improvements.
-    </p>
-    <p>
-      Next steps:
-      <a href="/implement/">implement core</a>,
-      <a href="/conformance/">run conformance</a>,
-      then <a href="/contribute/">submit improvements</a>.
-    </p>
+    <h2>Current status</h2>
+    <p><strong>Core 0.1.0-draft.1 is an implementation candidate.</strong> It is not ratified, independently certified, or institutionally endorsed. The founding package proposes public stewardship; named appointments and a stable release remain open work.</p>
+    <p><a href="/founding/00-charter.md">Read the founding charter</a> · <a href="/core/">Inspect the Core candidate</a> · <a href="/governance/">Review proposed governance</a></p>
   </div>
 </BaseLayout>

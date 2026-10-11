@@ -46,7 +46,10 @@
     return '';
   }
 
-  const telemetryEndpoint = resolveTelemetryEndpoint();
+  // Local investigation inputs and parser errors must never enter telemetry,
+  // even if an operator enables telemetry for the rest of the website.
+  const privateWorkspace = document.body?.dataset.privateWorkspace === 'true';
+  const telemetryEndpoint = privateWorkspace ? '' : resolveTelemetryEndpoint();
 
   function canSend() {
     return sentCount < MAX_EVENTS;

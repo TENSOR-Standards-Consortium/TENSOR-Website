@@ -1,0 +1,385 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tensor-website.pages.dev/core/0.1.0-draft.1/schemas/bundle.schema.json",
+  "title": "TENSOR candidate bundle 0.1.0-draft.1",
+  "type": "object",
+  "properties": {
+    "format": {
+      "const": "tensor-investigation-bundle"
+    },
+    "bindingVersion": {
+      "const": "0.1.0-draft.1"
+    },
+    "record": {
+      "type": "object"
+    },
+    "definitions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "content": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "path",
+          "content"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "format",
+    "bindingVersion",
+    "record",
+    "definitions"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "extension": {
+      "type": "object",
+      "properties": {
+        "namespace": {
+          "type": "string",
+          "minLength": 1,
+          "format": "uri"
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requiredForInterpretation": {
+          "type": "boolean"
+        },
+        "data": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "namespace",
+        "version",
+        "requiredForInterpretation",
+        "data"
+      ],
+      "additionalProperties": false
+    },
+    "dependency": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "format": "uri"
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "enum": [
+            "profile",
+            "extension"
+          ]
+        },
+        "requiredForInterpretation": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "kind",
+        "requiredForInterpretation"
+      ],
+      "additionalProperties": false
+    },
+    "contractRef": {
+      "type": "object",
+      "properties": {
+        "proposal": {
+          "const": "0.1.0"
+        },
+        "bindingVersion": {
+          "const": "0.1.0-draft.1"
+        },
+        "status": {
+          "const": "candidate; unratified"
+        }
+      },
+      "required": [
+        "proposal",
+        "bindingVersion",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "definitionRef": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "format": "uri"
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "artifact": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "sha256",
+        "artifact"
+      ],
+      "additionalProperties": false
+    },
+    "timeContext": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "const": "bounded"
+            },
+            "start": {
+              "type": "string",
+              "minLength": 1,
+              "format": "date-time"
+            },
+            "end": {
+              "type": "string",
+              "minLength": 1,
+              "format": "date-time"
+            },
+            "precision": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "status",
+            "start",
+            "end"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "const": "open"
+            },
+            "start": {
+              "type": "string",
+              "minLength": 1,
+              "format": "date-time"
+            },
+            "end": {
+              "type": "string",
+              "minLength": 1,
+              "format": "date-time"
+            },
+            "unknownBoundary": {
+              "enum": [
+                "start",
+                "end"
+              ]
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            },
+            "precision": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "status",
+            "unknownBoundary",
+            "reason"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "const": "unknown"
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "status",
+            "reason"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "eventTime": {
+      "anyOf": [
+        {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "const": "bounded"
+                },
+                "start": {
+                  "type": "string",
+                  "minLength": 1,
+                  "format": "date-time"
+                },
+                "end": {
+                  "type": "string",
+                  "minLength": 1,
+                  "format": "date-time"
+                },
+                "precision": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "status",
+                "start",
+                "end"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "const": "open"
+                },
+                "start": {
+                  "type": "string",
+                  "minLength": 1,
+                  "format": "date-time"
+                },
+                "end": {
+                  "type": "string",
+                  "minLength": 1,
+                  "format": "date-time"
+                },
+                "unknownBoundary": {
+                  "enum": [
+                    "start",
+                    "end"
+                  ]
+                },
+                "reason": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "precision": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "status",
+                "unknownBoundary",
+                "reason"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "const": "unknown"
+                },
+                "reason": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "status",
+                "reason"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "const": "known"
+            },
+            "at": {
+              "type": "string",
+              "minLength": 1,
+              "format": "date-time"
+            },
+            "precision": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "status",
+            "at"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "relationship": {
+      "type": "object",
+      "properties": {
+        "entryId": {
+          "type": "string",
+          "minLength": 1,
+          "format": "uri"
+        },
+        "role": {
+          "enum": [
+            "supports",
+            "contradicts",
+            "derivedFrom",
+            "selectedFor",
+            "context"
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "entryId",
+        "role"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

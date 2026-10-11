@@ -1,0 +1,12 @@
+flowchart TB
+  H["Human investigators"] --> V
+  A["Agent investigators"] --> V
+  V["Vendor layer<br/>Tools, connectors, interfaces and execution"] --> C
+  B["Business layer<br/>Policy, authority and operational context"] --> C
+  P["Public TENSOR profiles<br/>AI, identity, cloud, endpoint, forensics and other domains"] --> C
+  C["TENSOR Core<br/>Questions, evidence, assessments, decisions and revisions"]
+  C --- D["Pinned investigation definitions"]
+  C --- R["Portable investigation records"]
+  D --- Q["Question instances bind subject, time and parameters"]
+  R --- Q
+

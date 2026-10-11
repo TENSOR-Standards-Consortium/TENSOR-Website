@@ -1,3 +1,5 @@
-name = "tensor-website"
+# No production account or project fallback is stored here.
+# Deployment selects the dedicated TENSOR account and project from the
+# dedicated tensor-production GitHub environment. See docs/infrastructure-handoff.md.
 pages_build_output_dir = "dist"
 compatibility_date = "2026-02-05"

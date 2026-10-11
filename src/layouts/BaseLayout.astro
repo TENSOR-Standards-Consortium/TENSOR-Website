@@ -19,7 +19,7 @@ interface Props {
 
 const {
   title = 'TENSOR Framework',
-  description = 'Threat Evaluation & Neutralization through Structured Organizational Resilience',
+  description = 'A public standard for cyber investigations, usable by people and agents.',
   hidePageTitle = false,
   canonicalPath = Astro.url.pathname,
   ogImage = '/assets/img/logo-tensor-framework.png',
@@ -29,7 +29,7 @@ const {
   jsonLd,
 } = Astro.props;
 
-const siteUrl = Astro.site?.toString() || 'https://tensor-standards-consortium.org/';
+const siteUrl = Astro.site?.toString() || 'https://tensor-website.pages.dev/';
 const canonicalUrl = new URL(canonicalPath, siteUrl).toString();
 const ogImageUrl = ogImage.startsWith('http') ? ogImage : new URL(ogImage, siteUrl).toString();
 const jsonLdEntries = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
@@ -48,6 +48,7 @@ const configuredReleaseAllowedHosts = import.meta.env.RELEASE_ALLOWED_HOSTS
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/assets/img/logo-tensor-framework.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -74,14 +75,14 @@ const configuredReleaseAllowedHosts = import.meta.env.RELEASE_ALLOWED_HOSTS
       rel="stylesheet"
     />
     {jsonLdEntries.map((entry) => (
-      <script type="application/ld+json" is:inline set:text={JSON.stringify(entry)} />
+      <script type="application/ld+json" is:inline set:html={JSON.stringify(entry).replace(/</g, '\\u003c')} />
     ))}
-    <script is:inline src="/assets/js/app-init.js" defer></script>
   </head>
   <body
     data-tensor-api-origin={configuredApiOrigin || undefined}
     data-tensor-use-same-origin-api={useSameOriginApi ? 'true' : undefined}
     data-release-allowed-hosts={configuredReleaseAllowedHosts || undefined}
+    data-private-workspace={Astro.url.pathname.startsWith('/investigation-lab') || Astro.url.pathname.startsWith('/studio') ? 'true' : undefined}
   >
     <div class="app-shell">
       <Header />
@@ -101,5 +102,8 @@ const configuredReleaseAllowedHosts = import.meta.env.RELEASE_ALLOWED_HOSTS
 
       <Footer />
     </div>
+    <!-- Astro inserts the built CSP at the end of head. Load the shared
+         initializer after that policy so every executable script is covered. -->
+    <script is:inline src="/assets/js/app-init.js" defer></script>
   </body>
 </html>

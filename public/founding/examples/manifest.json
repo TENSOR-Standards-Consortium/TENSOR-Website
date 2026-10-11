@@ -1,0 +1,30 @@
+{
+  "status": "Illustrative artifact manifest; no signatures or conformance claim",
+  "contractProposal": "0.1.0",
+  "artifacts": [
+    {
+      "file": "case-a.definition.json",
+      "role": "definition",
+      "mediaType": "application/json",
+      "sha256": "43e7ef0537db404fcbc2c0936b9842ad20a3c873bc640223df4dbcd262d50db7"
+    },
+    {
+      "file": "case-a.record.json",
+      "role": "record",
+      "mediaType": "application/json",
+      "sha256": "f4ecff4ad8df470058201d0a7d6dd10ee86f4e630e3dd3ed8c0bce6745fae53a"
+    },
+    {
+      "file": "case-b.definition.json",
+      "role": "definition",
+      "mediaType": "application/json",
+      "sha256": "d2dc38bcc5573ae1856b9663da3550aece4366604e02432fab178340f5c5f930"
+    },
+    {
+      "file": "case-b.record.json",
+      "role": "record",
+      "mediaType": "application/json",
+      "sha256": "eea8a49b6ea5d78f899f19eab2d0e93176ce7a03edfa697cc54a9391f560fc7c"
+    }
+  ]
+}
