@@ -3,7 +3,7 @@
   "manifestVersion": 1,
   "bindingVersion": "0.1.0-draft.1",
   "sourceRepository": "https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework",
-  "sourceCommit": "5fdc868ad39170f5bcfdc4a4c546d167cc802e26",
+  "sourceCommit": "cebfa0ddc1dd0227d08dd5e98144a56a984ee0f0",
   "sourceDirty": false,
   "foundingSource": "framework-repository",
   "files": [
@@ -96,6 +96,18 @@
       "target": "public/core/0.1.0-draft.1/schemas/record.schema.json",
       "sha256": "61d433b6d293ae413530a6ab90d69c2a11e4fd9ccffb52ca94299ea19fe03dfc",
       "bytes": 67314
+    },
+    {
+      "source": "docs/review-process.md",
+      "target": "public/docs/review-process.md",
+      "sha256": "5a63a532236ef7352661fc80e845bd8accb3568a3e038c956c967e62d1e58b01",
+      "bytes": 3170
+    },
+    {
+      "source": "docs/stewardship.md",
+      "target": "public/docs/stewardship.md",
+      "sha256": "f711bcb5ba7be5e1a9a8f6104c124f93cf4ea950c848aa02ae8323dce8422e35",
+      "bytes": 4568
     },
     {
       "source": "proposals/founding-core-v0.1.0/00-charter.md",
@@ -204,6 +216,54 @@
       "target": "public/legacy/0.20260206e/tensor.core.graph.json",
       "sha256": "dfc3f1a965c01b6f7ade253e426e69abcbad688fab20d9d00065d71c777c010c",
       "bytes": 341136
+    },
+    {
+      "source": "review/2026-10-11.1/README.md",
+      "target": "public/review/2026-10-11.1/README.md",
+      "sha256": "900bafef3235cfc45018acdc5781a3433e0120d98e2bd62e3d6ccb2d753438c6",
+      "bytes": 5213
+    },
+    {
+      "source": "review/2026-10-11.1/manifest.json",
+      "target": "public/review/2026-10-11.1/manifest.json",
+      "sha256": "3c82bffbd2ba64aca1e1c65fae7d56094cf4cce6c0f79663c4e2f4a46c79e58d",
+      "bytes": 32520
+    },
+    {
+      "source": "review/2026-10-11.1/review-form.md",
+      "target": "public/review/2026-10-11.1/review-form.md",
+      "sha256": "681538c8dd1e445bd5df2438d06318ea2bb6519158dc4217f4526a9f5400b6f0",
+      "bytes": 2017
+    },
+    {
+      "source": "review/2026-10-11.1/review-package.zip",
+      "target": "public/review/2026-10-11.1/review-package.zip",
+      "sha256": "37ccb90c5f1cd911cf21d202a037d3bb967f749355a1c5e6b3e5c298c857f964",
+      "bytes": 467072
+    },
+    {
+      "source": "review/2026-10-11.1/source.tar.gz",
+      "target": "public/review/2026-10-11.1/source.tar.gz",
+      "sha256": "14468a734e562ea6f85b9f21f95da431eb6853208f5e07ff3e85255308a981cc",
+      "bytes": 460889
+    },
+    {
+      "source": "review/2026-10-11.1/validation.json",
+      "target": "public/review/2026-10-11.1/validation.json",
+      "sha256": "01e153f4c0d33c9ced5400468e690c8f07a211d0741ee753fbd478a18867a54c",
+      "bytes": 1526
+    },
+    {
+      "source": "review/2026-10-11.1/verify-snapshot.py",
+      "target": "public/review/2026-10-11.1/verify-snapshot.py",
+      "sha256": "49bdedc1395fd38dd3c8dd60e39f2b240d6f690d79a344f31cb9e2c9537afe21",
+      "bytes": 2674
+    },
+    {
+      "source": "review/2026-10-11.1/walkthrough.md",
+      "target": "public/review/2026-10-11.1/walkthrough.md",
+      "sha256": "cdd207c54ef9296a2650d900ccd5a655080f494eed20de594861842769e43028",
+      "bytes": 3449
     },
     {
       "source": "LICENSE",

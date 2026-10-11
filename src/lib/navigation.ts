@@ -3,7 +3,7 @@ export const navigation = [
   { title: 'Investigation Lab', url: '/investigation-lab/' },
   { title: 'Questions', url: '/questions/' },
   { title: 'Docs', url: '/docs/' },
-  { title: 'Contribute', url: '/contribute/' },
+  { title: 'Review', url: '/review/' },
 ];
 
 export const footerNavigation = [

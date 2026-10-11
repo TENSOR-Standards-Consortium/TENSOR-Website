@@ -14,6 +14,8 @@ The first command copies the four browser runtime modules, Core documentation, s
 
 `public/core/0.1.0-draft.1/provenance.json` records the full source Git commit, whether the checkout had uncommitted changes, source-relative paths, destination-relative paths, byte lengths, and SHA-256 digests. It has no timestamps or machine-specific paths. The manifest is reproducible for the same checkout and inputs. It is an integrity inventory, not a cryptographic signature or independent endorsement. Review the manifest and source diff together.
 
+The sync also copies the frozen `review/2026-10-11.1/` package (including its pinned source archive and single ZIP distribution bundle) to `public/review/2026-10-11.1/`, and current stewardship/review-process records to `public/docs/`. These are included in the same SHA-256 provenance inventory. Technical snapshot identity and the website synchronization commit are distinct.
+
 The generated directories are:
 
 - `src/vendor/tensor-core/`: browser runtime, imported by the Investigation Lab, and its upstream `LICENSE`.
