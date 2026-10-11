@@ -1,0 +1,73 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const version = '0.1.0-draft.1';
+const artifactPath = `/core/${version}`;
+const title = 'TENSOR Core';
+const description = 'A candidate shared contract for portable cyber investigations, usable by humans and agents.';
+---
+
+<BaseLayout title={title} description={description} canonicalPath="/core/">
+  <div class="container prose-card">
+    <p class="section-kicker">Public implementation candidate · {version}</p>
+    <h2>Carry the investigation, including its reasoning</h2>
+    <p>TENSOR Core proposes a shared contract for cyber investigations. A portable record connects questions, evidence references, observations, hypotheses, assessments, decisions, and recorded actions. Humans and agents use the same meanings and attribution rules.</p>
+    <p>This candidate adds an investigation record to TENSOR's question-graph foundation. The <a href="/questions/">existing question release</a> remains preserved and separately versioned. Core {version} is available for implementation and review; it is not a ratified standard.</p>
+    <p><a class="btn btn-primary" href="/investigation-lab/">Try Investigation Lab</a> <a class="btn btn-secondary" href="/implement/">Implement the candidate</a></p>
+
+    <h2>One shared layer, many implementations</h2>
+    <ol class="layers" aria-label="TENSOR architecture layers">
+      <li><strong>Products and services</strong><span>Investigator interfaces, agent runtimes, evidence stores, integrations, and business workflows.</span></li>
+      <li><strong>Public profiles and extensions</strong><span>Domain-specific questions and explicit additional semantics, with declared compatibility requirements.</span></li>
+      <li><strong>TENSOR Core</strong><span>Portable meaning, identity, context, provenance, revision history, and exchange rules.</span></li>
+    </ol>
+    <p>Vendor and business layers can build above Core. They must declare additional meaning and preserve the shared record. An agent identity or an imported action record does not grant authority to perform an action.</p>
+
+    <h2>Read and download the contract</h2>
+    <div class="resource-grid">
+      <section>
+        <h3>Purpose and normative proposal</h3>
+        <ul>
+          <li><a href="/founding/00-charter.md">Founding charter</a></li>
+          <li><a href="/founding/01-core-contract.md">Core contract: proposed requirements</a></li>
+          <li><a href="/founding/02-governance.md">Governance proposal</a></li>
+          <li><a href="/founding/03-standards-crosswalk.md">Standards crosswalk</a></li>
+        </ul>
+      </section>
+      <section>
+        <h3>Executable candidate binding</h3>
+        <ul>
+          <li><a href={`${artifactPath}/binding.md`}>JSON binding {version}</a></li>
+          <li><a href={`${artifactPath}/schemas/bundle.schema.json`}>Bundle JSON Schema</a></li>
+          <li><a href={`${artifactPath}/schemas/definition.schema.json`}>Definition JSON Schema</a></li>
+          <li><a href={`${artifactPath}/schemas/record.schema.json`}>Record JSON Schema</a></li>
+          <li><a href={`${artifactPath}/coverage.md`}>Validation coverage and limitations</a></li>
+        </ul>
+      </section>
+    </div>
+    <p>The founding contract states proposed meaning and behavior. The versioned binding makes those rules concrete for an implementation candidate. Check both when interpreting a result; a schema-valid object alone does not establish semantic validity.</p>
+
+    <h2>Two synthetic reference investigations</h2>
+    <ul>
+      <li><a href={`${artifactPath}/examples/case-a.bundle.json`} download>AI-system investigation bundle</a>: inspect an agent-related case and its recorded reasoning.</li>
+      <li><a href={`${artifactPath}/examples/case-b.bundle.json`} download>Identity investigation bundle</a>: inspect the same Core concepts in a conventional cyber investigation.</li>
+    </ul>
+    <p>Each bundle includes a record and the exact definition bytes used by its digest pins. Use the <a href="/investigation-lab/">Lab</a> to inspect, validate, export, and reimport it. These are examples, not real incident evidence.</p>
+
+    <h2>What a validation result means</h2>
+    <p>The reference validator checks the candidate's supported structural and semantic requirements. It reports failures and unsupported required meaning explicitly. A valid <code>unknown</code> assessment is different from an <code>indeterminate</code> validation result.</p>
+    <p>Validation does not establish evidence truth, investigative completeness, legal authority, or operational safety. The validator does not retrieve evidence or execute recorded actions. Read <a href="/conformance/">the reporting rules</a> before making an implementation claim.</p>
+
+    <h2>Help move the candidate forward</h2>
+    <p>The next evidence is an exchange between separately developed implementations, useful investigator feedback, and public resolution of open design questions. The <a href="/founding/04-reference-cases-and-conformance.md">acceptance scenarios</a>, <a href="/founding/05-review-plan.md">review plan</a>, and <a href="/founding/06-change-and-decision-register.md">decision register</a> make that work reviewable.</p>
+    <p><a href="/contribute/">Contribute a case, review, or implementation report</a> · <a href="/standards/">How TENSOR relates to existing standards</a></p>
+  </div>
+</BaseLayout>
+
+<style>
+  .layers { list-style: none; padding-left: 0; display: grid; gap: .65rem; }
+  .layers li { border: 1px solid var(--line-soft); border-left: 4px solid var(--accent-secondary); padding: 1rem; background: var(--bg-surface-muted); }
+  .layers strong, .layers span { display: block; }
+  .layers span { color: var(--text-secondary); margin-top: .25rem; }
+  .resource-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
+  @media (max-width: 700px) { .resource-grid { grid-template-columns: 1fr; gap: 0; } }
+</style>

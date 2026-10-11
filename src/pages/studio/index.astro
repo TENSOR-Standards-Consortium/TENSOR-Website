@@ -4,7 +4,7 @@ import GraphExplorer from '../../components/GraphExplorer.jsx';
 import { absoluteUrl, seo } from '../../data/seo';
 
 const meta = seo.studio;
-const siteUrl = Astro.site?.toString() || 'https://tensor-standards-consortium.org/';
+const siteUrl = Astro.site?.toString() || 'https://tensor-standards.pages.dev/';
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -25,35 +25,33 @@ const jsonLd = {
   <section class="studio-wrapper container">
     <div class="studio-intro-card">
       <p>
-        Graph Studio is a reference explorer for inspecting core graph and schema releases.
-        It helps implementers compare versions and inspect branch semantics before deployment.
+        Graph Studio explores the historical question graphs and their yes, no, and unknown branches.
+        Published graph releases remain available as reference material while the candidate Core contract adds portable investigation records.
       </p>
       <p>
-        This is not the primary implementation workflow. Use
-        <a href="/implement/"> Implement Core</a>
-        and
-        <a href="/conformance/"> Conformance Suite</a>
-        to complete integration readiness checks.
+        Import a graph or a vendor layer, inspect the questions, and export a merged graph.
+        Overlays preserve the base question meaning as separate metadata. Added questions need explicit text, category, and archetype.
+        The local checks cover graph structure; they do not establish full JSON Schema validation or candidate Core conformance.
       </p>
       <p>
-        Click any node to inspect inbound and outbound decisions.
-        The explorer supports offline use after first load.
+        Click a question to inspect its incoming and outgoing branches. Loading release channels requires a connection.
+        Try the <a href="/investigation-lab/">Investigation Lab</a> to inspect and exchange complete candidate investigation records.
       </p>
       <p class="hub-links">
         Next:
         <a href="/implement/">Implementation guide</a>
         ·
-        <a href="/conformance/">Conformance suite</a>
+        <a href="/conformance/">Candidate conformance scope</a>
         ·
         <a
           href="/investigation-lab/"
           data-telemetry-event="cta-open-investigation-lab"
           data-telemetry-location="studio-intro"
         >
-          Concept workflow demo
+          Investigation Lab
         </a>
         ·
-        <a href="/metrics/">Metrics dashboard</a>
+        <a href="/metrics/">Historical structural metrics</a>
       </p>
     </div>
 

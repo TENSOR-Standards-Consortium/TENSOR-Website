@@ -3,8 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { absoluteUrl, seo } from '../../data/seo';
 
 const meta = seo.implement;
-const siteUrl = Astro.site?.toString() || 'https://tensor-standards-consortium.org/';
-
+const siteUrl = Astro.site?.toString() || 'https://tensor-standards.pages.dev/';
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'TechArticle',
@@ -14,116 +13,40 @@ const jsonLd = {
 };
 ---
 
-<BaseLayout
-  title={meta.title}
-  description={meta.description}
-  canonicalPath={meta.canonicalPath}
-  ogType={meta.ogType}
-  jsonLd={jsonLd}
->
+<BaseLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
   <div class="container prose-card">
-    <h2>30-Minute Core Implementation Path</h2>
-    <p>
-      This path is for teams integrating TENSOR as a shared investigation contract.
-      Completion criteria are explicit so implementation claims remain verifiable.
-    </p>
+    <p class="section-kicker">Implementation candidate · 0.1.0-draft.1</p>
+    <h2>Validate a portable investigation</h2>
+    <p>Start with two synthetic examples and the reference validator. This establishes a reproducible baseline for the candidate binding; it does not certify an integration or prove that the recorded conclusions are true.</p>
 
-    <h2>Step 1: Pin Release Artifacts</h2>
+    <h2>1. Try a case in your browser</h2>
+    <p><a href="/investigation-lab/">Investigation Lab</a> lets you inspect, import, validate, and export a candidate bundle. Use the <a href="/core/0.1.0-draft.1/examples/case-a.bundle.json" download>AI-system case</a> or the <a href="/core/0.1.0-draft.1/examples/case-b.bundle.json" download>identity case</a>. Evidence in these examples is synthetic.</p>
+
+    <h2>2. Run the same candidate locally</h2>
+    <p>Use Node.js 22 or later. The implementation candidate is on the <a href="https://github.com/tensor-standards-consortium/TENSOR-Framework/tree/codex/core-investigation-contract">Core review branch</a>; the default branch retains the earlier framework until review is complete. Clone the candidate explicitly:</p>
+    <pre><code>{`git clone --branch codex/core-investigation-contract --single-branch https://github.com/tensor-standards-consortium/TENSOR-Framework.git
+cd TENSOR-Framework
+git rev-parse HEAD
+npm ci
+npm run check
+node core/v0.1.0-draft.1/cli.mjs core/v0.1.0-draft.1/examples/case-a.bundle.json`}</code></pre>
+    <p>Record the commit returned by <code>git rev-parse HEAD</code> because the review branch can change. The CLI prints a validation report. Inspect its findings and declared scope; a successful reference run is not an independent interoperability demonstration. <a href="/core/">Pin the candidate artifacts</a> when recording results.</p>
+
+    <h2>3. Understand what travels together</h2>
     <ul>
-      <li>
-        Schema:
-        <a href="/assets/data/core.schema.json" data-telemetry-event="artifact-schema-click" data-telemetry-location="implement-step-1">
-          <code>core.schema.json</code>
-        </a>
-      </li>
-      <li>
-        Graph:
-        <a href="/assets/data/tensor-core.json" data-telemetry-event="artifact-graph-click" data-telemetry-location="implement-step-1">
-          <code>tensor-core.json</code>
-        </a>
-      </li>
-      <li>
-        Release manifest:
-        <a href="/assets/releases/manifest.json" data-telemetry-event="artifact-manifest-click" data-telemetry-location="implement-step-1">
-          <code>releases/manifest.json</code>
-        </a>
-      </li>
+      <li>A pinned definition carries question meaning, criteria, parameters, and transition guards.</li>
+      <li>The investigation record binds instances to subjects and time, attributes entries, and preserves revisions.</li>
+      <li>The bundle retains the exact definition bytes used by its digest pins.</li>
+      <li>Evidence can remain in an access-controlled repository. An evidence reference is not permission to retrieve it.</li>
     </ul>
-    <p>
-      Expected output: your integration references explicit graph and schema versions.
-    </p>
+    <p>Use the candidate <a href="/core/0.1.0-draft.1/binding.md">binding documentation</a> and <a href="/schemas/">JSON Schemas</a>. Do not substitute the legacy graph schema or reconstruct pinned definition bytes by reserializing a parsed object.</p>
 
-    <h2>Step 2: Validate Contract</h2>
-    <ul>
-      <li>Run schema validation on canonical graph artifacts.</li>
-      <li>Fail your build on structural violations and edge ID mismatches.</li>
-      <li>Document accepted version range in your implementation README.</li>
-    </ul>
-    <p>
-      Expected output: deterministic pass/fail validation stage in CI.
-    </p>
+    <h2>4. Choose an implementation role</h2>
+    <p>The proposed roles are definition producer, record producer, reader, lossless exchanger, and transition interpreter. Implement the role your tool needs and declare its supported candidate version, profiles, required extensions, and limitations. An interpreter resolves recorded transition selections; Core does not authorize or execute tools.</p>
+    <p>Retain disagreement and unknowns. Preserve historical entries when an assessment changes. Report omissions and transformation losses before claiming a complete or lossless exchange.</p>
 
-    <h2>Step 3: Run Conformance Fixtures</h2>
-    <ul>
-      <li>
-        Manifest:
-        <a href="/standards/conformance/manifest.json" data-telemetry-event="artifact-conformance-manifest-click" data-telemetry-location="implement-step-3">
-          <code>conformance/manifest.json</code>
-        </a>
-      </li>
-      <li>
-        Valid fixture:
-        <a href="/standards/conformance/fixtures/valid/core-minimal.json" data-telemetry-event="artifact-valid-fixture-click" data-telemetry-location="implement-step-3">
-          <code>core-minimal.json</code>
-        </a>
-      </li>
-      <li>
-        Invalid fixture:
-        <a href="/standards/conformance/fixtures/invalid/edge-id-mismatch.json" data-telemetry-event="artifact-invalid-fixture-click" data-telemetry-location="implement-step-3">
-          <code>edge-id-mismatch.json</code>
-        </a>
-      </li>
-    </ul>
-    <p>
-      Expected output: valid fixture is accepted, invalid fixture is rejected with explicit error details.
-    </p>
-
-    <h2>Step 4: Enforce Deterministic Execution</h2>
-    <ul>
-      <li>Map runtime transitions to <code>yes</code>, <code>no</code>, or <code>unknown</code> only.</li>
-      <li>Store traversal state with stable node and edge IDs.</li>
-      <li>Keep model-generated reasoning as evidence, not branch policy.</li>
-    </ul>
-    <p>
-      Expected output: replayable traversal records for audits and debugging.
-    </p>
-
-    <h2>Done Criteria</h2>
-    <ul>
-      <li>All required fields validate against pinned schema.</li>
-      <li>Conformance fixtures pass/fail as expected.</li>
-      <li>Runtime traversal produces deterministic branch transitions.</li>
-      <li>Implementation documentation states supported versions and extension behavior.</li>
-    </ul>
-
-    <h2>FAQ</h2>
-    <h3>Can we implement partially?</h3>
-    <p>
-      Yes. Start at Consumer tier and publish current tier coverage. Incrementally move to Executor and Authoring Tool tiers.
-    </p>
-
-    <h3>Can we keep platform-specific metadata?</h3>
-    <p>
-      Yes. Use namespaced extensions and keep core semantics unchanged.
-    </p>
-
-    <p class="hub-links">
-      Implement next:
-      <a href="/conformance/">Conformance Suite</a>
-      ·
-      <a href="/standards/">Standards</a>
-      ·
-      <a href="/contribute/">Contribute updates</a>
-    </p>
+    <h2>5. Bring back exchange evidence</h2>
+    <p>Try moving an investigation between separately developed implementations. Compare question context, evidence links, assessments, transition selections, revisions, and unsupported semantics. Publish a synthetic fixture and a scoped report through the <a href="/contribute/">contribution workflow</a>.</p>
+    <p><a href="/conformance/">Validation coverage and reporting</a> · <a href="/standards/">Reuse of existing standards</a> · <a href="/extensions/">Extension boundaries</a></p>
   </div>
 </BaseLayout>

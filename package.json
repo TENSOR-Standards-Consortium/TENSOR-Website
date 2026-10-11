@@ -8,20 +8,26 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro sync && tsc --noEmit",
-    "test": "node --test tests/*.test.mjs"
+    "test": "node --test tests/*.test.mjs",
+    "sync:core": "node scripts/sync-core.mjs",
+    "check:core": "node scripts/sync-core.mjs --check",
+    "check:urls": "node scripts/hosting-check-url-policy.mjs",
+    "check:build": "node scripts/hosting-check-build.mjs",
+    "validate": "npm run check:core && npm run check:urls && npm run check && npm test && npm run build && npm run check:build"
   },
   "dependencies": {
-    "@astrojs/react": "^5.0.5",
-    "@astrojs/sitemap": "^3.7.2",
-    "astro": "^6.3.3",
-    "cytoscape": "^3.33.3",
+    "@astrojs/react": "7.0.1",
+    "@astrojs/sitemap": "3.7.4",
+    "astro": "7.3.8",
+    "cytoscape": "3.33.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "parse5": "8.0.0",
     "typescript": "^5.9.3"
   },
-  "overrides": {
-    "lodash": "4.18.1"
+  "engines": {
+    "node": ">=22.12.0"
   }
 }

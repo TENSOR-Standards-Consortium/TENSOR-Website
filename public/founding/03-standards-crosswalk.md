@@ -1,0 +1,43 @@
+# Standards crosswalk and semantic boundaries
+
+**Status:** informative founding proposal, v0.1.0. **Sources checked:** 2026-10-10.
+
+TENSOR proposes a public investigative layer for all cyber investigations, usable by humans, agents, and mixed teams. Existing standards already address substantial parts of that problem. This crosswalk identifies reuse candidates and proposed boundaries; it establishes no implemented mapping, external conformance, partnership, or endorsement. Every relationship below remains conceptual until a versioned mapping and exchange tests substantiate it.
+
+## Reuse before expansion
+
+Public TENSOR profiles should connect shared investigative questions and records to established knowledge. Vendor adapters supply integrations; business overlays supply explicit policy context. Neither may silently alter the shared meanings. A TENSOR field being convenient to implement does not justify inventing a competing evidence, threat-intelligence, or orchestration standard.
+
+| Existing work and verified scope | Reuse or reference | Proposed TENSOR responsibility and boundary |
+| --- | --- | --- |
+| **MITRE ATT&CK:** adversary behavior knowledge, available as STIX data. [Overview](https://www.mitre.org/focus-areas/cybersecurity/mitre-attack); [data](https://attack.mitre.org/resources/attack-data-and-tools/). | Reference applicable techniques and related objects using their identifiers and source versions. Preserve ATT&CK's descriptions and attribution. | Express which investigative question a technique motivates, which observations support an assessment, and what remains unresolved. A technique reference alone establishes neither occurrence nor investigation completeness. |
+| **MITRE D3FEND:** a countermeasure knowledge graph with typed concepts and relationships grounded in literature. [Project scope](https://d3fend.mitre.org/about/). | Reference defensive techniques and relevant artifact concepts when describing control-related questions and evidence requirements. | Record observed control behavior, context, limitations, and the resulting assessment. A D3FEND relationship is not proof that a deployed control worked in this case. |
+| **MITRE ATLAS:** adversary tactics and techniques involving AI, grounded in observed attacks and realistic demonstrations. [MITRE fact sheet](https://atlas.mitre.org/pdf-files/MITRE_ATLAS_Fact_Sheet.pdf). | Reference relevant AI threat knowledge in public profiles. Bind references to a retrieved release or immutable source snapshot. | Support investigation of an AI system and participation by an investigative agent through the same Core. Neither AI involvement nor an ATLAS label automatically establishes malicious behavior. |
+| **CASE / UCO:** CASE represents cyber investigations, including human/tool actions, provenance, and evidence-based hypothesis evaluation; it imports UCO's general cyber concepts. [Design, §§1–2](https://caseontology.org/resources/case_design_document.html). | Evaluate reuse of observable, action, identity, relationship, and provenance representations; retain external object identities. | Specify portable question definitions and their application to assessments and decisions. This overlaps CASE materially: determine whether TENSOR should be a CASE profile, extension, or separately bound model before freezing the contract. |
+| **STIX 2.1:** a structured language for cyber threat intelligence, with domain, relationship, observable, and other objects. [OASIS Standard](https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html). | Link or exchange applicable threat-intelligence objects, observables, and their markings without discarding their native semantics. | Preserve the investigation-specific basis for accepting, rejecting, qualifying, or revising claims. Do not turn every TENSOR object into a STIX object merely because both use JSON. |
+| **Attack Flow:** a STIX 2.1 extension describing adversary actions, conditions, assets, and effects. [Language specification](https://center-for-threat-informed-defense.github.io/attack-flow/language/). | Attach reconstructed or hypothesized adversary sequences, including their external source references. | Keep the suspected sequence of attacker behavior distinct from the sequence of investigative questions and decisions. An attack condition and a TENSOR assessment need an explicit mapping, not a shared label. |
+| **CACAO 2.0:** structured security playbooks, including investigative activities, workflow steps, commands, agents, and targets. [Committee Specification 01, §§1–4](https://docs.oasis-open.org/cacao/security-playbooks/v2.0/cs01/security-playbooks-v2.0-cs01.html). | Reference or bind operational collection/response procedures to CACAO playbooks and steps. | Preserve why a question was answered and why a transition was chosen. Avoid expanding Core into a competing orchestration engine; test how investigative logic binds to CACAO, including unsupported conditions and execution outcomes. |
+| **OCSF:** cybersecurity event logging and normalization, organized through event classes, attributes, objects, and types. [Schema project](https://github.com/ocsf/ocsf-schema). | Reference normalized events while retaining source identity, schema version, and transformation provenance. | Connect events to observations, evidence requirements, and assessments. Normalization does not establish collection completeness, evidential reliability, or the truth of an investigative conclusion. |
+
+## Concrete boundaries to test
+
+**An agent makes an outbound tool call.** An OCSF event or CASE/UCO observable can carry relevant activity; the originating record remains addressable. TENSOR asks whether the call exceeded a defined authorization scope and records the supporting and conflicting evidence. The applicable business policy is a versioned input. An ATLAS reference supplies threat context; it does not answer the authorization question. Missing policy evidence produces an unresolved assessment, not a finding of unauthorized activity.
+
+**An investigator recommends disabling an account.** TENSOR records the recommendation, rationale, attribution, and policy context. A CACAO procedure may implement the operation. A recommendation, authorization, attempted execution, and confirmed outcome remain distinct. A vendor's successful API response cannot silently rewrite the historical recommendation as a verified containment result.
+
+**A human revises an agent's hypothesis.** Preserve the earlier attributed assessment and its evidence links, then add the revision or disagreement. Evaluate reuse of CASE's hypothesis/provenance concepts first. A STIX export may convey the resulting intelligence, but an export omitting dissent or revision history is a declared projection, not a complete TENSOR investigation exchange.
+
+## Mapping acceptance requirements
+
+A publishable mapping should state:
+
+1. Source and target specification versions, vocabulary releases, object identifiers, mapping identifier/version, author, review date, and supporting references. A mutable URL alone is insufficient for reproducibility; retain an immutable version or content digest where the source permits it.
+2. Direction and cardinality for each rule: one-to-one, one-to-many, many-to-one, or unmapped. Identify transformed meanings, derived values, required assumptions, and omitted content. Similar words do not establish equivalence.
+3. Treatment of uncertainty, confidence methods, missing evidence, identity, time, revisions, and markings. A numeric confidence value must not acquire a different interpretation through conversion.
+4. Positive, negative, and lossy fixtures; executable validation against both bound formats; expected semantic assertions after exchange; and a readable transformation report. Test round trips only where reversibility is claimed.
+
+Adapters should retain originating representations when authorized, declare losses before export, and fail when required meaning cannot be preserved. Redaction must be explicit and respect the applicable disclosure rules; publishing the standard does not require publishing investigation data.
+
+## Decisions before stabilization
+
+Prioritize CASE/UCO and CACAO comparison using the two reference cases. Record why reuse, an extension, or a separate representation is necessary for each overlapping concept. Then select the initial binding versions and smallest useful mapping set. All eight integrations are candidates, not mandatory Core dependencies or claims of universal interoperability. Independent implementations and reviewers must test the chosen boundary before TENSOR advertises it as supported.

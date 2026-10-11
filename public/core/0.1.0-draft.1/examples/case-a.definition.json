@@ -1,0 +1,95 @@
+{
+  "id": "urn:example:tensor:candidate:case-a:definition",
+  "version": "0.1.0-draft.1",
+  "publicationStatus": "candidate",
+  "title": "Bounded investigation of an agent job data transfer",
+  "contractRef": {
+    "proposal": "0.1.0",
+    "bindingVersion": "0.1.0-draft.1",
+    "status": "candidate; unratified"
+  },
+  "questions": [
+    {
+      "id": "urn:example:tensor:candidate:case-a:question-transfer",
+      "prompt": "Did this job transfer data to the bound destination?",
+      "proposition": "The bound job transferred data to the specified destination during the bound interval.",
+      "parameters": {
+        "subject": {
+          "type": "URI",
+          "required": true,
+          "bindsTo": "subject:subject"
+        },
+        "window": {
+          "type": "timeContext",
+          "required": true,
+          "bindsTo": "timeContext"
+        },
+        "destination": {
+          "type": "URI",
+          "required": true
+        }
+      },
+      "applicabilityCriteria": "Applies to the bound subject and window when all required parameters are resolved.",
+      "assessmentCriteria": {
+        "yes": "Correlated source and egress evidence establishes outbound data for this job and destination.",
+        "no": "Complete stated observation coverage establishes no outbound data for this job and destination.",
+        "unknown": "Correlation, coverage, or required telemetry is missing or conflicting."
+      },
+      "evidenceRequirements": [
+        "Evidence correlating the bound subject and interval with the proposition; negative answers require stated observation coverage."
+      ]
+    },
+    {
+      "id": "urn:example:tensor:candidate:case-a:question-attachment",
+      "prompt": "Did the transfer include a restricted attachment?",
+      "proposition": "The job transfer included an attachment classified as restricted by the bound policy revision.",
+      "parameters": {
+        "subject": {
+          "type": "URI",
+          "required": true,
+          "bindsTo": "subject:subject"
+        },
+        "window": {
+          "type": "timeContext",
+          "required": true,
+          "bindsTo": "timeContext"
+        },
+        "destination": {
+          "type": "URI",
+          "required": true
+        },
+        "classificationPolicy": {
+          "type": "URI",
+          "required": true,
+          "referenceType": "PolicyReference"
+        }
+      },
+      "applicabilityCriteria": "Applies to the bound subject and window when all required parameters are resolved.",
+      "assessmentCriteria": {
+        "yes": "Correlated payload evidence establishes transfer of content classified as restricted under the policy.",
+        "no": "Complete transferred-content evidence establishes no restricted attachment under that policy.",
+        "unknown": "Transferred content, classification, or correlation remains unresolved."
+      },
+      "evidenceRequirements": [
+        "Evidence correlating the bound subject and interval with the proposition; negative answers require stated observation coverage."
+      ]
+    }
+  ],
+  "transitions": [
+    {
+      "id": "urn:example:tensor:candidate:case-a:transition-transfer-to-content",
+      "sourceQuestionId": "urn:example:tensor:candidate:case-a:question-transfer",
+      "targetQuestionId": "urn:example:tensor:candidate:case-a:question-attachment",
+      "guardOutcome": "yes"
+    }
+  ],
+  "entryQuestionIds": [
+    "urn:example:tensor:candidate:case-a:question-transfer"
+  ],
+  "dependencies": [],
+  "metadata": {
+    "sourceProposal": "0.1.0",
+    "sourceDefinitionSha256": "43e7ef0537db404fcbc2c0936b9842ad20a3c873bc640223df4dbcd262d50db7",
+    "synthetic": true
+  }
+}

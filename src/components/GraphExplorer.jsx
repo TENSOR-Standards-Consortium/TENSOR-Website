@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { checkLegacyGraphStructure, mergeLegacyGraphWithLayers } from '../lib/legacyGraph.mjs';
 import { resolveApiOrigins } from '../lib/runtimeApi';
 import {
   buildFrameworkAssetUrls,
@@ -29,16 +30,10 @@ const DEFAULT_DECISIONS = ['yes', 'no', 'unknown'];
 const DEFAULT_GRAPH_VERSION = '0.20260206e';
 const DEFAULT_SCHEMA_VERSION = '0.20260206e';
 
-const NODE_ID_PATTERN = /^Q[1-9]\d*$/;
-const EDGE_ID_PATTERN = /^Q\d+-(yes|no|unknown)-Q\d+$/;
 const VERSION_PATTERN = /^\d+\.\d{8}[a-z]?$/;
 
 function isRecord(value) {
   return value && typeof value === 'object' && !Array.isArray(value);
-}
-
-function deepClone(value) {
-  return JSON.parse(JSON.stringify(value));
 }
 
 function sanitizeVersion(value) {
@@ -233,12 +228,11 @@ function normalizeLayerPayload(payload, fallbackName = 'Custom Layer') {
   }
 
   const parseLayer = (raw, index) => {
-    const nodes = Array.isArray(raw?.nodes) ? raw.nodes.map((node) => normalizeNodeEntry(node)) : [];
-    const edges = Array.isArray(raw?.edges) ? raw.edges.map((edge) => normalizeEdgeEntry(edge)) : [];
-
-    if (!Array.isArray(nodes) || !Array.isArray(edges)) {
+    if (!Array.isArray(raw?.nodes) || !Array.isArray(raw?.edges)) {
       throw new Error('Layer requires nodes[] and edges[] arrays');
     }
+    const nodes = raw.nodes.map((node) => normalizeNodeEntry(node));
+    const edges = raw.edges.map((edge) => normalizeEdgeEntry(edge));
 
     const meta = raw?.metadata || {};
     const name = raw?.name || meta?.name || `${fallbackName} ${index + 1}`;
@@ -246,14 +240,14 @@ function normalizeLayerPayload(payload, fallbackName = 'Custom Layer') {
     const layerType = raw?.type || meta?.type || 'business';
 
     return {
-      id: `${slugify(name)}-${Date.now()}-${Math.random().toString(16).slice(2, 6)}`,
+      id: raw?.id || meta?.id || `${slugify(name)}-${Date.now()}-${Math.random().toString(16).slice(2, 6)}`,
       name,
       owner,
       type: layerType,
       description: raw?.description || meta?.description || '',
       nodes,
       edges,
-      enabled: true,
+      enabled: meta?.enabled !== false,
       source: meta?.source || 'Imported',
     };
   };
@@ -279,215 +273,6 @@ function slugify(value) {
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '')
     .slice(0, 48);
-}
-
-function readSchemaDefByRef(schema, ref) {
-  if (!isRecord(schema) || typeof ref !== 'string') {
-    return null;
-  }
-
-  const match = ref.match(/^#\/\$defs\/(.+)$/);
-  if (!match) {
-    return null;
-  }
-
-  const definition = schema?.$defs?.[match[1]];
-  return isRecord(definition) ? definition : null;
-}
-
-function resolveSchemaPropertiesFromDefinition(schema, definition) {
-  if (!isRecord(definition)) {
-    return null;
-  }
-
-  const directDataProperties = definition?.properties?.data?.properties;
-  if (isRecord(directDataProperties) && Object.keys(directDataProperties).length > 0) {
-    return directDataProperties;
-  }
-
-  const dataRef = definition?.properties?.data?.$ref;
-  const referencedData = readSchemaDefByRef(schema, dataRef);
-  if (referencedData) {
-    const resolvedFromRef = resolveSchemaPropertiesFromDefinition(schema, referencedData);
-    if (resolvedFromRef && Object.keys(resolvedFromRef).length > 0) {
-      return resolvedFromRef;
-    }
-  }
-
-  const directProperties = definition?.properties;
-  if (isRecord(directProperties) && Object.keys(directProperties).length > 0) {
-    return directProperties;
-  }
-
-  return null;
-}
-
-function resolveSchemaEntityProperties(schema, entityKey, collectionKey) {
-  if (!isRecord(schema)) {
-    return {};
-  }
-
-  const candidateDefinitions = [];
-  const defs = isRecord(schema.$defs) ? schema.$defs : {};
-  for (const key of [entityKey, `${entityKey}Flat`, `${entityKey}Wrapped`]) {
-    if (isRecord(defs[key])) {
-      candidateDefinitions.push(defs[key]);
-    }
-  }
-
-  const itemDefs = [];
-  const items = schema?.properties?.[collectionKey]?.items;
-  if (isRecord(items)) {
-    if (typeof items.$ref === 'string') {
-      const referenced = readSchemaDefByRef(schema, items.$ref);
-      if (referenced) {
-        itemDefs.push(referenced);
-      }
-    }
-
-    if (Array.isArray(items.oneOf)) {
-      for (const option of items.oneOf) {
-        if (!isRecord(option)) {
-          continue;
-        }
-        if (typeof option.$ref === 'string') {
-          const referenced = readSchemaDefByRef(schema, option.$ref);
-          if (referenced) {
-            itemDefs.push(referenced);
-          }
-        } else {
-          itemDefs.push(option);
-        }
-      }
-    }
-  }
-
-  for (const definition of [...candidateDefinitions, ...itemDefs]) {
-    const resolved = resolveSchemaPropertiesFromDefinition(schema, definition);
-    if (resolved && Object.keys(resolved).length > 0) {
-      return resolved;
-    }
-  }
-
-  return {};
-}
-
-function validateGraph(graph, schema) {
-  if (!schema) {
-    return {
-      valid: null,
-      errors: [],
-    };
-  }
-
-  const errors = [];
-  const requiredTopLevel = Array.isArray(schema.required)
-    ? schema.required
-    : ['namespace', 'product', 'version', 'generatedAt', 'schemaVersion', 'nodes', 'edges'];
-  const schemaNodeProperties = resolveSchemaEntityProperties(schema, 'node', 'nodes');
-  const schemaEdgeProperties = resolveSchemaEntityProperties(schema, 'edge', 'edges');
-  const allowedCategories =
-    schemaNodeProperties?.category?.enum ||
-    ['Application', 'Cloud', 'Email', 'File', 'Host', 'Identity', 'Network'];
-  const allowedDecisions =
-    schemaEdgeProperties?.decision?.enum || DEFAULT_DECISIONS;
-  const allowedNodeKeys =
-    Object.keys(schemaNodeProperties).length > 0
-      ? Object.keys(schemaNodeProperties)
-      : ['id', 'text', 'category', 'label', 'translations', 'extensions', 'archetype'];
-  const allowedEdgeKeys =
-    Object.keys(schemaEdgeProperties).length > 0
-      ? Object.keys(schemaEdgeProperties)
-      : ['id', 'source', 'target', 'decision', 'extensions'];
-
-  for (const key of requiredTopLevel) {
-    if (!(key in graph)) {
-      errors.push({ message: `Missing required top-level key: ${key}` });
-    }
-  }
-
-  if (!Array.isArray(graph.nodes)) {
-    errors.push({ message: 'nodes must be an array' });
-  }
-
-  if (!Array.isArray(graph.edges)) {
-    errors.push({ message: 'edges must be an array' });
-  }
-
-  if (errors.length > 0) {
-    return {
-      valid: false,
-      errors,
-    };
-  }
-
-  const nodeIds = new Set();
-
-  for (const node of graph.nodes) {
-    const data = getNodeData(node);
-
-    if (!data.id || !NODE_ID_PATTERN.test(data.id)) {
-      errors.push({ message: `Invalid node id: ${String(data.id)}` });
-    }
-
-    if (nodeIds.has(data.id)) {
-      errors.push({ message: `Duplicate node id: ${data.id}` });
-    } else {
-      nodeIds.add(data.id);
-    }
-
-    if (!data.text) {
-      errors.push({ message: `Node ${data.id || '<unknown>'} missing text` });
-    }
-
-    if (!allowedCategories.includes(data.category)) {
-      errors.push({ message: `Node ${data.id || '<unknown>'} has invalid category: ${String(data.category)}` });
-    }
-
-    for (const key of Object.keys(data)) {
-      if (!allowedNodeKeys.includes(key)) {
-        errors.push({ message: `Node ${data.id || '<unknown>'} has unsupported key: ${key}` });
-      }
-    }
-  }
-
-  for (const edge of graph.edges) {
-    const data = getEdgeData(edge);
-
-    if (!data.id || !EDGE_ID_PATTERN.test(data.id)) {
-      errors.push({ message: `Invalid edge id: ${String(data.id)}` });
-    }
-
-    if (!nodeIds.has(data.source)) {
-      errors.push({ message: `Edge ${data.id || '<unknown>'} source node does not exist: ${String(data.source)}` });
-    }
-
-    if (!nodeIds.has(data.target)) {
-      errors.push({ message: `Edge ${data.id || '<unknown>'} target node does not exist: ${String(data.target)}` });
-    }
-
-    if (!allowedDecisions.includes(data.decision)) {
-      errors.push({ message: `Edge ${data.id || '<unknown>'} has invalid decision: ${String(data.decision)}` });
-    }
-
-    if (data.id && data.source && data.target && data.decision) {
-      const encodedId = `${data.source}-${data.decision}-${data.target}`;
-      if (data.id !== encodedId) {
-        errors.push({ message: `Edge id mismatch for ${data.id}: expected ${encodedId}` });
-      }
-    }
-
-    for (const key of Object.keys(data)) {
-      if (!allowedEdgeKeys.includes(key)) {
-        errors.push({ message: `Edge ${data.id || '<unknown>'} has unsupported key: ${key}` });
-      }
-    }
-  }
-
-  return {
-    valid: errors.length === 0,
-    errors,
-  };
 }
 
 function getCategories(graph) {
@@ -719,142 +504,6 @@ async function readJsonFile(file) {
   return JSON.parse(text);
 }
 
-function mergeGraphWithLayers(baseGraph, layers) {
-  const merged = deepClone(baseGraph);
-  merged.extensions = {
-    ...(merged.extensions && typeof merged.extensions === 'object' ? merged.extensions : {}),
-    layers: {
-      active: [],
-      appliedAt: new Date().toISOString(),
-    },
-  };
-
-  const nodeIndex = new Map(
-    merged.nodes
-      .map((node, index) => [getNodeData(node)?.id, index])
-      .filter(([nodeId]) => Boolean(nodeId))
-  );
-  const edgeIndex = new Map(
-    merged.edges
-      .map((edge, index) => [getEdgeData(edge)?.id, index])
-      .filter(([edgeId]) => Boolean(edgeId))
-  );
-
-  for (const layer of layers.filter((candidate) => candidate.enabled)) {
-    merged.extensions.layers.active.push({
-      id: layer.id,
-      name: layer.name,
-      owner: layer.owner,
-      type: layer.type,
-      source: layer.source,
-    });
-
-    for (const layerNode of layer.nodes) {
-      const data = getNodeData(layerNode);
-      const nodeId = String(data.id || '').trim();
-      if (!nodeId) {
-        continue;
-      }
-
-      const normalizedNode = {
-        data: {
-          id: nodeId,
-          text: data.text || `Layer node ${nodeId}`,
-          label: data.label || nodeId,
-          category: data.category || 'Uncategorized',
-          extensions: {
-            ...(data.extensions && typeof data.extensions === 'object' ? data.extensions : {}),
-            layerSource: {
-              id: layer.id,
-              name: layer.name,
-              owner: layer.owner,
-              type: layer.type,
-            },
-          },
-        },
-      };
-
-      if (nodeIndex.has(nodeId)) {
-        const existingNode = merged.nodes[nodeIndex.get(nodeId)];
-        const existingExtensions =
-          existingNode?.data?.extensions && typeof existingNode.data.extensions === 'object'
-            ? existingNode.data.extensions
-            : {};
-
-        existingNode.data.extensions = {
-          ...existingExtensions,
-          overlays: {
-            ...(existingExtensions.overlays && typeof existingExtensions.overlays === 'object'
-              ? existingExtensions.overlays
-              : {}),
-            [layer.id]: {
-              label: data.label || null,
-              category: data.category || null,
-              text: data.text || null,
-              extensions: data.extensions && typeof data.extensions === 'object' ? data.extensions : {},
-            },
-          },
-        };
-      } else {
-        nodeIndex.set(nodeId, merged.nodes.length);
-        merged.nodes.push(normalizedNode);
-      }
-    }
-
-    for (const layerEdge of layer.edges) {
-      const data = getEdgeData(layerEdge);
-      const source = String(data.source || '').trim();
-      const target = String(data.target || '').trim();
-      const decision = data.decision || 'unknown';
-      if (!source || !target) {
-        continue;
-      }
-
-      const edgeId = String(data.id || `${source}-${decision}-${target}`).trim();
-      const normalizedEdge = {
-        data: {
-          id: edgeId,
-          source,
-          target,
-          decision,
-          extensions: {
-            ...(data.extensions && typeof data.extensions === 'object' ? data.extensions : {}),
-            layerSource: {
-              id: layer.id,
-              name: layer.name,
-              owner: layer.owner,
-              type: layer.type,
-            },
-          },
-        },
-      };
-
-      if (edgeIndex.has(edgeId)) {
-        const existingEdge = merged.edges[edgeIndex.get(edgeId)];
-        const existingExtensions =
-          existingEdge?.data?.extensions && typeof existingEdge.data.extensions === 'object'
-            ? existingEdge.data.extensions
-            : {};
-
-        existingEdge.data.extensions = {
-          ...existingExtensions,
-          overlays: {
-            ...(existingExtensions.overlays && typeof existingExtensions.overlays === 'object'
-              ? existingExtensions.overlays
-              : {}),
-            [layer.id]: data.extensions && typeof data.extensions === 'object' ? data.extensions : {},
-          },
-        };
-      } else {
-        edgeIndex.set(edgeId, merged.edges.length);
-        merged.edges.push(normalizedEdge);
-      }
-    }
-  }
-
-  return merged;
-}
-
 function sortReleasesByDate(releases) {
   return [...releases].sort((left, right) => {
     const leftTime = new Date(left?.releasedAt || 0).getTime();
@@ -963,7 +612,7 @@ export default function GraphExplorer() {
       }
     };
 
-    const resetMetricsDetails = (message = 'Load a release version to view quality metrics.') => {
+    const resetMetricsDetails = (message = 'Load a release version to view historical structural metrics.') => {
       if (selectors.metricsVersion) {
         selectors.metricsVersion.textContent = 'n/a';
       }
@@ -1020,11 +669,11 @@ export default function GraphExplorer() {
         typeof publishReadyFromHistory === 'boolean' ? publishReadyFromHistory : gateState.allPassed;
 
       if (publishReady === true) {
-        selectors.metricsPublish.textContent = 'Publish-ready';
+        selectors.metricsPublish.textContent = 'Historical structural gates passed';
       } else if (publishReady === false) {
-        selectors.metricsPublish.textContent = 'Not publish-ready';
+        selectors.metricsPublish.textContent = 'Historical structural gates failed';
       } else {
-        selectors.metricsPublish.textContent = 'Publish readiness pending';
+        selectors.metricsPublish.textContent = 'Historical structural gates unavailable';
       }
 
       selectors.metricsGates.innerHTML = '';
@@ -1450,7 +1099,6 @@ export default function GraphExplorer() {
         ],
         minZoom: 0.2,
         maxZoom: 2.5,
-        wheelSensitivity: 0.2,
       });
 
       state.cy.on('tap', 'node', (event) => {
@@ -1635,25 +1283,21 @@ export default function GraphExplorer() {
     };
 
     const validateAndSetSchemaStatus = () => {
-      const validation = validateGraph(state.baseGraph, state.schema);
-      const enabledLayers = state.layers.filter((layer) => layer.enabled).length;
+      const validation = checkLegacyGraphStructure(state.mergedGraph || state.baseGraph, state.schema);
+      const firstError = validation.errors[0]?.message;
+      setPill(selectors.schemaStatus, validation.valid
+        ? 'Legacy structural checks passed · full schema not checked'
+        : `Structural warning: ${firstError}`, validation.valid ? 'is-warn' : 'is-bad');
+      selectors.schemaStatus.title = validation.scope;
+    };
 
-      if (validation.valid === true) {
-        if (enabledLayers > 0) {
-          setPill(selectors.schemaStatus, `Core schema valid · ${enabledLayers} active layers`, 'is-good');
-        } else {
-          setPill(selectors.schemaStatus, 'Core schema validation passed', 'is-good');
-        }
+    const exportCheckedGraph = (filename, graph) => {
+      const result = checkLegacyGraphStructure(graph, state.schema);
+      if (!result.valid) {
+        setPill(selectors.schemaStatus, `Export blocked: ${result.errors[0].message}`, 'is-bad');
         return;
       }
-
-      if (validation.valid === false) {
-        const firstError = validation.errors[0]?.message || 'Validation failed';
-        setPill(selectors.schemaStatus, `Schema warning: ${firstError}`, 'is-bad');
-        return;
-      }
-
-      setPill(selectors.schemaStatus, 'Schema validator unavailable', 'is-warn');
+      makeDownload(filename, graph);
     };
 
     const rebuildMergedGraphAndRender = async () => {
@@ -1661,7 +1305,7 @@ export default function GraphExplorer() {
         return;
       }
 
-      state.mergedGraph = mergeGraphWithLayers(state.baseGraph, state.layers);
+      state.mergedGraph = mergeLegacyGraphWithLayers(state.baseGraph, state.layers);
       const categories = getCategories(state.mergedGraph);
 
       const previousCategories = new Set(state.activeCategories);
@@ -1836,7 +1480,7 @@ export default function GraphExplorer() {
           : null;
       const gateState = report?.monitoring?.publishGates || {};
 
-      const pillParts = [`Metrics ${formatPercent(overallScore)}`];
+      const pillParts = [`Structural metrics ${formatPercent(overallScore)}`];
       if (deltaScore !== null) {
         pillParts.push(formatDelta(deltaScore));
       }
@@ -1974,7 +1618,10 @@ export default function GraphExplorer() {
       const payload = await readJsonFile(file);
       const parsedLayers = normalizeLayerPayload(payload, file.name.replace(/\.json$/i, ''));
 
-      state.layers.push(...parsedLayers);
+      const nextLayers = [...state.layers, ...parsedLayers];
+      // Check mergeability before mutating the UI state so a malformed layer can be retried.
+      mergeLegacyGraphWithLayers(state.baseGraph, nextLayers);
+      state.layers = nextLayers;
       setPill(selectors.stats, `Imported ${parsedLayers.length} layer(s) from ${file.name}`, 'is-good');
       await rebuildMergedGraphAndRender();
     };
@@ -2119,7 +1766,7 @@ export default function GraphExplorer() {
           return;
         }
 
-        makeDownload(`tensor-core-${state.activeGraphVersion || 'custom'}.json`, state.baseGraph);
+        exportCheckedGraph(`tensor-core-${state.activeGraphVersion || 'custom'}.json`, state.baseGraph);
       });
 
       selectors.exportMergedBtn.addEventListener('click', () => {
@@ -2127,7 +1774,7 @@ export default function GraphExplorer() {
           return;
         }
 
-        makeDownload(`tensor-merged-${Date.now()}.json`, state.mergedGraph);
+        exportCheckedGraph(`tensor-merged-${Date.now()}.json`, state.mergedGraph);
       });
 
       selectors.exportLayersBtn.addEventListener('click', () => {
@@ -2161,7 +1808,7 @@ export default function GraphExplorer() {
         setPill(selectors.schemaStatus, 'Waiting for schema selection...', 'is-warn');
         setPill(selectors.stats, 'Preparing graph stats...', 'is-warn');
         setPill(selectors.timeline, 'Preparing release timeline...', 'is-warn');
-        setPill(selectors.metrics, 'Preparing metrics telemetry...', 'is-warn');
+        setPill(selectors.metrics, 'Preparing structural metrics...', 'is-warn');
         resetMetricsDetails('Loading release metrics...');
 
         await loadReleaseManifest();
@@ -2211,7 +1858,7 @@ export default function GraphExplorer() {
         }, 4 * 60 * 1000);
       } catch (error) {
         setPill(selectors.dataSource, 'Graph load failed', 'is-bad');
-        setPill(selectors.schemaStatus, 'Schema check skipped', 'is-warn');
+        setPill(selectors.schemaStatus, 'Structural check skipped', 'is-warn');
         setPill(selectors.stats, 'Explorer unavailable', 'is-bad');
         setPill(selectors.timeline, 'Timeline unavailable', 'is-warn');
         setPill(selectors.metrics, 'Metrics unavailable', 'is-warn');
@@ -2235,12 +1882,13 @@ export default function GraphExplorer() {
 
   return (
     <div ref={rootRef}>
+      <p className="detail-empty">Legacy graph explorer. Checks cover graph structure only, not full JSON Schema validation, investigative meaning, or candidate Core record conformance. Use the Investigation Lab for Core records.</p>
       <div className="studio-status-row">
         <span className="status-pill" id="data-source-pill">Loading data source...</span>
-        <span className="status-pill" id="schema-pill">Checking schema...</span>
+        <span className="status-pill" id="schema-pill">Checking graph structure...</span>
         <span className="status-pill" id="stats-pill">Preparing graph stats...</span>
         <span className="status-pill" id="timeline-pill">Loading timeline...</span>
-        <span className="status-pill" id="metrics-pill">Loading metrics...</span>
+        <span className="status-pill" id="metrics-pill">Loading structural metrics...</span>
       </div>
 
       <div className="studio-grid">
@@ -2270,7 +1918,7 @@ export default function GraphExplorer() {
             <button type="button" id="export-layers-btn">Export Layers</button>
           </div>
           <div className="button-row">
-            <button type="button" id="export-core-btn">Export Core Graph</button>
+            <button type="button" id="export-core-btn">Export Legacy Graph</button>
             <button type="button" id="export-merged-btn">Export Merged Graph</button>
           </div>
 
@@ -2350,15 +1998,16 @@ export default function GraphExplorer() {
 
           <div className="detail-section">
             <h3>Release Metrics</h3>
+            <p className="detail-empty">Historical graph structure only. These scores do not measure investigative effectiveness, security outcomes, or Core record conformance.</p>
             <div className="metrics-mini-grid">
               <p className="detail-kv"><span>Version</span><strong id="metrics-version">n/a</strong></p>
               <p className="detail-kv"><span>Overall</span><strong id="metrics-overall">n/a</strong></p>
-              <p className="detail-kv"><span>Coverage</span><strong id="metrics-coverage">n/a</strong></p>
+              <p className="detail-kv"><span>Structural Coverage</span><strong id="metrics-coverage">n/a</strong></p>
               <p className="detail-kv"><span>Routing</span><strong id="metrics-routing">n/a</strong></p>
               <p className="detail-kv"><span>Robustness</span><strong id="metrics-robustness">n/a</strong></p>
               <p className="detail-kv"><span>Delta vs Prior</span><strong id="metrics-delta">n/a</strong></p>
             </div>
-            <p className="detail-kv detail-text" id="metrics-publish">Load a release version to view quality metrics.</p>
+            <p className="detail-kv detail-text" id="metrics-publish">Load a release version to view historical structural metrics.</p>
             <ul id="metrics-gates" className="release-notes"></ul>
           </div>
 

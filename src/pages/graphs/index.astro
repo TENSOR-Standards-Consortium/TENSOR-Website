@@ -1,81 +1,39 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import ReleaseFeed from '../../components/ReleaseFeed.jsx';
-import CompactMetricsWidget from '../../components/CompactMetricsWidget.jsx';
 import { absoluteUrl, seo } from '../../data/seo';
 
 const meta = seo.graphs;
-const siteUrl = Astro.site?.toString() || 'https://tensor-standards-consortium.org/';
-
+const siteUrl = Astro.site?.toString() || 'https://tensor-standards.pages.dev/';
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'SoftwareSourceCode',
-  name: 'TENSOR Core Investigation Graph Channel',
+  '@type': 'TechArticle',
+  headline: meta.title,
   description: meta.description,
   url: absoluteUrl(siteUrl, meta.canonicalPath),
-  codeRepository: 'https://github.com/tensor-standards-consortium/tensor-framework',
-  programmingLanguage: 'JSON',
 };
 ---
 
-<BaseLayout
-  title={meta.title}
-  description={meta.description}
-  canonicalPath={meta.canonicalPath}
-  ogType={meta.ogType}
-  jsonLd={jsonLd}
->
+<BaseLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
   <div class="container prose-card">
-    <h2>TENSOR Core Investigation Graph Channel</h2>
-    <p>
-      Use this channel to consume canonical graph artifacts and monitor release evolution.
-      Pin versions before production rollout and evaluate diffs before upgrades.
-    </p>
-    <p>
-      Local copy used by Graph Studio:
-      <a href="/assets/data/tensor-core.json" data-telemetry-event="artifact-graph-click" data-telemetry-location="graphs-local">
-        <code>tensor-core.json</code>
-      </a>
-    </p>
-    <p>
-      Upstream release channel:
-      <a
-        href="https://tensor-standards-consortium.github.io/TENSOR-Framework/releases/core/graphs/latest/tensor.core.graph.json"
-        target="_blank"
-        rel="noopener noreferrer"
-        data-telemetry-event="artifact-graph-upstream-click"
-        data-telemetry-location="graphs-upstream"
-      >
-        latest tensor.core.graph.json
-      </a>
-    </p>
-    <p>
-      Local release timeline manifest:
-      <a href="/assets/releases/manifest.json" data-telemetry-event="artifact-manifest-click" data-telemetry-location="graphs-manifest">
-        <code>releases/manifest.json</code>
-      </a>
-    </p>
+    <p class="section-kicker">Preserved investigation knowledge</p>
+    <h2>Legacy graph releases</h2>
+    <p>The released TENSOR question graph contains <strong>588 questions and 1,554 transitions</strong>. It remains available under its original release identifiers. The candidate Core adds a portable investigation record; it does not delete this knowledge or silently convert it into verified findings.</p>
+    <div class="cta-group"><a class="btn btn-primary" href="/questions/">Browse the question catalog</a><a class="btn btn-secondary" href="/studio/">Open legacy Graph Studio</a></div>
 
-    <h2>Live Graph Release Index</h2>
-    <p>
-      This feed is fetched at runtime from the framework release index,
-      so new graph versions appear without redeploying the website.
-    </p>
-    <ReleaseFeed client:load kind="graph" />
+    <h2>Preserved artifacts</h2>
+    <ul>
+      <li><a href="/assets/data/tensor-core.json" download>Graph bundled with legacy Graph Studio</a></li>
+      <li><a href="/assets/releases/manifest.json">Website's legacy release manifest</a></li>
+      <li><a href="https://github.com/tensor-standards-consortium/TENSOR-Framework/tree/main/releases/core/graphs">Published legacy graph archive</a></li>
+      <li><a href="/schemas/">Legacy and candidate schemas</a></li>
+    </ul>
 
-    <h2>Release Performance Snapshot</h2>
-    <p>
-      Use this summary to assess compatibility confidence before promoting a graph version.
-    </p>
-    <CompactMetricsWidget client:load title="Graph Channel Metrics Snapshot" />
+    <h2>Migration requires a semantic review</h2>
+    <p>A node's text is a starting point. A candidate definition also needs an explicit proposition, subject and time context, parameters, evidence expectations, and assessment criteria. Source graph identifiers and exact source digests remain part of the migration history.</p>
+    <p>Automatic inventory can preserve the old fields and flag missing meaning. It cannot invent evidence, assessment criteria, policy, or investigation records. Questions stay marked for review until those decisions are made.</p>
 
-    <p class="hub-links">
-      Implement next:
-      <a href="/implement/">Implementation guide</a>
-      ·
-      <a href="/conformance/">Conformance suite</a>
-      ·
-      <a href="/metrics/">Full metrics dashboard</a>
-    </p>
+    <h2>Read graph metrics within their scope</h2>
+    <p><a href="/metrics/">Legacy metrics</a> describe structural graph properties and release checks. Connectivity, branch balance, or a composite quality score does not prove investigation effectiveness, evidence quality, or institutional adoption.</p>
+    <p><a href="/core/">New Core candidate</a> · <a href="/founding/06-change-and-decision-register.md">Migration decisions</a> · <a href="/contribute/">Help review a question</a></p>
   </div>
 </BaseLayout>

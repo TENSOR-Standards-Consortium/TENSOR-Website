@@ -4,6 +4,7 @@ import { fetchMetricsHistoryChannel, fetchMetricsLatestChannel } from '../lib/fr
 const REFRESH_INTERVAL_MS = 4 * 60 * 1000;
 
 function asNumber(value) {
+  if (value === null || value === undefined || value === '' || typeof value === 'boolean') return null;
   const number = Number(value);
   return Number.isFinite(number) ? number : null;
 }
@@ -36,7 +37,7 @@ function normalizeHistoryPayload(payload) {
   return { series: [] };
 }
 
-export default function CompactMetricsWidget({ title = 'Latest Framework Metrics' }) {
+export default function CompactMetricsWidget({ title = 'Historical Graph Metrics' }) {
   const [state, setState] = useState({
     loading: true,
     error: '',
@@ -116,8 +117,9 @@ export default function CompactMetricsWidget({ title = 'Latest Framework Metrics
 
   return (
     <section className="compact-metrics-card">
-      <p className="section-kicker">Release Telemetry</p>
+      <p className="section-kicker">Historical Graph Structure</p>
       <h3>{title}</h3>
+      <p>Structural scores only; investigative effectiveness and Core record conformance are not measured.</p>
       {state.loading ? <p className="compact-metrics-state">Loading metrics...</p> : null}
       {!state.loading && state.error ? <p className="compact-metrics-state">Unavailable: {state.error}</p> : null}
       {!state.loading && !state.error ? (
@@ -131,7 +133,7 @@ export default function CompactMetricsWidget({ title = 'Latest Framework Metrics
             <strong>{formatPercent(state.latest?.overallScore)}</strong>
           </div>
           <div>
-            <span>Coverage</span>
+            <span>Structural Coverage</span>
             <strong>{formatPercent(state.latest?.coverageScore)}</strong>
           </div>
           <div>

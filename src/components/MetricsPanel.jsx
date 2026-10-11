@@ -8,13 +8,14 @@ const CHART_HEIGHT = 220;
 const CHART_PADDING = 20;
 
 const SCORE_FIELDS = [
-  { key: 'coverageScore', label: 'Coverage' },
+  { key: 'coverageScore', label: 'Structural coverage' },
   { key: 'routingScore', label: 'Routing' },
   { key: 'informationScore', label: 'Information' },
   { key: 'robustnessScore', label: 'Robustness' },
 ];
 
 function asNumber(value) {
+  if (value === null || value === undefined || value === '' || typeof value === 'boolean') return null;
   const parsed = Number(value);
   return Number.isFinite(parsed) ? parsed : null;
 }
@@ -268,7 +269,7 @@ export default function MetricsPanel() {
     return (
       <section className="metrics-section container" aria-live="polite">
         <div className="metrics-shell">
-          <p className="metrics-state">Loading live framework metrics…</p>
+          <p className="metrics-state">Loading historical structural metrics…</p>
         </div>
       </section>
     );
@@ -298,8 +299,9 @@ export default function MetricsPanel() {
     <section className="metrics-section container" aria-live="polite">
       <div className="metrics-shell">
         <div className="metrics-heading">
-          <p className="section-kicker">Release Telemetry</p>
-          <h3>Always-updated quality trend across framework releases</h3>
+          <p className="section-kicker">Historical Graph Structure</p>
+          <h3>Historical graph structure across releases</h3>
+          <p>Structural scores do not measure investigative effectiveness, security outcomes, or Core record conformance.</p>
           <p>
             Latest release <strong>{state.latest.version}</strong> · updated {formatTimestamp(state.latest.generatedAt)}
           </p>
@@ -312,14 +314,14 @@ export default function MetricsPanel() {
             <p>{overallDelta === null ? 'No prior baseline yet' : `${formatDelta(overallDelta)} vs prior`}</p>
           </article>
           <article className="metrics-kpi-card">
-            <span>Coverage</span>
+            <span>Structural Coverage</span>
             <strong>{formatScore(state.latest.coverageScore)}</strong>
-            <p>Domain/archetype coverage quality</p>
+            <p>Configured domain/archetype representation</p>
           </article>
           <article className="metrics-kpi-card">
             <span>Routing</span>
             <strong>{formatScore(state.latest.routingScore)}</strong>
-            <p>Deterministic branch integrity</p>
+            <p>Configured branch consistency</p>
           </article>
           <article className="metrics-kpi-card">
             <span>Robustness</span>
@@ -392,7 +394,7 @@ export default function MetricsPanel() {
                 <li key={row?.version || `release-${row?.generatedAt || ''}`}>
                   <strong>{row?.version || 'unknown'}</strong>
                   <span>{formatScore(row?.overallScore)}</span>
-                  <em>{row?.publishReady === true ? 'Publish ready' : row?.publishReady === false ? 'Not ready' : 'Reviewing'}</em>
+                  <em>{row?.publishReady === true ? 'Historical gates passed' : row?.publishReady === false ? 'Historical gates failed' : 'No gate result'}</em>
                 </li>
               ))}
             </ul>

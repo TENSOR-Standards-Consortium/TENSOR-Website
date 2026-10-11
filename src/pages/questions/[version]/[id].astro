@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { legacyGraph, legacyQuestions, questionById, questionPath, LEGACY_VERSION, LEGACY_SHA256, LEGACY_DOWNLOAD, LEGACY_SOURCE } from '../../../data/legacy-questions';
+
+export function getStaticPaths() {
+  return legacyQuestions.map((question, index) => ({ params: { version: LEGACY_VERSION, id: question.id }, props: { question, index } }));
+}
+const { question, index } = Astro.props;
+const outgoing = legacyGraph.edges.filter((edge) => edge.source === question.id);
+const incoming = legacyGraph.edges.filter((edge) => edge.target === question.id);
+const isEntry = legacyGraph.entryNodeIds.includes(question.id);
+const previous = legacyQuestions[index - 1];
+const next = legacyQuestions[index + 1];
+const title = `${question.id} · ${question.label}`;
+const citationUrl = new URL(questionPath(question.id), Astro.site || 'https://tensor-standards.pages.dev/').toString();
+---
+
+<BaseLayout title={title} description={question.text} canonicalPath={questionPath(question.id)}>
+  <article class="container prose-card">
+    <p><a href="/questions/">← Question library</a></p>
+    <p class="section-kicker">Preserved graph release · {LEGACY_VERSION}</p>
+    <h2>{question.text}</h2>
+    <dl class="question-facts">
+      <div><dt>Question ID</dt><dd>{question.id}</dd></div>
+      <div><dt>Category</dt><dd>{question.category}</dd></div>
+      <div><dt>Archetype</dt><dd>{question.archetype}</dd></div>
+      <div><dt>Declared entry point</dt><dd>{isEntry ? 'Yes' : 'No'}</dd></div>
+    </dl>
+    <p>The wording and classification above are preserved from this release. It does not contain assessment criteria, applicability rules, investigation-specific context, or evidence for this question. Those must not be inferred from the graph alone.</p>
+
+    <h2>Recorded outgoing routes</h2>
+    {outgoing.length > 0 ? <ul class="route-list">{outgoing.map((edge) => (
+      <li><strong>{edge.decision}</strong><div><a href={questionPath(edge.target)}>{edge.target} · {questionById.get(edge.target)?.text}</a><p class="edge-id">Route ID: <code>{edge.id}</code></p></div></li>
+    ))}</ul> : <p>This release declares no outgoing routes for this question. That does not by itself establish that an investigation is complete.</p>}
+    <p>These links show the graph's published routing. Following a link does not record an assessment or authorize an action.</p>
+
+    {incoming.length > 0 && <details><summary>Incoming routes ({incoming.length})</summary><ul>{incoming.map((edge) => <li><a href={questionPath(edge.source)}>{edge.source}</a> on <strong>{edge.decision}</strong> <span class="edge-id">({edge.id})</span></li>)}</ul></details>}
+
+    <h2>Cite this exact question</h2>
+    <p>Include the question ID, graph version, and source digest so that later revisions cannot silently change the reference.</p>
+    <blockquote>TENSOR Framework, graph {LEGACY_VERSION}, question {question.id}: “{question.text}” <a href={citationUrl}>{citationUrl}</a></blockquote>
+    <dl class="source-facts"><dt>Source SHA-256</dt><dd><code>{LEGACY_SHA256}</code></dd></dl>
+    <p><a href={LEGACY_DOWNLOAD} download>Download the exact graph</a> · <a href={LEGACY_SOURCE}>Pinned repository source</a></p>
+
+    <h2>Using this question in the candidate Core</h2>
+    <p>This preserved entry is not a converted Core {"0.1.0-draft.1"} definition. A reviewed conversion must supply explicit assessment criteria and parameters, preserve the source identity, and document any change in meaning. See <a href="/core/">the candidate contract</a> and <a href="/contribute/">contribution process</a>.</p>
+    <nav class="adjacent-questions" aria-label="Adjacent question identifiers">
+      {previous && <a href={questionPath(previous.id)}>← {previous.id}</a>}
+      <a href="/questions/">All questions</a>
+      {next && <a href={questionPath(next.id)}>{next.id} →</a>}
+    </nav>
+  </article>
+</BaseLayout>
+
+<style>
+  .question-facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; border-block: 1px solid var(--line-soft); padding: 1rem 0; margin: 1.5rem 0; }
+  dt { font-size: .8rem; color: var(--text-muted); }
+  dd { margin: .25rem 0 0; }
+  .route-list { list-style: none; padding-left: 0; }
+  .route-list > li { display: grid; grid-template-columns: 5rem minmax(0, 1fr); gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--line-soft); }
+  .edge-id { font-size: .85rem; color: var(--text-muted); overflow-wrap: anywhere; }
+  .route-list .edge-id { margin-top: .35rem; }
+  details { border: 1px solid var(--line-soft); padding: .75rem 1rem; margin: 1.5rem 0; }
+  summary { cursor: pointer; }
+  blockquote { border-left: 3px solid var(--accent-secondary); padding: 1rem; background: var(--bg-surface-muted); overflow-wrap: anywhere; }
+  .source-facts { margin: 1rem 0; overflow-wrap: anywhere; }
+  .adjacent-questions { display: flex; justify-content: space-between; gap: 1rem; margin-top: 2rem; }
+  @media (max-width: 700px) { .question-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 450px) { .route-list > li { grid-template-columns: 1fr; gap: .35rem; } }
+</style>

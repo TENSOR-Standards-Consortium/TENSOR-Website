@@ -3,8 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { absoluteUrl, seo } from '../../data/seo';
 
 const meta = seo.extensions;
-const siteUrl = Astro.site?.toString() || 'https://tensor-standards-consortium.org/';
-
+const siteUrl = Astro.site?.toString() || 'https://tensor-standards.pages.dev/';
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'TechArticle',
@@ -14,76 +13,29 @@ const jsonLd = {
 };
 ---
 
-<BaseLayout
-  title={meta.title}
-  description={meta.description}
-  canonicalPath={meta.canonicalPath}
-  ogType={meta.ogType}
-  jsonLd={jsonLd}
->
+<BaseLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
   <div class="container prose-card">
-    <h2>Extension Contract</h2>
-    <p>
-      TENSOR keeps core semantics stable while allowing additive metadata through namespaced
-      <code>extensions</code> objects on graphs, nodes, and edges.
-    </p>
+    <p class="section-kicker">Build above shared meaning</p>
+    <h2>Profiles, vendor layers, and business context</h2>
+    <p>Core supplies a common investigative model. Public domain profiles add reviewed vocabulary, questions, and requirements. Vendor layers provide tooling and integrations. Business layers supply explicit policy, authority, thresholds, and organizational context.</p>
+    <p>Each can specialize an investigation. None may silently redefine a Core outcome, change a question's proposition under the same identity, or turn a policy judgment into an observation.</p>
 
-    <h2>Extension Boundaries</h2>
+    <h2>Publish the semantic dependency</h2>
     <ul>
-      <li><strong>Allowed:</strong> scoring hints, confidence metadata, owner fields, and control mappings.</li>
-      <li><strong>Allowed:</strong> platform-specific execution hints that do not redefine core decisions.</li>
-      <li><strong>Not allowed:</strong> changing the meaning of <code>yes</code>, <code>no</code>, or <code>unknown</code>.</li>
-      <li><strong>Not allowed:</strong> repurposing stable node IDs to new investigative questions.</li>
+      <li>Give profiles and extension definitions an identity and version.</li>
+      <li>Declare constraints, dependencies, and whether an extension is required for interpretation.</li>
+      <li>Expose unsupported required meaning instead of returning a misleading successful interpretation.</li>
+      <li>Preserve unknown optional data when claiming lossless exchange.</li>
+      <li>Use explicit binding parameters or a new definition identity when local behavior changes a question's meaning.</li>
     </ul>
+    <p>Follow the extension representation in the <a href="/core/0.1.0-draft.1/binding.md">candidate binding</a>. The logical proposal does not make arbitrary vendor key names interoperable.</p>
 
-    <h2>Naming and Collision Avoidance</h2>
-    <p>
-      Prefix extension keys with your namespace. Use consistent ownership naming and publish key semantics.
-    </p>
-    <ul>
-      <li><strong>Portable extension example:</strong> <code>acme.evidenceConfidence</code></li>
-      <li><strong>Vendor-private extension example:</strong> <code>vendorx.executionHint</code></li>
-      <li><strong>Anti-pattern:</strong> <code>decisionOverride</code> that bypasses core branch semantics</li>
-    </ul>
+    <h2>Keep policy visible</h2>
+    <p>A question about whether a tool call exceeded its permitted scope needs the relevant policy version and context. A risk score may support a decision if its scale, method, and interpretation are stated. A private score or hidden prompt cannot silently replace public assessment criteria.</p>
+    <p>Record claimed authority separately from attribution. A human, agent, system, or organization label alone grants no permission. Importing a record neither authorizes an action nor permits access to referenced evidence.</p>
 
-    <h2>Examples</h2>
-    <h3>Portable extension</h3>
-    <pre><code>{`{
-  "extensions": {
-    "acme.evidenceConfidence": 0.82,
-    "acme.controlMapping": ["SI-4", "IR-5"]
-  }
-}`}</code></pre>
-
-    <h3>Vendor-private extension</h3>
-    <pre><code>{`{
-  "extensions": {
-    "vendorx.ticketTemplate": "IR-HIGH-SEV",
-    "vendorx.queue": "tier2-investigations"
-  }
-}`}</code></pre>
-
-    <h3>Anti-pattern</h3>
-    <pre><code>{`{
-  "extensions": {
-    "overrideDecision": "no"
-  }
-}`}</code></pre>
-    <p>
-      The anti-pattern above silently redefines branch behavior and breaks interoperability.
-      If behavior changes are needed, propose a standards change through governance.
-    </p>
-
-    <h2>Implementation Guidance</h2>
-    <ul>
-      <li>Document every extension key and expected type in your integration docs.</li>
-      <li>Treat unknown extension keys as non-fatal unless your local policy requires strict mode.</li>
-      <li>Keep core investigative semantics in base graph artifacts.</li>
-      <li>Use overlays to activate local process variations without forking core releases.</li>
-    </ul>
-
-    <p>
-      Continue with <a href="/conformance/">Conformance Suite</a> to verify extensions do not break core contracts.
-    </p>
+    <h2>Report exchange limits</h2>
+    <p>A vendor-specific ticket layout may be optional display metadata. A dependency that changes the interpretation of a decision is not. When a recipient cannot interpret required semantics, its report must identify the affected content. When an export drops content, declare the loss.</p>
+    <p><a href="/founding/01-core-contract.md">Read requirements TC-29 through TC-35</a> · <a href="/conformance/">Validation and exchange evidence</a></p>
   </div>
 </BaseLayout>

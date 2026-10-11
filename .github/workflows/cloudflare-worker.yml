@@ -6,9 +6,15 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: cloudflare-worker-production
+  cancel-in-progress: false
+
 jobs:
   deploy:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    environment: tensor-production
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
 
@@ -18,33 +24,37 @@ jobs:
           node-version: 22
           cache: npm
 
+      - name: Require dedicated TENSOR production configuration
+        env:
+          SITE_URL: ${{ vars.TENSOR_SITE_URL }}
+          TENSOR_CLOUDFLARE_ACCOUNT_ID: ${{ vars.TENSOR_CLOUDFLARE_ACCOUNT_ID }}
+          TENSOR_CLOUDFLARE_API_TOKEN: ${{ secrets.TENSOR_CLOUDFLARE_API_TOKEN }}
+        run: |
+          node --input-type=module <<'NODE'
+          const required = ['TENSOR_CLOUDFLARE_ACCOUNT_ID', 'TENSOR_CLOUDFLARE_API_TOKEN', 'SITE_URL'];
+          for (const name of required) {
+            if (!process.env[name]?.trim()) throw new Error(`Missing dedicated TENSOR production configuration: ${name}`);
+          }
+          if (!/^[a-f0-9]{32}$/i.test(process.env.TENSOR_CLOUDFLARE_ACCOUNT_ID)) throw new Error('Invalid TENSOR_CLOUDFLARE_ACCOUNT_ID');
+          const site = new URL(process.env.SITE_URL);
+          if (site.protocol !== 'https:' || site.username || site.password || site.port || site.search || site.hash || site.pathname !== '/') throw new Error('TENSOR_SITE_URL must be an HTTPS origin without credentials, port, path, query or fragment');
+          NODE
+
       - name: Install dependencies
         run: npm ci
 
       - name: Run dependency audit
         run: npm audit
 
-      - name: Enforce URL scheme policy
-        run: |
-          if grep -R -n --fixed-strings "javascript:" worker/index.mjs src/lib/frameworkDataApi.js src/components/GraphExplorer.jsx; then
-            echo "Forbidden javascript: URL scheme detected"
-            exit 1
-          fi
-          if grep -R -n --fixed-strings "data:text/html" worker/index.mjs src/lib/frameworkDataApi.js src/components/GraphExplorer.jsx; then
-            echo "Forbidden data:text/html URL scheme detected"
-            exit 1
-          fi
-          if grep -R -n --fixed-strings "file://" worker/index.mjs src/lib/frameworkDataApi.js src/components/GraphExplorer.jsx; then
-            echo "Forbidden file:// URL scheme detected"
-            exit 1
-          fi
-
-      - name: Build site
-        run: npm run build
+      - name: Check, test, build and inspect generated security policies
+        env:
+          SITE_URL: ${{ vars.TENSOR_SITE_URL }}
+        run: npm run validate
 
       - name: Deploy Worker + Static Assets
         uses: cloudflare/wrangler-action@da0e0dfe58b7a431659754fdf3f186c529afbe65
         with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          apiToken: ${{ secrets.TENSOR_CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ vars.TENSOR_CLOUDFLARE_ACCOUNT_ID }}
+          wranglerVersion: '4.149.0'
           command: deploy --config worker.wrangler.toml

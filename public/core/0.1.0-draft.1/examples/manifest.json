@@ -1,0 +1,30 @@
+{
+  "bindingVersion": "0.1.0-draft.1",
+  "status": "synthetic candidate fixtures",
+  "files": [
+    {
+      "path": "case-a.definition.json",
+      "sha256": "d24cc27aba68e7dff4d053bd7a65e9c6f5324f7286332913d5059794a52e2ff4"
+    },
+    {
+      "path": "case-a.record.json",
+      "sha256": "0df4fb0e28cbbe57774d36a5003c66a2fdd48da27c956979efb61ebbe8042616"
+    },
+    {
+      "path": "case-a.bundle.json",
+      "sha256": "b8dc145fd470eeec0a13f4e2881dc95fec528c7e178681abb3b54b93b3934c7a"
+    },
+    {
+      "path": "case-b.definition.json",
+      "sha256": "6e85c07aacf21ff813efab19b8e2a4b7ebca71ca850de42d3b6dd368cffea399"
+    },
+    {
+      "path": "case-b.record.json",
+      "sha256": "f44ba5b99d744bb1f385fbfce51ff55c7f79c80729b56bcf933de6bbc07a053d"
+    },
+    {
+      "path": "case-b.bundle.json",
+      "sha256": "b241ebd34eb90963303d531b05968dd859ec77346494f16d28e113abb6ada4df"
+    }
+  ]
+}

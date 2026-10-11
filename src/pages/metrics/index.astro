@@ -4,7 +4,7 @@ import MetricsDashboard from '../../components/MetricsDashboard.jsx';
 import { absoluteUrl, seo } from '../../data/seo';
 
 const meta = seo.metrics;
-const siteUrl = Astro.site?.toString() || 'https://tensor-standards-consortium.org/';
+const siteUrl = Astro.site?.toString() || 'https://tensor-standards.pages.dev/';
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -23,22 +23,22 @@ const jsonLd = {
   jsonLd={jsonLd}
 >
   <section class="container prose-card">
-    <h2>Release Health and Compatibility Confidence</h2>
+    <h2>Historical Graph Structure</h2>
     <p>
-      This dashboard tracks quality telemetry tied to framework release channels.
-      Use it to assess whether a release is ready for implementation, promotion, or rollback.
+      This dashboard reports historical graph counts, routing checks, and synthetic structural scores.
+      It does not establish investigative effectiveness, coverage of real incidents, security outcomes, or conformance to the candidate Core record contract.
     </p>
     <ul>
-      <li><strong>Coverage:</strong> whether expected domains and archetypes are represented.</li>
-      <li><strong>Routing quality:</strong> branch correctness and traversal consistency indicators.</li>
-      <li><strong>Robustness:</strong> resilience signals across versions and fixture behavior.</li>
-      <li><strong>Publish readiness:</strong> gate summary for operational release decisions.</li>
+      <li><strong>Structural coverage:</strong> representation of the configured domains and archetypes.</li>
+      <li><strong>Routing:</strong> configured branch and traversal consistency checks.</li>
+      <li><strong>Robustness:</strong> reachability under synthetic graph perturbations.</li>
+      <li><strong>Historical gates:</strong> results of the old graph release thresholds; passing these is not a current publication or adoption decision.</li>
     </ul>
     <p class="hub-links">
       Implement next:
       <a href="/implement/">Implementation guide</a>
       ·
-      <a href="/conformance/">Conformance suite</a>
+      <a href="/conformance/">Candidate conformance scope</a>
       ·
       <a href="/graphs/">Graph release channel</a>
     </p>

@@ -3,8 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { absoluteUrl, seo } from '../../data/seo';
 
 const meta = seo.contribute;
-const siteUrl = Astro.site?.toString() || 'https://tensor-standards-consortium.org/';
-
+const siteUrl = Astro.site?.toString() || 'https://tensor-standards.pages.dev/';
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'TechArticle',
@@ -14,72 +13,34 @@ const jsonLd = {
 };
 ---
 
-<BaseLayout
-  title={meta.title}
-  description={meta.description}
-  canonicalPath={meta.canonicalPath}
-  ogType={meta.ogType}
-  jsonLd={jsonLd}
->
+<BaseLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
   <div class="container prose-card">
-    <h2>Contribution Ladder</h2>
-    <p>
-      Contributions should improve compatibility, clarity, or conformance evidence.
-      Start small and move toward standards proposals with reproducible proof.
-    </p>
+    <p class="section-kicker">Help make investigations portable</p>
+    <h2>Bring a case, an implementation, or a careful review</h2>
+    <p>The next stage is proving that shared investigative meaning survives exchange. Contributions are most useful when they expose an ambiguity, demonstrate a real investigation need, or test a boundary between Core and another standard.</p>
+    <div class="cta-group"><a class="btn btn-primary" href="https://github.com/tensor-standards-consortium/TENSOR-Framework/issues/new">Open a framework issue</a><a class="btn btn-secondary" href="https://github.com/tensor-standards-consortium/TENSOR-Framework/pulls">Review proposals and code</a></div>
 
+    <h2>Useful first contributions</h2>
+    <ul>
+      <li><strong>Practitioners:</strong> describe a synthetic investigation where an assessment changed, evidence was unavailable, or two investigators disagreed.</li>
+      <li><strong>Implementers:</strong> build a reader or exporter independently and report the meaning preserved or lost.</li>
+      <li><strong>Researchers:</strong> evaluate whether Core supports review, handoff, and reproducibility in a defined task.</li>
+      <li><strong>Standards specialists:</strong> test the CASE/UCO and CACAO boundaries with the reference cases.</li>
+      <li><strong>Domain editors:</strong> review a legacy question's proposition, context, evidence requirements, and source quality before proposing a public profile.</li>
+    </ul>
+
+    <h2>Make a proposal reviewable</h2>
     <ol>
-      <li><strong>Docs fix:</strong> clarify ambiguous wording or add missing implementation detail.</li>
-      <li><strong>Fixture update:</strong> add or refine conformance cases for real integration edge conditions.</li>
-      <li><strong>Schema proposal:</strong> submit additive fields or constraints with compatibility analysis.</li>
-      <li><strong>Governance participation:</strong> review open proposals and provide implementer impact feedback.</li>
+      <li>Identify the artifact and version, the problem, and the expected behavior.</li>
+      <li>Include a minimal synthetic example with both successful and failing cases where relevant.</li>
+      <li>Explain compatibility, privacy, and security implications, plus alternatives considered.</li>
+      <li>State which Core requirements or binding rules are affected and what remains untested.</li>
+      <li>Disclose relevant affiliations and retain source attribution.</li>
     </ol>
+    <p>Do not include credentials, confidential incident data, or evidence you cannot share. A public standard does not require public disclosure of investigations. Use the repository's published security-reporting instructions for a vulnerability rather than a public incident-data dump.</p>
 
-    <h2>Quality Bar</h2>
-    <ul>
-      <li>State problem, affected artifact, and expected behavior.</li>
-      <li>Describe compatibility impact across existing consumers.</li>
-      <li>Include fixture or test evidence where behavior changes.</li>
-      <li>Avoid vendor-only assumptions in core semantics.</li>
-    </ul>
-
-    <h2>Submission Templates</h2>
-    <ul>
-      <li>
-        Issue intake template:
-        <a href="https://github.com/tensor-standards-consortium/tensor-framework/issues/new" target="_blank" rel="noopener noreferrer">
-          Open new issue
-        </a>
-      </li>
-      <li>
-        Proposal workflow:
-        <a href="https://github.com/tensor-standards-consortium/tensor-framework/pulls" target="_blank" rel="noopener noreferrer">
-          Open or review pull requests
-        </a>
-      </li>
-      <li>
-        Source repository:
-        <a href="https://github.com/tensor-standards-consortium/tensor-framework" target="_blank" rel="noopener noreferrer">
-          tensor-framework
-        </a>
-      </li>
-    </ul>
-
-    <h2>Review Expectations</h2>
-    <ul>
-      <li>Maintainers prioritize deterministic behavior and compatibility guarantees.</li>
-      <li>Breaking changes require migration and deprecation plans.</li>
-      <li>Conformance evidence is weighted higher than opinion in review decisions.</li>
-      <li>Unclear proposals are returned with requested evidence gaps.</li>
-    </ul>
-
-    <p class="hub-links">
-      Contribute next:
-      <a href="/governance/">Governance process</a>
-      ·
-      <a href="/conformance/">Conformance fixtures</a>
-      ·
-      <a href="/implement/">Implementation baseline</a>
-    </p>
+    <h2>What happens next</h2>
+    <p>Repository review can improve this implementation candidate. Formal stewardship and independent review follow the <a href="/governance/">governance proposal</a> once adopted. A merged contribution is not a certification, partnership, or governance appointment.</p>
+    <p><a href="/founding/05-review-plan.md">Review and adoption plan</a> · <a href="/core/">Candidate artifacts</a> · <a href="/questions/">Legacy questions awaiting semantic review</a></p>
   </div>
 </BaseLayout>

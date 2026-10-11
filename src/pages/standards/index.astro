@@ -3,8 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { absoluteUrl, seo } from '../../data/seo';
 
 const meta = seo.standards;
-const siteUrl = Astro.site?.toString() || 'https://tensor-standards-consortium.org/';
-
+const siteUrl = Astro.site?.toString() || 'https://tensor-standards.pages.dev/';
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'TechArticle',
@@ -14,132 +13,42 @@ const jsonLd = {
 };
 ---
 
-<BaseLayout
-  title={meta.title}
-  description={meta.description}
-  canonicalPath={meta.canonicalPath}
-  ogType={meta.ogType}
-  jsonLd={jsonLd}
->
+<BaseLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
   <div class="container prose-card">
-    <h2>TENSOR Core Standards Package v1.0.0</h2>
-    <p>
-      This package defines release and compatibility rules for multi-vendor interoperability.
-      Core semantics remain consortium-managed; organization-specific behavior belongs in overlays.
-    </p>
+    <p class="section-kicker">Reuse, then prove the relationship</p>
+    <h2>An investigative layer alongside existing standards</h2>
+    <p>TENSOR makes questions, evidence, uncertainty, and decisions portable across an investigation. Existing standards already describe adversary behavior, defensive knowledge, evidence, events, and operational workflows. Core should connect that work with explicit, tested mappings.</p>
+    <p>The relationships below are design boundaries. They do not establish implemented adapters, partnership, endorsement, or external conformance.</p>
 
-    <h2>Package Artifacts</h2>
-    <ul>
-      <li>
-        Package descriptor:
-        <a href="/standards/tensor-core-v1.0.0.json"><code>tensor-core-v1.0.0.json</code></a>
-      </li>
-      <li>
-        Compatibility policy:
-        <a href="/standards/compatibility-policy.md"><code>compatibility-policy.md</code></a>
-      </li>
-      <li>
-        Release timeline manifest:
-        <a href="/assets/releases/manifest.json"><code>releases/manifest.json</code></a>
-      </li>
-    </ul>
-
-    <h2>Conformance Tier Matrix</h2>
     <table>
-      <thead>
-        <tr>
-          <th>Tier</th>
-          <th>Scope</th>
-          <th>Minimum Evidence</th>
-        </tr>
-      </thead>
+      <thead><tr><th>Existing work</th><th>Relationship to investigate</th></tr></thead>
       <tbody>
-        <tr>
-          <td>Consumer</td>
-          <td>Read, validate, and surface graph/schema semantics.</td>
-          <td>Pass valid fixture; reject invalid fixture with explicit reason.</td>
-        </tr>
-        <tr>
-          <td>Executor</td>
-          <td>Execute branch traversal using deterministic decisions.</td>
-          <td>Replayable traversal logs with node and edge IDs.</td>
-        </tr>
-        <tr>
-          <td>Authoring Tool</td>
-          <td>Create compatible graph updates without breaking existing consumers.</td>
-          <td>Schema-valid output plus ID stability across revisions.</td>
-        </tr>
+        <tr><td><a href="https://attack.mitre.org/">MITRE ATT&amp;CK</a></td><td>Reference adversary behavior that motivates a question; a technique label alone does not answer it.</td></tr>
+        <tr><td><a href="https://d3fend.mitre.org/about/">MITRE D3FEND</a></td><td>Reference defensive techniques and artifact concepts; record observed control behavior separately.</td></tr>
+        <tr><td><a href="https://atlas.mitre.org/">MITRE ATLAS</a></td><td>Supply AI threat context while keeping the same Core for AI and conventional investigations.</td></tr>
+        <tr><td><a href="https://caseontology.org/resources/case_design_document.html">CASE / UCO</a></td><td>Evaluate reuse of evidence, identity, actions, provenance, and hypothesis concepts. The overlap is substantial.</td></tr>
+        <tr><td><a href="https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html">STIX 2.1</a></td><td>Preserve native threat intelligence and observable identities, versions, and markings.</td></tr>
+        <tr><td><a href="https://center-for-threat-informed-defense.github.io/attack-flow/language/">Attack Flow</a></td><td>Keep a suspected adversary sequence distinct from the investigator's question and decision sequence.</td></tr>
+        <tr><td><a href="https://docs.oasis-open.org/cacao/security-playbooks/v2.0/cs01/security-playbooks-v2.0-cs01.html">CACAO 2.0</a></td><td>Bind collection and response procedures while preserving the reason for an investigative decision.</td></tr>
+        <tr><td><a href="https://github.com/ocsf/ocsf-schema">OCSF</a></td><td>Reference normalized events and transformation provenance without implying evidence completeness.</td></tr>
       </tbody>
     </table>
 
-    <h2>Conformance Starter Suite</h2>
-    <p>
-      The starter suite provides deterministic baseline checks. Extend locally for domain needs,
-      but preserve the core validation contract.
-    </p>
+    <h2>A provisional binding, an open reuse decision</h2>
+    <p>The candidate JSON binding makes the Core proposal executable for review. It is not a CASE/UCO adapter. Whether stable TENSOR should use a CASE profile, extension, or separately bound model remains subject to the two reference cases and independent review.</p>
+    <p><a href="/founding/03-standards-crosswalk.md">Read the source-backed standards crosswalk</a> for scope, references, and mapping acceptance requirements.</p>
+
+    <h2>Version identity carries meaning</h2>
+    <p>New Core definitions use a logical identity, an artifact version, and an exact-byte digest. A changed proposition, criterion, or transition meaning needs a new concept identity. A display correction still produces a new artifact version. Historical releases stay retrievable.</p>
+    <p>Candidate versions may change during review. There is no stable compatibility guarantee yet. The <a href="/graphs/">legacy graph release channel</a> keeps its existing identifiers and artifacts; the new candidate does not silently reinterpret them.</p>
+
+    <h2>What a mapping must show</h2>
     <ul>
-      <li>
-        Suite manifest:
-        <a href="/standards/conformance/manifest.json"><code>conformance/manifest.json</code></a>
-      </li>
-      <li>
-        Valid fixture:
-        <a href="/standards/conformance/fixtures/valid/core-minimal.json">
-          <code>fixtures/valid/core-minimal.json</code>
-        </a>
-      </li>
-      <li>
-        Invalid fixture:
-        <a href="/standards/conformance/fixtures/invalid/edge-id-mismatch.json">
-          <code>fixtures/invalid/edge-id-mismatch.json</code>
-        </a>
-      </li>
+      <li>Pinned source and target versions, object identities, and a versioned mapping.</li>
+      <li>Direction, cardinality, assumptions, transformations, and unmapped meaning.</li>
+      <li>Handling of uncertainty, evidence, confidence, identity, time, revisions, and markings.</li>
+      <li>Positive, negative, and lossy fixtures with explicit exchange results.</li>
     </ul>
-
-    <h2>Release and Deprecation Policy</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Change Type</th>
-          <th>Version Rule</th>
-          <th>Deprecation Expectation</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Additive node/edge/category change</td>
-          <td>Minor version increment</td>
-          <td>Must not break existing compliant consumers.</td>
-        </tr>
-        <tr>
-          <td>Semantic change to existing IDs</td>
-          <td>Major version increment</td>
-          <td>Requires migration notes and deprecation window.</td>
-        </tr>
-        <tr>
-          <td>Schema constraint tightening</td>
-          <td>Minor or major based on compatibility impact</td>
-          <td>Must publish rationale and affected fixture updates.</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <h2>FAQ</h2>
-    <h3>Is TENSOR a replacement for SIEM or SOAR platforms?</h3>
-    <p>
-      No. TENSOR is a shared investigation contract above those systems.
-      It standardizes semantics, not vendor product features.
-    </p>
-
-    <h3>Can vendors innovate while staying compatible?</h3>
-    <p>
-      Yes. Core semantics remain stable while overlays and extensions carry differentiated behavior.
-    </p>
-
-    <h3>Where should we start?</h3>
-    <p>
-      Start with <a href="/implement/">Implement Core</a>, then run
-      <a href="/conformance/">Conformance Suite</a> before release.
-    </p>
+    <p><a href="/core/">Inspect Core</a> · <a href="/conformance/">Review validation scope</a> · <a href="/contribute/">Propose a mapping</a></p>
   </div>
 </BaseLayout>

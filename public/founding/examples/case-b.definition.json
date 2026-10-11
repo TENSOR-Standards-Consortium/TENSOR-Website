@@ -1,0 +1,81 @@
+{
+  "id": "urn:example:tensor:case-b:definition",
+  "version": "0.1.0-example",
+  "publicationStatus": "illustrative draft",
+  "title": "Bounded investigation of an identity session",
+  "contractRef": {
+    "proposal": "0.1.0",
+    "document": "../01-core-contract.md",
+    "status": "unratified proposal"
+  },
+  "questions": [
+    {
+      "id": "urn:example:tensor:case-b:question-egress",
+      "prompt": "Did the session originate through egress managed by the bound organization?",
+      "proposition": "The bound session used egress managed by the bound organization during the bound interval.",
+      "parameters": {
+        "subject": {
+          "type": "URI",
+          "required": true
+        },
+        "window": {
+          "type": "timeContext",
+          "required": true
+        },
+        "organization": {
+          "type": "URI",
+          "required": true
+        }
+      },
+      "applicabilityCriteria": "Applies to the bound subject, organization, and window when all required parameters are resolved.",
+      "assessmentCriteria": {
+        "yes": "Correlated VPN and inventory evidence establishes egress managed by the bound organization.",
+        "no": "Sufficient authoritative inventory and session coverage establishes that the egress was not managed by the bound organization.",
+        "unknown": "Inventory, session correlation, or coverage is missing or conflicting."
+      },
+      "evidenceRequirements": [
+        "Evidence correlating the bound subject and interval with the proposition; negative answers require stated observation coverage."
+      ]
+    },
+    {
+      "id": "urn:example:tensor:case-b:question-replay",
+      "prompt": "Was this session token replayed?",
+      "proposition": "A party replayed this session token in the bound organization's identity context during the bound interval.",
+      "parameters": {
+        "subject": {
+          "type": "URI",
+          "required": true
+        },
+        "window": {
+          "type": "timeContext",
+          "required": true
+        },
+        "organization": {
+          "type": "URI",
+          "required": true
+        }
+      },
+      "applicabilityCriteria": "Applies to the bound subject, organization, and window when all required parameters are resolved.",
+      "assessmentCriteria": {
+        "yes": "Correlated issuer, device, or token evidence establishes replay for this session.",
+        "no": "Sufficient stated issuer, device, and token observation coverage establishes no replay in this interval.",
+        "unknown": "Available evidence cannot establish replay or its absence with sufficient coverage."
+      },
+      "evidenceRequirements": [
+        "Evidence correlating the bound subject and interval with the proposition; negative answers require stated observation coverage."
+      ]
+    }
+  ],
+  "transitions": [
+    {
+      "id": "urn:example:tensor:case-b:transition-egress-to-replay",
+      "sourceQuestionId": "urn:example:tensor:case-b:question-egress",
+      "targetQuestionId": "urn:example:tensor:case-b:question-replay",
+      "guardOutcome": "unknown"
+    }
+  ],
+  "entryQuestionIds": [
+    "urn:example:tensor:case-b:question-egress"
+  ],
+  "dependencies": []
+}

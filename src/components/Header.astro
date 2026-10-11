@@ -26,6 +26,7 @@ const pathname = Astro.url.pathname;
               <a
                 href={item.url}
                 class={isActive ? 'is-active' : ''}
+                aria-current={isActive ? 'page' : undefined}
                 target={isExternal ? '_blank' : undefined}
                 rel={isExternal ? 'noopener noreferrer' : undefined}
               >
@@ -38,3 +39,13 @@ const pathname = Astro.url.pathname;
     </nav>
   </div>
 </header>
+
+<style>
+  @media (max-width: 700px) {
+    .site-header { position: relative; top: 0; }
+    .header-inner { flex-direction: column; align-items: flex-start; gap: .35rem; }
+    .header-nav { width: 100%; overflow: visible; }
+    .header-nav ul { flex-wrap: wrap; gap: .1rem .35rem; }
+    .header-nav a { display: inline-flex; align-items: center; min-height: 44px; padding: .3rem .45rem; }
+  }
+</style>

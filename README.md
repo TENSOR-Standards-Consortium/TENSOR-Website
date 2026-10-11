@@ -1,162 +1,109 @@
-# TENSOR Framework Site
+# TENSOR website
 
-Astro + React-islands frontend for the TENSOR Framework website, designed for Cloudflare Pages and Cloudflare Workers.
+The public website and browser tools for TENSOR: a shared investigative Core for all cyber investigations, usable by humans and agents, with vendor and business layers above it.
 
-## Stack
+**Current Core implementation: `0.1.0-draft.1`, a candidate binding for founding proposal `0.1.0`. It is not a ratified standard or a certification.** Existing dated graph releases retain their original meaning and version history.
 
-- Astro (static-first)
-- React islands for interactive UI
-- Cytoscape for graph rendering
-- Progressive Web App (offline-capable docs + Graph Studio)
-- Cloudflare Pages for static hosting
-- Optional Cloudflare Worker for `/api/*` edge endpoints
+## What lives here
 
-## Graph Studio Capabilities
+| Surface | Purpose |
+| --- | --- |
+| `/standards/`, `/docs/`, `/governance/`, `/implement/` | Explain the proposal, implementation boundary and participation process |
+| `/investigation-lab/` | Import, inspect, validate and export candidate investigation bundles; load two synthetic worked cases |
+| `/questions/` | Browse 588 preserved legacy questions with version-specific citation pages |
+| `/studio/`, `/graphs/`, `/schemas/` | Preserve the legacy graph ecosystem and its authoring/exploration tools |
+| `/metrics/` | Inspect historical graph quality reports; these are not evidence of investigative effectiveness |
 
-- Version-aware graph and schema loading (`/api/releases`, `/api/graph?version=`, `/api/schema?version=`)
-- Timeline diffs across releases (`/api/diff?from=&to=`)
-- Version-scoped quality report loading (`/api/metrics/report?version=&type=math-assurance|graph-quality|coverage-matrix`)
-- Per-version release quality panel in the Studio sidebar (overall/coverage/routing/robustness + publish gate checks)
-- Import/export for:
-  - Core graph JSON
-  - Schema JSON
-- Overlay layers (`tensor-layer-pack.v1`)
-- Layered merge model: core investigation semantics remain stable while organization/vendor logic is carried in custom layers
-- Runtime polling of framework releases from the TENSOR Framework repo (Worker remote manifest + local fallback)
-- Home page release telemetry panel auto-refreshes from framework math-assurance feeds (latest + history trend).
+The [framework repository](https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework) owns the specifications, runtime, schemas, examples and releases. This repository owns their presentation and browser interfaces. Astro builds static HTML, React supplies interactive islands, and Cytoscape renders legacy graphs.
 
-## Metrics Dashboard
+The Core runtime validates representations and declared dependencies. It does not establish evidence truth, grant authority, execute actions or contact agents. Imported Lab bundles stay in browser memory and can be downloaded again; the Lab and Studio disable client telemetry. Validation reports retain `fail`, `indeterminate` and `notRun` distinctions. Using one implementation is not independent interoperability proof.
 
-- Route: `/metrics/`
-- Deep trend and comparison view for release assurance artifacts:
-  - publish-gate timeline across releases
-  - selected-release gate check details
-  - domain x archetype coverage matrix
-  - version picker tied to framework release channel
-  - export actions for review packs: history CSV, gates CSV, coverage matrix CSV, trend PNG
+## Local setup and checks
 
-## Compact Metrics Widgets
+Use **Node 22.12 or later**. The committed artifacts allow a normal build without a framework checkout or build-time network fetches.
 
-- Graphs and Schemas pages include compact live metrics snapshots linked to `/metrics/` for deeper analysis.
-
-## Local Development
-
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
-2. Run dev server:
-   ```bash
-   npm run dev
-   ```
-3. Open:
-   - Home: `http://localhost:4321/`
-   - Graph Studio: `http://localhost:4321/studio/`
-
-## Build
-
-```bash
-npm run build
+```sh
+npm ci
+npm run dev
 ```
 
-Output directory: `dist/`.
+Open `http://localhost:4321/`. To check and build the production output:
 
-## PWA / Offline Behavior
-
-- Service worker: `public/sw.js`
-- Manifest: `public/manifest.webmanifest`
-- Offline fallback page: `src/pages/offline/index.astro`
-- Precached core routes include docs, schema/graph assets, and Graph Studio shell.
-
-## Cloudflare Authentication
-
-Before deploy commands:
-
-```bash
-npx wrangler whoami
+```sh
+npm audit
+npm run validate
+npm run preview
 ```
 
-If not authenticated:
+`validate` checks artifact provenance, enforces the existing release URL policy, checks types, runs tests, builds `dist/`, and inspects every generated page's CSP hashes and JSON-LD. The full dependency audit remains a separate required CI step. Development mode does not apply Astro's production CSP; use the built preview for browser validation.
 
-```bash
-npx wrangler login
+Tests cover the browser integration and hosting behavior. The framework repository owns its larger Core conformance test suite. Passing these checks does not ratify the candidate or establish every founding-contract requirement.
+
+## Updating Core artifacts
+
+Edit the framework source first, then synchronize from its local checkout:
+
+```sh
+npm run sync:core -- --framework /absolute/path/to/TENSOR-Framework-checkout
+npm run check:core
+npm run check:core -- --framework /absolute/path/to/TENSOR-Framework-checkout
 ```
 
-If you have multiple Cloudflare accounts, set the one you want:
+The offline check compares every generated file with its recorded SHA-256 and rejects missing or unrecorded files. The optional source check also compares the supplied framework checkout. Nothing is fetched or executed from that checkout.
 
-```bash
-export CLOUDFLARE_ACCOUNT_ID="<your_account_id>"
+| Generated path | Contents |
+| --- | --- |
+| `src/vendor/tensor-core/` | Four browser-safe reference-runtime modules |
+| `public/core/0.1.0-draft.1/` | Candidate binding, coverage notes, schemas, example bundles and provenance |
+| `public/founding/` | Founding charter, Core contract, governance, crosswalk and review proposal |
+| `public/legacy/0.20260206e/` | Exact published legacy graph used by the question catalog |
+
+`public/core/0.1.0-draft.1/provenance.json` records the full source commit, dirty status, source/destination paths, sizes and hashes. Local integration can record uncommitted or bootstrap sources explicitly; release preparation must resynchronize from the clean committed framework source with `sourceDirty: false` and `foundingSource: "framework-repository"`. A provenance inventory is not a signature or external endorsement. See [the sync contract](docs/core-sync.md) for details. Do not hand-edit generated copies.
+
+## Hosting and deployment
+
+**Production belongs in a dedicated TENSOR-controlled Cloudflare account.** Keep Cloudflare Pages for the static website and the independent [TENSOR GitHub organization](https://github.com/TENSOR-Standards-Consortium) for source, review and versioned artifacts. Provider hosting does not determine the standard's semantics or governance.
+
+Account access is verified for **TENSOR Standards Consortium**. Its dedicated Pages project is `tensor-standards`, with `main` reserved for production and `core-next-stage` for candidate previews. The interim provider origin is `https://tensor-standards.pages.dev`; production publication and a custom-domain cutover are separate steps. As observed on 2026-10-10, `tensor-standards-consortium.org` did not resolve. The inherited host is retained only for historical preview references; new deployments target the dedicated account.
+
+The workflows use the **`tensor-production` GitHub environment** and fail before deployment when its required configuration is missing. Configure these values only for the dedicated TENSOR destination:
+
+| Environment setting | Type | Purpose |
+| --- | --- | --- |
+| `TENSOR_CLOUDFLARE_ACCOUNT_ID` | Variable | Dedicated TENSOR account identifier |
+| `TENSOR_CLOUDFLARE_PROJECT_NAME` | Variable | Actual Pages project name in that account; required for Pages deployment |
+| `TENSOR_SITE_URL` | Variable | Verified HTTPS canonical origin; supplied to the build as `SITE_URL` |
+| `TENSOR_CLOUDFLARE_API_TOKEN` | Secret | Deployment token scoped to the intended account and deployment permissions |
+
+There is no inherited account ID, project-name fallback, generic deployment secret, or local OAuth fallback in the production workflows. `wrangler.toml` contains the dedicated project name required by Wrangler and the static build output; the workflow still requires an explicit account/project/token. No token belongs in source control.
+
+- `ci.yml`: audits and validates pull requests, `main`, and `codex/*` branches; no deployment.
+- `cloudflare-pages.yml`: repeats all checks and deploys `main` to the configured dedicated Pages project. Manual dispatch is restricted to `main`.
+- `cloudflare-worker.yml`: optionally repeats all checks and manually deploys the Worker from `main` into the same dedicated account boundary.
+
+Follow [the infrastructure handoff](docs/infrastructure-handoff.md) to establish ownership, configure the environment, verify a destination preview, and cut over DNS. Missing configuration intentionally blocks publication. Local Wrangler authentication must not be substituted for production configuration.
+
+For a local provider-style preview, without publishing:
+
+```sh
+npx --yes wrangler@4.149.0 pages dev dist --port 8788
 ```
 
-## Deploy Option 1: Cloudflare Pages
+The HTML contains Astro-generated script/style hashes. `_headers` adds frame-embedding and transport controls without a second script policy that would block hydration. Inline style attributes support React/Cytoscape dimensions; inline JavaScript and `unsafe-eval` remain disallowed. The service worker never caches API requests, revalidates standards assets and provides an offline fallback; cached content is not proof of the latest release.
 
-```bash
-npm run build
-npx wrangler pages deploy dist --project-name tensor-website
-```
+See [the hosting decision](docs/hosting-decision.md) for the platform rationale and security contract. A successful build or preview does not establish production deployment, independent ownership, or custom-domain readiness.
 
-Pages builds automatically fall back to the Worker API origin for live release/metrics data when `/api/*`
-is not available on the Pages host.
+## Optional legacy Worker API
 
-## Deploy Option 2: Cloudflare Worker + Static Assets
+`worker/index.mjs` can serve the static assets plus these existing endpoints:
 
-This serves static assets from `dist/` and enables edge endpoints:
+- `/api/health`, `/api/version`, `/api/releases`
+- `/api/graph`, `/api/schema`, `/api/diff`
+- `/api/metrics/latest`, `/api/metrics/history`, `/api/metrics/report`
+- `/api/telemetry` (POST; separate from the Core data contract)
 
-- `/api/health`
-- `/api/version`
-- `/api/releases`
-- `/api/graph`
-- `/api/schema`
-- `/api/diff`
-- `/api/metrics/latest`
-- `/api/metrics/history`
-- `/api/metrics/report`
-- `/api/telemetry`
+Pages deployment does not deploy this Worker. The candidate Lab does not require it. Legacy release/metrics readers can use their existing public-repository fallbacks when an API is unavailable.
 
-```bash
-npm run build
-npx wrangler deploy --config worker.wrangler.toml
-```
+For an explicitly configured API, build with `PUBLIC_TENSOR_API_ORIGIN` or `PUBLIC_TENSOR_USE_SAME_ORIGIN_API=true`. Any additional origin also needs a reviewed CSP `connect-src` entry. `TELEMETRY_ALLOWED_ORIGINS` controls the Worker POST origin allowlist (default same-origin); `RELEASE_ALLOWED_HOSTS` and `PUBLIC_RELEASE_ALLOWED_HOSTS` configure release host allowlists. Host allowlisting does not remove existing HTTPS, path-prefix, traversal or size checks. Do not enable the telemetry endpoint for imported investigation contents.
 
-## CI/CD Workflows
-
-- `.github/workflows/cloudflare-pages.yml`: deploys Pages on `main` push
-- `.github/workflows/cloudflare-worker.yml`: manual Worker deploy
-
-Required repository secrets:
-
-- `CLOUDFLARE_API_TOKEN`
-- `CLOUDFLARE_ACCOUNT_ID`
-
-Token scope guidance:
-
-- Scope `CLOUDFLARE_API_TOKEN` to the minimum required permissions for this project (Pages deploy and Worker deploy only).
-- Avoid account-wide admin tokens for CI.
-- Rotate deployment tokens on a regular schedule and after contributor/offboarding changes.
-- Enable branch protection for `main` to require at least one CODEOWNER approval on security-critical paths.
-
-Optional security environment variables:
-
-- `TELEMETRY_ALLOWED_ORIGINS`: comma-separated origin allowlist for `/api/telemetry` POST requests.
-  - Default: same-origin only.
-- `RELEASE_ALLOWED_HOSTS`: comma-separated host allowlist for release manifest and release artifact HTTPS fetches.
-  - Default: `raw.githubusercontent.com,tensor-standards-consortium.github.io,tensor-standards-consortium.org`.
-- `PUBLIC_RELEASE_ALLOWED_HOSTS`: optional frontend runtime host allowlist override (same format as `RELEASE_ALLOWED_HOSTS`).
-
-## Key Paths
-
-- Astro pages: `src/pages/`
-- Shared layout: `src/layouts/BaseLayout.astro`
-- React graph island: `src/components/GraphExplorer.jsx`
-- Live version badge island: `src/components/LiveVersionBadge.jsx`
-- Live metrics island: `src/components/MetricsPanel.jsx`
-- Full metrics dashboard island: `src/components/MetricsDashboard.jsx`
-- Standards page: `src/pages/standards/index.astro`
-- Graph data: `public/assets/data/tensor-core.json`
-- Schema: `public/assets/data/core.schema.json`
-- Release manifest: `public/assets/releases/manifest.json`
-- Standards package: `public/standards/tensor-core-v1.0.0.json`
-- Conformance fixtures: `public/standards/conformance/fixtures/`
-- Worker API: `worker/index.mjs`
-- Pages config: `wrangler.toml`
-- Worker config: `worker.wrangler.toml`
+The optional Worker deployment configuration is `worker.wrangler.toml`. Its existence and historical deployment do not prove that its current public route works; verify the intended account, route and environment before using the manual workflow.

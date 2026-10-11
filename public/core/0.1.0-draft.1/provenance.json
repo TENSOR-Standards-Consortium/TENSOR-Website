@@ -1,0 +1,239 @@
+{
+  "format": "tensor-website-source-manifest",
+  "manifestVersion": 1,
+  "bindingVersion": "0.1.0-draft.1",
+  "sourceRepository": "https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework",
+  "sourceCommit": "5fdc868ad39170f5bcfdc4a4c546d167cc802e26",
+  "sourceDirty": false,
+  "foundingSource": "framework-repository",
+  "files": [
+    {
+      "source": "LICENSE",
+      "target": "public/core/0.1.0-draft.1/LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "bytes": 11357
+    },
+    {
+      "source": "core/v0.1.0-draft.1/README.md",
+      "target": "public/core/0.1.0-draft.1/README.md",
+      "sha256": "fd44744da43c31e9c0d5461dc8d9b65bdc18da8a3d7125d842088224927266d5",
+      "bytes": 6014
+    },
+    {
+      "source": "core/v0.1.0-draft.1/binding.md",
+      "target": "public/core/0.1.0-draft.1/binding.md",
+      "sha256": "77ffa224831eac1a49fd67fb30a286c8ed7b843faaa7e4f60301cd4951935bcd",
+      "bytes": 18345
+    },
+    {
+      "source": "core/v0.1.0-draft.1/coverage.md",
+      "target": "public/core/0.1.0-draft.1/coverage.md",
+      "sha256": "d0c9c6eb6c5f88cb62a626817e3c10a35150333a3afcc693870907fb9cf910fa",
+      "bytes": 3805
+    },
+    {
+      "source": "core/v0.1.0-draft.1/examples/README.md",
+      "target": "public/core/0.1.0-draft.1/examples/README.md",
+      "sha256": "4f72484dd1b902176e9ec7951ede32f633a5fa27f4e51a34ca3e26a22fdf1e3a",
+      "bytes": 1835
+    },
+    {
+      "source": "core/v0.1.0-draft.1/examples/case-a.bundle.json",
+      "target": "public/core/0.1.0-draft.1/examples/case-a.bundle.json",
+      "sha256": "b8dc145fd470eeec0a13f4e2881dc95fec528c7e178681abb3b54b93b3934c7a",
+      "bytes": 23501
+    },
+    {
+      "source": "core/v0.1.0-draft.1/examples/case-a.definition.json",
+      "target": "public/core/0.1.0-draft.1/examples/case-a.definition.json",
+      "sha256": "d24cc27aba68e7dff4d053bd7a65e9c6f5324f7286332913d5059794a52e2ff4",
+      "bytes": 3666
+    },
+    {
+      "source": "core/v0.1.0-draft.1/examples/case-a.record.json",
+      "target": "public/core/0.1.0-draft.1/examples/case-a.record.json",
+      "sha256": "0df4fb0e28cbbe57774d36a5003c66a2fdd48da27c956979efb61ebbe8042616",
+      "bytes": 18396
+    },
+    {
+      "source": "core/v0.1.0-draft.1/examples/case-b.bundle.json",
+      "target": "public/core/0.1.0-draft.1/examples/case-b.bundle.json",
+      "sha256": "b241ebd34eb90963303d531b05968dd859ec77346494f16d28e113abb6ada4df",
+      "bytes": 22742
+    },
+    {
+      "source": "core/v0.1.0-draft.1/examples/case-b.definition.json",
+      "target": "public/core/0.1.0-draft.1/examples/case-b.definition.json",
+      "sha256": "6e85c07aacf21ff813efab19b8e2a4b7ebca71ca850de42d3b6dd368cffea399",
+      "bytes": 3672
+    },
+    {
+      "source": "core/v0.1.0-draft.1/examples/case-b.record.json",
+      "target": "public/core/0.1.0-draft.1/examples/case-b.record.json",
+      "sha256": "f44ba5b99d744bb1f385fbfce51ff55c7f79c80729b56bcf933de6bbc07a053d",
+      "bytes": 17650
+    },
+    {
+      "source": "core/v0.1.0-draft.1/examples/manifest.json",
+      "target": "public/core/0.1.0-draft.1/examples/manifest.json",
+      "sha256": "8e3382804d20ee765426a7531a4cf14a11668fbab18acd1e65fbddd28bb41da1",
+      "bytes": 901
+    },
+    {
+      "source": "core/v0.1.0-draft.1/schemas/bundle.schema.json",
+      "target": "public/core/0.1.0-draft.1/schemas/bundle.schema.json",
+      "sha256": "b76d92b6d3f82f201ee494f794b464ce50703a129382ad73b052a0ef797f6460",
+      "bytes": 8742
+    },
+    {
+      "source": "core/v0.1.0-draft.1/schemas/definition.schema.json",
+      "target": "public/core/0.1.0-draft.1/schemas/definition.schema.json",
+      "sha256": "e360b1f228720a665647a3b3d961956242611cf3da767cdccd57b251d3d54b60",
+      "bytes": 13407
+    },
+    {
+      "source": "core/v0.1.0-draft.1/schemas/record.schema.json",
+      "target": "public/core/0.1.0-draft.1/schemas/record.schema.json",
+      "sha256": "61d433b6d293ae413530a6ab90d69c2a11e4fd9ccffb52ca94299ea19fe03dfc",
+      "bytes": 67314
+    },
+    {
+      "source": "proposals/founding-core-v0.1.0/00-charter.md",
+      "target": "public/founding/00-charter.md",
+      "sha256": "e683bda66f6852ef72133f95e9c2e6013e79105dbd8b4aacb940fd4a2d2ebe85",
+      "bytes": 6113
+    },
+    {
+      "source": "proposals/founding-core-v0.1.0/01-core-contract.md",
+      "target": "public/founding/01-core-contract.md",
+      "sha256": "6308266906184fb3264a5068a71d4ddff729bd5f0b526662962fcef307ece83f",
+      "bytes": 30075
+    },
+    {
+      "source": "proposals/founding-core-v0.1.0/02-governance.md",
+      "target": "public/founding/02-governance.md",
+      "sha256": "6b6998a25ef3143cc3c0f729b3137a4c1ae1b1cf681c150a84be318cd6b94679",
+      "bytes": 6680
+    },
+    {
+      "source": "proposals/founding-core-v0.1.0/03-standards-crosswalk.md",
+      "target": "public/founding/03-standards-crosswalk.md",
+      "sha256": "a06c29b9056c5f96f9a02729e563e875dd00f99e35780e804dc854238993a035",
+      "bytes": 8656
+    },
+    {
+      "source": "proposals/founding-core-v0.1.0/04-reference-cases-and-conformance.md",
+      "target": "public/founding/04-reference-cases-and-conformance.md",
+      "sha256": "758babaf084949f5d72b903439a14999a8b80f0d8deb7fc2efb9bc174ae91077",
+      "bytes": 10656
+    },
+    {
+      "source": "proposals/founding-core-v0.1.0/05-review-plan.md",
+      "target": "public/founding/05-review-plan.md",
+      "sha256": "486b7a766875f383a7efba401adb14d5262dbba9c18eaf77b06ff1d93c6378ff",
+      "bytes": 3827
+    },
+    {
+      "source": "proposals/founding-core-v0.1.0/06-change-and-decision-register.md",
+      "target": "public/founding/06-change-and-decision-register.md",
+      "sha256": "3cfe895403def1707998a94eb74a90ac4d0ff808309a564e7e1fbf22b57a5380",
+      "bytes": 7132
+    },
+    {
+      "source": "proposals/founding-core-v0.1.0/README.md",
+      "target": "public/founding/README.md",
+      "sha256": "87dac85938e45dd1ff3fd9f85c7ef4617d31edc5f659c567321e6e4f8c522aee",
+      "bytes": 4147
+    },
+    {
+      "source": "proposals/founding-core-v0.1.0/VALIDATION.md",
+      "target": "public/founding/VALIDATION.md",
+      "sha256": "f3803daae7484dc06d78d38b25229929fe1038a147066365928ebfc2e105959a",
+      "bytes": 2733
+    },
+    {
+      "source": "proposals/founding-core-v0.1.0/architecture.mmd",
+      "target": "public/founding/architecture.mmd",
+      "sha256": "4f800bf0e41096f21328ced72372ee214b7c637ca4c192aa95a9eac09f6b5b07",
+      "bytes": 574
+    },
+    {
+      "source": "proposals/founding-core-v0.1.0/examples/README.md",
+      "target": "public/founding/examples/README.md",
+      "sha256": "b8e5a94a4380820afe959eb9a5695440f2713b4e46d0ea3b24ed5ae4c7926cd4",
+      "bytes": 4000
+    },
+    {
+      "source": "proposals/founding-core-v0.1.0/examples/case-a.definition.json",
+      "target": "public/founding/examples/case-a.definition.json",
+      "sha256": "43e7ef0537db404fcbc2c0936b9842ad20a3c873bc640223df4dbcd262d50db7",
+      "bytes": 3236
+    },
+    {
+      "source": "proposals/founding-core-v0.1.0/examples/case-a.record.json",
+      "target": "public/founding/examples/case-a.record.json",
+      "sha256": "f4ecff4ad8df470058201d0a7d6dd10ee86f4e630e3dd3ed8c0bce6745fae53a",
+      "bytes": 17265
+    },
+    {
+      "source": "proposals/founding-core-v0.1.0/examples/case-b.definition.json",
+      "target": "public/founding/examples/case-b.definition.json",
+      "sha256": "d2dc38bcc5573ae1856b9663da3550aece4366604e02432fab178340f5c5f930",
+      "bytes": 3204
+    },
+    {
+      "source": "proposals/founding-core-v0.1.0/examples/case-b.record.json",
+      "target": "public/founding/examples/case-b.record.json",
+      "sha256": "eea8a49b6ea5d78f899f19eab2d0e93176ce7a03edfa697cc54a9391f560fc7c",
+      "bytes": 16569
+    },
+    {
+      "source": "proposals/founding-core-v0.1.0/examples/check_authoring.py",
+      "target": "public/founding/examples/check_authoring.py",
+      "sha256": "61f9fe27a822cdbbe07d7bc29550885486fd0bd1ed4d6d69af3e122f3b066584",
+      "bytes": 7136
+    },
+    {
+      "source": "proposals/founding-core-v0.1.0/examples/manifest.json",
+      "target": "public/founding/examples/manifest.json",
+      "sha256": "7a0f265c5e6ee39be0a655bb01d3c2d46a3d0653acf64c8f721549167dbde7d9",
+      "bytes": 933
+    },
+    {
+      "source": "releases/core/graphs/v0.20260206e/tensor.core.graph.json",
+      "target": "public/legacy/0.20260206e/tensor.core.graph.json",
+      "sha256": "dfc3f1a965c01b6f7ade253e426e69abcbad688fab20d9d00065d71c777c010c",
+      "bytes": 341136
+    },
+    {
+      "source": "LICENSE",
+      "target": "src/vendor/tensor-core/LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "bytes": 11357
+    },
+    {
+      "source": "core/v0.1.0-draft.1/index.mjs",
+      "target": "src/vendor/tensor-core/index.mjs",
+      "sha256": "baa02cb807a532a8d2596889dc07e54c3cd24f04cd4ab3a80e49caa7ac2a3853",
+      "bytes": 42214
+    },
+    {
+      "source": "core/v0.1.0-draft.1/json.mjs",
+      "target": "src/vendor/tensor-core/json.mjs",
+      "sha256": "57313d1a22f09aae1bd010c6e8652e332403917ae64767fef7e1e437304c00e9",
+      "bytes": 5974
+    },
+    {
+      "source": "core/v0.1.0-draft.1/schema-validator.mjs",
+      "target": "src/vendor/tensor-core/schema-validator.mjs",
+      "sha256": "73cc64bb18cadfceb6ec6f20aa915335e642a75dd38b4a79d8818fc29f403fb3",
+      "bytes": 7495
+    },
+    {
+      "source": "core/v0.1.0-draft.1/schemas.mjs",
+      "target": "src/vendor/tensor-core/schemas.mjs",
+      "sha256": "085af9665ef9a1db861c806e0d72e5bd793d95b6532ff2f0d9b1025c066106fc",
+      "bytes": 10737
+    }
+  ]
+}

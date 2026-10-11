@@ -1,3 +1,6 @@
-name = "tensor-website"
+# Wrangler requires the name even when --project-name is supplied.
+# This project belongs to the verified dedicated TENSOR account.
+# Production still requires explicit account/project/token environment settings.
+name = "tensor-standards"
 pages_build_output_dir = "dist"
 compatibility_date = "2026-02-05"

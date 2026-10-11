@@ -1,0 +1,579 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tensor-website.pages.dev/core/0.1.0-draft.1/schemas/definition.schema.json",
+  "title": "TENSOR candidate definition 0.1.0-draft.1",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "format": "uri"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "publicationStatus": {
+      "enum": [
+        "draft",
+        "candidate",
+        "stable",
+        "deprecated"
+      ]
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "contractRef": {
+      "$ref": "#/$defs/contractRef"
+    },
+    "questions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "format": "uri"
+          },
+          "prompt": {
+            "type": "string",
+            "minLength": 1
+          },
+          "proposition": {
+            "type": "string",
+            "minLength": 1
+          },
+          "parameters": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "enum": [
+                    "URI",
+                    "string",
+                    "number",
+                    "integer",
+                    "boolean",
+                    "timeContext"
+                  ]
+                },
+                "required": {
+                  "type": "boolean"
+                },
+                "bindsTo": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "referenceType": {
+                  "enum": [
+                    "Actor",
+                    "QuestionInstance",
+                    "EvidenceReference",
+                    "Observation",
+                    "Hypothesis",
+                    "Assessment",
+                    "Decision",
+                    "ActionRecord",
+                    "PolicyReference",
+                    "AuthorityAssertion"
+                  ]
+                }
+              },
+              "required": [
+                "type",
+                "required"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "applicabilityCriteria": {
+            "type": "string",
+            "minLength": 1
+          },
+          "assessmentCriteria": {
+            "type": "object",
+            "properties": {
+              "yes": {
+                "type": "string",
+                "minLength": 1
+              },
+              "no": {
+                "type": "string",
+                "minLength": 1
+              },
+              "unknown": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "yes",
+              "no",
+              "unknown"
+            ],
+            "additionalProperties": false
+          },
+          "evidenceRequirements": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 0
+          },
+          "noEvidenceReason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "metadata": {
+            "type": "object"
+          },
+          "extensions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/extension"
+            },
+            "minItems": 0
+          }
+        },
+        "required": [
+          "id",
+          "prompt",
+          "proposition",
+          "parameters",
+          "applicabilityCriteria",
+          "assessmentCriteria",
+          "evidenceRequirements"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "transitions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "format": "uri"
+          },
+          "sourceQuestionId": {
+            "type": "string",
+            "minLength": 1,
+            "format": "uri"
+          },
+          "targetQuestionId": {
+            "type": "string",
+            "minLength": 1,
+            "format": "uri"
+          },
+          "guardOutcome": {
+            "enum": [
+              "yes",
+              "no",
+              "unknown"
+            ]
+          },
+          "metadata": {
+            "type": "object"
+          },
+          "extensions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/extension"
+            },
+            "minItems": 0
+          }
+        },
+        "required": [
+          "id",
+          "sourceQuestionId",
+          "targetQuestionId",
+          "guardOutcome"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0
+    },
+    "entryQuestionIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "format": "uri"
+      },
+      "minItems": 1
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/dependency"
+      },
+      "minItems": 0
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "extensions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/extension"
+      },
+      "minItems": 0
+    }
+  },
+  "required": [
+    "id",
+    "version",
+    "publicationStatus",
+    "title",
+    "contractRef",
+    "questions",
+    "transitions",
+    "entryQuestionIds",
+    "dependencies"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "extension": {
+      "type": "object",
+      "properties": {
+        "namespace": {
+          "type": "string",
+          "minLength": 1,
+          "format": "uri"
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requiredForInterpretation": {
+          "type": "boolean"
+        },
+        "data": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "namespace",
+        "version",
+        "requiredForInterpretation",
+        "data"
+      ],
+      "additionalProperties": false
+    },
+    "dependency": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "format": "uri"
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "enum": [
+            "profile",
+            "extension"
+          ]
+        },
+        "requiredForInterpretation": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "kind",
+        "requiredForInterpretation"
+      ],
+      "additionalProperties": false
+    },
+    "contractRef": {
+      "type": "object",
+      "properties": {
+        "proposal": {
+          "const": "0.1.0"
+        },
+        "bindingVersion": {
+          "const": "0.1.0-draft.1"
+        },
+        "status": {
+          "const": "candidate; unratified"
+        }
+      },
+      "required": [
+        "proposal",
+        "bindingVersion",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "definitionRef": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "format": "uri"
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "artifact": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "sha256",
+        "artifact"
+      ],
+      "additionalProperties": false
+    },
+    "timeContext": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "const": "bounded"
+            },
+            "start": {
+              "type": "string",
+              "minLength": 1,
+              "format": "date-time"
+            },
+            "end": {
+              "type": "string",
+              "minLength": 1,
+              "format": "date-time"
+            },
+            "precision": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "status",
+            "start",
+            "end"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "const": "open"
+            },
+            "start": {
+              "type": "string",
+              "minLength": 1,
+              "format": "date-time"
+            },
+            "end": {
+              "type": "string",
+              "minLength": 1,
+              "format": "date-time"
+            },
+            "unknownBoundary": {
+              "enum": [
+                "start",
+                "end"
+              ]
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            },
+            "precision": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "status",
+            "unknownBoundary",
+            "reason"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "const": "unknown"
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "status",
+            "reason"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "eventTime": {
+      "anyOf": [
+        {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "const": "bounded"
+                },
+                "start": {
+                  "type": "string",
+                  "minLength": 1,
+                  "format": "date-time"
+                },
+                "end": {
+                  "type": "string",
+                  "minLength": 1,
+                  "format": "date-time"
+                },
+                "precision": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "status",
+                "start",
+                "end"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "const": "open"
+                },
+                "start": {
+                  "type": "string",
+                  "minLength": 1,
+                  "format": "date-time"
+                },
+                "end": {
+                  "type": "string",
+                  "minLength": 1,
+                  "format": "date-time"
+                },
+                "unknownBoundary": {
+                  "enum": [
+                    "start",
+                    "end"
+                  ]
+                },
+                "reason": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "precision": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "status",
+                "unknownBoundary",
+                "reason"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "const": "unknown"
+                },
+                "reason": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "status",
+                "reason"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "const": "known"
+            },
+            "at": {
+              "type": "string",
+              "minLength": 1,
+              "format": "date-time"
+            },
+            "precision": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "status",
+            "at"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "relationship": {
+      "type": "object",
+      "properties": {
+        "entryId": {
+          "type": "string",
+          "minLength": 1,
+          "format": "uri"
+        },
+        "role": {
+          "enum": [
+            "supports",
+            "contradicts",
+            "derivedFrom",
+            "selectedFor",
+            "context"
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "entryId",
+        "role"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

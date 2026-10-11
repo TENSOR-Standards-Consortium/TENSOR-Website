@@ -1,243 +1,144 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import LiveVersionBadge from '../components/LiveVersionBadge.jsx';
-import MetricsPanel from '../components/MetricsPanel.jsx';
-import version from '../data/version.json';
 import { absoluteUrl, seo } from '../data/seo';
 
 const meta = seo.home;
-const siteUrl = Astro.site?.toString() || 'https://tensor-standards-consortium.org/';
-
+const siteUrl = Astro.site?.toString() || 'https://tensor-standards.pages.dev/';
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  name: 'TENSOR Framework',
+  name: 'TENSOR',
   url: absoluteUrl(siteUrl, '/'),
   description: meta.description,
-  publisher: {
-    '@type': 'Organization',
-    name: 'TENSOR Standards Consortium',
-  },
 };
 ---
 
-<BaseLayout
-  title={meta.title}
-  description={meta.description}
-  canonicalPath={meta.canonicalPath}
-  ogType={meta.ogType}
-  hidePageTitle={true}
-  jsonLd={jsonLd}
->
+<BaseLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} hidePageTitle={true} jsonLd={jsonLd}>
   <section class="section-hero">
     <div class="hero-glow hero-glow-a" aria-hidden="true"></div>
     <div class="hero-glow hero-glow-b" aria-hidden="true"></div>
     <div class="hero-content container">
       <div class="hero-logo">
-        <img src="/assets/img/logo-tensor-framework.png" alt="TENSOR Framework logo" />
+        <img src="/assets/img/logo-tensor-framework.png" alt="TENSOR Framework" />
       </div>
-
       <div class="hero-text">
-        <p class="hero-kicker">Open Standard For Security Investigation Logic</p>
-        <h1 class="hero-title">Implement Once. Stay Interoperable.</h1>
-        <h2 class="hero-definition">
-          TENSOR defines a deterministic graph contract for investigations across analytics platforms,
-          automation systems, and AI-assisted workflows.
-        </h2>
-        <p class="hero-tagline">
-          Use stable node and edge semantics, run the shared conformance suite, and contribute improvements
-          without forking core behavior.
-        </p>
+        <p class="hero-kicker">A public standard for cyber investigations</p>
+        <h1 class="hero-title">One investigation.<br />Shared understanding.</h1>
+        <p class="hero-definition">Questions, evidence, and decisions that humans and agents can carry between tools.</p>
+        <p class="hero-tagline">TENSOR defines a common investigative layer. Public profiles, vendor tools, and business policies build on it while keeping uncertainty, attribution, and history intact.</p>
         <div class="cta-group">
-          <a
-            class="btn btn-primary"
-            href="/implement/"
-            data-telemetry-event="cta-implement-core"
-            data-telemetry-location="home-hero"
-          >
-            Implement Core in 30 Minutes
-          </a>
-          <a
-            class="btn btn-secondary"
-            href="/conformance/"
-            data-telemetry-event="cta-run-conformance"
-            data-telemetry-location="home-hero"
-          >
-            Run Conformance Suite
-          </a>
-          <a
-            class="btn btn-secondary"
-            href="/contribute/"
-            data-telemetry-event="cta-propose-improvement"
-            data-telemetry-location="home-hero"
-          >
-            Propose an Improvement
-          </a>
-          <a
-            class="btn btn-secondary"
-            href="/governance/"
-            data-telemetry-event="cta-join-governance"
-            data-telemetry-location="home-hero"
-          >
-            Join Governance
-          </a>
-          <LiveVersionBadge client:load fallbackVersion={version.current} />
+          <a class="btn btn-primary" href="/investigation-lab/" data-telemetry-event="cta-open-investigation-lab" data-telemetry-location="home-hero">Try an investigation</a>
+          <a class="btn btn-secondary" href="/core/" data-telemetry-event="cta-open-core" data-telemetry-location="home-hero">Read the Core contract</a>
         </div>
+        <p class="candidate-status"><span class="status-dot" aria-hidden="true"></span> Review preview · Core 0.1.0-draft.1 implementation candidate</p>
       </div>
     </div>
   </section>
 
-  <section class="section-features container">
+  <section class="container investigation-example" aria-labelledby="example-title">
+    <div class="example-intro">
+      <p class="section-kicker">See what travels with the case</p>
+      <h2 id="example-title">Did the agent send restricted information?</h2>
+      <p>A recorded tool call starts the investigation. It does not answer every question. Keep the original assessment, the new evidence, and the resulting decision together.</p>
+      <a href="/investigation-lab/">Inspect the synthetic AI-system case →</a>
+    </div>
+    <ol class="example-trace">
+      <li><span class="trace-type">Question instance</span><p>A specific agent, outbound call, time window, and policy context.</p></li>
+      <li><span class="trace-type">Initial assessment · unknown</span><p>The call is visible; the transmitted content is not yet established.</p></li>
+      <li><span class="trace-type">New evidence and revision</span><p>A receipt changes the assessment. The earlier entry and its inputs remain.</p></li>
+      <li><span class="trace-type">Explicit decision</span><p>Record the selected assessment, rationale, policy, and claimed authority. A decision is distinct from execution.</p></li>
+    </ol>
+  </section>
+
+  <section class="section-features container" aria-label="What Core preserves">
     <article class="feature-card">
-      <h3>Why This Standard Exists</h3>
-      <p>
-        Most SOC stacks duplicate investigation logic across SIEM, SOAR, and custom playbooks.
-        Tool-specific branching semantics make cross-platform verification difficult.
-      </p>
+      <h2>Questions with context</h2>
+      <p>Separate a reusable definition from a question about a particular subject and time. Pin the meaning used in each investigation.</p>
     </article>
     <article class="feature-card">
-      <h3>Failure Mode It Targets</h3>
-      <p>
-        AI-assisted workflows can drift when branch rules are implied in prompts instead of encoded
-        in deterministic graph transitions.
-      </p>
+      <h2>Unknowns and disagreement</h2>
+      <p>Distinguish missing evidence from a negative finding. Preserve competing assessments and make selected decisions explicit.</p>
     </article>
     <article class="feature-card">
-      <h3>Result</h3>
-      <p>
-        TENSOR keeps investigation intent stable while allowing implementation details to vary by
-        vendor and organization.
-      </p>
+      <h2>A history you can hand off</h2>
+      <p>Keep evidence references, attribution, original inputs, and revisions together. Declare omissions and unsupported meaning during exchange.</p>
     </article>
   </section>
 
-  <section class="section-features container">
-    <article class="feature-card">
-      <h3>Stable IDs</h3>
-      <p>Node and edge identifiers remain portable across releases, enabling replay, diffing, and migration checks.</p>
-    </article>
-    <article class="feature-card">
-      <h3>Explicit Decisions</h3>
-      <p>Every transition resolves to <code>yes</code>, <code>no</code>, or <code>unknown</code>, so execution rules are testable.</p>
-    </article>
-    <article class="feature-card">
-      <h3>Overlay Compatibility</h3>
-      <p>Teams can layer local business logic without mutating core investigative semantics.</p>
-    </article>
-    <article class="feature-card">
-      <h3>Conformance Evidence</h3>
-      <p>Baseline fixtures and release telemetry provide objective signals for implementation readiness.</p>
-    </article>
-    <article class="feature-card">
-      <h3>Concept Investigation Lab</h3>
-      <p>
-        Explore mission-style and walkthrough-style investigation flows that demonstrate how human and agent analysts
-        can follow the same deterministic graph semantics.
-      </p>
-      <p>
-        <a
-          href="/investigation-lab/"
-          data-telemetry-event="cta-open-investigation-lab"
-          data-telemetry-location="home-features"
-        >
-          Open the concept demo.
-        </a>
-      </p>
-    </article>
-  </section>
-
-  <section class="container prose-card">
-    <h2>Conformance Levels</h2>
-    <p>
-      Adoption is incremental. Implement the level that matches your product role, then move upward
-      as your integration matures.
-    </p>
-    <table>
-      <thead>
-        <tr>
-          <th>Level</th>
-          <th>What You Support</th>
-          <th>Pass Criteria</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Consumer</td>
-          <td>Load and validate canonical graph + schema artifacts.</td>
-          <td>Accept valid fixtures and reject invalid fixtures with deterministic errors.</td>
-        </tr>
-        <tr>
-          <td>Executor</td>
-          <td>Traverse decisions using graph semantics in runtime workflows.</td>
-          <td>Produce reproducible branch transitions and audit records for traversals.</td>
-        </tr>
-        <tr>
-          <td>Authoring Tool</td>
-          <td>Create or modify graphs while preserving compatibility policy.</td>
-          <td>Emit schema-valid artifacts and maintain stable IDs across revisions.</td>
-        </tr>
-      </tbody>
-    </table>
+  <section class="container prose-card" aria-labelledby="layers-title">
+    <p class="section-kicker">Public meaning. Room to build.</p>
+    <h2 id="layers-title">The shared layer beneath tools and policy</h2>
+    <div class="layer-stack" role="img" aria-label="Human and agent investigators use vendor tools and business policy above public TENSOR profiles and Core. Core connects pinned definitions with portable records.">
+      <div class="layer-actors">Human investigators <span aria-hidden="true">+</span> Agent investigators</div>
+      <div class="layer-pair"><div><strong>Vendor layer</strong><span>Tools, integrations, storage, execution</span></div><div><strong>Business layer</strong><span>Policy, authority, thresholds, retention</span></div></div>
+      <div class="layer-public"><strong>Public TENSOR profiles</strong><span>Domain questions, vocabulary, evidence requirements</span></div>
+      <div class="layer-core"><strong>TENSOR Core</strong><span>Shared investigative meaning · Pinned definitions + portable records</span></div>
+    </div>
+    <p>No vendor or business layer may silently change the meaning of Core. Actor type grants no authority. Imported records do not authorize actions or access to evidence.</p>
+    <p><a href="/about/">Read the mission and boundaries</a> · <a href="/extensions/">Build profiles and extensions</a></p>
   </section>
 
   <section class="container path-grid">
     <article class="prose-card">
-      <h2>Implementation Path</h2>
-      <ol>
-        <li>Load pinned schema and graph release artifacts.</li>
-        <li>Run conformance fixtures and document pass/fail output.</li>
-        <li>Map runtime execution to explicit <code>yes</code>/<code>no</code>/<code>unknown</code> transitions.</li>
-        <li>Ship with release pinning and publish your compatibility statement.</li>
-      </ol>
-      <p>
-        <a
-          href="/implement/"
-          data-telemetry-event="implementation-path-open"
-          data-telemetry-location="home-path"
-        >
-          Open the full implementation guide.
-        </a>
-      </p>
+      <p class="section-kicker">For practitioners</p>
+      <h2>Start with a real investigative need</h2>
+      <p>Explore an AI-system incident or a conventional identity case. Both are synthetic, and both use the same candidate contract for human and agent participation.</p>
+      <p>AI security teams are the first adoption community. TENSOR's scope remains all cyber investigations.</p>
+      <a href="/investigation-lab/">Open Investigation Lab →</a>
     </article>
     <article class="prose-card">
-      <h2>Contribution Path</h2>
-      <ol>
-        <li>Open an issue describing a concrete gap with reproducible context.</li>
-        <li>Draft an RFC-level proposal with compatibility impact.</li>
-        <li>Add or update fixtures proving behavior and edge cases.</li>
-        <li>Merge through governance review and release notes.</li>
-      </ol>
-      <p>
-        <a
-          href="/contribute/"
-          data-telemetry-event="contribution-path-open"
-          data-telemetry-location="home-path"
-        >
-          Open contribution workflow.
-        </a>
-      </p>
+      <p class="section-kicker">For implementers</p>
+      <h2>Validate, exchange, report the gaps</h2>
+      <p>Use versioned schemas, a documented binding, and a reference CLI. Build a reader or exporter and test which meaning survives the handoff.</p>
+      <p>Reference checks establish a bounded baseline. Independent exchange and external review are the next evidence gates.</p>
+      <a href="/implement/">Follow the implementation guide →</a>
     </article>
   </section>
 
-  <MetricsPanel client:load />
+  <section class="container prose-card">
+    <p class="section-kicker">Built from the existing foundation</p>
+    <h2>The investigation questions stay</h2>
+    <p>The legacy release contains 588 questions and 1,554 transitions. Its original artifacts remain available while the questions undergo semantic review for the new definition-and-record model.</p>
+    <p><a href="/questions/">Browse the question catalog</a> · <a href="/graphs/">View preserved releases</a> · <a href="/studio/">Open legacy Graph Studio</a></p>
+  </section>
 
-  <section class="section-showcase container">
-    <div class="showcase-copy">
-      <p class="section-kicker">Investigation Model Shift</p>
-      <h3>From tool-specific flows to a shared graph contract</h3>
-      <p>
-        Traditional workflows are usually linear with optional loop-backs. TENSOR preserves those patterns,
-        but encodes reusable logic once so integrators can apply the same semantics across platforms.
-      </p>
-      <p>
-        Next step: <a href="/standards/">review standards and compatibility policy</a> before implementation.
-      </p>
-    </div>
-    <div class="showcase-media">
-      <img
-        src="/assets/img/workflow-linear-vs-graph.png"
-        alt="Comparison of mostly linear workflows versus shared graph-based investigation logic"
-      />
-    </div>
+  <section class="container prose-card">
+    <p class="section-kicker">Help shape a public standard</p>
+    <h2>Useful alongside the standards you already use</h2>
+    <p>TENSOR's proposed boundaries reference ATT&amp;CK, D3FEND, ATLAS, CASE/UCO, STIX, Attack Flow, CACAO, and OCSF. Mappings need versioned definitions and exchange evidence; they are not implied by a logo or a shared field name.</p>
+    <p>The founding charter, governance proposal, and 38 Core requirements are open for review. This candidate is not a ratified standard or an institutional endorsement.</p>
+    <div class="cta-group"><a class="btn btn-secondary" href="/standards/">Explore the standards crosswalk</a><a class="btn btn-secondary" href="/contribute/">Contribute a case or review</a></div>
   </section>
 </BaseLayout>
+
+<style>
+  .candidate-status { margin-top: 1.15rem; font-size: 0.83rem; color: var(--text-secondary); }
+  .status-dot { display: inline-block; width: 0.45rem; height: 0.45rem; margin-right: 0.4rem; background: var(--accent-primary); border-radius: 50%; vertical-align: middle; }
+  .investigation-example { display: grid; grid-template-columns: 0.95fr 1.05fr; gap: 3rem; padding: 2rem 2.2rem; margin-bottom: 2rem; background: var(--bg-card); border: 1px solid var(--line-soft); border-left: 3px solid var(--accent-primary); }
+  .example-intro h2 { font-size: clamp(1.45rem, 2.6vw, 2rem); line-height: 1.3; margin: 0.7rem 0 1rem; }
+  .example-intro p { color: var(--text-secondary); margin-bottom: 1rem; }
+  .example-trace { list-style: none; padding: 0; counter-reset: trace; }
+  .example-trace li { position: relative; padding: 0 0 1.2rem 2.4rem; border-left: 1px solid var(--line-soft); }
+  .example-trace li:last-child { padding-bottom: 0; border-left-color: transparent; }
+  .example-trace li::before { counter-increment: trace; content: counter(trace); position: absolute; left: -0.8rem; top: 0; width: 1.6rem; height: 1.6rem; border: 1px solid var(--line-soft); border-radius: 50%; background: var(--bg-card); font: 0.75rem/1.5rem var(--font-mono); text-align: center; color: var(--accent-primary); }
+  .trace-type { font: 600 0.8rem/1.4 var(--font-mono); color: var(--accent-primary); }
+  .example-trace p { color: var(--text-secondary); font-size: 0.93rem; margin-top: 0.2rem; }
+  .feature-card h2 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+  .layer-stack { margin: 1.5rem 0; display: grid; gap: 0.7rem; }
+  .layer-actors { text-align: center; padding: 0.4rem; font-weight: 600; }
+  .layer-actors > span { color: var(--accent-primary); padding: 0 1rem; }
+  .layer-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+  .layer-pair > div, .layer-public, .layer-core { padding: 1rem 1.3rem; border: 1px solid var(--line-soft); background: var(--bg-input); }
+  .layer-stack strong, .layer-stack span { display: block; }
+  .layer-actors > span { display: inline; }
+  .layer-stack span { color: var(--text-secondary); font-size: 0.9rem; }
+  .layer-core { border-color: var(--accent-primary); border-left-width: 3px; }
+  .layer-core strong { color: var(--accent-primary); }
+  @media (max-width: 760px) {
+    .investigation-example { grid-template-columns: 1fr; gap: 1.6rem; padding: 1.5rem; }
+    .example-trace { margin-left: 0.8rem; }
+    .layer-pair { grid-template-columns: 1fr; }
+    .layer-actors { font-size: 0.9rem; }
+    .layer-actors > span { padding: 0 0.4rem; }
+  }
+</style>
