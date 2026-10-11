@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { seo } from '../../data/seo';
+import snapshot from '../../../public/review/2026-10-11.1/manifest.json';
+const meta = seo.review;
+const files = `/review/${snapshot.reviewId}`;
+const source = `${snapshot.sourceRepository}/tree/${snapshot.sourceCommit}`;
+---
+
+<BaseLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType}>
+  <div class="container prose-card review-package">
+    <p class="section-kicker">Technical review · {snapshot.reviewId}</p>
+    <h2>Can someone else understand and continue the investigation?</h2>
+    <p>TENSOR proposes a public investigative layer for all cyber investigations, usable by humans and agents. It carries the question, context, evidence basis, uncertainty, attribution and decision history between people and tools. Vendor products and business policy build above that shared meaning.</p>
+    <p><strong>This is a frozen technical candidate.</strong> It is not a stable Core release, certification or institutional endorsement. No invitations or formal review window have been initiated through this package.</p>
+    <div class="cta-group"><a class="btn btn-primary" href={`${files}/review-package.zip`} download>Download review package · ZIP</a><a class="btn btn-secondary" href="/investigation-lab/">Walk through a synthetic case</a></div>
+    <p><a href={`${files}/README.md`}>Review brief</a> · <a href={`${files}/manifest.json`}>File hashes and source identity</a> · <a href={`${files}/validation.json`}>Observed validation and limits</a></p>
+
+    <h2>One snapshot, distinct parts</h2>
+    <p>Source commit: <a href={source}><code>{snapshot.sourceCommit}</code></a>. The archive contains all {snapshot.files.length} tracked source files at that commit. Later website or stewardship updates do not change this technical target.</p>
+    <table>
+      <thead><tr><th>Part</th><th>Review target</th><th>Its purpose</th></tr></thead>
+      <tbody>
+        <tr><td>Founding proposal</td><td>0.1.0</td><td>Public purpose, 38 proposed requirements and governance proposal.</td></tr>
+        <tr><td>Investigation-record Core</td><td>0.1.0-draft.1</td><td>A trial binding and reference implementation for particular investigations.</td></tr>
+        <tr><td>Evidence-route graph</td><td>0.20261011b</td><td>103 questions, 225 edges, explicit evidence criteria and 252 author-side scenarios.</td></tr>
+        <tr><td>Published graph archive</td><td>0.20260206e</td><td>Preserved 588-question, 1,554-edge release with its original schema.</td></tr>
+      </tbody>
+    </table>
+    <p>A graph defines reusable questions and routes. A record captures the context, evidence, assessments and decisions of a particular case. The draft graph has not been automatically migrated into a Core record definition. The <a href="/questions/">question catalog</a> and <a href="/studio/">legacy Studio</a> still show the published graph; inspect the new draft and its evidence cards in the frozen source.</p>
+
+    <h2>Your first hour</h2>
+    <ol>
+      <li><strong>Understand the claim · 10 minutes.</strong> Read the <a href="/founding/00-charter.md">charter</a> and the artifact table above. A record preserves attributed assertions; it does not make them true or authorize action.</li>
+      <li><strong>Follow an agent-related case · 15 minutes.</strong> In <a href="/investigation-lab/">Investigation Lab</a>, open “An agent’s outbound transfer.” Inspect Questions, Evidence, Assessments, Decisions and History. Find the initial unknown, new evidence, revision and retained original. Download and re-import the bundle. This is one implementation's round trip.</li>
+      <li><strong>Compare a conventional case · 15 minutes.</strong> Open “An ambiguous identity incident.” Inspect competing explanations, missing evidence and the human–agent handoff. Record context you would need before continuing the investigation.</li>
+      <li><strong>Challenge one graph route · 10 minutes.</strong> In the frozen source, follow an entry from <code>drafts/core/source/entry_nodes.json</code>. Compare its yes/no/unknown routes against <code>drafts/core/entry-evidence-criteria.json</code>. Check subject, time, technical hypothesis and whether a public report has been mistaken for victim evidence.</li>
+      <li><strong>Return one finding · 10 minutes.</strong> Cite an exact requirement or question ID, include a synthetic counterexample, and say what you did not assess. Critical findings are welcome; endorsement is not required.</li>
+    </ol>
+    <p><a href={`${files}/walkthrough.md`} download>Download the walkthrough and offline alternatives</a> · <a href={`${files}/review-form.md`} download>Download the review return form</a></p>
+
+    <h2>Choose one useful contribution</h2>
+    <ul>
+      <li><strong>Practitioner review:</strong> challenge evidence sufficiency, bounded negative findings, unknown routes and handoff context.</li>
+      <li><strong>Independent implementation:</strong> exchange both cases in both directions and report preserved meaning, unsupported dependencies and loss. A wrapper around our validator is not independent.</li>
+      <li><strong>Standards reuse:</strong> map a complete case to CASE/UCO, identify reuse and gaps, and document round-trip loss before recommending a permanent binding.</li>
+      <li><strong>Practical evaluation:</strong> compare a defined handoff task with and without TENSOR, retaining disagreement, effort and sample limitations.</li>
+    </ul>
+
+    <h2>Reproduce the baseline</h2>
+    <p>Download and unpack the ZIP review package. It contains the unchanged source archive, <a href={`${files}/manifest.json`} download>manifest</a>, <a href={`${files}/verify-snapshot.py`} download>snapshot verifier</a> and review guides. Extract its <code>source.tar.gz</code> into an empty directory. With Python 3.9 or later, run the verifier against that directory. It checks archive bytes and every source-file pin without fetching or executing source content.</p>
+    <pre><code>{`python3 verify-snapshot.py /absolute/path/to/extracted-source
+cd /absolute/path/to/extracted-source
+# Use Node 24.21.0 and npm 11.19.0, pinned in the source.
+npm ci
+npm run check
+python3 -m unittest discover -s tests/legacy -q
+python3 scripts/validate_release_contract.py
+python3 scripts/evaluate_entry_scenarios.py`}</code></pre>
+    <p>The observed baseline passed 161 Node tests, both synthetic Core examples, 58 Python tests, release preservation, 252/252 scenarios and default graph authoring assurance. The <a href={`${files}/README.md`}>brief</a> includes the graph-assurance command and exclusions. Retain your own environment and complete reports.</p>
+
+    <h2>What remains unproven</h2>
+    <p>These are author/reference-implementation results. The graph suite includes seven public-report-only cases and 245 explicitly synthetic reconstructions, not original incident logs. Independent exchange, external technical review, CASE/UCO loss analysis and field usefulness remain open. Validation does not establish evidence truth, identity, authority, legal admissibility, safety or institutional approval.</p>
+
+    <h2>Return findings to the public record</h2>
+    <p>John Schieferle Uhlenbrock is the accepted bootstrap steward, convenor, Core editor and conformance maintainer under the TENSOR Standards Consortium project identity. These roles currently concentrate in one founder. The broader governance proposal remains unadopted; conflict disclosure and infrastructure continuity confirmations remain pending.</p>
+    <div class="cta-group"><a class="btn btn-primary" href="https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework/issues/new?template=implementation-report.yml">Prepare a technical finding</a><a class="btn btn-secondary" href="/governance/">Read stewardship and review handling</a></div>
+    <p>For sensitive reports, use <a href="https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework/security/advisories/new">private vulnerability reporting</a>. Public findings must contain no confidential case material. <a href="/docs/review-process.md">The finding process</a> preserves objections, responses and dissent; publication or issue closure is not independent approval.</p>
+  </div>
+</BaseLayout>
+
+<style>
+  .review-package { overflow-wrap: anywhere; }
+  .review-package pre { overflow-wrap: normal; }
+</style>

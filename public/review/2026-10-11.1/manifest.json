@@ -1,0 +1,893 @@
+{
+  "format": "tensor-institutional-review-snapshot",
+  "manifestVersion": 1,
+  "reviewId": "2026-10-11.1",
+  "sourceRepository": "https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework",
+  "sourceCommit": "c82cd1c540b2ca6fbf5ba7ee3e38edcd2e1e6f8f",
+  "proposalVersion": "0.1.0",
+  "bindingVersion": "0.1.0-draft.1",
+  "draftGraphVersion": "0.20261011b",
+  "releasedGraphSchemaVersion": "0.20260206e",
+  "archive": {
+    "path": "source.tar.gz",
+    "sha256": "14468a734e562ea6f85b9f21f95da431eb6853208f5e07ff3e85255308a981cc",
+    "bytes": 460889
+  },
+  "files": [
+    {
+      "path": ".devcontainer/devcontainer.json",
+      "sha256": "96d9ff160827c30c01064ca468f2f287708e41224584a9ca231ac94dcad67204",
+      "bytes": 655
+    },
+    {
+      "path": ".github/CODEOWNERS",
+      "sha256": "b6c82c38ee8f9cb22576dcb89070e15679c41a02c4196901b0642e2b3d19ec2f",
+      "bytes": 343
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/bug_report.md",
+      "sha256": "0c8d64f29fb4536513653bf8c97da30f3340e2041b91c8952db1515d6b23a7b3",
+      "bytes": 834
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/core-rfc.yml",
+      "sha256": "fead8b353eb8543ed36adb1309ca0fab074724118f580dea70363f548591b8b4",
+      "bytes": 2032
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/feature_request.md",
+      "sha256": "1f48c52f209a971b8e7eae4120144d28fcf8ee38a7778a7b4d8cf1ab356617d2",
+      "bytes": 595
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/implementation-report.yml",
+      "sha256": "bf95a4bf915ef6a5e98c48562bedaf79a91efe1c7c56c40841509a231d7717c5",
+      "bytes": 1718
+    },
+    {
+      "path": ".github/dependabot.yml",
+      "sha256": "b546a39329012791783c2f6a569488160dc4a354faf4d53c29098dbdf279fad7",
+      "bytes": 365
+    },
+    {
+      "path": ".github/workflows/update-latest.yml",
+      "sha256": "680ba5409ee7056144d12726a0f03f9fe3632b70a5f22d598e410406e745f1c8",
+      "bytes": 923
+    },
+    {
+      "path": ".github/workflows/validate-core.yml",
+      "sha256": "85e303816cb18c6cacecf03737fea8f57db5e782b65c83665cd1ec74adfcfde1",
+      "bytes": 820
+    },
+    {
+      "path": ".github/workflows/validate-release-contract.yml",
+      "sha256": "6b70f8629558da517d00d078214859b1bb6d02bf28d106a89c76162a9a14f1fb",
+      "bytes": 2159
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "ea4469ddc02ea2cb927ad92289c462211e67c864fc00433b20fc4d4dabdc3b7e",
+      "bytes": 70
+    },
+    {
+      "path": ".node-version",
+      "sha256": "73fb1b615e2043a933be1c0895cde4358036acc28d785692509b822aa53c761f",
+      "bytes": 8
+    },
+    {
+      "path": "CITATION.cff",
+      "sha256": "3a6b4da5f27b617227e1647440b001b5e24221063be8c4913ee2d024dbc65138",
+      "bytes": 830
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "sha256": "8f1eced214899af18b6c00632c86880e4f6525d1c193a3666c8a5ce2a3948ef7",
+      "bytes": 3950
+    },
+    {
+      "path": "GOVERNANCE.md",
+      "sha256": "bccc4a3f9b602a0bcd8c441d79bfec75b53bfb3a3549043cba3df5ef04d393b4",
+      "bytes": 3149
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "bytes": 11357
+    },
+    {
+      "path": "README.md",
+      "sha256": "2a2e41cfe6f5103bf143e1712beac9a0a1e1cf6bdf941887216e3fcbe777bd31",
+      "bytes": 7324
+    },
+    {
+      "path": "SECURITY.md",
+      "sha256": "220b3db8d2c12f64638f13d744ef13945089d4e6e7db8e57e078d787a433c65a",
+      "bytes": 2054
+    },
+    {
+      "path": "core/v0.1.0-draft.1/README.md",
+      "sha256": "fd44744da43c31e9c0d5461dc8d9b65bdc18da8a3d7125d842088224927266d5",
+      "bytes": 6014
+    },
+    {
+      "path": "core/v0.1.0-draft.1/binding.md",
+      "sha256": "77ffa224831eac1a49fd67fb30a286c8ed7b843faaa7e4f60301cd4951935bcd",
+      "bytes": 18345
+    },
+    {
+      "path": "core/v0.1.0-draft.1/cli.mjs",
+      "sha256": "b1073219b85ae986f37866ba20154c8aa9ed9e39fc830bfcd3edc940ccb5c882",
+      "bytes": 1021
+    },
+    {
+      "path": "core/v0.1.0-draft.1/coverage.md",
+      "sha256": "d0c9c6eb6c5f88cb62a626817e3c10a35150333a3afcc693870907fb9cf910fa",
+      "bytes": 3805
+    },
+    {
+      "path": "core/v0.1.0-draft.1/examples/README.md",
+      "sha256": "4f72484dd1b902176e9ec7951ede32f633a5fa27f4e51a34ca3e26a22fdf1e3a",
+      "bytes": 1835
+    },
+    {
+      "path": "core/v0.1.0-draft.1/examples/case-a.bundle.json",
+      "sha256": "b8dc145fd470eeec0a13f4e2881dc95fec528c7e178681abb3b54b93b3934c7a",
+      "bytes": 23501
+    },
+    {
+      "path": "core/v0.1.0-draft.1/examples/case-a.definition.json",
+      "sha256": "d24cc27aba68e7dff4d053bd7a65e9c6f5324f7286332913d5059794a52e2ff4",
+      "bytes": 3666
+    },
+    {
+      "path": "core/v0.1.0-draft.1/examples/case-a.record.json",
+      "sha256": "0df4fb0e28cbbe57774d36a5003c66a2fdd48da27c956979efb61ebbe8042616",
+      "bytes": 18396
+    },
+    {
+      "path": "core/v0.1.0-draft.1/examples/case-b.bundle.json",
+      "sha256": "b241ebd34eb90963303d531b05968dd859ec77346494f16d28e113abb6ada4df",
+      "bytes": 22742
+    },
+    {
+      "path": "core/v0.1.0-draft.1/examples/case-b.definition.json",
+      "sha256": "6e85c07aacf21ff813efab19b8e2a4b7ebca71ca850de42d3b6dd368cffea399",
+      "bytes": 3672
+    },
+    {
+      "path": "core/v0.1.0-draft.1/examples/case-b.record.json",
+      "sha256": "f44ba5b99d744bb1f385fbfce51ff55c7f79c80729b56bcf933de6bbc07a053d",
+      "bytes": 17650
+    },
+    {
+      "path": "core/v0.1.0-draft.1/examples/manifest.json",
+      "sha256": "8e3382804d20ee765426a7531a4cf14a11668fbab18acd1e65fbddd28bb41da1",
+      "bytes": 901
+    },
+    {
+      "path": "core/v0.1.0-draft.1/index.mjs",
+      "sha256": "baa02cb807a532a8d2596889dc07e54c3cd24f04cd4ab3a80e49caa7ac2a3853",
+      "bytes": 42214
+    },
+    {
+      "path": "core/v0.1.0-draft.1/json.mjs",
+      "sha256": "57313d1a22f09aae1bd010c6e8652e332403917ae64767fef7e1e437304c00e9",
+      "bytes": 5974
+    },
+    {
+      "path": "core/v0.1.0-draft.1/schema-validator.mjs",
+      "sha256": "73cc64bb18cadfceb6ec6f20aa915335e642a75dd38b4a79d8818fc29f403fb3",
+      "bytes": 7495
+    },
+    {
+      "path": "core/v0.1.0-draft.1/schemas.mjs",
+      "sha256": "085af9665ef9a1db861c806e0d72e5bd793d95b6532ff2f0d9b1025c066106fc",
+      "bytes": 10737
+    },
+    {
+      "path": "core/v0.1.0-draft.1/schemas/bundle.schema.json",
+      "sha256": "b76d92b6d3f82f201ee494f794b464ce50703a129382ad73b052a0ef797f6460",
+      "bytes": 8742
+    },
+    {
+      "path": "core/v0.1.0-draft.1/schemas/definition.schema.json",
+      "sha256": "e360b1f228720a665647a3b3d961956242611cf3da767cdccd57b251d3d54b60",
+      "bytes": 13407
+    },
+    {
+      "path": "core/v0.1.0-draft.1/schemas/record.schema.json",
+      "sha256": "61d433b6d293ae413530a6ab90d69c2a11e4fd9ccffb52ca94299ea19fe03dfc",
+      "bytes": 67314
+    },
+    {
+      "path": "core/v0.1.0-draft.1/scripts/validate-examples.mjs",
+      "sha256": "3d219b0cf39bcc1feeee409b540dfd5a416d04b07c34bfaeaa0573fc411335d8",
+      "bytes": 727
+    },
+    {
+      "path": "core/v0.1.0-draft.1/scripts/write-schemas.mjs",
+      "sha256": "a95e3de31603d53ca8b60a03f6b67f3f6f1112669580607eee4df4edff6349bf",
+      "bytes": 568
+    },
+    {
+      "path": "docs/adoption-plan.md",
+      "sha256": "fe7b7c9c4a46d82828aa78509048cf55b989fddf333b40f446d87a82b289679f",
+      "bytes": 4137
+    },
+    {
+      "path": "docs/adr-001-candidate-json-binding.md",
+      "sha256": "49dafd130d93d3c5ceb66848bf771f3f59aeb17626d982ba15c5f58c683a2161",
+      "bytes": 3180
+    },
+    {
+      "path": "docs/legacy-migration.md",
+      "sha256": "d207d6345c0f6bddab7e9bcd603bb6e2fcc1541f0fbed931e5ef538407cd5279",
+      "bytes": 2316
+    },
+    {
+      "path": "docs/next-stage-plan.md",
+      "sha256": "5eab5ac5fd1f78dfbeb25c09645446fee2501da0bab94dfbd477c25aaa414308",
+      "bytes": 8436
+    },
+    {
+      "path": "docs/release-checklist.md",
+      "sha256": "70eec518407a04bb26a8297bd61db2701b59a1ba9f56493be9fc7edd035ab7e3",
+      "bytes": 4289
+    },
+    {
+      "path": "docs/reviewer-packet.md",
+      "sha256": "02b98be22e79d8dc29e5c64c7cc047cbf15e874a08d093eb0dfa83796e4f77be",
+      "bytes": 3752
+    },
+    {
+      "path": "drafts/core/ENTRY-REVIEW.md",
+      "sha256": "93738cca36fa96340a78d35db65fc427e505760b4193513e9aaba71dc899cf08",
+      "bytes": 8113
+    },
+    {
+      "path": "drafts/core/POSITIVE-REVIEW.md",
+      "sha256": "a1d16781b6f5b9422dd06d23a0b2caae69e7a98c2cd921fb59315ef5f9a2208f",
+      "bytes": 10389
+    },
+    {
+      "path": "drafts/core/entry-evidence-criteria.json",
+      "sha256": "0595cdd6a27c44ca87839981a2b4b93d51452a234a7af8d400da68c900cf1e49",
+      "bytes": 86963
+    },
+    {
+      "path": "drafts/core/reviews/2026-02-12-final-core-pass-review.md",
+      "sha256": "94c234c92d54866e1cbb35ea26a562be89b42136545a226352ae5dd9938cda12",
+      "bytes": 2071
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-11-entry-evidence/README.md",
+      "sha256": "c4bfabf9853425b8ca0f0e70d4ffbb753a74e034a731d8b3a88d234633430240",
+      "bytes": 2214
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-11-entry-evidence/detached-draft-material.json",
+      "sha256": "ca072e20669496970a3548e8fae502ee32845fc8e424beaa5806625434df930d",
+      "bytes": 32987
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-11-entry-evidence/preservation.json",
+      "sha256": "c58ec0a43eea86557f8e750b72da91b7d2606286cbe1ccaab11cc3e40348e4d8",
+      "bytes": 7637
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-11-entry-evidence/scenario-results.json",
+      "sha256": "ab1110b7ebc02748720c3a9a1ab45fb31f3e2b060ade624dc59d27319b0034f9",
+      "bytes": 51838
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-11-entry-evidence/structural/coverage-matrix.json",
+      "sha256": "ad2cc5764c56e76a3c8dc7bfe79987ab05400f23e9f96866480b16a2be6671db",
+      "bytes": 3111
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-11-entry-evidence/structural/coverage-matrix.md",
+      "sha256": "a6182e5636c3aa69d7f4566942bae9181b21250652a8ebc6e4e2509a7570035b",
+      "bytes": 1148
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-11-entry-evidence/structural/graph-quality.json",
+      "sha256": "afedaaf31cee4cff949df639fcaf9b2467aaa0f859fa49ef7b1345c5002bd00e",
+      "bytes": 4079
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-11-entry-evidence/structural/graph-quality.md",
+      "sha256": "7fb573f71709bb62fce6841f7e3854e41d052280e13b942d41b9fa673581f8b5",
+      "bytes": 1735
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-11-entry-evidence/structural/math-assurance.json",
+      "sha256": "201b0b2e46a925ff7fe014f1feae741cca5f159141645956422dcf0ecbaec99f",
+      "bytes": 13987
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-11-entry-evidence/structural/math-assurance.md",
+      "sha256": "b9083f570f2c32c16503f8979126beb3913214b78cccfe7c26fcc90ef098c012",
+      "bytes": 4515
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-11-positive-evidence/README.md",
+      "sha256": "53f11beabcb32c52af51e8a7385b2a4d1709d983b1742960310b25e0f896c551",
+      "bytes": 3587
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-11-positive-evidence/preservation.json",
+      "sha256": "d8cb43458ba36731a927e9de28104afced5eba32b6d56c474d0ef886b0387ece",
+      "bytes": 7666
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-11-positive-evidence/prior-draft-manifest.json",
+      "sha256": "7564c4b593a7e368885fb58e00a6c0a554652db4b71ae735a01efd38bfde8695",
+      "bytes": 1509
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-11-positive-evidence/prior-draft.graph.json",
+      "sha256": "ed390a26b887e560f2224bbd577ba282e2fc331bb5c1293f6002413da7a72a0d",
+      "bytes": 113064
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-11-positive-evidence/scenario-results.json",
+      "sha256": "cd295dbef6030cbebe501cd35eda113d08d14727ba8aa6e3565c017a84e2a205",
+      "bytes": 514812
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-11-positive-evidence/structural/coverage-matrix.json",
+      "sha256": "1915dc7b4b694914a1811bec1c7d6b78bbe9174f7ee1c9e37626a7ea65a29c53",
+      "bytes": 3096
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-11-positive-evidence/structural/coverage-matrix.md",
+      "sha256": "b0309d467afeb78fe0e702bd912bb88598e6645208ee1e605d848b55383c335f",
+      "bytes": 1148
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-11-positive-evidence/structural/graph-quality.json",
+      "sha256": "a176e2a2a6ba8772cd116c7505691233e29a23ca74e85dc1755fd865f752c3bf",
+      "bytes": 4049
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-11-positive-evidence/structural/graph-quality.md",
+      "sha256": "809b9c05f233d056e1a6fc6deb5cdcf8c3fc8d7ca736e4b5b169d6edd3999d20",
+      "bytes": 1845
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-11-positive-evidence/structural/math-assurance.json",
+      "sha256": "43c931b2b42b2e53836653414b823a4e913d2d833c9d581c3f4b30b42ce8f23f",
+      "bytes": 14000
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-11-positive-evidence/structural/math-assurance.md",
+      "sha256": "c3581995303ac0ef3086929ef96e31f7514c9bac615858eea968a1d50935316c",
+      "bytes": 4486
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-11-topology-policy/README.md",
+      "sha256": "235113fb7dd68db929929c6b6ee5c1b2665a189ef94ed9cf0b6ba9ea46b10491",
+      "bytes": 9229
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-11-topology-policy/counterexamples.json",
+      "sha256": "99011dd93036a201897ab0d05fa7e2b5b25115e2805592d13608dde74ba1f8cb",
+      "bytes": 27303
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-11-topology-policy/current/coverage-matrix.json",
+      "sha256": "21cde3cdec7eb8811bf3627907c015b7505f1a9e138e8bdf3870edc2eb4bab93",
+      "bytes": 4354
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-11-topology-policy/current/coverage-matrix.md",
+      "sha256": "9cd00cca4a9be9ed011dfcf1a8749e9ebacc527ae9d23dc67d837e058844e308",
+      "bytes": 2086
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-11-topology-policy/current/graph-quality.json",
+      "sha256": "2d073d4811264cd8cd7ba2715a83f08cff0b01df651ccedb02c9cd8b912c9e73",
+      "bytes": 8107
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-11-topology-policy/current/graph-quality.md",
+      "sha256": "95ac8acee2a38d2b924ca8ee8844c996fc1762ed7271c86fb7002933fb9e6ed4",
+      "bytes": 2868
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-11-topology-policy/current/math-assurance.json",
+      "sha256": "ccbcc67d6edd1bbf9a941376145505b2a33afa4844035fa3764a5d33ab5b3636",
+      "bytes": 18829
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-11-topology-policy/current/math-assurance.md",
+      "sha256": "023c317e1feb55f3e2a2437cc1bfb1f70f7e7060b3dea682727d61c8cc9bca36",
+      "bytes": 6385
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-11-topology-policy/preservation.json",
+      "sha256": "cdcddc47f73f1cbc36421200418600336e47303923f76cba3eb129574998cbbb",
+      "bytes": 12693
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-11-topology-policy/prior-ENTRY-REVIEW.md",
+      "sha256": "9132119b93efdb2404cd9d4874661f65f34628167ab27ab9f71a52092489bcaf",
+      "bytes": 7724
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-11-topology-policy/prior-POSITIVE-REVIEW.md",
+      "sha256": "698ab3aa578ca8a865c53aceace4da7951b5b9f0b22b564faafe18bceaf7a1c8",
+      "bytes": 9854
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-11-topology-policy/reviewed-graph.graph.json",
+      "sha256": "8b83f19f83d7d796c96b404d37f4ae093d36415b35123602133f34cad5c172be",
+      "bytes": 80967
+    },
+    {
+      "path": "drafts/core/scenarios/entry-evidence-cases.json",
+      "sha256": "13541a42427aa3b61a1bd2ae58e1913dbd04d40049085c1826ef503dc4026f69",
+      "bytes": 754831
+    },
+    {
+      "path": "drafts/core/source/edges.jsonl",
+      "sha256": "a0db894db557209b9e7289f4036c9dd3feed9712565376bd311f34e8301b2328",
+      "bytes": 18037
+    },
+    {
+      "path": "drafts/core/source/entry_nodes.json",
+      "sha256": "f4c50d88d48478047a25fd8bda7a3897b9b9a2cde8344a5590f025d3ab06625a",
+      "bytes": 156
+    },
+    {
+      "path": "drafts/core/source/nodes.jsonl",
+      "sha256": "3732a8778794eb5f8728f8dae032a8e96a61d73fea035b9a0f1516bbc62f7c6c",
+      "bytes": 44145
+    },
+    {
+      "path": "drafts/core/tensor.core.graph.json",
+      "sha256": "8b83f19f83d7d796c96b404d37f4ae093d36415b35123602133f34cad5c172be",
+      "bytes": 80967
+    },
+    {
+      "path": "drafts/core/tensor.core.schema.json",
+      "sha256": "6520f4cd90c26d72252c986e4db7e8639c76e30f2f5c865a7318101c2a513ad5",
+      "bytes": 6672
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "a26f325ffa65898e7d33d65ae747cb3552bf084b4b5d6ffad73e61dca59a7b5b",
+      "bytes": 3102
+    },
+    {
+      "path": "package.json",
+      "sha256": "d5f28d01d348410a24425b346fb2fdc8860ead48a41fadc094d799ae92a5c3b9",
+      "bytes": 552
+    },
+    {
+      "path": "proposals/founding-core-v0.1.0/00-charter.md",
+      "sha256": "e683bda66f6852ef72133f95e9c2e6013e79105dbd8b4aacb940fd4a2d2ebe85",
+      "bytes": 6113
+    },
+    {
+      "path": "proposals/founding-core-v0.1.0/01-core-contract.md",
+      "sha256": "6308266906184fb3264a5068a71d4ddff729bd5f0b526662962fcef307ece83f",
+      "bytes": 30075
+    },
+    {
+      "path": "proposals/founding-core-v0.1.0/02-governance.md",
+      "sha256": "6b6998a25ef3143cc3c0f729b3137a4c1ae1b1cf681c150a84be318cd6b94679",
+      "bytes": 6680
+    },
+    {
+      "path": "proposals/founding-core-v0.1.0/03-standards-crosswalk.md",
+      "sha256": "a06c29b9056c5f96f9a02729e563e875dd00f99e35780e804dc854238993a035",
+      "bytes": 8656
+    },
+    {
+      "path": "proposals/founding-core-v0.1.0/04-reference-cases-and-conformance.md",
+      "sha256": "758babaf084949f5d72b903439a14999a8b80f0d8deb7fc2efb9bc174ae91077",
+      "bytes": 10656
+    },
+    {
+      "path": "proposals/founding-core-v0.1.0/05-review-plan.md",
+      "sha256": "486b7a766875f383a7efba401adb14d5262dbba9c18eaf77b06ff1d93c6378ff",
+      "bytes": 3827
+    },
+    {
+      "path": "proposals/founding-core-v0.1.0/06-change-and-decision-register.md",
+      "sha256": "3cfe895403def1707998a94eb74a90ac4d0ff808309a564e7e1fbf22b57a5380",
+      "bytes": 7132
+    },
+    {
+      "path": "proposals/founding-core-v0.1.0/README.md",
+      "sha256": "87dac85938e45dd1ff3fd9f85c7ef4617d31edc5f659c567321e6e4f8c522aee",
+      "bytes": 4147
+    },
+    {
+      "path": "proposals/founding-core-v0.1.0/VALIDATION.md",
+      "sha256": "f3803daae7484dc06d78d38b25229929fe1038a147066365928ebfc2e105959a",
+      "bytes": 2733
+    },
+    {
+      "path": "proposals/founding-core-v0.1.0/architecture.mmd",
+      "sha256": "4f800bf0e41096f21328ced72372ee214b7c637ca4c192aa95a9eac09f6b5b07",
+      "bytes": 574
+    },
+    {
+      "path": "proposals/founding-core-v0.1.0/examples/README.md",
+      "sha256": "b8e5a94a4380820afe959eb9a5695440f2713b4e46d0ea3b24ed5ae4c7926cd4",
+      "bytes": 4000
+    },
+    {
+      "path": "proposals/founding-core-v0.1.0/examples/case-a.definition.json",
+      "sha256": "43e7ef0537db404fcbc2c0936b9842ad20a3c873bc640223df4dbcd262d50db7",
+      "bytes": 3236
+    },
+    {
+      "path": "proposals/founding-core-v0.1.0/examples/case-a.record.json",
+      "sha256": "f4ecff4ad8df470058201d0a7d6dd10ee86f4e630e3dd3ed8c0bce6745fae53a",
+      "bytes": 17265
+    },
+    {
+      "path": "proposals/founding-core-v0.1.0/examples/case-b.definition.json",
+      "sha256": "d2dc38bcc5573ae1856b9663da3550aece4366604e02432fab178340f5c5f930",
+      "bytes": 3204
+    },
+    {
+      "path": "proposals/founding-core-v0.1.0/examples/case-b.record.json",
+      "sha256": "eea8a49b6ea5d78f899f19eab2d0e93176ce7a03edfa697cc54a9391f560fc7c",
+      "bytes": 16569
+    },
+    {
+      "path": "proposals/founding-core-v0.1.0/examples/check_authoring.py",
+      "sha256": "61f9fe27a822cdbbe07d7bc29550885486fd0bd1ed4d6d69af3e122f3b066584",
+      "bytes": 7136
+    },
+    {
+      "path": "proposals/founding-core-v0.1.0/examples/manifest.json",
+      "sha256": "7a0f265c5e6ee39be0a655bb01d3c2d46a3d0653acf64c8f721549167dbde7d9",
+      "bytes": 933
+    },
+    {
+      "path": "releases/checksums.json",
+      "sha256": "dbfd1ce861a1dd09dd76021cf0e7ffa0851dac5a7d16848eeaf28fd769dfe0d4",
+      "bytes": 3415
+    },
+    {
+      "path": "releases/core/graphs/latest/tensor.core.graph.json",
+      "sha256": "dfc3f1a965c01b6f7ade253e426e69abcbad688fab20d9d00065d71c777c010c",
+      "bytes": 341136
+    },
+    {
+      "path": "releases/core/graphs/v0.20250519b/tensor.core.graph.json",
+      "sha256": "62b0e771294a8f57f1f9ef53c0018bfda39c7f7d22ed94332f8dce1616a0d3c0",
+      "bytes": 68218
+    },
+    {
+      "path": "releases/core/graphs/v0.20250813/tensor.core.graph.json",
+      "sha256": "5e3a8e64251db4575cf531241f2ec1585b6835a2560466cacf0d6cf3eac2aaaf",
+      "bytes": 60783
+    },
+    {
+      "path": "releases/core/graphs/v0.20260206/tensor.core.graph.json",
+      "sha256": "bba0d5371c08fcefc549d37aa0114ae3afb869b1b87db41a9c71d46a51e66a74",
+      "bytes": 49737
+    },
+    {
+      "path": "releases/core/graphs/v0.20260206c/tensor.core.graph.json",
+      "sha256": "368031e23ed399daa8e9abf19c3a21cc69349b8a12337437df2d748511056f83",
+      "bytes": 241291
+    },
+    {
+      "path": "releases/core/graphs/v0.20260206d/tensor.core.graph.json",
+      "sha256": "5ad1fbbea59cc1e7b273cf576730a877c84d13c438f08309ce635926275fef8f",
+      "bytes": 338260
+    },
+    {
+      "path": "releases/core/graphs/v0.20260206e/tensor.core.graph.json",
+      "sha256": "dfc3f1a965c01b6f7ade253e426e69abcbad688fab20d9d00065d71c777c010c",
+      "bytes": 341136
+    },
+    {
+      "path": "releases/core/reports/history/math-assurance-history.json",
+      "sha256": "3a3e5952c6f991e7be23cb7496db6fcd593cd7eb297fe0e61b3443a7ecbed474",
+      "bytes": 2089
+    },
+    {
+      "path": "releases/core/reports/history/math-assurance-history.md",
+      "sha256": "e473a50e483ddbffc2a1691a558fe5689ff6f401ef8a902ce97e17c82e84f447",
+      "bytes": 840
+    },
+    {
+      "path": "releases/core/reports/latest/math-assurance.json",
+      "sha256": "399ffb41e9fda73a2766c40bde7ddbe1b11ed2c6937755f8e63be43ea2449893",
+      "bytes": 13000
+    },
+    {
+      "path": "releases/core/reports/latest/math-assurance.md",
+      "sha256": "c651016867a3ea3a71e89cae6b7cb82c3e15400a56c20612dc6c56dc70ee7331",
+      "bytes": 4154
+    },
+    {
+      "path": "releases/core/reports/v0.20260206c/coverage-matrix.json",
+      "sha256": "66109d93a4f95569d1de8f277772a48a896c30a114d31e35a1c548af44e390b4",
+      "bytes": 2534
+    },
+    {
+      "path": "releases/core/reports/v0.20260206c/coverage-matrix.md",
+      "sha256": "d30791b05b6f1f6da0a2cb27400081a4a07a44bca3435ebab9163ab891d4ddb3",
+      "bytes": 824
+    },
+    {
+      "path": "releases/core/reports/v0.20260206c/graph-quality.json",
+      "sha256": "975eea444d73cdacc43e64e6b00d874c86de05aae4f7f4f0adc0d4e8946c744f",
+      "bytes": 2977
+    },
+    {
+      "path": "releases/core/reports/v0.20260206c/graph-quality.md",
+      "sha256": "7ae4aeec110f7b569e70771497d95bf06b386da7861c5731360798e17deabe67",
+      "bytes": 1088
+    },
+    {
+      "path": "releases/core/reports/v0.20260206c/math-assurance.json",
+      "sha256": "ff3ef7a92e20d9ed06e010b9d791c3bca83220dde01200ba28690a7a3c3d2825",
+      "bytes": 9809
+    },
+    {
+      "path": "releases/core/reports/v0.20260206c/math-assurance.md",
+      "sha256": "029484c3a41f7bb1c10068a0a8135a498e8894ce1386a1a8e7f5763d482d3648",
+      "bytes": 3183
+    },
+    {
+      "path": "releases/core/reports/v0.20260206d/coverage-matrix.json",
+      "sha256": "a15516b180462013c3f62624b83fae43d0fb03d2fcf21cc9fe73d56994e2223e",
+      "bytes": 2546
+    },
+    {
+      "path": "releases/core/reports/v0.20260206d/coverage-matrix.md",
+      "sha256": "2d3b45ca510499ec9c6817fa925d51338b8a0bed8da4d9ef8013dbe49ccd7128",
+      "bytes": 836
+    },
+    {
+      "path": "releases/core/reports/v0.20260206d/graph-quality.json",
+      "sha256": "d3761cad3db417a92eec90ad91b464bf88a2c7f48cec09579590f82010d5fc03",
+      "bytes": 2998
+    },
+    {
+      "path": "releases/core/reports/v0.20260206d/graph-quality.md",
+      "sha256": "06a4f09dd3976625486a77fa081f04224697dffe90f906dd9ed586820051ca44",
+      "bytes": 1085
+    },
+    {
+      "path": "releases/core/reports/v0.20260206d/math-assurance.json",
+      "sha256": "5dc6bca93b8a21edef09310fa00405b446077ef3252196cbd9ef93c86b89d2a1",
+      "bytes": 9617
+    },
+    {
+      "path": "releases/core/reports/v0.20260206d/math-assurance.md",
+      "sha256": "9859dfbd1661331542ffb58d4ec4bf28618c243543a3b947f5c24117851a8d40",
+      "bytes": 3168
+    },
+    {
+      "path": "releases/core/reports/v0.20260206e/coverage-matrix.json",
+      "sha256": "4d0c6eef81cfe664689c96c0109120e61cee02f1721551aa1bb766b578cabf4b",
+      "bytes": 2546
+    },
+    {
+      "path": "releases/core/reports/v0.20260206e/coverage-matrix.md",
+      "sha256": "77795fe3e5e43c074a0339c6802e07a841aea44fbecd1d0856a73352e675befb",
+      "bytes": 837
+    },
+    {
+      "path": "releases/core/reports/v0.20260206e/graph-quality.json",
+      "sha256": "dfe973780fcbfe9dd2998ca50cc9f70395af95aa0361b1e6503d0a8fbeb02aeb",
+      "bytes": 3279
+    },
+    {
+      "path": "releases/core/reports/v0.20260206e/graph-quality.md",
+      "sha256": "191f140adc0359ad79bd6ab1028d590074571a8b9da6403e8bbe8cdf5bccdb7b",
+      "bytes": 1182
+    },
+    {
+      "path": "releases/core/reports/v0.20260206e/math-assurance.json",
+      "sha256": "399ffb41e9fda73a2766c40bde7ddbe1b11ed2c6937755f8e63be43ea2449893",
+      "bytes": 13000
+    },
+    {
+      "path": "releases/core/reports/v0.20260206e/math-assurance.md",
+      "sha256": "c651016867a3ea3a71e89cae6b7cb82c3e15400a56c20612dc6c56dc70ee7331",
+      "bytes": 4154
+    },
+    {
+      "path": "releases/core/schemas/latest/tensor.core.schema.json",
+      "sha256": "6520f4cd90c26d72252c986e4db7e8639c76e30f2f5c865a7318101c2a513ad5",
+      "bytes": 6672
+    },
+    {
+      "path": "releases/core/schemas/v0.20250519/tensor.core.schema.json",
+      "sha256": "702d7c607d94d38c56468b3af0cd1c86bdd02b8744bab20cb38137b9ba6b7df5",
+      "bytes": 6512
+    },
+    {
+      "path": "releases/core/schemas/v0.20250813/tensor.core.schema.json",
+      "sha256": "da89065a9a8d5be2f66082cdb44a18b7deb7399b197053d6a32239150d8dd5f1",
+      "bytes": 5169
+    },
+    {
+      "path": "releases/core/schemas/v0.20260206/tensor.core.schema.json",
+      "sha256": "1fbf29577cdf04b169f4dd3f5d0f09af29cd0f2f4e2691d382bad0656a1d5fab",
+      "bytes": 6304
+    },
+    {
+      "path": "releases/core/schemas/v0.20260206c/tensor.core.schema.json",
+      "sha256": "4b0ce8ea4861c44df93baf03e6c45f3745438ddda0f48c90001053877fb55674",
+      "bytes": 6672
+    },
+    {
+      "path": "releases/core/schemas/v0.20260206d/tensor.core.schema.json",
+      "sha256": "4b0ce8ea4861c44df93baf03e6c45f3745438ddda0f48c90001053877fb55674",
+      "bytes": 6672
+    },
+    {
+      "path": "releases/core/schemas/v0.20260206e/tensor.core.schema.json",
+      "sha256": "6520f4cd90c26d72252c986e4db7e8639c76e30f2f5c865a7318101c2a513ad5",
+      "bytes": 6672
+    },
+    {
+      "path": "releases/manifest.json",
+      "sha256": "713c94d5b066a1f6b2725cbdd8fc1c27956e95f3aa4d58b39f7d744f883174d8",
+      "bytes": 4224
+    },
+    {
+      "path": "scripts/build_core_graph_from_source.py",
+      "sha256": "3b5520945d3309c494a551d065ff7558d68dbaad17b28a8b5cb49d6cf477dfa6",
+      "bytes": 5555
+    },
+    {
+      "path": "scripts/core_graph_math_assurance.py",
+      "sha256": "ac5c3e22f6914584261e5a26c0bbae284d4651d201979e56ba50cac4026f7d87",
+      "bytes": 52156
+    },
+    {
+      "path": "scripts/core_graph_pipeline.py",
+      "sha256": "eea70a4dc645ed9c0b336dbe06daa39b7a672cda6e9a21bdd5978b48320fc452",
+      "bytes": 29681
+    },
+    {
+      "path": "scripts/evaluate_entry_scenarios.py",
+      "sha256": "fa2380d410f427ce049281e8db4fddd9f954921224f2bbbfa87064c5120aafea",
+      "bytes": 22035
+    },
+    {
+      "path": "scripts/generate_release_checksums.py",
+      "sha256": "bf0966689a3832b0dd131afca77c19b030f587bd3035717895caa480593f464e",
+      "bytes": 3437
+    },
+    {
+      "path": "scripts/graph_assurance_policy.py",
+      "sha256": "395562a580510d3f55f4e8a8ee56e30af61c1d1452151b0b202d535c85dddc4a",
+      "bytes": 10110
+    },
+    {
+      "path": "scripts/inventory_legacy_graph.py",
+      "sha256": "f30963a83ca53779410d999358f3e92baa55a0b20abdc971a0ae8e597102c900",
+      "bytes": 9046
+    },
+    {
+      "path": "scripts/lint_core_graph_quality.py",
+      "sha256": "ba64c3033f1b36088769f8172ffe9f18cf859a6aa63a92e43fc9550d6e6afa34",
+      "bytes": 10875
+    },
+    {
+      "path": "scripts/review_topology_gates.py",
+      "sha256": "8573abf0c1ca2082491dfd1454c678d5ac9147668259d397d7f130932366ed51",
+      "bytes": 5753
+    },
+    {
+      "path": "scripts/validate_release_contract.py",
+      "sha256": "46eb57143775199d43e2c4b576b0ec9ee6af5442ce9698e2616fa3a15b3ad2bc",
+      "bytes": 39932
+    },
+    {
+      "path": "standards/compatibility-policy.md",
+      "sha256": "dc489c6a3b139697b4b6c8aff05fe55bb589c350f857a870f41347048b2cfd4c",
+      "bytes": 2993
+    },
+    {
+      "path": "standards/conformance/fixtures/invalid/release-manifest.bad-version.json",
+      "sha256": "25e0b7babbde7ea1e17411e285531aa3e4bfd44ee10b973739bbfe5108100909",
+      "bytes": 615
+    },
+    {
+      "path": "standards/conformance/fixtures/invalid/release-manifest.latest-mismatch.json",
+      "sha256": "c748afd5a8e3a78eb4e9e0dae5b66d3651ba725b50581ba6e450a9c2cb162715",
+      "bytes": 625
+    },
+    {
+      "path": "standards/conformance/fixtures/invalid/release-manifest.missing-file.json",
+      "sha256": "20eade3307963bc379d474b23f847e5ca15b63334cb2fd3d039c49d6833e6369",
+      "bytes": 618
+    },
+    {
+      "path": "standards/conformance/fixtures/valid/release-manifest.valid.json",
+      "sha256": "19b7aeba56e8efc5c00d040cc6aa127465606cf5ed3aee3c4829c53b892a2adb",
+      "bytes": 581
+    },
+    {
+      "path": "standards/conformance/manifest.json",
+      "sha256": "7a435b7bc0855b1e8eda663cbbe6bc6d0085276a36ab4975dd5fab99671416eb",
+      "bytes": 493
+    },
+    {
+      "path": "standards/core-graph-authoring-playbook.md",
+      "sha256": "49e67cd4e435fc4ebbb17aa88750f1eab9c3698224be57916ff08363e1de9bf2",
+      "bytes": 9635
+    },
+    {
+      "path": "standards/core-vs-overlay-contract.md",
+      "sha256": "10c1487b759fc8b66305c2a372dad16bd6121365fe230eb5cff5d8de9cd1ff04",
+      "bytes": 3727
+    },
+    {
+      "path": "standards/graph-assurance-policy.md",
+      "sha256": "bd45e7caa0c6a63d23d25e0efc7d50f2c1e3d1fd5a6622749e963237ed3c242b",
+      "bytes": 7417
+    },
+    {
+      "path": "tests/core/README.md",
+      "sha256": "6ba37ce62d0336b7c134cf4c5e0785b6a9ee5e4fa34977479f30b8fdb4d3f469",
+      "bytes": 2433
+    },
+    {
+      "path": "tests/core/contract.test.mjs",
+      "sha256": "e28c668bd04945dd104a435d08371a8bfdbd89eb8088c70f8c3c41b4654014b4",
+      "bytes": 33262
+    },
+    {
+      "path": "tests/core/fixture-integrity.test.mjs",
+      "sha256": "6a283718f110bec90c83bede208ae0867631dddecf85e885f0caf0629bd38422",
+      "bytes": 1919
+    },
+    {
+      "path": "tests/core/legacy-draft-schema.test.mjs",
+      "sha256": "5efe2a759065b141edd3061dea743f967230d96fddc5c5c8998f263237816cf6",
+      "bytes": 755
+    },
+    {
+      "path": "tests/core/reviewer-regressions.test.mjs",
+      "sha256": "f463a62a2baf1e25c3a89013203dfc4b0e355aa86c1a634049cf1f44df8dae81",
+      "bytes": 11718
+    },
+    {
+      "path": "tests/core/schema-parity.test.mjs",
+      "sha256": "6ff73e0ca3855b47d351909b346d6c436fc841b278ecdd2dc2ea292e5fee8ff4",
+      "bytes": 4230
+    },
+    {
+      "path": "tests/core/serialization-budget.test.mjs",
+      "sha256": "22d954f6f46bc7512721c13abfc023a4c5d8748caf64f56cb6d26c4803f91f73",
+      "bytes": 1317
+    },
+    {
+      "path": "tests/legacy/test_entry_evidence.py",
+      "sha256": "43fb1c78a9a66a25e42036c94ca8dbd4ba2e194207a1c3c960c921bc8b9154e3",
+      "bytes": 12709
+    },
+    {
+      "path": "tests/legacy/test_graph_assurance_policy.py",
+      "sha256": "553e2d894646a554bd80c1f2ccaab9aa04b9a7baa6394ee59953bfb35e7db37b",
+      "bytes": 11194
+    },
+    {
+      "path": "tests/legacy/test_legacy_preservation.py",
+      "sha256": "af5b348ae5065118476b8eff2e6872e00bcde3cb498e4569a71a65b4349a99f2",
+      "bytes": 14968
+    },
+    {
+      "path": "tests/legacy/test_positive_evidence.py",
+      "sha256": "a21034f0e171b3324ffd08a0dbbdec2e915fecaf0d877316060b20daf3d32af3",
+      "bytes": 8595
+    }
+  ]
+}

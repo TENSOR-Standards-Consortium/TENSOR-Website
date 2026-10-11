@@ -14,6 +14,8 @@ const FOUNDING = 'proposals/founding-core-v0.1.0';
 const LEGACY = 'releases/core/graphs/v0.20260206e/tensor.core.graph.json';
 const LEGACY_TARGET = 'public/legacy/0.20260206e/tensor.core.graph.json';
 const LEGACY_SHA256 = 'dfc3f1a965c01b6f7ade253e426e69abcbad688fab20d9d00065d71c777c010c';
+const REVIEW = 'review/2026-10-11.1';
+const REVIEW_DOCS = ['stewardship.md', 'review-process.md'];
 const MANIFEST = `${PUBLIC_CORE}/provenance.json`;
 const RUNTIME = ['index.mjs', 'schemas.mjs', 'json.mjs', 'schema-validator.mjs'];
 const DOCUMENTS = ['README.md', 'binding.md', 'coverage.md'];
@@ -26,7 +28,7 @@ const FOUNDING_FILES = [
   'examples/manifest.json', 'examples/check_authoring.py',
 ];
 const LICENSE_TARGETS = ['src/vendor/tensor-core/LICENSE', `${PUBLIC_CORE}/LICENSE`];
-const OWNED_ROOTS = ['src/vendor/tensor-core', PUBLIC_CORE, 'public/founding', 'public/legacy/0.20260206e'];
+const OWNED_ROOTS = ['src/vendor/tensor-core', PUBLIC_CORE, 'public/founding', 'public/legacy/0.20260206e', 'public/review/2026-10-11.1', 'public/docs'];
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const fail = (message) => { throw new Error(message); };
 const lexicalOrder = (a, b) => a < b ? -1 : a > b ? 1 : 0;
@@ -101,6 +103,10 @@ async function sourceSnapshot(options) {
     ...FOUNDING_FILES.map((name) => ({ source: `${FOUNDING}/${name}`, readRoot: foundingRoot, readPath: `${foundingPrefix}${name}`, target: `public/founding/${name}` })),
     { source: LEGACY, target: LEGACY_TARGET },
   ];
+  for (const filename of await listFiles(source, REVIEW)) {
+    pairs.push({ source: filename, target: `public/${filename}` });
+  }
+  for (const name of REVIEW_DOCS) pairs.push({ source: `docs/${name}`, target: `public/docs/${name}` });
   for (const folder of ['schemas', 'examples']) {
     for (const filename of await listFiles(source, `${CORE}/${folder}`)) {
       if (!/\.(json|md)$/.test(filename)) fail(`Unexpected public Core artifact: ${filename}`);
@@ -143,7 +149,7 @@ async function checkManifest() {
     const bytes = await readFile(await safePath(WEBSITE, file.target));
     if (bytes.byteLength !== file.bytes || hash(bytes) !== file.sha256) fail(`Generated artifact differs from its recorded source: ${file.target}`);
   }
-  for (const required of [...RUNTIME.map((name) => `src/vendor/tensor-core/${name}`), ...LICENSE_TARGETS, ...DOCUMENTS.map((name) => `${PUBLIC_CORE}/${name}`), ...FOUNDING_FILES.map((name) => `public/founding/${name}`), ...['bundle', 'definition', 'record'].map((name) => `${PUBLIC_CORE}/schemas/${name}.schema.json`), ...['case-a', 'case-b'].map((name) => `${PUBLIC_CORE}/examples/${name}.bundle.json`), LEGACY_TARGET]) {
+  for (const required of [...RUNTIME.map((name) => `src/vendor/tensor-core/${name}`), ...LICENSE_TARGETS, ...DOCUMENTS.map((name) => `${PUBLIC_CORE}/${name}`), ...FOUNDING_FILES.map((name) => `public/founding/${name}`), ...['README.md', 'manifest.json', 'source.tar.gz', 'review-package.zip', 'verify-snapshot.py', 'validation.json', 'walkthrough.md', 'review-form.md'].map((name) => `public/${REVIEW}/${name}`), ...REVIEW_DOCS.map((name) => `public/docs/${name}`), ...['bundle', 'definition', 'record'].map((name) => `${PUBLIC_CORE}/schemas/${name}.schema.json`), ...['case-a', 'case-b'].map((name) => `${PUBLIC_CORE}/examples/${name}.bundle.json`), LEGACY_TARGET]) {
     if (!seen.has(required)) fail(`Required generated artifact is absent: ${required}`);
   }
   if (manifest.files.find((file) => file.target === LEGACY_TARGET)?.sha256 !== LEGACY_SHA256) fail('Legacy graph SHA-256 does not match the published release.');

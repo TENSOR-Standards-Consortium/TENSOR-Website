@@ -23,14 +23,15 @@ const jsonLd = {
     <p><a href="/investigation-lab/">Investigation Lab</a> lets you inspect, import, validate, and export a candidate bundle. Use the <a href="/core/0.1.0-draft.1/examples/case-a.bundle.json" download>AI-system case</a> or the <a href="/core/0.1.0-draft.1/examples/case-b.bundle.json" download>identity case</a>. Evidence in these examples is synthetic.</p>
 
     <h2>2. Run the same candidate locally</h2>
-    <p>Use Node.js 22 or later. The implementation candidate is on the <a href="https://github.com/tensor-standards-consortium/TENSOR-Framework/tree/codex/core-investigation-contract">Core review branch</a>; the default branch retains the earlier framework until review is complete. Clone the candidate explicitly:</p>
-    <pre><code>{`git clone --branch codex/core-investigation-contract --single-branch https://github.com/tensor-standards-consortium/TENSOR-Framework.git
+    <p>Use Node.js 24.21.0 and npm 11.19.0, as pinned in the repository. Check out the <a href="/review/">frozen review source</a> rather than a moving branch:</p>
+    <pre><code>{`git clone https://github.com/tensor-standards-consortium/TENSOR-Framework.git
 cd TENSOR-Framework
+git checkout --detach c82cd1c540b2ca6fbf5ba7ee3e38edcd2e1e6f8f
 git rev-parse HEAD
 npm ci
 npm run check
 node core/v0.1.0-draft.1/cli.mjs core/v0.1.0-draft.1/examples/case-a.bundle.json`}</code></pre>
-    <p>Record the commit returned by <code>git rev-parse HEAD</code> because the review branch can change. The CLI prints a validation report. Inspect its findings and declared scope; a successful reference run is not an independent interoperability demonstration. <a href="/core/">Pin the candidate artifacts</a> when recording results.</p>
+    <p>Record the commit returned by <code>git rev-parse HEAD</code> and match it to the frozen review manifest. The CLI prints a validation report. Inspect its findings and declared scope; a successful reference run is not an independent interoperability demonstration. <a href="/core/">Pin the candidate artifacts</a> when recording results.</p>
 
     <h2>3. Understand what travels together</h2>
     <ul>

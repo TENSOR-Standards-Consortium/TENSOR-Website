@@ -108,3 +108,7 @@ Pages deployment does not deploy this Worker. The candidate Lab does not require
 For an explicitly configured API, build with `PUBLIC_TENSOR_API_ORIGIN` or `PUBLIC_TENSOR_USE_SAME_ORIGIN_API=true`. Any additional origin also needs a reviewed CSP `connect-src` entry. `TELEMETRY_ALLOWED_ORIGINS` controls the Worker POST origin allowlist (default same-origin); `RELEASE_ALLOWED_HOSTS` and `PUBLIC_RELEASE_ALLOWED_HOSTS` configure release host allowlists. Host allowlisting does not remove existing HTTPS, path-prefix, traversal or size checks. Do not enable the telemetry endpoint for imported investigation contents.
 
 The optional Worker deployment configuration is `worker.wrangler.toml`. Its existence and historical deployment do not prove that its current public route works; verify the intended account, route and environment before using the manual workflow.
+
+## Institutional technical review
+
+`/review/` is the reviewer entry point for frozen review `2026-10-11.1`. Its ZIP includes the source at Framework commit `c82cd1c540b2ca6fbf5ba7ee3e38edcd2e1e6f8f`, all 175 source pins, verifier, validation baseline and guides. Website provenance separately identifies the committed Framework source used for synchronization. Current stewardship and finding procedures are generated from Framework docs. Public questions and Studio still use the preserved published graph; the evidence-route draft is available in the frozen source rather than silently replacing that release. No invitations are sent by building or deploying this site.

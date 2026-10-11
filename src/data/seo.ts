@@ -14,6 +14,12 @@ export const seo = {
     canonicalPath: '/',
     ogType: 'website',
   },
+  review: {
+    title: 'Review TENSOR | Frozen Technical Candidate',
+    description: 'Review one pinned TENSOR candidate with a first-hour walkthrough, source archive, evidence criteria, reproducible checks and a clear feedback route.',
+    canonicalPath: '/review/',
+    ogType: 'article',
+  },
   implement: {
     title: 'Implement the TENSOR Core Candidate',
     description:
