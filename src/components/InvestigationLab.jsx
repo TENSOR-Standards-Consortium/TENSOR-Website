@@ -98,6 +98,8 @@ export default function InvestigationLab() {
   const [report, setReport] = useState(null);
   const [source, setSource] = useState(null);
   const [busy, setBusy] = useState(false);
+  const [ready, setReady] = useState(false);
+  useEffect(() => { setReady(true); }, []);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
   const [section, setSection] = useState('overview');
@@ -127,6 +129,7 @@ export default function InvestigationLab() {
   }
 
   async function runOperation(work) {
+    if (!ready) return;
     const ticket = ++operation.current;
     setBusy(true); setError(''); setNotice('');
     try { await work(ticket); }
@@ -170,19 +173,19 @@ export default function InvestigationLab() {
     window.requestAnimationFrame(() => contentRef.current?.focus({ preventScroll: false }));
   }
 
-  return <div className="tensor-investigation-lab" aria-busy={busy}>
+  return <div className="tensor-investigation-lab" aria-busy={busy || !ready}>
     <section className="il-start" aria-labelledby="il-start-title">
       <div className="il-start-heading"><div><p className="il-eyebrow">One record. A shared basis for review.</p><h2 id="il-start-title">Open an investigation</h2></div><span className="il-version">Core {BINDING_VERSION}</span></div>
       <p className="il-lead">Follow the questions, evidence, judgments, and decisions. Then carry the same record to another tool.</p>
-      <div className="il-case-grid">{CASES.map((sample, index) => <button type="button" className={`il-case ${source?.label === sample.title ? 'is-selected' : ''}`} key={sample.id} disabled={busy} onClick={() => loadCase(sample)}><span className="il-case-number">0{index + 1} / SYNTHETIC CASE</span><strong>{sample.title}</strong><span>{sample.description}</span><span className="il-case-action">Open reference case <span aria-hidden="true">↗</span></span></button>)}</div>
-      <div className="il-import-row"><div><label htmlFor="il-bundle-file" className="il-file-label">Import a local bundle</label><input id="il-bundle-file" type="file" accept=".json,application/json" onChange={importFile} disabled={busy} aria-describedby="il-privacy" /></div><p id="il-privacy">JSON · up to 2 MiB. Your file is read in this browser and is not uploaded. Evidence locations are never opened and recorded actions are never executed.</p></div>
-      <details className="il-paste"><summary>Or paste bundle JSON</summary><form onSubmit={(event) => { event.preventDefault(); runOperation((ticket) => importText(paste, { label: 'Pasted bundle', kind: 'import' }, ticket)); }}><label htmlFor="il-json-paste">Bundle JSON to open</label><textarea id="il-json-paste" value={paste} onChange={(event) => setPaste(event.target.value)} spellCheck="false" rows={7} placeholder='{ "format": "tensor-investigation-bundle", … }' maxLength={MAX_BUNDLE_BYTES} /><button type="submit" className="il-button" disabled={busy || !paste.trim()}>Open pasted bundle</button></form></details>
-      <div className="il-live" aria-live="polite" aria-atomic="true">{busy ? 'Reading and validating the bundle locally…' : notice}</div>
+      <div className="il-case-grid">{CASES.map((sample, index) => <button type="button" className={`il-case ${source?.label === sample.title ? 'is-selected' : ''}`} key={sample.id} disabled={busy || !ready} onClick={() => loadCase(sample)}><span className="il-case-number">0{index + 1} / SYNTHETIC CASE</span><strong>{sample.title}</strong><span>{sample.description}</span><span className="il-case-action">Open reference case <span aria-hidden="true">↗</span></span></button>)}</div>
+      <div className="il-import-row"><div><label htmlFor="il-bundle-file" className="il-file-label">Import a local bundle</label><input id="il-bundle-file" type="file" accept=".json,application/json" onChange={importFile} disabled={busy || !ready} aria-describedby="il-privacy" /></div><p id="il-privacy">JSON · up to 2 MiB. Your file is read in this browser and is not uploaded. Evidence locations are never opened and recorded actions are never executed.</p></div>
+      <details className="il-paste"><summary>Or paste bundle JSON</summary><form onSubmit={(event) => { event.preventDefault(); runOperation((ticket) => importText(paste, { label: 'Pasted bundle', kind: 'import' }, ticket)); }}><label htmlFor="il-json-paste">Bundle JSON to open</label><textarea id="il-json-paste" value={paste} onChange={(event) => setPaste(event.target.value)} spellCheck="false" rows={7} placeholder='{ "format": "tensor-investigation-bundle", … }' maxLength={MAX_BUNDLE_BYTES} /><button type="submit" className="il-button" disabled={busy || !ready || !paste.trim()}>Open pasted bundle</button></form></details>
+      <div className="il-live" aria-live="polite" aria-atomic="true">{!ready ? 'Preparing the local investigation workspace…' : busy ? 'Reading and validating the bundle locally…' : notice}</div>
       {error && <div className="il-error" role="alert"><strong>Could not open this bundle</strong><p>{error}</p>{bundle && <p>The previously opened record is unchanged.</p>}</div>}
     </section>
 
     {bundle && <>
-      <section className="il-workspace-bar" aria-label="Open bundle"><div><span className="il-eyebrow">{source.kind === 'synthetic' ? 'Synthetic reference case' : 'Imported record · assertions unverified'}</span><h2>{source.label}</h2><p>{asText(bundle.record?.scope?.purpose || 'No readable scope purpose supplied.')}</p></div><div className="il-workspace-actions"><button type="button" className="il-button il-button-secondary" disabled={busy} onClick={() => runOperation(async (ticket) => { const result = await validateBundle(bundle, { maxBytes: MAX_BUNDLE_BYTES }); if (ticket === operation.current) { setReport(result); setNotice(summarizeValidation(result).title); } })}>Run checks again</button><button type="button" className="il-button" onClick={() => { try { download(serializeForLab(bundle), downloadName(bundle)); } catch (caught) { setError(caught instanceof Error ? caught.message : 'Export failed.'); } }}>Download bundle ↓</button></div></section>
+      <section className="il-workspace-bar" aria-label="Open bundle"><div><span className="il-eyebrow">{source.kind === 'synthetic' ? 'Synthetic reference case' : 'Imported record · assertions unverified'}</span><h2>{source.label}</h2><p>{asText(bundle.record?.scope?.purpose || 'No readable scope purpose supplied.')}</p></div><div className="il-workspace-actions"><button type="button" className="il-button il-button-secondary" disabled={busy || !ready} onClick={() => runOperation(async (ticket) => { const result = await validateBundle(bundle, { maxBytes: MAX_BUNDLE_BYTES }); if (ticket === operation.current) { setReport(result); setNotice(summarizeValidation(result).title); } })}>Run checks again</button><button type="button" className="il-button" onClick={() => { try { download(serializeForLab(bundle), downloadName(bundle)); } catch (caught) { setError(caught instanceof Error ? caught.message : 'Export failed.'); } }}>Download bundle ↓</button></div></section>
       {report && <ValidationReport report={report} onDownload={() => download(JSON.stringify(report, null, 2), downloadName(bundle, 'validation'))} />}
       <div className="il-workbench">
         <nav className="il-sections" aria-label="Investigation sections">{SECTIONS.map((item) => <button type="button" key={item.id} className={section === item.id ? 'is-active' : ''} aria-current={section === item.id ? 'page' : undefined} onClick={() => showSection(item.id)}><span>{item.label}</span>{item.id !== 'overview' && <span className="il-count">{item.id === 'all' || item.id === 'history' ? entries.length : (groups[item.id]?.length || 0)}</span>}</button>)}<p>The record preserves attributed assertions. A newer entry does not silently replace an earlier one.</p></nav>
