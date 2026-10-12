@@ -27,8 +27,8 @@ test('source, selection and focus round-trip through URL; invalid states recover
     assert.deepEqual(readAtlasState(search, graphs), state);
     assert.equal(new URLSearchParams(search).get('keep'), 'external');
   }
-  assert.deepEqual(readAtlasState('?graph=evil&node=missing&view=focus', graphs), { dataset: 'working', node: null, view: 'all' });
-  assert.deepEqual(readAtlasState('', graphs), { dataset: 'working', node: null, view: 'all' });
+  assert.deepEqual(readAtlasState('?graph=evil&node=missing&view=focus', graphs), { dataset: 'published', node: null, view: 'all' });
+  assert.deepEqual(readAtlasState('', graphs), { dataset: 'published', node: null, view: 'all' });
   assert.deepEqual(readAtlasState('?graph=published&node=Q609', graphs), { dataset: 'published', node: null, view: 'all' });
 });
 test('coverage ledger is pinned to both graph artifacts and records all originals without equating shared IDs', async () => {

@@ -28,7 +28,7 @@ export function atlasLayout(graph, orientation = 'wide') {
 }
 export function readAtlasState(search, graphs) {
   const params = new URLSearchParams(search);
-  const dataset = params.get('graph') === 'published' ? 'published' : 'working';
+  const dataset = params.get('graph') === 'working' ? 'working' : 'published';
   const graph = graphs[dataset];
   const requested = params.get('node');
   return { dataset, node: graph.nodes.some((n) => n.id === requested) ? requested : null, view: params.get('view') === 'focus' && graph.nodes.some((n) => n.id === requested) ? 'focus' : 'all' };

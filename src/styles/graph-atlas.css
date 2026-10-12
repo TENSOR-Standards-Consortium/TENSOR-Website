@@ -261,3 +261,9 @@ body:has(.atlas) .header-inner { width: min(1800px, 96vw); }
 @media(max-width:800px) { .atlas:fullscreen .investigation-timeline { height: 620px; } }
 .investigation-timeline > :not(.timeline-scroll) { flex-shrink: 0; }
 .investigation-timeline .timeline-scroll { min-height: 0; }
+
+/* The nebula carries depth; projected labels stay quiet until inspection. */
+.three-label-domain { font-size: .65rem; letter-spacing: .16em; transform: translate(-50%,-50%); padding: .3rem .5rem; background: #0c141e99; border-radius: 3px; }
+.three-label-stage { font-size: .5rem; color: #b0c3d3; background: #0c141eb8; padding: .15rem .25rem; }
+.three-label-domain small { display: block; color: #acc0d0; letter-spacing: 0; font-size: .5rem; text-align: center; margin-top: .2rem; }
+@media(max-width:600px) { .three-label-domain { font-size: .5rem; } .three-label-domain small { display: none; } .atlas-render-tabs { min-width: 155px; } }
