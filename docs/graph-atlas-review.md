@@ -8,6 +8,8 @@ The public atlas opens with the complete working definition and switches to the 
 
 URL state includes graph, node and all/focus view. Camera zoom/pan is temporary. Source change and browser Back resolve against the selected definition version; a shared numeric ID is never an equivalence claim. Evidence criteria apply only to the working source. Both complete text alternatives are server-rendered. Questions, route controls, pan/zoom controls and the optional overview provide alternatives to pointer exploration. Fullscreen rejection has a visible fallback. Reduced motion disables camera animation.
 
+At close zoom, node IDs remain centered and context edges become quieter. Full labels are available on pointer hover and in the keyboard-accessible inspector; neighboring full labels are not painted over one another. Coordinate labels have a viewport font-size cap.
+
 Shared shell, button/badge/focus primitives, typography, domain and canvas tokens remain centralized. The private Lab uses its existing independent instance/selection renderer and local-data privacy contract.
 
 ## Observed verification

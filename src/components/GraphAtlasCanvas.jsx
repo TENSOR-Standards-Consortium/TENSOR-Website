@@ -8,6 +8,7 @@ export default function GraphAtlasCanvas({ graph, layout, selectedId, view, onSe
   const [renderedLayout, setRenderedLayout] = useState(null), [status, setStatus] = useState('Preparing the complete map…');
   const [camera, setCamera] = useState({ zoom: 1, pan: { x: 0, y: 0 }, width: 1, height: 1 });
   const ready = renderedLayout === layout;
+  const [hovered, setHovered] = useState(null);
   const [fullscreen, setFullscreen] = useState(false), [overview, setOverview] = useState(false);
   const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const fit = (elements) => {
@@ -22,7 +23,7 @@ export default function GraphAtlasCanvas({ graph, layout, selectedId, view, onSe
   };
   useEffect(() => {
     let disposed = false, observer, frame;
-    setRenderedLayout(null); setStatus('Preparing the complete map…');
+    setHovered(null); setRenderedLayout(null); setStatus('Preparing the complete map…');
     import('cytoscape').then(({ default: cytoscape }) => {
       if (disposed || !host.current) return;
       const css = getComputedStyle(host.current);
@@ -41,21 +42,32 @@ export default function GraphAtlasCanvas({ graph, layout, selectedId, view, onSe
         { selector: '.connected[outcome = "yes"]', style: { 'line-color': '#6ee7b7', 'target-arrow-color': '#6ee7b7' } },
         { selector: '.connected[outcome = "no"]', style: { 'line-color': '#ffb3b3', 'target-arrow-color': '#ffb3b3' } },
         { selector: '.connected[outcome = "unknown"]', style: { 'line-color': '#efcd84', 'target-arrow-color': '#efcd84' } },
-        { selector: '.detail', style: { label: 'data(title)', 'font-family': 'Inter, sans-serif', 'font-size': 11, 'text-wrap': 'wrap', 'text-max-width': 120, 'text-valign': 'bottom', 'text-margin-y': 5, 'text-background-color': '#101722', 'text-background-opacity': .95, 'text-background-padding': 3 } },
+
       ] });
       cy.current = instance;
+      let detailed = false;
       const sync = () => {
+        setHovered(null);
         if (frame) return;
         frame = requestAnimationFrame(() => {
           frame = null;
           if (disposed) return;
           const detail = instance.zoom() > 1.35;
-          if (detail !== instance.nodes().first().hasClass('detail')) instance.nodes().toggleClass('detail', detail);
+          if (detail !== detailed) {
+            detailed = detail;
+            instance.edges().style('opacity', detail || desired.current.selectedId ? .08 : .34);
+            instance.edges('.connected').style('opacity', 1);
+          }
           setCamera({ zoom: instance.zoom(), pan: instance.pan(), width: instance.width(), height: instance.height() });
         });
       };
       instance.on('pan zoom', sync);
       instance.on('tap', 'node', (event) => selected.current(event.target.id()));
+      instance.on('mouseover', 'node', (event) => {
+        const point = event.target.renderedPosition();
+        setHovered({ title: event.target.data('title'), x: Math.max(12, Math.min(instance.width() - 290, point.x + 18)), y: Math.max(70, Math.min(instance.height() - 100, point.y + 22)) });
+      });
+      instance.on('mouseout', 'node', () => setHovered(null));
       const initialZoom = Math.min((instance.width() - 76) / (layout.width + 80), (instance.height() - 76) / (layout.height + 50));
       instance.viewport({ zoom: initialZoom, pan: { x: (instance.width() - layout.width * initialZoom) / 2, y: (instance.height() - layout.height * initialZoom) / 2 + 20 } });
       observer = new ResizeObserver(() => {
@@ -77,7 +89,8 @@ export default function GraphAtlasCanvas({ graph, layout, selectedId, view, onSe
     if (!instance || !ready) return;
     instance.elements().removeClass('selected neighbor connected');
     instance.nodes().style('opacity', selectedId ? .5 : 1);
-    instance.edges().style('opacity', selectedId ? .09 : .34);
+    instance.edges().style('opacity', selectedId || instance.zoom() > 1.35 ? .08 : .34);
+    setHovered(null);
     const node = instance.getElementById(selectedId || '');
     node.addClass('selected').style('opacity', 1); node.neighborhood().nodes().addClass('neighbor').style('opacity', 1); node.connectedEdges().addClass('connected').style('opacity', 1);
     if (view === 'focus' && node.length) fit(node.closedNeighborhood());
@@ -101,11 +114,12 @@ export default function GraphAtlasCanvas({ graph, layout, selectedId, view, onSe
           {DOMAINS.map((domain, i) => <text key={domain} style={{ fontSize: `${9 / camera.zoom}px`, letterSpacing: 0 }} x={300 + i * layout.domainWidth} y="45" fill={layout.nodes.find(n => n.category === domain)?.color}>{['ID', 'HOST', 'NET', 'CLD', 'MAIL', 'APP', 'FILE'][i]}</text>)}
           {STAGES.map((stage, i) => <g key={stage}><line x1="135" x2={layout.width} y1={80 + i * layout.stageHeight} y2={80 + i * layout.stageHeight} /><text className="atlas-stage-label" style={{ fontSize: `${8 / camera.zoom}px`, letterSpacing: 0 }} x="0" y={130 + i * layout.stageHeight}>{stage}</text></g>)}
         </> : <>
-          {DOMAINS.map((domain, i) => <g key={domain}><line x1="160" x2={layout.width} y1={55 + i * layout.laneHeight} y2={55 + i * layout.laneHeight} /><text style={{ fontSize: `${Math.max(25, 9 / camera.zoom)}px` }} x="0" y={100 + i * layout.laneHeight} fill={layout.nodes.find(n => n.category === domain)?.color}>{domain.toUpperCase()}</text></g>)}
-          {STAGES.map((stage, i) => <text key={stage} className="atlas-stage-label" style={{ fontSize: `${Math.max(21, 8 / camera.zoom)}px` }} x={230 + i * layout.stageWidth} y="12">{String(i + 1).padStart(2, '0')} / {stage.toUpperCase()}</text>)}
+          {DOMAINS.map((domain, i) => <g key={domain}><line x1="160" x2={layout.width} y1={55 + i * layout.laneHeight} y2={55 + i * layout.laneHeight} /><text style={{ fontSize: `${Math.min(14, Math.max(9, 25 * camera.zoom)) / camera.zoom}px` }} x="0" y={100 + i * layout.laneHeight} fill={layout.nodes.find(n => n.category === domain)?.color}>{domain.toUpperCase()}</text></g>)}
+          {STAGES.map((stage, i) => <text key={stage} className="atlas-stage-label" style={{ fontSize: `${Math.min(12, Math.max(8, 21 * camera.zoom)) / camera.zoom}px` }} x={230 + i * layout.stageWidth} y="12">{String(i + 1).padStart(2, '0')} / {stage.toUpperCase()}</text>)}
         </>}
       </g>
     </svg>
+    {hovered && <div className="atlas-node-tooltip" aria-hidden="true" style={{ left: hovered.x, top: hovered.y }}>{hovered.title}</div>}
     <div className="atlas-map-caption"><span className="atlas-status-light" /><span aria-live="polite">{status}<small>Select a question to illuminate its routes.</small></span></div>
     <div className="atlas-camera-controls" role="group" aria-label="Map camera">
       <button className="btn btn-secondary" disabled={!ready} onClick={() => { onWhole(); fit(); }}>Fit all</button>
