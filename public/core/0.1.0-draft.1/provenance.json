@@ -3,7 +3,7 @@
   "manifestVersion": 1,
   "bindingVersion": "0.1.0-draft.1",
   "sourceRepository": "https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework",
-  "sourceCommit": "9b2c82df1f513b3cf0b43a634d031806bd8ef8f0",
+  "sourceCommit": "78a275b127d2f24933c3ec16d9a2b0b1c38fb0af",
   "sourceDirty": false,
   "foundingSource": "framework-repository",
   "files": [
@@ -106,7 +106,7 @@
     {
       "source": "docs/legacy-migration.md",
       "target": "public/docs/legacy-migration.md",
-      "sha256": "fa95106f3134e44ad7e6370a2899eb937e0318ef1c53d4016fc04def65542aea",
+      "sha256": "2a2dcc6d6ca5a76e679d4196cbfcd49701ae5da4b750b8d668bb00ecfeb41540",
       "bytes": 2882
     },
     {
