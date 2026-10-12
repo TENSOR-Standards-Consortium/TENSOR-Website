@@ -1,4 +1,5 @@
 ---
+import ContentCard from '../../components/ContentCard.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { legacyGraph, legacyQuestions, legacyCategories, questionPath, LEGACY_VERSION, LEGACY_DOWNLOAD, LEGACY_SHA256, LEGACY_SOURCE } from '../../data/legacy-questions';
 const title = 'Question library';
@@ -6,7 +7,7 @@ const description = `Browse and cite the ${legacyQuestions.length} questions in 
 ---
 
 <BaseLayout title={title} description={description} canonicalPath="/questions/">
-  <div class="container prose-card">
+  <ContentCard>
     <p class="section-kicker">Preserved graph release · {LEGACY_VERSION}</p>
     <h2>Inspect and cite the questions already published</h2>
     <p>This library preserves {legacyQuestions.length} questions and {legacyGraph.edges.length} recorded routes from the existing stable graph. Each question has a version-scoped page with its original wording, classification, and outgoing routes.</p>
@@ -36,7 +37,7 @@ const description = `Browse and cite the ${legacyQuestions.length} questions in 
         </section>
       ))}
     </div>
-  </div>
+  </ContentCard>
 </BaseLayout>
 
 <script>

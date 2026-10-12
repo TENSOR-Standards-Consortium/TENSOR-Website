@@ -1,4 +1,5 @@
 ---
+import PageIntro from '../../components/PageIntro.astro';
 import InvestigationLab from '../../components/InvestigationLab.jsx';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import '../../styles/investigation-lab.css';
@@ -8,18 +9,10 @@ const description = 'Inspect, validate, and exchange portable investigation reco
 ---
 
 <BaseLayout title={title} description={description} canonicalPath="/investigation-lab/" ogType="article" hidePageTitle={true}>
-  <section class="container il-page-intro">
-    <p class="section-kicker">A working reference for TENSOR Core</p>
-    <h1>An investigation you can carry forward.</h1>
-    <p>
-      Humans and agents can share the same questions, evidence references, assessments, and decisions.
-      Open a synthetic case, inspect its reasoning record, and download a portable bundle for review.
-    </p>
-    <div class="il-page-links">
-      <a href="/core/">Read the Core contract</a>
-      <a href="/conformance/">Understand the validation boundary</a>
-    </div>
-  </section>
+  <PageIntro title="An investigation you can carry forward." eyebrow="A working reference for TENSOR Core" workspace>
+    <p>Humans and agents can share the same questions, evidence references, assessments, and decisions. Open a synthetic case, follow its recorded path, and download a portable bundle for review.</p>
+    <div class="cta-group"><a href="/graphs/">Explore the working definition graph</a><a href="/core/">Read the Core contract</a><a href="/conformance/">Validation boundary</a></div>
+  </PageIntro>
 
   <section class="container" aria-label="Investigation Lab workspace">
     <InvestigationLab client:load />

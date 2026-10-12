@@ -1,4 +1,5 @@
 ---
+import ContentCard from '../components/ContentCard.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { absoluteUrl, seo } from '../data/seo';
 
@@ -65,7 +66,8 @@ const jsonLd = {
     </article>
   </section>
 
-  <section class="container prose-card" aria-labelledby="layers-title">
+  <ContentCard as="section" aria-labelledby="layers-title">
+    <p><a href="/graphs/">Explore the working graph and evidence criteria</a> · <a href="/investigation-lab/">Follow a recorded investigation path</a></p>
     <p class="section-kicker">Public meaning. Room to build.</p>
     <h2 id="layers-title">The shared layer beneath tools and policy</h2>
     <div class="layer-stack" role="img" aria-label="Human and agent investigators use vendor tools and business policy above public TENSOR profiles and Core. Core connects pinned definitions with portable records.">
@@ -76,39 +78,39 @@ const jsonLd = {
     </div>
     <p>No vendor or business layer may silently change the meaning of Core. Actor type grants no authority. Imported records do not authorize actions or access to evidence.</p>
     <p><a href="/about/">Read the mission and boundaries</a> · <a href="/extensions/">Build profiles and extensions</a></p>
-  </section>
+  </ContentCard>
 
   <section class="container path-grid">
-    <article class="prose-card">
+    <ContentCard as="article" contained={false}>
       <p class="section-kicker">For practitioners</p>
       <h2>Start with a real investigative need</h2>
       <p>Explore an AI-system incident or a conventional identity case. Both are synthetic, and both use the same candidate contract for human and agent participation.</p>
       <p>AI security teams are the first adoption community. TENSOR's scope remains all cyber investigations.</p>
       <a href="/investigation-lab/">Open Investigation Lab →</a>
-    </article>
-    <article class="prose-card">
+    </ContentCard>
+    <ContentCard as="article" contained={false}>
       <p class="section-kicker">For implementers</p>
       <h2>Validate, exchange, report the gaps</h2>
       <p>Use versioned schemas, a documented binding, and a reference CLI. Build a reader or exporter and test which meaning survives the handoff.</p>
       <p>Reference checks establish a bounded baseline. Independent exchange and external review are the next evidence gates.</p>
       <a href="/implement/">Follow the implementation guide →</a>
-    </article>
+    </ContentCard>
   </section>
 
-  <section class="container prose-card">
+  <ContentCard as="section">
     <p class="section-kicker">Built from the existing foundation</p>
     <h2>The investigation questions stay</h2>
     <p>The legacy release contains 588 questions and 1,554 transitions. Its original artifacts remain available while the questions undergo semantic review for the new definition-and-record model.</p>
-    <p><a href="/questions/">Browse the question catalog</a> · <a href="/graphs/">View preserved releases</a> · <a href="/studio/">Open legacy Graph Studio</a></p>
-  </section>
+    <p><a href="/questions/">Browse the question catalog</a> · <a href="/graphs/">Explore working and published graphs</a> · <a href="/studio/">Open legacy Graph Studio</a></p>
+  </ContentCard>
 
-  <section class="container prose-card">
+  <ContentCard as="section">
     <p class="section-kicker">Help shape a public standard</p>
     <h2>Useful alongside the standards you already use</h2>
     <p>TENSOR's proposed boundaries reference ATT&amp;CK, D3FEND, ATLAS, CASE/UCO, STIX, Attack Flow, CACAO, and OCSF. Mappings need versioned definitions and exchange evidence; they are not implied by a logo or a shared field name.</p>
     <p>The founding charter, governance proposal, and 38 Core requirements are open for review. This candidate is not a ratified standard or an institutional endorsement.</p>
     <div class="cta-group"><a class="btn btn-secondary" href="/standards/">Explore the standards crosswalk</a><a class="btn btn-secondary" href="/contribute/">Contribute a case or review</a></div>
-  </section>
+  </ContentCard>
 </BaseLayout>
 
 <style>

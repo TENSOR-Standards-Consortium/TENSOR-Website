@@ -1,4 +1,5 @@
 ---
+import ContentCard from '../../components/ContentCard.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { absoluteUrl, seo } from '../../data/seo';
 
@@ -14,7 +15,7 @@ const jsonLd = {
 ---
 
 <BaseLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
-  <div class="container prose-card">
+  <ContentCard>
     <p class="section-kicker">The same investigative contract</p>
     <h2>Humans and agents can exchange an investigation</h2>
     <p>Investigators need to know which question was answered, about whom and when, using what evidence and criteria. That need is the same whether the assessment came from a person, an agent, or a mixed team.</p>
@@ -40,5 +41,5 @@ const jsonLd = {
     <h2>Try both sides of the model</h2>
     <p>The <a href="/investigation-lab/">Investigation Lab</a> includes an AI-system investigation and a conventional identity investigation involving an agent. Both are synthetic and use the same candidate binding.</p>
     <p><a href="/core/">Core contract and examples</a> · <a href="/standards/">ATLAS, CASE/UCO, and other standards</a> · <a href="/conformance/">What validation can establish</a></p>
-  </div>
+  </ContentCard>
 </BaseLayout>

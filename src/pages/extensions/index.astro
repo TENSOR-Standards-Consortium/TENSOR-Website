@@ -1,4 +1,5 @@
 ---
+import ContentCard from '../../components/ContentCard.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { absoluteUrl, seo } from '../../data/seo';
 
@@ -14,7 +15,7 @@ const jsonLd = {
 ---
 
 <BaseLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
-  <div class="container prose-card">
+  <ContentCard>
     <p class="section-kicker">Build above shared meaning</p>
     <h2>Profiles, vendor layers, and business context</h2>
     <p>Core supplies a common investigative model. Public domain profiles add reviewed vocabulary, questions, and requirements. Vendor layers provide tooling and integrations. Business layers supply explicit policy, authority, thresholds, and organizational context.</p>
@@ -37,5 +38,5 @@ const jsonLd = {
     <h2>Report exchange limits</h2>
     <p>A vendor-specific ticket layout may be optional display metadata. A dependency that changes the interpretation of a decision is not. When a recipient cannot interpret required semantics, its report must identify the affected content. When an export drops content, declare the loss.</p>
     <p><a href="/founding/01-core-contract.md">Read requirements TC-29 through TC-35</a> · <a href="/conformance/">Validation and exchange evidence</a></p>
-  </div>
+  </ContentCard>
 </BaseLayout>

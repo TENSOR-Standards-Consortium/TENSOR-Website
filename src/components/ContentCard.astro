@@ -1,0 +1,10 @@
+---
+interface Props {
+  as?: 'div' | 'section' | 'article';
+  contained?: boolean;
+  class?: string;
+  [key: string]: unknown;
+}
+const { as: Tag = 'div', contained = true, class: className, ...attributes } = Astro.props;
+---
+<Tag class:list={['prose-card', { container: contained }, className]} {...attributes}><slot /></Tag>

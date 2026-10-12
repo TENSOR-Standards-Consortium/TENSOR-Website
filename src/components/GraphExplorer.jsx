@@ -9,23 +9,6 @@ import {
   isTrustedReleaseUrl,
 } from '../lib/frameworkDataApi';
 
-const CATEGORY_COLORS = {
-  Application: '#ffd166',
-  Cloud: '#4cc9f0',
-  Email: '#ff9f1c',
-  File: '#06d6a0',
-  Host: '#f3722c',
-  Identity: '#9b5de5',
-  Network: '#00bbf9',
-  Uncategorized: '#94a3b8',
-};
-
-const DECISION_COLORS = {
-  yes: '#6ee7b7',
-  no: '#fb7185',
-  unknown: '#fbbf24',
-};
-
 const DEFAULT_DECISIONS = ['yes', 'no', 'unknown'];
 const DEFAULT_GRAPH_VERSION = '0.20260206e';
 const DEFAULT_SCHEMA_VERSION = '0.20260206e';
@@ -517,9 +500,11 @@ export default function GraphExplorer() {
 
   useEffect(() => {
     const root = rootRef.current;
-    if (!root) {
-      return;
-    }
+    if (!root) return;
+    const css = getComputedStyle(root);
+    const token = (name) => css.getPropertyValue(name).trim();
+    const CATEGORY_COLORS = Object.fromEntries(['Application', 'Cloud', 'Email', 'File', 'Host', 'Identity', 'Network', 'Uncategorized'].map((name) => [name, token(`--domain-${name.toLowerCase()}`)]));
+    const DECISION_COLORS = { yes: token('--accent-success'), no: token('--accent-danger'), unknown: token('--accent-warning') };
 
     const q = (selector) => root.querySelector(selector);
     const qa = (selector) => Array.from(root.querySelectorAll(selector));
@@ -1041,8 +1026,8 @@ export default function GraphExplorer() {
           {
             selector: 'node',
             style: {
-              'background-color': 'data(color)',
-              color: '#ecf6ff',
+              'background-color': token('--bg-input'),
+              color: token('--text-primary'),
               label: 'data(label)',
               'font-size': 10,
               'font-family': 'Inter, system-ui, sans-serif',
@@ -1051,7 +1036,7 @@ export default function GraphExplorer() {
               'text-valign': 'center',
               'text-halign': 'center',
               'border-width': 1.4,
-              'border-color': '#d3ebff',
+              'border-color': 'data(color)',
               width: 40,
               height: 40,
               'overlay-opacity': 0,
@@ -1069,8 +1054,8 @@ export default function GraphExplorer() {
               opacity: 0.82,
               label: 'data(decision)',
               'font-size': 8,
-              color: '#eaf5ff',
-              'text-background-color': '#071324',
+              color: token('--text-primary'),
+              'text-background-color': token('--bg-app'),
               'text-background-opacity': 0.7,
               'text-background-padding': 1,
             },
@@ -1079,9 +1064,9 @@ export default function GraphExplorer() {
             selector: 'node:selected',
             style: {
               'border-width': 3,
-              'border-color': '#1de2ff',
+              'border-color': token('--accent-primary'),
               'text-outline-width': 1,
-              'text-outline-color': '#071324',
+              'text-outline-color': token('--bg-app'),
             },
           },
           {
@@ -1826,7 +1811,21 @@ export default function GraphExplorer() {
 
         bindControls();
 
-        await loadVersions(selectors.graphVersionSelect.value, selectors.schemaVersionSelect.value);
+        const params = new URL(window.location.href).searchParams;
+        const requestedVersion = sanitizeVersion(params.get('graph'));
+        // Deep links from the catalog retain the exact published graph version.
+        await loadVersions(requestedVersion || selectors.graphVersionSelect.value, selectors.schemaVersionSelect.value);
+        const requestedNode = params.get('node');
+        const node = requestedNode && state.cy?.getElementById(requestedNode);
+        if (node && node.length) {
+          state.selectedNodeId = node.id();
+          node.select();
+          state.focusMode = true;
+          selectors.toggleFocusBtn.textContent = 'Clear Focus';
+          applyFocusMode();
+          renderSelectionDetails();
+          state.cy.fit(node.closedNeighborhood(), 45);
+        }
 
         releasePollTimer = window.setInterval(async () => {
           if (state.destroyed) {
@@ -1892,7 +1891,7 @@ export default function GraphExplorer() {
       </div>
 
       <div className="studio-grid">
-        <aside className="studio-panel controls-panel">
+        <aside className="tensor-panel studio-panel controls-panel">
           <h2>Explorer Controls</h2>
 
           <p className="studio-field">Release Versions</p>
@@ -1905,21 +1904,21 @@ export default function GraphExplorer() {
           </div>
 
           <div className="button-row button-row-single">
-            <button type="button" id="load-versions-btn">Load Selected Versions</button>
+            <button className="btn btn-secondary" type="button" id="load-versions-btn">Load Selected Versions</button>
           </div>
 
           <p className="studio-field">Import / Export</p>
           <div className="button-row">
-            <button type="button" id="import-graph-btn">Import Graph</button>
-            <button type="button" id="import-schema-btn">Import Schema</button>
+            <button className="btn btn-secondary" type="button" id="import-graph-btn">Import Graph</button>
+            <button className="btn btn-secondary" type="button" id="import-schema-btn">Import Schema</button>
           </div>
           <div className="button-row">
-            <button type="button" id="import-layer-btn">Import Layer</button>
-            <button type="button" id="export-layers-btn">Export Layers</button>
+            <button className="btn btn-secondary" type="button" id="import-layer-btn">Import Layer</button>
+            <button className="btn btn-secondary" type="button" id="export-layers-btn">Export Layers</button>
           </div>
           <div className="button-row">
-            <button type="button" id="export-core-btn">Export Legacy Graph</button>
-            <button type="button" id="export-merged-btn">Export Merged Graph</button>
+            <button className="btn btn-secondary" type="button" id="export-core-btn">Export Legacy Graph</button>
+            <button className="btn btn-secondary" type="button" id="export-merged-btn">Export Merged Graph</button>
           </div>
 
           <input id="graph-import-input" type="file" accept="application/json,.json" className="is-hidden" />
@@ -1947,11 +1946,11 @@ export default function GraphExplorer() {
           <div id="category-filters" className="chip-grid" aria-label="Category filters"></div>
 
           <div className="button-row">
-            <button type="button" id="reset-filters-btn">Reset Filters</button>
-            <button type="button" id="fit-graph-btn">Fit Graph</button>
+            <button className="btn btn-secondary" type="button" id="reset-filters-btn">Reset Filters</button>
+            <button className="btn btn-secondary" type="button" id="fit-graph-btn">Fit Graph</button>
           </div>
           <div className="button-row button-row-single">
-            <button type="button" id="toggle-focus-btn">Focus Selection</button>
+            <button className="btn btn-secondary" type="button" id="toggle-focus-btn">Focus Selection</button>
           </div>
 
           <div className="stats-grid">
@@ -1978,14 +1977,14 @@ export default function GraphExplorer() {
           <div id="layer-list" className="layer-list"></div>
         </aside>
 
-        <section className="studio-canvas" aria-label="Graph canvas">
+        <section className="tensor-panel studio-canvas" aria-label="Graph canvas">
           <div id="graph-canvas" className="graph-canvas"></div>
           <div className="canvas-empty is-hidden" id="canvas-empty">
             No nodes match your current filters.
           </div>
         </section>
 
-        <aside className="studio-panel details-panel">
+        <aside className="tensor-panel studio-panel details-panel">
           <h2>Version Timeline & Selection</h2>
           <p className="detail-kv detail-text" id="diff-summary">
             Diff summary will appear after loading a release.

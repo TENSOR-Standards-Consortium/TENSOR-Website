@@ -1,4 +1,5 @@
 ---
+import ContentCard from '../../components/ContentCard.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { absoluteUrl, seo } from '../../data/seo';
 
@@ -14,7 +15,7 @@ const jsonLd = {
 ---
 
 <BaseLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
-  <div class="container prose-card">
+  <ContentCard>
     <p class="section-kicker">Proposed public stewardship</p>
     <h2>A public standard needs accountable decisions</h2>
     <p>TENSOR's intended specification, essential public profiles, schemas, and basic conformance materials should be accessible without buying a product or sponsorship. Vendor participation is welcome; funding must not purchase control over shared meaning.</p>
@@ -51,5 +52,5 @@ const jsonLd = {
     <h2>Participation without privileged status</h2>
     <p>Disclose affiliations and conflicts. Keep funding conditions visible. Record dissent and appeals. Use synthetic or authorized de-identified cases. Existing licenses remain applicable to existing materials; contribution, patent, and stewardship policies need explicit review before adoption.</p>
     <p><a href="/contribute/">Contribute a review or implementation</a> · <a href="/founding/05-review-plan.md">Review the evidence gates</a></p>
-  </div>
+  </ContentCard>
 </BaseLayout>

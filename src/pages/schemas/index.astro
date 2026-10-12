@@ -1,4 +1,5 @@
 ---
+import ContentCard from '../../components/ContentCard.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { absoluteUrl, seo } from '../../data/seo';
 
@@ -14,7 +15,7 @@ const jsonLd = {
 ---
 
 <BaseLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
-  <div class="container prose-card">
+  <ContentCard>
     <p class="section-kicker">Two contracts, separately versioned</p>
     <h2>Core candidate schemas</h2>
     <p>These JSON Schemas describe the experimental <strong>0.1.0-draft.1</strong> binding. Use them with the semantic validator: a structurally valid document can still have broken references, mismatched pins, or invalid transition selections.</p>
@@ -33,5 +34,5 @@ const jsonLd = {
     </ul>
     <p>Pin an explicit version and content digest. A mutable “latest” location is a discovery convenience, not a reproducible pin.</p>
     <p><a href="/graphs/">Legacy graph releases</a> · <a href="/implement/">Implement the new candidate</a></p>
-  </div>
+  </ContentCard>
 </BaseLayout>

@@ -72,6 +72,26 @@ export function validateHtml(html, name = 'page') {
   return errors;
 }
 
+export function validateShell(html, name = 'page', expectedSignature) {
+  const nodes = [];
+  walk(parse(html), (node) => nodes.push(node));
+  const errors = [];
+  for (const tag of ['header', 'main', 'footer', 'h1']) {
+    if (nodes.filter((node) => node.tagName === tag).length !== 1) errors.push(`${name}: shared shell requires one ${tag}`);
+  }
+  const primary = nodes.filter((node) => node.tagName === 'nav' && attrs(node)['aria-label'] === 'Primary');
+  if (primary.length !== 1) errors.push(`${name}: shared shell requires one primary navigation`);
+  const label = (node) => node.value || (node.childNodes || []).map(label).join('');
+  const links = (root) => {
+    const found = [];
+    if (root) walk(root, (node) => { if (node.tagName === 'a') found.push([attrs(node).href, label(node).trim()]); });
+    return found;
+  };
+  const signature = JSON.stringify([links(primary[0]), links(nodes.find((node) => node.tagName === 'footer'))]);
+  if (expectedSignature && signature !== expectedSignature) errors.push(`${name}: navigation or footer differs from the shared shell`);
+  return { errors, signature };
+}
+
 async function htmlFiles(directory) {
   const files = [];
   for (const entry of await readdir(directory, { withFileTypes: true })) {
@@ -94,14 +114,22 @@ export async function checkBuild(directory = resolve('dist')) {
   const files = await htmlFiles(directory);
   if (!files.length) throw new Error('No built HTML found. Run npm run build first.');
   const errors = [];
-  for (const file of files) errors.push(...validateHtml(await readFile(file, 'utf8'), relative(directory, file)));
+  let shellSignature;
+  for (const file of files) {
+    const html = await readFile(file, 'utf8');
+    const name = relative(directory, file);
+    errors.push(...validateHtml(html, name));
+    const shell = validateShell(html, name, shellSignature);
+    shellSignature ??= shell.signature;
+    errors.push(...shell.errors);
+  }
   errors.push(...validateRobots(await readFile(resolve(directory, 'robots.txt'), 'utf8'), astroConfig.site));
   const headers = await readFile(resolve(directory, '_headers'), 'utf8');
   if (!headers.includes("Content-Security-Policy: frame-ancestors 'self'")) errors.push('_headers: missing frame-ancestors header');
   if (/Content-Security-Policy:.*(?:script-src|default-src)/.test(headers)) errors.push('_headers: a second script/default policy would intersect the built page hashes');
   if (headers.split('\n').some((line) => line.length > 2000)) errors.push('_headers: Cloudflare line limit exceeded');
   if (errors.length) throw new Error(errors.join('\n'));
-  console.log(`Built security checks passed: ${files.length} HTML pages, exact script/style hashes, JSON-LD, hosting headers, and canonical robots sitemap.`);
+  console.log(`Built security checks passed: ${files.length} HTML pages with a consistent shared shell, exact script/style hashes, JSON-LD, hosting headers, and canonical robots sitemap.`);
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) await checkBuild(process.argv[2] ? resolve(process.argv[2]) : undefined);

@@ -1,4 +1,9 @@
 ---
+import WorkingGraph from '../../components/WorkingGraph.jsx';
+import graph from '../../../public/graphs/working/tensor.core.graph.json';
+import criteria from '../../../public/graphs/working/entry-evidence-criteria.json';
+import source from '../../../public/core/0.1.0-draft.1/provenance.json';
+import ContentCard from '../../components/ContentCard.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { absoluteUrl, seo } from '../../data/seo';
 
@@ -14,7 +19,13 @@ const jsonLd = {
 ---
 
 <BaseLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
-  <div class="container prose-card">
+  <section class="container" aria-label="Working graph workspace">
+    <WorkingGraph graph={graph} criteria={criteria} source={source} client:load />
+    <noscript><p>The question list and evidence criteria below work without JavaScript. Enable JavaScript for the node canvas and focused inspector.</p></noscript>
+    <details class="tensor-panel graph-static-outline"><summary>Complete working graph and criteria · text view</summary><ol>{graph.nodes.map((node) => <li id={`working-${node.id}`}><h3>{node.id} · {node.label}</h3><p>{node.text}</p><dl>{Object.entries(criteria.rules[criteria.nodes[node.id].rule]).map(([answer, text]) => <div><dt>{answer}</dt><dd>{text}</dd></div>)}</dl><ul>{graph.edges.filter((edge) => edge.source === node.id).map((edge) => <li>{edge.decision} → <a href={`#working-${edge.target}`}>{edge.target}</a></li>)}</ul></li>)}</ol></details>
+    <p class="graph-downloads"><a href="/graphs/working/tensor.core.graph.json" download>Working graph JSON</a> · <a href="/graphs/working/entry-evidence-criteria.json" download>Evidence criteria JSON</a> · <a href="/investigation-lab/">Follow a recorded investigation path</a></p>
+  </section>
+  <ContentCard>
     <p class="section-kicker">Preserved investigation knowledge</p>
     <h2>Legacy graph releases</h2>
     <p>The released TENSOR question graph contains <strong>588 questions and 1,554 transitions</strong>. It remains available under its original release identifiers. The candidate Core adds a portable investigation record; it does not delete this knowledge or silently convert it into verified findings.</p>
@@ -35,5 +46,16 @@ const jsonLd = {
     <h2>Read graph metrics within their scope</h2>
     <p><a href="/metrics/">Legacy metrics</a> describe structural graph properties and release checks. Connectivity, branch balance, or a composite quality score does not prove investigation effectiveness, evidence quality, or institutional adoption.</p>
     <p><a href="/core/">New Core candidate</a> · <a href="/founding/06-change-and-decision-register.md">Migration decisions</a> · <a href="/contribute/">Help review a question</a></p>
-  </div>
+  </ContentCard>
 </BaseLayout>
+
+<style>
+.graph-static-outline { padding: 1rem; margin: 1rem 0; }
+.graph-static-outline summary { cursor: pointer; color: var(--accent-primary); }
+.graph-static-outline ol { padding: 1rem 0 0 1.5rem; }
+.graph-static-outline ol > li { padding: 1rem 0; border-top: 1px solid var(--line-soft); scroll-margin-top: 7rem; }
+.graph-static-outline dl { margin: .7rem 0; font-size: .85rem; }
+.graph-static-outline dt { font-weight: 700; color: var(--accent-primary); }
+.graph-static-outline ul { padding-left: 1.2rem; }
+.graph-downloads { margin: 1.2rem 0 2rem; font-size: .9rem; }
+</style>

@@ -1,4 +1,5 @@
 ---
+import ContentCard from '../../components/ContentCard.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { absoluteUrl, seo } from '../../data/seo';
 
@@ -14,7 +15,7 @@ const jsonLd = {
 ---
 
 <BaseLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
-  <div class="container prose-card">
+  <ContentCard>
     <p class="section-kicker">Evidence before a compatibility claim</p>
     <h2>Reference validation is the first step</h2>
     <p>Core 0.1.0-draft.1 includes schemas, two synthetic cases, a reference validator, and executable tests. They exercise a candidate binding. They are not a certification program or proof of independent interoperability.</p>
@@ -54,5 +55,5 @@ npm test`}</code></pre>
 
     <h2>Earlier fixtures</h2>
     <p>The previous website's graph-only starter fixtures belong to the legacy model. Use <a href="/core/">the candidate release page</a> for new work; do not combine the two contracts under one conformance claim.</p>
-  </div>
+  </ContentCard>
 </BaseLayout>

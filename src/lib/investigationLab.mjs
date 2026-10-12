@@ -8,6 +8,7 @@ export const CASES = Object.freeze([
 ]);
 export const SECTIONS = Object.freeze([
   { id: 'overview', label: 'Scope & handoff' },
+  { id: 'graph', label: 'Recorded path' },
   { id: 'QuestionInstance', label: 'Questions' },
   { id: 'EvidenceReference', label: 'Evidence' },
   { id: 'Observation', label: 'Observations' },

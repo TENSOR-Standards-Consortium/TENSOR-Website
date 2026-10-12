@@ -1,6 +1,6 @@
 # Core artifacts and source provenance
 
-The framework repository owns the Core runtime, candidate schemas and examples, founding proposal, and preserved legacy release. This website commits exact copies so local builds and deployments do not fetch changing content or require access to another repository.
+The framework repository owns the Core runtime, candidate schemas and examples, founding proposal, working graph with evidence criteria, and preserved legacy release. This website commits exact copies so local builds and deployments do not fetch changing content or require access to another repository.
 
 After the framework changes are committed, run from the website checkout:
 
@@ -21,6 +21,7 @@ The generated directories are:
 - `src/vendor/tensor-core/`: browser runtime, imported by the Investigation Lab, and its upstream `LICENSE`.
 - `public/core/0.1.0-draft.1/`: downloadable candidate documentation, schemas, examples, upstream `LICENSE`, and provenance.
 - `public/founding/`: the founding proposal, validation notes, and explicitly listed illustrative examples from `proposals/founding-core-v0.1.0/`. The Python authoring checker is a downloadable source file; the sync script never executes it.
+- `public/graphs/working/`: exact current draft graph, evidence criteria, and entry configuration from `drafts/core/`. These are working definitions, separate from published releases and the Core example definitions. Their source commit and digests are recorded in the same provenance manifest.
 - `public/legacy/0.20260206e/`: the exact published legacy graph. Its fixed SHA-256 is `dfc3f1a965c01b6f7ade253e426e69abcbad688fab20d9d00065d71c777c010c`.
 
 Edit the framework source and resync rather than editing these copies. Both source and destination paths reject traversal, unexpected path characters, and symbolic links. Unknown files in generated directories fail verification; the script never deletes them automatically.

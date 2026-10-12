@@ -1,4 +1,5 @@
 ---
+import ContentCard from '../../components/ContentCard.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 const version = '0.1.0-draft.1';
 const artifactPath = `/core/${version}`;
@@ -7,7 +8,7 @@ const description = 'A candidate shared contract for portable cyber investigatio
 ---
 
 <BaseLayout title={title} description={description} canonicalPath="/core/">
-  <div class="container prose-card">
+  <ContentCard>
     <p class="section-kicker">Public implementation candidate · {version}</p>
     <h2>Carry the investigation, including its reasoning</h2>
     <p>TENSOR Core proposes a shared contract for cyber investigations. A portable record connects questions, evidence references, observations, hypotheses, assessments, decisions, and recorded actions. Humans and agents use the same meanings and attribution rules.</p>
@@ -60,7 +61,7 @@ const description = 'A candidate shared contract for portable cyber investigatio
     <h2>Help move the candidate forward</h2>
     <p>The next evidence is an exchange between separately developed implementations, useful investigator feedback, and public resolution of open design questions. The <a href="/founding/04-reference-cases-and-conformance.md">acceptance scenarios</a>, <a href="/founding/05-review-plan.md">review plan</a>, and <a href="/founding/06-change-and-decision-register.md">decision register</a> make that work reviewable.</p>
     <p><a href="/contribute/">Contribute a case, review, or implementation report</a> · <a href="/standards/">How TENSOR relates to existing standards</a></p>
-  </div>
+  </ContentCard>
 </BaseLayout>
 
 <style>
