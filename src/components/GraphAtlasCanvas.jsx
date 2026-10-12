@@ -1,0 +1,128 @@
+import { useEffect, useRef, useState } from 'react';
+import { DOMAINS, STAGES } from '../lib/graphAtlas.mjs';
+
+export default function GraphAtlasCanvas({ graph, layout, selectedId, view, onSelect, onWhole, onFocus, shell }) {
+  const host = useRef(null), cy = useRef(null), selected = useRef(onSelect);
+  const desired = useRef({ selectedId, view }), previousView = useRef(view);
+  selected.current = onSelect; desired.current = { selectedId, view };
+  const [renderedLayout, setRenderedLayout] = useState(null), [status, setStatus] = useState('Preparing the complete map…');
+  const [camera, setCamera] = useState({ zoom: 1, pan: { x: 0, y: 0 }, width: 1, height: 1 });
+  const ready = renderedLayout === layout;
+  const [fullscreen, setFullscreen] = useState(false), [overview, setOverview] = useState(false);
+  const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fit = (elements) => {
+    const instance = cy.current;
+    if (!instance) return;
+    const target = elements;
+    const zoom = Math.min((instance.width() - 76) / (layout.width + 80), (instance.height() - 76) / (layout.height + 50));
+    const viewport = { zoom, pan: { x: (instance.width() - layout.width * zoom) / 2, y: (instance.height() - layout.height * zoom) / 2 + 20 } };
+    instance.stop();
+    if (reduced()) { if (target) instance.fit(target, 80); else instance.viewport(viewport); }
+    else instance.animate(target ? { fit: { eles: target, padding: 80 } } : viewport, { duration: 360, easing: 'ease-in-out-cubic' });
+  };
+  useEffect(() => {
+    let disposed = false, observer, frame;
+    setRenderedLayout(null); setStatus('Preparing the complete map…');
+    import('cytoscape').then(({ default: cytoscape }) => {
+      if (disposed || !host.current) return;
+      const css = getComputedStyle(host.current);
+      const color = value => value.startsWith('var(') ? css.getPropertyValue(value.slice(4, -1)).trim() : value;
+      const instance = cytoscape({ container: host.current, elements: [
+        ...layout.nodes.map((n) => ({ data: { id: n.id, title: `${n.id} · ${n.label.replace(`${n.category}: `, '')}`, color: color(n.color) }, position: n.position })),
+        ...graph.edges.map((e, i) => ({ data: { id: `atlas-edge-${i}`, source: e.source, target: e.target, outcome: e.decision } })),
+      ], layout: { name: 'preset', fit: false }, minZoom: .025, maxZoom: 3.5, wheelSensitivity: .18, boxSelectionEnabled: false, autoungrabify: true,
+      style: [
+        { selector: 'node', style: { width: 55, height: 28, shape: 'round-rectangle', 'background-color': '#101c29', 'background-opacity': 1, 'border-width': 1.5, 'border-color': 'data(color)', label: 'data(id)', color: '#edf4ff', 'font-family': 'JetBrains Mono, monospace', 'font-size': 17, 'font-weight': 500, 'text-valign': 'center', 'text-halign': 'center', 'text-outline-color': '#101c29', 'text-outline-width': 2 } },
+        { selector: 'edge', style: { width: 1.1, opacity: .2, 'line-color': '#8dacc8', 'target-arrow-color': '#8dacc8', 'target-arrow-shape': 'triangle', 'arrow-scale': .7, 'curve-style': 'bezier' } },
+        { selector: 'edge[outcome = "unknown"]', style: { 'line-style': 'dashed' } },
+        { selector: '.neighbor', style: { 'border-width': 2.5, 'background-color': '#26374a', 'z-index': 8 } },
+        { selector: 'node.selected', style: { 'border-color': '#ffd083', 'border-width': 4, width: 74, height: 39, 'background-color': '#64401d', 'z-index': 10 } },
+        { selector: 'edge.connected', style: { width: 3.5, opacity: 1, label: 'data(outcome)', 'font-size': 14, color: '#eff6ff', 'text-background-color': '#101722', 'text-background-opacity': 1, 'text-background-padding': 4, 'z-index': 9, 'text-rotation': 'autorotate' } },
+        { selector: '.connected[outcome = "yes"]', style: { 'line-color': '#6ee7b7', 'target-arrow-color': '#6ee7b7' } },
+        { selector: '.connected[outcome = "no"]', style: { 'line-color': '#ffb3b3', 'target-arrow-color': '#ffb3b3' } },
+        { selector: '.connected[outcome = "unknown"]', style: { 'line-color': '#efcd84', 'target-arrow-color': '#efcd84' } },
+        { selector: '.detail', style: { label: 'data(title)', 'font-family': 'Inter, sans-serif', 'font-size': 11, 'text-wrap': 'wrap', 'text-max-width': 120, 'text-valign': 'bottom', 'text-margin-y': 5, 'text-background-color': '#101722', 'text-background-opacity': .95, 'text-background-padding': 3 } },
+      ] });
+      cy.current = instance;
+      const sync = () => {
+        if (frame) return;
+        frame = requestAnimationFrame(() => {
+          frame = null;
+          if (disposed) return;
+          const detail = instance.zoom() > 1.35;
+          if (detail !== instance.nodes().first().hasClass('detail')) instance.nodes().toggleClass('detail', detail);
+          setCamera({ zoom: instance.zoom(), pan: instance.pan(), width: instance.width(), height: instance.height() });
+        });
+      };
+      instance.on('pan zoom', sync);
+      instance.on('tap', 'node', (event) => selected.current(event.target.id()));
+      const initialZoom = Math.min((instance.width() - 76) / (layout.width + 80), (instance.height() - 76) / (layout.height + 50));
+      instance.viewport({ zoom: initialZoom, pan: { x: (instance.width() - layout.width * initialZoom) / 2, y: (instance.height() - layout.height * initialZoom) / 2 + 20 } });
+      observer = new ResizeObserver(() => {
+        if (disposed) return;
+        instance.resize();
+        if (desired.current.view === 'all') {
+          const z = Math.min((instance.width() - 76) / (layout.width + 80), (instance.height() - 76) / (layout.height + 50));
+          instance.viewport({ zoom: z, pan: { x: (instance.width() - layout.width * z) / 2, y: (instance.height() - layout.height * z) / 2 + 20 } });
+        }
+        sync();
+      });
+      observer.observe(host.current);
+      sync(); setRenderedLayout(layout); setStatus(`${graph.nodes.length} questions · ${graph.edges.length.toLocaleString()} routes · complete graph loaded`);
+    }).catch(() => { if (!disposed) setStatus('Map unavailable. Open Questions or the complete text view below; every question and route remains available.'); });
+    return () => { disposed = true; if (frame) cancelAnimationFrame(frame); observer?.disconnect(); cy.current?.destroy(); cy.current = null; };
+  }, [graph, layout]);
+  useEffect(() => {
+    const instance = cy.current;
+    if (!instance || !ready) return;
+    instance.elements().removeClass('selected neighbor connected');
+    instance.nodes().style('opacity', selectedId ? .5 : 1);
+    instance.edges().style('opacity', selectedId ? .09 : .34);
+    const node = instance.getElementById(selectedId || '');
+    node.addClass('selected').style('opacity', 1); node.neighborhood().nodes().addClass('neighbor').style('opacity', 1); node.connectedEdges().addClass('connected').style('opacity', 1);
+    if (view === 'focus' && node.length) fit(node.closedNeighborhood());
+    else if (previousView.current === 'focus') fit();
+    previousView.current = view;
+    // Selection in the full atlas preserves the camera and spatial context.
+  }, [selectedId, view, ready]);
+  useEffect(() => {
+    const change = () => setFullscreen(document.fullscreenElement === shell.current);
+    document.addEventListener('fullscreenchange', change);
+    return () => document.removeEventListener('fullscreenchange', change);
+  }, [shell]);
+  const zoom = (factor) => { const c = cy.current; if (c) { c.stop(); c.zoom({ level: c.zoom() * factor, renderedPosition: { x: c.width() / 2, y: c.height() / 2 } }); } };
+  const pan = (x, y) => { cy.current?.stop(); cy.current?.panBy({ x, y }); };
+  const mini = { x: -40, y: -10, width: layout.width + 80, height: layout.height + 20 };
+  return <div className="atlas-map-wrap">
+    <div className="atlas-stage" ref={host} tabIndex={0} onKeyDown={(event) => { const moves = { ArrowLeft: [140, 0], ArrowRight: [-140, 0], ArrowUp: [0, 140], ArrowDown: [0, -140] }; if (moves[event.key]) { event.preventDefault(); pan(...moves[event.key]); } }} role="img" aria-label="Complete directed question graph. Use Questions and route links for keyboard and screen-reader exploration." data-graph-ready={String(ready)} data-node-count={graph.nodes.length} data-edge-count={graph.edges.length} data-view={view} />
+    <svg className="atlas-map-labels" aria-hidden="true" width="100%" height="100%">
+      <g transform={`translate(${camera.pan.x} ${camera.pan.y}) scale(${camera.zoom})`}>
+        {layout.orientation === 'portrait' ? <>
+          {DOMAINS.map((domain, i) => <text key={domain} style={{ fontSize: `${9 / camera.zoom}px`, letterSpacing: 0 }} x={300 + i * layout.domainWidth} y="45" fill={layout.nodes.find(n => n.category === domain)?.color}>{['ID', 'HOST', 'NET', 'CLD', 'MAIL', 'APP', 'FILE'][i]}</text>)}
+          {STAGES.map((stage, i) => <g key={stage}><line x1="135" x2={layout.width} y1={80 + i * layout.stageHeight} y2={80 + i * layout.stageHeight} /><text className="atlas-stage-label" style={{ fontSize: `${8 / camera.zoom}px`, letterSpacing: 0 }} x="0" y={130 + i * layout.stageHeight}>{stage}</text></g>)}
+        </> : <>
+          {DOMAINS.map((domain, i) => <g key={domain}><line x1="160" x2={layout.width} y1={55 + i * layout.laneHeight} y2={55 + i * layout.laneHeight} /><text style={{ fontSize: `${Math.max(25, 9 / camera.zoom)}px` }} x="0" y={100 + i * layout.laneHeight} fill={layout.nodes.find(n => n.category === domain)?.color}>{domain.toUpperCase()}</text></g>)}
+          {STAGES.map((stage, i) => <text key={stage} className="atlas-stage-label" style={{ fontSize: `${Math.max(21, 8 / camera.zoom)}px` }} x={230 + i * layout.stageWidth} y="12">{String(i + 1).padStart(2, '0')} / {stage.toUpperCase()}</text>)}
+        </>}
+      </g>
+    </svg>
+    <div className="atlas-map-caption"><span className="atlas-status-light" /><span aria-live="polite">{status}<small>Select a question to illuminate its routes.</small></span></div>
+    <div className="atlas-camera-controls" role="group" aria-label="Map camera">
+      <button className="btn btn-secondary" disabled={!ready} onClick={() => { onWhole(); fit(); }}>Fit all</button>
+      <button className="btn btn-secondary" disabled={!ready || !selectedId} onClick={() => { onFocus(); const node = cy.current?.getElementById(selectedId || ''); if (node?.length) fit(node.closedNeighborhood()); }}>Focus selection</button>
+      <button className="btn btn-secondary" disabled={!ready} aria-label="Zoom in" onClick={() => zoom(1.5)}>+</button>
+      <button className="btn btn-secondary" disabled={!ready} aria-label="Zoom out" onClick={() => zoom(1 / 1.5)}>−</button>
+      <button className="btn btn-secondary atlas-fullscreen" onClick={async () => { try { if (document.fullscreenElement) await document.exitFullscreen(); else if (shell.current?.requestFullscreen) await shell.current.requestFullscreen(); else setStatus('Full screen is unavailable in this browser. Fit all and zoom remain available.'); } catch { setStatus('Full screen could not open. Fit all and zoom remain available.'); } }} aria-label={fullscreen ? 'Exit full screen' : 'Enter full screen'}>{fullscreen ? 'Exit ↙' : 'Expand ↗'}</button>
+    </div>
+    <div className={`atlas-orientation ${overview ? 'is-open' : 'is-closed'}`}>
+      <button className="atlas-overview-toggle" aria-expanded={overview} aria-label="Toggle overview map" onClick={() => setOverview(!overview)}>Overview <span>{Math.round(camera.zoom * 100)}% {overview ? '−' : '+'}</span></button>
+      {overview && <>
+      <svg className="atlas-minimap" viewBox={`${mini.x} ${mini.y} ${mini.width} ${mini.height}`} role="img" aria-label="Map overview and current viewport">
+        {layout.nodes.map((n) => <rect key={n.id} x={n.position.x - 14} y={n.position.y - 9} width="28" height="18" fill={n.id === selectedId ? '#ffcf83' : n.color} opacity={n.id === selectedId ? 1 : .7} />)}
+        <rect className="atlas-viewport" x={-camera.pan.x / camera.zoom} y={-camera.pan.y / camera.zoom} width={camera.width / camera.zoom} height={camera.height / camera.zoom} />
+      </svg>
+      <div className="atlas-pan" role="group" aria-label="Pan map"><button aria-label="Pan left" onClick={() => pan(140, 0)}>←</button><button aria-label="Pan up" onClick={() => pan(0, 140)}>↑</button><button aria-label="Pan down" onClick={() => pan(0, -140)}>↓</button><button aria-label="Pan right" onClick={() => pan(-140, 0)}>→</button></div></>}
+    </div>
+    <div className="atlas-map-key"><span>Arrow = route</span><span className="tone-yes">yes</span><span className="tone-no">no</span><span className="tone-unknown">unknown · dashed</span><span>Drag / pinch to explore</span></div>
+  </div>;
+}

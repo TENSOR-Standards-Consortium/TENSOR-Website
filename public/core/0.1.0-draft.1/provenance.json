@@ -3,7 +3,7 @@
   "manifestVersion": 1,
   "bindingVersion": "0.1.0-draft.1",
   "sourceRepository": "https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework",
-  "sourceCommit": "399e69a0e0e224c610c19df8a2261877db444692",
+  "sourceCommit": "bbf06b5b9d7b2baa6c74d04273cdf6966182d169",
   "sourceDirty": false,
   "foundingSource": "framework-repository",
   "files": [
@@ -96,6 +96,18 @@
       "target": "public/core/0.1.0-draft.1/schemas/record.schema.json",
       "sha256": "61d433b6d293ae413530a6ab90d69c2a11e4fd9ccffb52ca94299ea19fe03dfc",
       "bytes": 67314
+    },
+    {
+      "source": "docs/graph-coverage-roadmap.md",
+      "target": "public/docs/graph-coverage-roadmap.md",
+      "sha256": "25a0363272f2bac4f2d5c4eeb8d1680f77338553018478be6f39c38caac8e418",
+      "bytes": 4873
+    },
+    {
+      "source": "docs/legacy-migration.md",
+      "target": "public/docs/legacy-migration.md",
+      "sha256": "fa863b41fe153a92bf175d48a9d03dc1d095887f415bdbfe1df726d412ede9c5",
+      "bytes": 2643
     },
     {
       "source": "docs/review-process.md",
@@ -210,6 +222,12 @@
       "target": "public/founding/examples/manifest.json",
       "sha256": "7a0f265c5e6ee39be0a655bb01d3c2d46a3d0653acf64c8f721549167dbde7d9",
       "bytes": 933
+    },
+    {
+      "source": "drafts/core/coverage-inventory.json",
+      "target": "public/graphs/working/coverage-inventory.json",
+      "sha256": "e377f0e36afe1366ba9869ee337ce225880b7938c0e8c55712a5edd373a62912",
+      "bytes": 318422
     },
     {
       "source": "drafts/core/entry-evidence-criteria.json",

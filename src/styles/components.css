@@ -14,3 +14,8 @@
 .workspace-intro .page-title { max-width: 24ch; }
 .workspace-intro p:not(.page-eyebrow) { color: var(--text-secondary); max-width: 80ch; margin-top: 1rem; }
 .prose-card { overflow-wrap: anywhere; }
+
+/* Outcome tones are shared by definition and recorded graph keys. */
+.tone-yes { color: var(--accent-success); }
+.tone-no { color: var(--accent-danger); }
+.tone-unknown { color: var(--accent-warning); }
