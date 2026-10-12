@@ -1,5 +1,7 @@
 # Investigation atlas validation
 
+Historical atlas review, before nebula and original-question restoration. Current working draft: 609 questions; all 588 author dispositions recorded, independent review pending. Counts and observations below describe the earlier build.
+
 Baseline: website `eb1e586a69bc3b5d05aadc8a59f02352af57ed4a`. Framework source: clean merged `bbf06b5b9d7b2baa6c74d04273cdf6966182d169` (Framework PR #13).
 
 ## Delivered behavior

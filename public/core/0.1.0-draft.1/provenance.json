@@ -3,7 +3,7 @@
   "manifestVersion": 1,
   "bindingVersion": "0.1.0-draft.1",
   "sourceRepository": "https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework",
-  "sourceCommit": "bbf06b5b9d7b2baa6c74d04273cdf6966182d169",
+  "sourceCommit": "22a1be5d6f2b46b16ccc738efef04599c052c082",
   "sourceDirty": false,
   "foundingSource": "framework-repository",
   "files": [
@@ -100,14 +100,14 @@
     {
       "source": "docs/graph-coverage-roadmap.md",
       "target": "public/docs/graph-coverage-roadmap.md",
-      "sha256": "25a0363272f2bac4f2d5c4eeb8d1680f77338553018478be6f39c38caac8e418",
-      "bytes": 4873
+      "sha256": "da38050e7adbfb6c4db9907f8a802bcb36ae27e896c451350b659d0a2d1feb19",
+      "bytes": 4241
     },
     {
       "source": "docs/legacy-migration.md",
       "target": "public/docs/legacy-migration.md",
-      "sha256": "fa863b41fe153a92bf175d48a9d03dc1d095887f415bdbfe1df726d412ede9c5",
-      "bytes": 2643
+      "sha256": "fa95106f3134e44ad7e6370a2899eb937e0318ef1c53d4016fc04def65542aea",
+      "bytes": 2882
     },
     {
       "source": "docs/review-process.md",
@@ -226,26 +226,38 @@
     {
       "source": "drafts/core/coverage-inventory.json",
       "target": "public/graphs/working/coverage-inventory.json",
-      "sha256": "e377f0e36afe1366ba9869ee337ce225880b7938c0e8c55712a5edd373a62912",
-      "bytes": 318422
+      "sha256": "c98b002e529dd3f1552a4e79f610f5669b64a3e71c90dda3fbe5dec6ba080beb",
+      "bytes": 889747
     },
     {
       "source": "drafts/core/entry-evidence-criteria.json",
       "target": "public/graphs/working/entry-evidence-criteria.json",
-      "sha256": "0595cdd6a27c44ca87839981a2b4b93d51452a234a7af8d400da68c900cf1e49",
-      "bytes": 86963
+      "sha256": "137c2f02087b6a1cef25931381e9a9ba867523ea4ca9b7021ee0db5a34b2db5f",
+      "bytes": 520889
+    },
+    {
+      "source": "drafts/core/reviews/2026-10-12-restoration/README.md",
+      "target": "public/graphs/working/reviews/2026-10-12-restoration/README.md",
+      "sha256": "c26bced24b6cbaecee8e33c0391aa5ff9750800f86c03ac48de88de3c2ea028d",
+      "bytes": 5874
+    },
+    {
+      "source": "drafts/core/reviews/2026-10-12-restoration/analysis.json",
+      "target": "public/graphs/working/reviews/2026-10-12-restoration/analysis.json",
+      "sha256": "3a3e5b460d1fd6542d56fcb101ce961e2fea507305bfa8dae1de2a7008d5ddcf",
+      "bytes": 1322930
     },
     {
       "source": "drafts/core/source/entry_nodes.json",
       "target": "public/graphs/working/source/entry_nodes.json",
-      "sha256": "f4c50d88d48478047a25fd8bda7a3897b9b9a2cde8344a5590f025d3ab06625a",
-      "bytes": 156
+      "sha256": "e24fb7f141aa3782df799440cca442abe37a460c91ba133c51748e3138f676b6",
+      "bytes": 1254
     },
     {
       "source": "drafts/core/tensor.core.graph.json",
       "target": "public/graphs/working/tensor.core.graph.json",
-      "sha256": "8b83f19f83d7d796c96b404d37f4ae093d36415b35123602133f34cad5c172be",
-      "bytes": 80967
+      "sha256": "90dfdc2209634bb8108f8e449d8dc623a02aed8ea190a054e6bdad9fd1d22620",
+      "bytes": 864441
     },
     {
       "source": "releases/core/graphs/v0.20260206e/tensor.core.graph.json",

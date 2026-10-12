@@ -2,37 +2,35 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import ContentCard from '../../../components/ContentCard.astro';
 import inventory from '../../../../public/graphs/working/coverage-inventory.json';
-const names = {'same-id-rewritten': 'Same ID · rewritten', 'technical-reduction': 'Earlier consolidation', 'entry-evidence-repair': 'Entry repair · detached', 'positive-evidence-repair': 'Positive repair · detached'};
+const names = {'same-id-rewritten': 'Prior repair retained', 'restored-with-evidence-repair': 'Restored with evidence repair'};
 const rows = inventory.originalQuestions;
 ---
-<BaseLayout title="Graph coverage and migration" description="A source-pinned account of all 588 original TENSOR questions and the plan for bringing their investigative capabilities forward." canonicalPath="/graphs/coverage/">
+<BaseLayout title="Graph coverage and migration" description="Analysis, repaired definitions and independent review status for all 588 original TENSOR questions in the 609-question working draft." canonicalPath="/graphs/coverage/">
   <ContentCard>
     <p class="section-kicker">Published knowledge → working definitions</p>
-    <h2>506 originals are absent from the active draft.</h2>
-    <p>The published release has <strong>588 questions and 1,554 routes</strong>. The working draft has <strong>103 questions and 225 routes</strong>: 82 rewritten original IDs and 21 new questions. All 82 shared IDs have changed text. No comprehensive approved equivalence mapping currently exists.</p>
-    <p>All original questions remain preserved, but <strong>equivalent investigative coverage has not yet been demonstrated</strong>. Each original needs a reviewed disposition, including the 82 shared IDs. The ledger below records ID lineage; “same ID” does not mean the same proposition.</p>
-    <p><a class="btn btn-primary" href="/graphs/?graph=published">Explore all 588 questions</a> <a class="btn btn-secondary" href="/graphs/?graph=working">Explore the working draft</a></p>
-    <h2>How 588 became 103</h2>
-    <div class="coverage-table"><table><thead><tr><th>Stage</th><th>Questions</th><th>Change</th></tr></thead><tbody><tr><td>Published release</td><td>588</td><td>Preserved source baseline</td></tr><tr><td>Earlier technical reduction</td><td>219</td><td>369 original IDs removed during consolidation</td></tr><tr><td>Entry evidence repairs</td><td>184</td><td>49 originals detached; 14 questions added</td></tr><tr><td>Positive evidence repairs</td><td>103</td><td>88 originals detached; 7 questions added</td></tr></tbody></table></div>
-    <p>The repairs removed unsupported pivots and assertions. Reattaching old routes just to recover a node count would undo that work. Consolidation may be justified, but it needs explicit mappings and evidence of what was retained or lost.</p>
-    <h2>Bring capabilities forward in reviewed batches</h2>
+    <h2>All 588 original IDs are in the active draft.</h2>
+    <p>The working draft has <strong>609 questions and 1,554 routes</strong>: all 588 original IDs plus 21 repair questions. The seven repaired entry paths remain intact. The published 588-question release and frozen institutional review package are unchanged.</p>
+    <p>Each original now has an <strong>author-reviewed disposition</strong>. The 82 prior repairs retain their broader parameterized predicates; 506 originals return with explicit evidence criteria and repaired routes. Changes in meaning are recorded. Independent approval and equivalent investigative coverage have not been demonstrated.</p>
+    <p><a class="btn btn-primary" href="/graphs/?graph=working&amp;renderer=3d">Explore the 609-question draft</a> <a class="btn btn-secondary" href="/graphs/?graph=published">Preserved 588-question release</a></p>
+    <h2>The full history stays visible</h2>
+    <div class="coverage-table"><table><thead><tr><th>Stage</th><th>Questions</th><th>Change</th></tr></thead><tbody><tr><td>Published release</td><td>588</td><td>Preserved source baseline</td></tr><tr><td>Earlier technical reduction</td><td>219</td><td>369 original IDs removed</td></tr><tr><td>Entry evidence repairs</td><td>184</td><td>49 originals detached; 14 questions added</td></tr><tr><td>Positive evidence repairs</td><td>103</td><td>88 originals detached; 7 questions added</td></tr><tr><td>Original-question restoration</td><td>609</td><td>506 originals revised and returned; prior repairs retained</td></tr></tbody></table></div>
+    <p>Original unsupported edges were replaced, rather than reattached. Questions now separate matching records, provenance, operational comparators, independent corroboration, technical hypotheses, bounded scope, relations, technical sources or patterns, and comparable metric changes. Qualified endings preserve no/unknown answers and open questions without closing the investigation.</p>
+    <p>The source contains <strong>479 distinct exact prompts</strong> and <strong>107 repeated-prompt groups involving 216 IDs</strong>. Repeated wording is disclosed; no consolidation or equivalence is assumed. Node count alone cannot establish coverage.</p>
+    <h2>What reviewers should challenge next</h2>
     <ol class="coverage-plan">
-      <li><strong>Review the 137 recently detached questions first.</strong> Work in seven domain batches, checking missing prerequisites, meaningful routes, and yes/no/unknown criteria. Review the 82 rewritten originals in those same batches.</li>
-      <li><strong>Review the 369 earlier consolidation removals.</strong> Give every original a disposition: restore, revise, merge, split, public profile, or defer. Record target references, rationale, information lost, and unresolved gaps. Public domain profiles remain part of TENSOR.</li>
-      <li><strong>Publish additive definition batches with scenario evidence.</strong> Include positive, negative, unknown and contradictory evidence; benign explanations; cross-domain pivots; and human/agent walkthroughs. Preserve released artifacts and the frozen review package.</li>
-      <li><strong>Claim migration completeness only after scope review.</strong> Account for all originals and additions, publish independent findings and residual gaps, and test end-to-end identity, endpoint, network, cloud, email, application, file and autonomous-agent investigations.</li>
+      <li><strong>Meaning and evidence in each domain.</strong> Review the source and revised proposition, facet, criteria and route rationale. Identify missing capabilities, unsupported inferences or useful consolidation.</li>
+      <li><strong>Human and agent investigations with authorized evidence.</strong> Exercise supported, contradicted and unresolved paths. The 1,791 authored scenarios are regression evidence, not verified real-world efficacy.</li>
+      <li><strong>Independent implementation and exchange.</strong> Preserve bound subjects/time and separate assessments using the pinned definitions and the separate Core candidate. Publish disagreements before promotion.</li>
     </ol>
-    <p>The next deliverable is the first reviewed domain batch. A smaller graph can be appropriate; a count alone cannot establish coverage. The institutional package remains a bounded candidate with this gap disclosed.</p>
-    <p><a href="/docs/graph-coverage-roadmap.md">Full migration roadmap and acceptance criteria</a> · <a href="/graphs/working/coverage-inventory.json" download>Download the complete coverage ledger</a></p>
+    <p><a href="/docs/graph-coverage-roadmap.md">Review roadmap</a> · <a href="/graphs/working/reviews/2026-10-12-restoration/README.md">Restoration method and limits</a> · <a href="/graphs/working/reviews/2026-10-12-restoration/analysis.json" download>Complete per-ID analysis</a> · <a href="/graphs/working/coverage-inventory.json" download>Coverage ledger JSON</a></p>
     <h2>Original-question ledger</h2>
-    <p><strong>{inventory.summary.approvedSemanticDispositions} approved semantic dispositions.</strong> All 588 originals are pending semantic review. The categories below describe where IDs left the draft, not whether their capabilities are obsolete or equivalent.</p>
+    <p><strong>{inventory.summary.authorReviewedDispositions} author-reviewed dispositions; {inventory.summary.approvedSemanticDispositions} independently approved.</strong> Source prompts, changed meaning, issues and target wording are available for every original. Historical removal stages remain in the downloaded ledger.</p>
     <div class="coverage-filters"><label>Search originals<input id="coverage-search" type="search" placeholder="ID, domain, topic, or prompt" /></label><label>Lineage<select id="coverage-status" aria-label="Lineage"><option value="">All stages</option>{Object.entries(names).map(([value,label])=><option value={value}>{label}</option>)}</select></label></div>
     <p id="coverage-count" aria-live="polite">588 original questions</p>
     <div class="coverage-table coverage-ledger" tabindex="0" role="region" aria-label="All original questions and their lineage">
-      <table><thead><tr><th>Original question</th><th>Domain / stage</th><th>ID lineage</th><th>Semantic disposition</th></tr></thead><tbody>{rows.map((row) => <tr data-coverage-row data-status={row.lineageStatus}><td><a href={`/graphs/?graph=published&node=${row.sourceId}`}>{row.sourceId} · {row.sourceLabel}</a><details><summary>Original prompt</summary><p>{row.sourceText}</p></details></td><td>{row.category}<br /><small>{row.archetype}</small></td><td>{names[row.lineageStatus]}{row.activeId && <p><a href={`/graphs/?graph=working&node=${row.activeId}`}>Inspect working wording ↗</a></p>}</td><td>Pending review</td></tr>)}</tbody></table>
+      <table><thead><tr><th>Original question</th><th>Domain / stage</th><th>ID lineage</th><th>Semantic disposition</th></tr></thead><tbody>{rows.map((row) => <tr id={row.sourceId} data-coverage-row data-status={row.lineageStatus}><td><a href={`/graphs/?graph=published&node=${row.sourceId}`}>{row.sourceId} · {row.sourceLabel}</a><details><summary>Original prompt</summary><p>{row.sourceText}</p></details></td><td>{row.category}<br /><small>{row.archetype}</small></td><td>{names[row.lineageStatus]}{row.activeId && <p><a href={`/graphs/?graph=working&node=${row.activeId}`}>Inspect working wording ↗</a></p>}</td><td><strong>{row.disposition === 'restore-with-evidence-repair' ? 'Revised and restored' : 'Prior evidence repair retained'}</strong><p>{row.sourceFacet}</p><details><summary>Meaning and identified issues</summary><p>{row.rationale}</p><ul>{row.issues.map(issue => <li>{issue}</li>)}</ul>{row.sourceDuplicateIds.length > 1 && <p>Repeated prompt IDs: {row.sourceDuplicateIds.join(', ')}. Equivalence is unproved.</p>}<p>{row.scenarioRefs.length} scenario references in the complete analysis.</p></details><small>Independent review pending</small></td></tr>)}</tbody></table>
     </div>
-    <h2>Absent originals by domain</h2>
-    <ul>{Object.entries(inventory.summary.absentByDomain).map(([domain,count])=><li>{domain}: {count}</li>)}</ul>
+    <p><strong>{inventory.summary.absentOriginal} original IDs absent.</strong> This inventory does not assert equivalent meaning or exhaustive coverage.</p>
     <h2>Source pins</h2>
     <p>Published {inventory.published.version}: <code>{inventory.published.sha256}</code></p>
     <p>Working {inventory.working.version}: <code>{inventory.working.sha256}</code></p>
@@ -57,6 +55,7 @@ const rows = inventory.originalQuestions;
 <style>
   .coverage-table { overflow: auto; margin: 1rem 0; }
   table { width: 100%; border-collapse: collapse; font-size: .85rem; text-align: left; }
+  tr[id] { scroll-margin-top: 6rem; }
   th, td { padding: .8rem; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
   th { background: var(--bg-card); }
   .coverage-ledger { max-height: 42rem; border: 1px solid var(--line-soft); }
