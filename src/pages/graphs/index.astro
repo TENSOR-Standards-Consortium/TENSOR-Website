@@ -1,5 +1,6 @@
 ---
 import WorkingGraph from '../../components/WorkingGraph.jsx';
+import published from '../../../public/legacy/0.20260206e/tensor.core.graph.json';
 import graph from '../../../public/graphs/working/tensor.core.graph.json';
 import criteria from '../../../public/graphs/working/entry-evidence-criteria.json';
 import source from '../../../public/core/0.1.0-draft.1/provenance.json';
@@ -18,11 +19,16 @@ const jsonLd = {
 };
 ---
 
-<BaseLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
-  <section class="container" aria-label="Working graph workspace">
-    <WorkingGraph graph={graph} criteria={criteria} source={source} client:load />
+<BaseLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd} hidePageTitle>
+  <section class="atlas-page" aria-label="Investigation graph workspace">
+    <WorkingGraph published={published} graph={graph} criteria={criteria} source={source} client:load />
+    <div class="atlas-coverage" id="coverage">
+      <div><p class="section-kicker">COVERAGE / AN OPEN MIGRATION</p><h2>Preserved does not mean<br />brought forward.</h2><p>The working draft contains <strong>82 rewritten original IDs and 21 new questions</strong>. <strong>506 original questions are absent</strong> from the active draft. Equivalent investigative coverage has not yet been demonstrated.</p></div>
+      <div><div class="atlas-lineage"><div>588<small>Published</small></div><span>→</span><div>219<small>Reduced draft</small></div><span>→</span><div>184<small>Entry repair</small></div><span>→</span><div>103<small>Positive repair</small></div></div><p>Every original question is accounted for in a source-pinned ledger. The next stage reviews each capability, its evidence criteria, routes, and scenarios before restoring or consolidating it.</p><div class="cta-group"><a class="btn btn-primary" href="/graphs/coverage/">Coverage ledger &amp; roadmap →</a><a class="btn btn-secondary" href="/questions/">Published catalog</a></div></div>
+    </div>
     <noscript><p>The question list and evidence criteria below work without JavaScript. Enable JavaScript for the node canvas and focused inspector.</p></noscript>
     <details class="tensor-panel graph-static-outline"><summary>Complete working graph and criteria · text view</summary><ol>{graph.nodes.map((node) => <li id={`working-${node.id}`}><h3>{node.id} · {node.label}</h3><p>{node.text}</p><dl>{Object.entries(criteria.rules[criteria.nodes[node.id].rule]).map(([answer, text]) => <div><dt>{answer}</dt><dd>{text}</dd></div>)}</dl><ul>{graph.edges.filter((edge) => edge.source === node.id).map((edge) => <li>{edge.decision} → <a href={`#working-${edge.target}`}>{edge.target}</a></li>)}</ul></li>)}</ol></details>
+    <details class="tensor-panel graph-static-outline"><summary>Complete published graph · 588 questions · text view</summary><ol>{published.nodes.map((node) => <li id={`published-${node.id}`}><h3>{node.id} · {node.label}</h3><p>{node.text}</p><ul>{published.edges.filter((edge) => edge.source === node.id).map((edge) => <li>{edge.decision} → <a href={`#published-${edge.target}`}>{edge.target}</a></li>)}</ul></li>)}</ol></details>
     <p class="graph-downloads"><a href="/graphs/working/tensor.core.graph.json" download>Working graph JSON</a> · <a href="/graphs/working/entry-evidence-criteria.json" download>Evidence criteria JSON</a> · <a href="/investigation-lab/">Follow a recorded investigation path</a></p>
   </section>
   <ContentCard>

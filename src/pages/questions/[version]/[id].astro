@@ -18,7 +18,7 @@ const citationUrl = new URL(questionPath(question.id), Astro.site || 'https://te
 
 <BaseLayout title={title} description={question.text} canonicalPath={questionPath(question.id)}>
   <ContentCard as="article">
-    <p><a href="/questions/">← Question library</a> · <a href={`/studio/?graph=${LEGACY_VERSION}&node=${encodeURIComponent(question.id)}`}>View this node in the published graph</a></p>
+    <p><a href="/questions/">← Question library</a> · <a href={`/graphs/?graph=published&node=${encodeURIComponent(question.id)}`}>View this node in the published graph</a></p>
     <p class="section-kicker">Preserved graph release · {LEGACY_VERSION}</p>
     <h2>{question.text}</h2>
     <dl class="question-facts">

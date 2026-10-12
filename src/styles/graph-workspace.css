@@ -27,7 +27,6 @@
 .tensor-graph-toolbar .btn { font-size: .8rem; white-space: nowrap; }
 .tensor-graph-canvas { width: 100%; height: 440px; background: var(--bg-app); }
 .tensor-graph-key { padding: .75rem 1rem; border-top: 1px solid var(--line-soft); }
-.tone-yes { color: var(--accent-success); } .tone-no { color: var(--accent-danger); } .tone-unknown { color: var(--accent-warning); }
 .tensor-graph-inspector { padding: 1.4rem; margin-top: 1rem; }
 .tensor-graph-inspector h3 { font-size: 1.2rem; line-height: 1.5; margin: .4rem 0 1rem; }
 .tensor-graph-inspector h4 { margin: 1.4rem 0 .75rem; }

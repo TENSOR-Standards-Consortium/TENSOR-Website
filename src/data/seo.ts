@@ -91,7 +91,7 @@ export const seo = {
     ogType: 'article',
   },
   graphs: {
-    title: 'TENSOR Working Graph',
+    title: 'TENSOR Investigation Atlas',
     description:
       'Explore the current working question graph, inspect evidence criteria and available routes, or open preserved published graph releases.',
     canonicalPath: '/graphs/',

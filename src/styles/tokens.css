@@ -1,4 +1,8 @@
 :root {
+  --bg-canvas: #0c141e;
+  --bg-canvas-panel: #14202c;
+  --line-canvas: #344556;
+  --text-canvas-muted: #aabdcf;
   --bg-app: #20252c;
   --bg-card: #2b313a;
   --bg-card-hover: #343b45;
@@ -12,13 +16,13 @@
   --accent-success: #6ee7b7;
   --accent-danger: #ffb3b3;
   --accent-warning: #efcd84;
-  --domain-application: #ffd166;
-  --domain-cloud: #4cc9f0;
-  --domain-email: #ff9f1c;
-  --domain-file: #06d6a0;
-  --domain-host: #f3722c;
-  --domain-identity: #9b5de5;
-  --domain-network: #00bbf9;
+  --domain-application: #f5df94;
+  --domain-cloud: #83e3e6;
+  --domain-email: #ffc78b;
+  --domain-file: #87e6bd;
+  --domain-host: #ffae8c;
+  --domain-identity: #bc9aff;
+  --domain-network: #6bd8ff;
   --domain-uncategorized: #94a3b8;
   --panel-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 4px 12px rgba(0, 0, 0, 0.4);
   --bg-page: var(--bg-app);

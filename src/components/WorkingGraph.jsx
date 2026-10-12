@@ -1,48 +1,67 @@
-import { useEffect, useMemo, useState } from 'react';
-import GraphCanvas from './GraphCanvas.jsx';
-import { Badge, Panel } from './WorkspaceUI.jsx';
-import { definitionView } from '../lib/graphViews.mjs';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import GraphAtlasCanvas from './GraphAtlasCanvas.jsx';
+import { Badge } from './WorkspaceUI.jsx';
+import { atlasLayout, DOMAINS, DOMAIN_COLORS, readAtlasState, writeAtlasState } from '../lib/graphAtlas.mjs';
+import '../styles/graph-atlas.css';
 
-export default function WorkingGraph({ graph, criteria, source }) {
-  const [selectedId, setSelectedId] = useState(graph.entryNodeIds[0]);
-  const [whole, setWhole] = useState(false);
-  const [query, setQuery] = useState('');
-  const [ready, setReady] = useState(false);
+export default function WorkingGraph({ graph: working, published, criteria, source }) {
+  const graphs = useMemo(() => ({ working, published }), [working, published]);
+  const [state, setState] = useState({ dataset: 'working', node: null, view: 'all' });
+  const [outline, setOutline] = useState(false), [query, setQuery] = useState('');
+  const [ready, setReady] = useState(false), [orientation, setOrientation] = useState('wide');
+  const shell = useRef(null), inspectorTitle = useRef(null), searchInput = useRef(null), findButton = useRef(null);
+  const graph = graphs[state.dataset], isWorking = state.dataset === 'working';
+  const layout = useMemo(() => atlasLayout(graph, orientation), [graph, orientation]);
   const byId = useMemo(() => new Map(graph.nodes.map((node) => [node.id, node])), [graph]);
   useEffect(() => {
-    const read = () => { const id = new URL(window.location.href).searchParams.get('node'); setSelectedId(byId.has(id) ? id : graph.entryNodeIds[0]); };
-    read(); setReady(true); window.addEventListener('popstate', read);
-    return () => window.removeEventListener('popstate', read);
-  }, [byId, graph]);
-  function select(id) {
-    if (!byId.has(id)) return;
-    setSelectedId(id);
-    const url = new URL(window.location.href); url.searchParams.set('node', id);
+    const read = () => setState(readAtlasState(window.location.search, graphs));
+    const media = window.matchMedia('(max-width: 600px)');
+    const resize = () => setOrientation(media.matches ? 'portrait' : 'wide');
+    read(); resize(); setReady(true); window.addEventListener('popstate', read); media.addEventListener('change', resize);
+    return () => { window.removeEventListener('popstate', read); media.removeEventListener('change', resize); };
+  }, [graphs]);
+  useEffect(() => { if (state.node) inspectorTitle.current?.focus({ preventScroll: true }); }, [state.node, state.dataset]);
+  useEffect(() => { if (outline) searchInput.current?.focus({ preventScroll: true }); }, [outline]);
+  const change = (patch) => {
+    const next = { ...state, ...patch };
+    setState(next);
+    const url = new URL(window.location.href); url.search = writeAtlasState(url.search, next);
     if (url.href !== window.location.href) window.history.pushState(null, '', url);
-  }
-  const view = useMemo(() => definitionView(graph, selectedId, whole), [graph, selectedId, whole]);
-  const node = byId.get(view.selected);
-  const evidence = criteria.nodes[node.id];
+  };
+  const select = (id) => { if (byId.has(id)) change({ node: id }); };
+  const node = byId.get(state.node);
+  const evidence = isWorking && node ? criteria.nodes[node.id] : null;
   const rule = criteria.rules[evidence?.rule];
-  const found = graph.nodes.filter((item) => `${item.id} ${item.label} ${item.text} ${item.category}`.toLowerCase().includes(query.toLowerCase().trim()));
-  const outgoing = graph.edges.filter((edge) => edge.source === node.id);
-  const incoming = graph.edges.filter((edge) => edge.target === node.id);
-  return <div className="tensor-graph-workspace" aria-busy={!ready}>
-    <Panel className="tensor-graph-heading">
-      <div><p className="section-kicker">Working definition · unratified draft</p><h2>{graph.nodes.length} questions. Seven starting points.</h2><p>Choose a starting point, inspect a question, and follow its available branches. Exploring definitions does not record an assessment or create an investigation.</p></div>
-      <div className="tensor-graph-source"><Badge value="unknown">Draft {graph.version}</Badge><p>Schema {graph.schemaVersion}</p><a href={`${source.sourceRepository}/tree/${source.sourceCommit}/drafts/core`}>Pinned framework source</a><details><summary>Exact graph digest</summary><code>{criteria.graphSha256}</code></details></div>
-    </Panel>
-    <nav className="tensor-graph-entries" aria-label="Working graph entry points">{graph.entryNodeIds.map((id) => <a href={`?node=${encodeURIComponent(id)}`} key={id} className={`btn ${node.id === id ? 'btn-primary' : 'btn-secondary'}`} aria-current={node.id === id ? 'true' : undefined} onClick={(event) => { event.preventDefault(); select(id); }}>{byId.get(id)?.category} · {id}</a>)}</nav>
-    <div className="tensor-graph-layout">
-      <Panel as="aside" className="tensor-graph-outline" aria-label="Question list"><h3>Find a question</h3><label htmlFor="working-node-search">ID, topic, or question text</label><input id="working-node-search" type="search" value={query} onChange={(event) => setQuery(event.target.value)} /><p className="tensor-graph-caption">{found.length} questions</p><ul>{found.map((item) => <li key={item.id}><a href={`?node=${encodeURIComponent(item.id)}`} aria-current={node.id === item.id ? 'true' : undefined} onClick={(event) => { event.preventDefault(); select(item.id); }}>{item.id} · {item.label}</a></li>)}</ul></Panel>
-      <div className="tensor-graph-main"><div className="tensor-graph-mode"><label><input type="checkbox" checked={whole} onChange={(event) => setWhole(event.target.checked)} /> Show the whole working graph</label><p className="tensor-graph-caption">{whole ? 'Overview: use zoom or clear this option to read a local route.' : 'Focus: the selected question and its direct incoming and outgoing neighbors.'}</p></div><GraphCanvas nodes={view.nodes} edges={view.edges} selectedId={node.id} onSelect={select} label="Working definition graph" />
-        <Panel className="tensor-graph-inspector" aria-label="Selected working question"><p className="section-kicker">{node.id} · {node.category} · {node.archetype}</p><h3>{node.text}</h3><p>{outgoing.length ? 'Available outgoing routes' : 'This definition route stops here. The investigation can remain open.'}</p><ul className="tensor-route-list">{outgoing.map((edge) => <li key={edge.id}><Badge value={edge.decision} /><a href={`?node=${encodeURIComponent(edge.target)}`} onClick={(event) => { event.preventDefault(); select(edge.target); }}>{edge.target} · {byId.get(edge.target)?.label}</a></li>)}</ul>
-          {incoming.length > 0 && <details><summary>Incoming routes ({incoming.length})</summary><ul>{incoming.map((edge) => <li key={edge.id}><a href={`?node=${encodeURIComponent(edge.source)}`} onClick={(event) => { event.preventDefault(); select(edge.source); }}>{edge.source}</a> on {edge.decision}</li>)}</ul></details>}
-          <h4>Evidence criteria</h4>{rule ? <dl>{['yes', 'no', 'unknown'].map((outcome) => <div key={outcome}><dt><Badge value={outcome} /></dt><dd>{rule[outcome]}</dd></div>)}</dl> : <p>Criteria unavailable; do not infer them from the branch label.</p>}
-          <details><summary>Required bindings and assessment record</summary><p>Bind: {evidence?.boundSubjectFields?.join(', ')} and the exact time interval.</p><p>Record: {evidence?.requiredAssessmentRecord?.join(', ')}.</p><ul>{criteria.bindingRules.map((text, i) => <li key={i}>{text}</li>)}</ul></details>
-        </Panel>
-      </div>
+  const outgoing = node ? graph.edges.filter((e) => e.source === node.id) : [];
+  const incoming = node ? graph.edges.filter((e) => e.target === node.id) : [];
+  const found = graph.nodes.filter((n) => `${n.id} ${n.label} ${n.text} ${n.category}`.toLowerCase().includes(query.trim().toLowerCase()));
+  const file = source.files.find((f) => f.target === (isWorking ? 'public/graphs/working/tensor.core.graph.json' : 'public/legacy/0.20260206e/tensor.core.graph.json'));
+  return <div className="atlas" aria-busy={!ready} ref={shell}>
+    <div className="atlas-heading">
+      <div><p className="section-kicker">TENSOR / INVESTIGATION KNOWLEDGE</p><h1>The investigation atlas<span>.</span></h1></div>
+      <a className="atlas-lab-link" href="/investigation-lab/">Follow an investigation <span aria-hidden="true">↗</span></a>
     </div>
-    <p className="tensor-graph-caption">This working graph is separate from the 588-question published graph and the Core {source.bindingVersion} case definitions. Matching question IDs across versions do not imply matching meaning.</p>
+    <div className="atlas-toolbar">
+      <div className="atlas-source-tabs" role="group" aria-label="Graph version">
+        <button aria-pressed={isWorking} onClick={() => { change({ dataset: 'working', node: null, view: 'all' }); setQuery(''); }}><span>Working draft</span><strong>{working.nodes.length}</strong></button>
+        <button aria-pressed={!isWorking} onClick={() => { change({ dataset: 'published', node: null, view: 'all' }); setQuery(''); }}><span>Published graph</span><strong>{published.nodes.length}</strong></button>
+      </div>
+      <div className="atlas-version"><span>{isWorking ? 'UNRATIFIED' : 'PRESERVED RELEASE'}</span><code>{graph.version}</code></div>
+      <button ref={findButton} className="btn btn-secondary atlas-find" aria-expanded={outline} aria-controls="atlas-questions" onClick={() => setOutline(!outline)}>⌕ Questions <span>{graph.nodes.length}</span></button>
+    </div>
+    <div className="atlas-workbench">
+      <GraphAtlasCanvas graph={graph} layout={layout} selectedId={state.node} view={state.view} onSelect={select} onWhole={() => change({ view: 'all' })} onFocus={() => change({ view: 'focus' })} shell={shell} />
+      {outline && <aside className="atlas-question-drawer" id="atlas-questions" aria-label="Find a question"><div className="atlas-drawer-title"><h2>Questions</h2><button aria-label="Close questions" onClick={() => { setOutline(false); findButton.current?.focus(); }}>×</button></div><label htmlFor="atlas-search">Search ID, topic, or question</label><input ref={searchInput} id="atlas-search" type="search" value={query} onChange={(event) => setQuery(event.target.value)} /><p>{found.length} of {graph.nodes.length} questions</p><ul>{found.map((n) => <li key={n.id}><button aria-pressed={n.id === state.node} onClick={() => { select(n.id); setOutline(false); }}><code>{n.id}</code><span>{n.label}<small>{n.category} / {n.archetype}</small></span></button></li>)}</ul></aside>}
+      {node && <aside className="atlas-inspector" aria-label="Selected question"><div className="atlas-drawer-title"><p className="section-kicker">{node.id} / {node.category}</p><button aria-label="Close inspector" onClick={() => { change({ node: null, view: 'all' }); findButton.current?.focus(); }}>×</button></div><p className="atlas-node-stage">{node.archetype} · {isWorking ? 'Working definition' : 'Published definition'}</p><h2 ref={inspectorTitle} tabIndex={-1}>{node.text}</h2>
+        <h3>{outgoing.length ? 'Follow a route' : 'Route endpoint'}</h3>{!outgoing.length && <p>This route stops here. The investigation can remain open.</p>}
+        <ul className="atlas-routes">{outgoing.map((e, i) => <li key={i}><Badge value={e.decision} /><button onClick={() => select(e.target)}><code>{e.target}</code> {byId.get(e.target)?.label}<span aria-hidden="true">→</span></button></li>)}</ul>
+        {incoming.length > 0 && <details><summary>Incoming routes · {incoming.length}</summary><ul>{incoming.map((e, i) => <li key={i}><button onClick={() => select(e.source)}>{e.source} on {e.decision}</button></li>)}</ul></details>}
+        <h3>Evidence criteria</h3>{rule ? <dl>{['yes', 'no', 'unknown'].map((outcome) => <div key={outcome}><dt><Badge value={outcome} /></dt><dd>{rule[outcome]}</dd></div>)}</dl> : <p>This preserved release predates the working evidence criteria. Its question and routes are shown as published; current criteria are not silently applied to it.</p>}
+        {evidence && <details><summary>Bindings and assessment record</summary><p>Bind: {evidence.boundSubjectFields?.join(', ')} and the exact time interval.</p><p>Record: {evidence.requiredAssessmentRecord?.join(', ')}.</p><ul>{criteria.bindingRules.map((text, i) => <li key={i}>{text}</li>)}</ul></details>}
+        {!isWorking && <a href={`/questions/0.20260206e/${node.id}/`}>Open published question page ↗</a>}
+      </aside>}
+    </div>
+    <div className="atlas-domain-nav" role="group" aria-label="Start with a domain">{DOMAINS.map((domain, i) => <button key={domain} onClick={() => change({ node: graph.entryNodeIds.find((id) => byId.get(id)?.category === domain) || graph.nodes.find((n) => n.category === domain)?.id, view: 'focus' })}><i style={{ backgroundColor: DOMAIN_COLORS[i] }} />{domain}<span>{graph.nodes.filter((n) => n.category === domain).length}</span></button>)}</div>
+    <div className="atlas-footnote"><p>Position = domain &amp; question stage. Only arrows assert routes. This is a definition map; recorded investigation paths live in the Lab.</p><details><summary>Source &amp; exact digest</summary><a href={`${source.sourceRepository}/blob/${source.sourceCommit}/${file?.source}`}>Pinned framework source</a><code>{file?.sha256}</code><p>Schema {graph.schemaVersion}. Matching IDs across versions do not imply equivalent meaning.</p></details></div>
   </div>;
 }
