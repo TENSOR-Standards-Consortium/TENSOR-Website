@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { DOMAINS, STAGES } from '../lib/graphAtlas.mjs';
 
-export default function GraphAtlasCanvas({ graph, layout, selectedId, view, onSelect, onWhole, onFocus, shell }) {
+export default function GraphAtlasCanvas({ graph, layout, selectedId, view, onSelect, onWhole, onFocus, shell, trace }) {
   const host = useRef(null), cy = useRef(null), selected = useRef(onSelect);
-  const desired = useRef({ selectedId, view }), previousView = useRef(view);
-  selected.current = onSelect; desired.current = { selectedId, view };
+  const desired = useRef({ selectedId, view, trace }), previousView = useRef(view);
+  selected.current = onSelect; desired.current = { selectedId, view, trace };
   const [renderedLayout, setRenderedLayout] = useState(null), [status, setStatus] = useState('Preparing the complete map…');
   const [camera, setCamera] = useState({ zoom: 1, pan: { x: 0, y: 0 }, width: 1, height: 1 });
   const ready = renderedLayout === layout;
@@ -42,6 +42,9 @@ export default function GraphAtlasCanvas({ graph, layout, selectedId, view, onSe
         { selector: '.connected[outcome = "yes"]', style: { 'line-color': '#6ee7b7', 'target-arrow-color': '#6ee7b7' } },
         { selector: '.connected[outcome = "no"]', style: { 'line-color': '#ffb3b3', 'target-arrow-color': '#ffb3b3' } },
         { selector: '.connected[outcome = "unknown"]', style: { 'line-color': '#efcd84', 'target-arrow-color': '#efcd84' } },
+        { selector: 'node.visited', style: { 'border-width': 3, 'border-color': '#ffd083', 'background-color': '#49371e', 'z-index': 8 } },
+        { selector: 'node.available', style: { 'border-style': 'dashed', 'border-width': 2.5, 'background-color': '#26374a', 'z-index': 8 } },
+        { selector: 'edge.traversed', style: { width: 5, opacity: 1, 'line-color': '#ffd083', 'target-arrow-color': '#ffd083', label: 'data(outcome)', color: '#ffe4ac', 'font-size': 16, 'text-background-color': '#101722', 'text-background-opacity': 1, 'text-background-padding': 4, 'z-index': 11 } },
 
       ] });
       cy.current = instance;
@@ -55,8 +58,9 @@ export default function GraphAtlasCanvas({ graph, layout, selectedId, view, onSe
           const detail = instance.zoom() > 1.35;
           if (detail !== detailed) {
             detailed = detail;
-            instance.edges().style('opacity', detail || desired.current.selectedId ? .08 : .34);
+            instance.edges().style('opacity', desired.current.trace ? .1 : detail || desired.current.selectedId ? .08 : .34);
             instance.edges('.connected').style('opacity', 1);
+            instance.edges('.traversed').style('opacity', 1);
           }
           setCamera({ zoom: instance.zoom(), pan: instance.pan(), width: instance.width(), height: instance.height() });
         });
@@ -73,7 +77,8 @@ export default function GraphAtlasCanvas({ graph, layout, selectedId, view, onSe
       observer = new ResizeObserver(() => {
         if (disposed) return;
         instance.resize();
-        if (desired.current.view === 'all') {
+        if (desired.current.trace?.visibleIds) instance.fit(instance.elements(':visible'),80);
+        else if (desired.current.view === 'all') {
           const z = Math.min((instance.width() - 76) / (layout.width + 80), (instance.height() - 76) / (layout.height + 50));
           instance.viewport({ zoom: z, pan: { x: (instance.width() - layout.width * z) / 2, y: (instance.height() - layout.height * z) / 2 + 20 } });
         }
@@ -87,17 +92,32 @@ export default function GraphAtlasCanvas({ graph, layout, selectedId, view, onSe
   useEffect(() => {
     const instance = cy.current;
     if (!instance || !ready) return;
-    instance.elements().removeClass('selected neighbor connected');
+    instance.elements().removeClass('selected neighbor connected visited available traversed');
+    instance.elements().style('display', 'element');
     instance.nodes().style('opacity', selectedId ? .5 : 1);
     instance.edges().style('opacity', selectedId || instance.zoom() > 1.35 ? .08 : .34);
     setHovered(null);
     const node = instance.getElementById(selectedId || '');
     node.addClass('selected').style('opacity', 1); node.neighborhood().nodes().addClass('neighbor').style('opacity', 1); node.connectedEdges().addClass('connected').style('opacity', 1);
-    if (view === 'focus' && node.length) fit(node.closedNeighborhood());
+    if (trace) {
+      instance.nodes().style('opacity', .38); instance.edges().style('opacity', .1);
+      trace.visitedIds.forEach(id => instance.getElementById(id).addClass('visited').style('opacity', 1));
+      trace.nextIds.forEach(id => instance.getElementById(id).addClass('available').style('opacity', 1));
+      instance.getElementById(trace.currentId).addClass('selected').style('opacity', 1);
+      instance.edges().filter(e => e.source().id() === trace.currentId).addClass('connected').style('opacity', .85);
+      instance.edges().filter(e => trace.selectedEdges.some(s => e.source().id() === s.source && e.target().id() === s.target && e.data('outcome') === s.decision)).addClass('traversed').style('opacity', 1);
+      if (trace.visibleIds) {
+        const visible = new Set(trace.visibleIds);
+        instance.nodes().filter(n => !visible.has(n.id())).style('display', 'none');
+        instance.edges().filter(e => !visible.has(e.source().id()) || !visible.has(e.target().id())).style('display', 'none');
+        fit(instance.elements(':visible'));
+      } else if (previousView.current === 'path') fit();
+    }
+    if (!trace && view === 'focus' && node.length) fit(node.closedNeighborhood());
     else if (previousView.current === 'focus') fit();
-    previousView.current = view;
+    previousView.current = trace?.visibleIds ? 'path' : view;
     // Selection in the full atlas preserves the camera and spatial context.
-  }, [selectedId, view, ready]);
+  }, [selectedId, view, ready, trace]);
   useEffect(() => {
     const change = () => setFullscreen(document.fullscreenElement === shell.current);
     document.addEventListener('fullscreenchange', change);
@@ -108,7 +128,7 @@ export default function GraphAtlasCanvas({ graph, layout, selectedId, view, onSe
   const mini = { x: -40, y: -10, width: layout.width + 80, height: layout.height + 20 };
   return <div className="atlas-map-wrap">
     <div className="atlas-stage" ref={host} tabIndex={0} onKeyDown={(event) => { const moves = { ArrowLeft: [140, 0], ArrowRight: [-140, 0], ArrowUp: [0, 140], ArrowDown: [0, -140] }; if (moves[event.key]) { event.preventDefault(); pan(...moves[event.key]); } }} role="img" aria-label="Complete directed question graph. Use Questions and route links for keyboard and screen-reader exploration." data-graph-ready={String(ready)} data-node-count={graph.nodes.length} data-edge-count={graph.edges.length} data-view={view} />
-    <svg className="atlas-map-labels" aria-hidden="true" width="100%" height="100%">
+    {!trace?.visibleIds && <svg className="atlas-map-labels" aria-hidden="true" width="100%" height="100%">
       <g transform={`translate(${camera.pan.x} ${camera.pan.y}) scale(${camera.zoom})`}>
         {layout.orientation === 'portrait' ? <>
           {DOMAINS.map((domain, i) => <text key={domain} style={{ fontSize: `${9 / camera.zoom}px`, letterSpacing: 0 }} x={300 + i * layout.domainWidth} y="45" fill={layout.nodes.find(n => n.category === domain)?.color}>{['ID', 'HOST', 'NET', 'CLD', 'MAIL', 'APP', 'FILE'][i]}</text>)}
@@ -118,12 +138,12 @@ export default function GraphAtlasCanvas({ graph, layout, selectedId, view, onSe
           {STAGES.map((stage, i) => <text key={stage} className="atlas-stage-label" style={{ fontSize: `${Math.min(12, Math.max(8, 21 * camera.zoom)) / camera.zoom}px` }} x={230 + i * layout.stageWidth} y="12">{String(i + 1).padStart(2, '0')} / {stage.toUpperCase()}</text>)}
         </>}
       </g>
-    </svg>
+    </svg>}
     {hovered && <div className="atlas-node-tooltip" aria-hidden="true" style={{ left: hovered.x, top: hovered.y }}>{hovered.title}</div>}
-    <div className="atlas-map-caption"><span className="atlas-status-light" /><span aria-live="polite">{status}<small>Select a question to illuminate its routes.</small></span></div>
+    <div className="atlas-map-caption"><span className="atlas-status-light" /><span aria-live="polite">{status}<small>{trace ? `${graph.nodes.find(n=>n.id===trace.currentId)?.category} / ${graph.nodes.find(n=>n.id===trace.currentId)?.archetype} · ${trace.visitedIds.length} visited · ${trace.nextIds.length} next options` : 'Select a question to illuminate its routes.'}</small></span></div>
     <div className="atlas-camera-controls" role="group" aria-label="Map camera">
       <button className="btn btn-secondary" disabled={!ready} onClick={() => { onWhole(); fit(); }}>Fit all</button>
-      <button className="btn btn-secondary" disabled={!ready || !selectedId} onClick={() => { onFocus(); const node = cy.current?.getElementById(selectedId || ''); if (node?.length) fit(node.closedNeighborhood()); }}>Focus selection</button>
+      {!trace && <button className="btn btn-secondary" disabled={!ready || !selectedId} onClick={() => { onFocus(); const node = cy.current?.getElementById(selectedId || ''); if (node?.length) fit(node.closedNeighborhood()); }}>Focus selection</button>}
       <button className="btn btn-secondary" disabled={!ready} aria-label="Zoom in" onClick={() => zoom(1.5)}>+</button>
       <button className="btn btn-secondary" disabled={!ready} aria-label="Zoom out" onClick={() => zoom(1 / 1.5)}>−</button>
       <button className="btn btn-secondary atlas-fullscreen" onClick={async () => { try { if (document.fullscreenElement) await document.exitFullscreen(); else if (shell.current?.requestFullscreen) await shell.current.requestFullscreen(); else setStatus('Full screen is unavailable in this browser. Fit all and zoom remain available.'); } catch { setStatus('Full screen could not open. Fit all and zoom remain available.'); } }} aria-label={fullscreen ? 'Exit full screen' : 'Enter full screen'}>{fullscreen ? 'Exit ↙' : 'Expand ↗'}</button>
@@ -132,7 +152,7 @@ export default function GraphAtlasCanvas({ graph, layout, selectedId, view, onSe
       <button className="atlas-overview-toggle" aria-expanded={overview} aria-label="Toggle overview map" onClick={() => setOverview(!overview)}>Overview <span>{Math.round(camera.zoom * 100)}% {overview ? '−' : '+'}</span></button>
       {overview && <>
       <svg className="atlas-minimap" viewBox={`${mini.x} ${mini.y} ${mini.width} ${mini.height}`} role="img" aria-label="Map overview and current viewport">
-        {layout.nodes.map((n) => <rect key={n.id} x={n.position.x - 14} y={n.position.y - 9} width="28" height="18" fill={n.id === selectedId ? '#ffcf83' : n.color} opacity={n.id === selectedId ? 1 : .7} />)}
+        {layout.nodes.filter(n=>!trace?.visibleIds || trace.visibleIds.includes(n.id)).map((n) => <rect key={n.id} x={n.position.x - 14} y={n.position.y - 9} width="28" height="18" fill={n.id === selectedId ? '#ffcf83' : n.color} opacity={n.id === selectedId ? 1 : .7} />)}
         <rect className="atlas-viewport" x={-camera.pan.x / camera.zoom} y={-camera.pan.y / camera.zoom} width={camera.width / camera.zoom} height={camera.height / camera.zoom} />
       </svg>
       <div className="atlas-pan" role="group" aria-label="Pan map"><button aria-label="Pan left" onClick={() => pan(140, 0)}>←</button><button aria-label="Pan up" onClick={() => pan(0, 140)}>↑</button><button aria-label="Pan down" onClick={() => pan(0, -140)}>↓</button><button aria-label="Pan right" onClick={() => pan(-140, 0)}>→</button></div></>}
