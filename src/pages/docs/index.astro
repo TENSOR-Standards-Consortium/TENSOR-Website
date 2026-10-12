@@ -1,4 +1,5 @@
 ---
+import ContentCard from '../../components/ContentCard.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { absoluteUrl, seo } from '../../data/seo';
 
@@ -14,7 +15,7 @@ const jsonLd = {
 ---
 
 <BaseLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
-  <div class="container prose-card">
+  <ContentCard>
     <p class="section-kicker">Documentation</p>
     <h2>Start with an investigation you can inspect</h2>
     <p>Open a synthetic case in the Investigation Lab, inspect the definition and its record, then export the bundle. The same candidate contract applies to a human investigating an agent and an agent assisting with a conventional identity incident.</p>
@@ -47,6 +48,6 @@ const jsonLd = {
     <p><a href="/founding/00-charter.md">Charter</a> · <a href="/governance/">Governance</a> · <a href="/standards/">Standards crosswalk</a> · <a href="/founding/05-review-plan.md">Review plan</a> · <a href="/founding/06-change-and-decision-register.md">Change and decision register</a></p>
 
     <h2>Work with earlier TENSOR content</h2>
-    <p>The <a href="/questions/">question catalog</a>, <a href="/studio/">legacy Graph Studio</a>, and <a href="/graphs/">graph release archive</a> preserve the earlier graph model. Its schemas and version numbers are separate from this candidate. A legacy graph is not a complete Core investigation record.</p>
-  </div>
+    <p>The <a href="/graphs/">working graph</a> exposes draft questions, routes, and evidence criteria. Investigation Lab’s <strong>Recorded path</strong> shows explicit case transitions and retained assessments. The <a href="/questions/">question catalog</a> and <a href="/studio/">legacy Graph Studio</a> preserve the earlier graph model. Its schemas and version numbers are separate from this candidate. A legacy graph is not a complete Core investigation record.</p>
+  </ContentCard>
 </BaseLayout>

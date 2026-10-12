@@ -1,4 +1,5 @@
 ---
+import ContentCard from '../../components/ContentCard.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import MetricsDashboard from '../../components/MetricsDashboard.jsx';
 import { absoluteUrl, seo } from '../../data/seo';
@@ -22,7 +23,7 @@ const jsonLd = {
   ogType={meta.ogType}
   jsonLd={jsonLd}
 >
-  <section class="container prose-card">
+  <ContentCard as="section">
     <h2>Historical Graph Structure</h2>
     <p>
       This dashboard reports historical graph counts, routing checks, and synthetic structural scores.
@@ -42,7 +43,7 @@ const jsonLd = {
       ·
       <a href="/graphs/">Graph release channel</a>
     </p>
-  </section>
+  </ContentCard>
 
   <MetricsDashboard client:load />
 </BaseLayout>

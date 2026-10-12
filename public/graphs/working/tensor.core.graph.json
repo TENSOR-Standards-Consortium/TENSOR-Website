@@ -1,0 +1,2813 @@
+{
+  "generatedAt": "2026-10-11T00:00:00Z",
+  "namespace": "tensor",
+  "product": "core",
+  "version": "0.20261011b",
+  "schemaVersion": "0.20260206e",
+  "locale": "en-US",
+  "entryNodeIds": [
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4",
+    "Q5",
+    "Q6",
+    "Q7"
+  ],
+  "nodes": [
+    {
+      "id": "Q1",
+      "text": "Does the examined evidence contain a record of the bound principal performing the bound identity action within the bound time interval?",
+      "label": "Identity: Matching event record",
+      "category": "Identity",
+      "archetype": "detect",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q1"
+        }
+      }
+    },
+    {
+      "id": "Q2",
+      "text": "Does the examined evidence contain a record of the bound process executing on the bound host within the bound time interval?",
+      "label": "Host: Matching event record",
+      "category": "Host",
+      "archetype": "detect",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q2"
+        }
+      }
+    },
+    {
+      "id": "Q3",
+      "text": "Does the examined evidence contain a record of the bound communication between the bound endpoints within the bound time interval?",
+      "label": "Network: Matching event record",
+      "category": "Network",
+      "archetype": "detect",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q3"
+        }
+      }
+    },
+    {
+      "id": "Q4",
+      "text": "Does the examined evidence contain a record of the bound control-plane operation on the bound cloud resource within the bound time interval?",
+      "label": "Cloud: Matching event record",
+      "category": "Cloud",
+      "archetype": "detect",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q4"
+        }
+      }
+    },
+    {
+      "id": "Q5",
+      "text": "Does the examined evidence contain a record of the bound message being delivered to the bound mailbox within the bound time interval?",
+      "label": "Email: Matching event record",
+      "category": "Email",
+      "archetype": "detect",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q5"
+        }
+      }
+    },
+    {
+      "id": "Q6",
+      "text": "Does the examined evidence contain a record of the bound application handling the bound request within the bound time interval?",
+      "label": "Application: Matching event record",
+      "category": "Application",
+      "archetype": "detect",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q6"
+        }
+      }
+    },
+    {
+      "id": "Q7",
+      "text": "Does the examined evidence contain a record of the bound file being present on the bound system within the bound time interval?",
+      "label": "File: Matching event record",
+      "category": "File",
+      "archetype": "detect",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q7"
+        }
+      }
+    },
+    {
+      "id": "Q8",
+      "text": "Does an independent evidence source contain a record of the bound principal performing the bound identity action within the same bound time interval?",
+      "label": "Identity: Independent event record",
+      "category": "Identity",
+      "archetype": "detect",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q8"
+        }
+      }
+    },
+    {
+      "id": "Q9",
+      "text": "Does an independent evidence source contain a record of the bound process executing on the bound host within the same bound time interval?",
+      "label": "Host: Independent event record",
+      "category": "Host",
+      "archetype": "detect",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q9"
+        }
+      }
+    },
+    {
+      "id": "Q10",
+      "text": "Does an independent evidence source contain a record of the bound communication between the bound endpoints within the same bound time interval?",
+      "label": "Network: Independent event record",
+      "category": "Network",
+      "archetype": "detect",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q10"
+        }
+      }
+    },
+    {
+      "id": "Q11",
+      "text": "Does an independent evidence source contain a record of the bound control-plane operation on the bound cloud resource within the same bound time interval?",
+      "label": "Cloud: Independent event record",
+      "category": "Cloud",
+      "archetype": "detect",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q11"
+        }
+      }
+    },
+    {
+      "id": "Q12",
+      "text": "Does an independent evidence source contain a record of the bound message being delivered to the bound mailbox within the same bound time interval?",
+      "label": "Email: Independent event record",
+      "category": "Email",
+      "archetype": "detect",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q12"
+        }
+      }
+    },
+    {
+      "id": "Q13",
+      "text": "Does an independent evidence source contain a record of the bound application handling the bound request within the same bound time interval?",
+      "label": "Application: Independent event record",
+      "category": "Application",
+      "archetype": "detect",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q13"
+        }
+      }
+    },
+    {
+      "id": "Q14",
+      "text": "Does an independent evidence source contain a record of the bound file being present on the bound system within the same bound time interval?",
+      "label": "File: Independent event record",
+      "category": "File",
+      "archetype": "detect",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q14"
+        }
+      }
+    },
+    {
+      "id": "Q82",
+      "text": "Is the independent record of the bound communication between the bound endpoints within the same bound time interval supported by verifiable provenance and event interpretation?",
+      "label": "Network: Independent record validity",
+      "category": "Network",
+      "archetype": "validate",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q82"
+        }
+      }
+    },
+    {
+      "id": "Q83",
+      "text": "Is the independent record of the bound control-plane operation on the bound cloud resource within the same bound time interval supported by verifiable provenance and event interpretation?",
+      "label": "Cloud: Independent record validity",
+      "category": "Cloud",
+      "archetype": "validate",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q83"
+        }
+      }
+    },
+    {
+      "id": "Q85",
+      "text": "Is the primary record of handling of the bound request by the bound application within the bound time interval supported by verifiable provenance and event interpretation?",
+      "label": "Application: Primary record validity",
+      "category": "Application",
+      "archetype": "validate",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q85"
+        }
+      }
+    },
+    {
+      "id": "Q86",
+      "text": "Is the primary record of presence of the bound file on the bound system within the bound time interval supported by verifiable provenance and event interpretation?",
+      "label": "File: Primary record validity",
+      "category": "File",
+      "archetype": "validate",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q86"
+        }
+      }
+    },
+    {
+      "id": "Q147",
+      "text": "Is the independent record of delivery of the bound message to the bound mailbox within the same bound time interval supported by verifiable provenance and event interpretation?",
+      "label": "Email: Independent record validity",
+      "category": "Email",
+      "archetype": "validate",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q147"
+        }
+      }
+    },
+    {
+      "id": "Q148",
+      "text": "Is the independent record of handling of the bound request by the bound application within the same bound time interval supported by verifiable provenance and event interpretation?",
+      "label": "Application: Independent record validity",
+      "category": "Application",
+      "archetype": "validate",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q148"
+        }
+      }
+    },
+    {
+      "id": "Q149",
+      "text": "Is the independent record of presence of the bound file on the bound system within the same bound time interval supported by verifiable provenance and event interpretation?",
+      "label": "File: Independent record validity",
+      "category": "File",
+      "archetype": "validate",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q149"
+        }
+      }
+    },
+    {
+      "id": "Q150",
+      "text": "Is the independent record of the bound identity action by the bound principal within the same bound time interval supported by verifiable provenance and event interpretation?",
+      "label": "Identity: Independent record validity",
+      "category": "Identity",
+      "archetype": "validate",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q150"
+        }
+      }
+    },
+    {
+      "id": "Q151",
+      "text": "Is the independent record of execution of the bound process on the bound host within the same bound time interval supported by verifiable provenance and event interpretation?",
+      "label": "Host: Independent record validity",
+      "category": "Host",
+      "archetype": "validate",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q151"
+        }
+      }
+    },
+    {
+      "id": "Q152",
+      "text": "Is the primary record of the bound communication between the bound endpoints within the bound time interval supported by verifiable provenance and event interpretation?",
+      "label": "Network: Primary record validity",
+      "category": "Network",
+      "archetype": "validate",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q152"
+        }
+      }
+    },
+    {
+      "id": "Q153",
+      "text": "Is the primary record of the bound control-plane operation on the bound cloud resource within the bound time interval supported by verifiable provenance and event interpretation?",
+      "label": "Cloud: Primary record validity",
+      "category": "Cloud",
+      "archetype": "validate",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q153"
+        }
+      }
+    },
+    {
+      "id": "Q154",
+      "text": "Is the primary record of delivery of the bound message to the bound mailbox within the bound time interval supported by verifiable provenance and event interpretation?",
+      "label": "Email: Primary record validity",
+      "category": "Email",
+      "archetype": "validate",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q154"
+        }
+      }
+    },
+    {
+      "id": "Q155",
+      "text": "Is the primary record of the bound identity action by the bound principal within the bound time interval supported by verifiable provenance and event interpretation?",
+      "label": "Identity: Primary record validity",
+      "category": "Identity",
+      "archetype": "validate",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q155"
+        }
+      }
+    },
+    {
+      "id": "Q156",
+      "text": "Is the primary record of execution of the bound process on the bound host within the bound time interval supported by verifiable provenance and event interpretation?",
+      "label": "Host: Primary record validity",
+      "category": "Host",
+      "archetype": "validate",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q156"
+        }
+      }
+    },
+    {
+      "id": "Q159",
+      "text": "Does the validated primary record of the bound communication between the bound endpoints satisfy the declared falsifiable criterion for the named technical hypothesis within the bound time interval?",
+      "label": "Network: primary classification assessment",
+      "category": "Network",
+      "archetype": "classify",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q159"
+        }
+      }
+    },
+    {
+      "id": "Q161",
+      "text": "Does the validated primary record of delivery of the bound message to the bound mailbox satisfy the declared falsifiable criterion for the named technical hypothesis within the bound time interval?",
+      "label": "Email: primary classification assessment",
+      "category": "Email",
+      "archetype": "classify",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q161"
+        }
+      }
+    },
+    {
+      "id": "Q184",
+      "text": "Does the validated primary record of presence of the bound file on the bound system satisfy the declared falsifiable criterion for the named technical hypothesis within the bound time interval?",
+      "label": "File: primary classification assessment",
+      "category": "File",
+      "archetype": "classify",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q184"
+        }
+      }
+    },
+    {
+      "id": "Q187",
+      "text": "Does the validated independent record of the bound communication between the bound endpoints satisfy the declared falsifiable criterion for the named technical hypothesis within the bound time interval?",
+      "label": "Network: independent classification assessment",
+      "category": "Network",
+      "archetype": "classify",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q187"
+        }
+      }
+    },
+    {
+      "id": "Q188",
+      "text": "Does the validated independent record of the bound control-plane operation on the bound cloud resource satisfy the declared falsifiable criterion for the named technical hypothesis within the bound time interval?",
+      "label": "Cloud: independent classification assessment",
+      "category": "Cloud",
+      "archetype": "classify",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q188"
+        }
+      }
+    },
+    {
+      "id": "Q190",
+      "text": "Does the validated primary record of handling of the bound request by the bound application satisfy the declared falsifiable criterion for the named technical hypothesis within the bound time interval?",
+      "label": "Application: primary classification assessment",
+      "category": "Application",
+      "archetype": "classify",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q190"
+        }
+      }
+    },
+    {
+      "id": "Q214",
+      "text": "Does the validated primary record of execution of the bound process on the bound host satisfy the declared falsifiable criterion for the named technical hypothesis within the bound time interval?",
+      "label": "Host: primary classification assessment",
+      "category": "Host",
+      "archetype": "classify",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q214"
+        }
+      }
+    },
+    {
+      "id": "Q219",
+      "text": "Does the validated independent record of presence of the bound file on the bound system satisfy the declared falsifiable criterion for the named technical hypothesis within the bound time interval?",
+      "label": "File: independent classification assessment",
+      "category": "File",
+      "archetype": "classify",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q219"
+        }
+      }
+    },
+    {
+      "id": "Q221",
+      "text": "Does the validated independent record of execution of the bound process on the bound host satisfy the declared falsifiable criterion for the named technical hypothesis within the bound time interval?",
+      "label": "Host: independent classification assessment",
+      "category": "Host",
+      "archetype": "classify",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q221"
+        }
+      }
+    },
+    {
+      "id": "Q223",
+      "text": "Does the validated primary record of the bound control-plane operation on the bound cloud resource satisfy the declared falsifiable criterion for the named technical hypothesis within the bound time interval?",
+      "label": "Cloud: primary classification assessment",
+      "category": "Cloud",
+      "archetype": "classify",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q223"
+        }
+      }
+    },
+    {
+      "id": "Q224",
+      "text": "Does the validated independent record of delivery of the bound message to the bound mailbox satisfy the declared falsifiable criterion for the named technical hypothesis within the bound time interval?",
+      "label": "Email: independent classification assessment",
+      "category": "Email",
+      "archetype": "classify",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q224"
+        }
+      }
+    },
+    {
+      "id": "Q225",
+      "text": "Does the validated independent record of handling of the bound request by the bound application satisfy the declared falsifiable criterion for the named technical hypothesis within the bound time interval?",
+      "label": "Application: independent classification assessment",
+      "category": "Application",
+      "archetype": "classify",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q225"
+        }
+      }
+    },
+    {
+      "id": "Q233",
+      "text": "Does the validated selected record of the bound identity action by the bound principal satisfy the declared falsifiable criterion for the named technical hypothesis within the bound time interval?",
+      "label": "Identity: selected classification assessment",
+      "category": "Identity",
+      "archetype": "classify",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q233"
+        }
+      }
+    },
+    {
+      "id": "Q245",
+      "text": "Is the primary hypothesis assessment of presence of the bound file on the bound system bounded to explicit subjects and time with evidenced entity inclusions, exclusions and unknown scope recorded?",
+      "label": "File: primary scope assessment",
+      "category": "File",
+      "archetype": "scope",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q245"
+        }
+      }
+    },
+    {
+      "id": "Q253",
+      "text": "Is the selected hypothesis assessment of the bound identity action by the bound principal bounded to explicit subjects and time with evidenced entity inclusions, exclusions and unknown scope recorded?",
+      "label": "Identity: selected scope assessment",
+      "category": "Identity",
+      "archetype": "scope",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q253"
+        }
+      }
+    },
+    {
+      "id": "Q256",
+      "text": "Is the primary hypothesis assessment of the bound control-plane operation on the bound cloud resource bounded to explicit subjects and time with evidenced entity inclusions, exclusions and unknown scope recorded?",
+      "label": "Cloud: primary scope assessment",
+      "category": "Cloud",
+      "archetype": "scope",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q256"
+        }
+      }
+    },
+    {
+      "id": "Q257",
+      "text": "Is the independent hypothesis assessment of delivery of the bound message to the bound mailbox bounded to explicit subjects and time with evidenced entity inclusions, exclusions and unknown scope recorded?",
+      "label": "Email: independent scope assessment",
+      "category": "Email",
+      "archetype": "scope",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q257"
+        }
+      }
+    },
+    {
+      "id": "Q258",
+      "text": "Is the independent hypothesis assessment of handling of the bound request by the bound application bounded to explicit subjects and time with evidenced entity inclusions, exclusions and unknown scope recorded?",
+      "label": "Application: independent scope assessment",
+      "category": "Application",
+      "archetype": "scope",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q258"
+        }
+      }
+    },
+    {
+      "id": "Q259",
+      "text": "Is the independent hypothesis assessment of presence of the bound file on the bound system bounded to explicit subjects and time with evidenced entity inclusions, exclusions and unknown scope recorded?",
+      "label": "File: independent scope assessment",
+      "category": "File",
+      "archetype": "scope",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q259"
+        }
+      }
+    },
+    {
+      "id": "Q261",
+      "text": "Is the independent hypothesis assessment of execution of the bound process on the bound host bounded to explicit subjects and time with evidenced entity inclusions, exclusions and unknown scope recorded?",
+      "label": "Host: independent scope assessment",
+      "category": "Host",
+      "archetype": "scope",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q261"
+        }
+      }
+    },
+    {
+      "id": "Q268",
+      "text": "Is the primary hypothesis assessment of execution of the bound process on the bound host bounded to explicit subjects and time with evidenced entity inclusions, exclusions and unknown scope recorded?",
+      "label": "Host: primary scope assessment",
+      "category": "Host",
+      "archetype": "scope",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q268"
+        }
+      }
+    },
+    {
+      "id": "Q279",
+      "text": "Is the primary hypothesis assessment of handling of the bound request by the bound application bounded to explicit subjects and time with evidenced entity inclusions, exclusions and unknown scope recorded?",
+      "label": "Application: primary scope assessment",
+      "category": "Application",
+      "archetype": "scope",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q279"
+        }
+      }
+    },
+    {
+      "id": "Q283",
+      "text": "Is the independent hypothesis assessment of the bound communication between the bound endpoints bounded to explicit subjects and time with evidenced entity inclusions, exclusions and unknown scope recorded?",
+      "label": "Network: independent scope assessment",
+      "category": "Network",
+      "archetype": "scope",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q283"
+        }
+      }
+    },
+    {
+      "id": "Q284",
+      "text": "Is the independent hypothesis assessment of the bound control-plane operation on the bound cloud resource bounded to explicit subjects and time with evidenced entity inclusions, exclusions and unknown scope recorded?",
+      "label": "Cloud: independent scope assessment",
+      "category": "Cloud",
+      "archetype": "scope",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q284"
+        }
+      }
+    },
+    {
+      "id": "Q299",
+      "text": "Is the primary hypothesis assessment of delivery of the bound message to the bound mailbox bounded to explicit subjects and time with evidenced entity inclusions, exclusions and unknown scope recorded?",
+      "label": "Email: primary scope assessment",
+      "category": "Email",
+      "archetype": "scope",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q299"
+        }
+      }
+    },
+    {
+      "id": "Q303",
+      "text": "Is the primary hypothesis assessment of the bound communication between the bound endpoints bounded to explicit subjects and time with evidenced entity inclusions, exclusions and unknown scope recorded?",
+      "label": "Network: primary scope assessment",
+      "category": "Network",
+      "archetype": "scope",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q303"
+        }
+      }
+    },
+    {
+      "id": "Q323",
+      "text": "Does validated evidence support the explicitly named relationship between delivery of the bound message to the bound mailbox and the bound target observation within the assessed interval?",
+      "label": "Email: correlation assessment",
+      "category": "Email",
+      "archetype": "correlate",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q323"
+        }
+      }
+    },
+    {
+      "id": "Q345",
+      "text": "Does validated evidence support the explicitly named relationship between handling of the bound request by the bound application and the bound target observation within the assessed interval?",
+      "label": "Application: correlation assessment",
+      "category": "Application",
+      "archetype": "correlate",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q345"
+        }
+      }
+    },
+    {
+      "id": "Q346",
+      "text": "Does validated evidence support the explicitly named relationship between presence of the bound file on the bound system and the bound target observation within the assessed interval?",
+      "label": "File: correlation assessment",
+      "category": "File",
+      "archetype": "correlate",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q346"
+        }
+      }
+    },
+    {
+      "id": "Q348",
+      "text": "Does validated evidence support the explicitly named relationship between execution of the bound process on the bound host and the bound target observation within the assessed interval?",
+      "label": "Host: correlation assessment",
+      "category": "Host",
+      "archetype": "correlate",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q348"
+        }
+      }
+    },
+    {
+      "id": "Q356",
+      "text": "Does validated evidence support the explicitly named relationship between the bound communication between the bound endpoints and the bound target observation within the assessed interval?",
+      "label": "Network: correlation assessment",
+      "category": "Network",
+      "archetype": "correlate",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q356"
+        }
+      }
+    },
+    {
+      "id": "Q364",
+      "text": "Does validated evidence support the explicitly named relationship between the bound control-plane operation on the bound cloud resource and the bound target observation within the assessed interval?",
+      "label": "Cloud: correlation assessment",
+      "category": "Cloud",
+      "archetype": "correlate",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q364"
+        }
+      }
+    },
+    {
+      "id": "Q379",
+      "text": "Does validated evidence support the explicitly named relationship between the bound identity action by the bound principal and the bound target observation within the assessed interval?",
+      "label": "Identity: correlation assessment",
+      "category": "Identity",
+      "archetype": "correlate",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q379"
+        }
+      }
+    },
+    {
+      "id": "Q417",
+      "text": "Does assessed evidence for presence of the bound file on the bound system satisfy the declared discriminator for the named technical source within the bound interval?",
+      "label": "File: attribution assessment",
+      "category": "File",
+      "archetype": "attribute",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q417"
+        }
+      }
+    },
+    {
+      "id": "Q425",
+      "text": "Does assessed evidence for the bound identity action by the bound principal satisfy the declared discriminator for the named technical source within the bound interval?",
+      "label": "Identity: attribution assessment",
+      "category": "Identity",
+      "archetype": "attribute",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q425"
+        }
+      }
+    },
+    {
+      "id": "Q426",
+      "text": "Does assessed evidence for execution of the bound process on the bound host satisfy the declared discriminator for the named technical source within the bound interval?",
+      "label": "Host: attribution assessment",
+      "category": "Host",
+      "archetype": "attribute",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q426"
+        }
+      }
+    },
+    {
+      "id": "Q430",
+      "text": "Does assessed evidence for handling of the bound request by the bound application satisfy the declared discriminator for the named technical source within the bound interval?",
+      "label": "Application: attribution assessment",
+      "category": "Application",
+      "archetype": "attribute",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q430"
+        }
+      }
+    },
+    {
+      "id": "Q439",
+      "text": "Does assessed evidence for the bound communication between the bound endpoints satisfy the declared discriminator for the named technical source within the bound interval?",
+      "label": "Network: attribution assessment",
+      "category": "Network",
+      "archetype": "attribute",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q439"
+        }
+      }
+    },
+    {
+      "id": "Q440",
+      "text": "Does assessed evidence for the bound control-plane operation on the bound cloud resource satisfy the declared discriminator for the named technical source within the bound interval?",
+      "label": "Cloud: attribution assessment",
+      "category": "Cloud",
+      "archetype": "attribute",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q440"
+        }
+      }
+    },
+    {
+      "id": "Q441",
+      "text": "Does assessed evidence for delivery of the bound message to the bound mailbox satisfy the declared discriminator for the named technical source within the bound interval?",
+      "label": "Email: attribution assessment",
+      "category": "Email",
+      "archetype": "attribute",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q441"
+        }
+      }
+    },
+    {
+      "id": "Q492",
+      "text": "Does assessed evidence for the bound identity action by the bound principal show the named observed metric change against a comparable baseline within the bound interval?",
+      "label": "Identity: impact assessment",
+      "category": "Identity",
+      "archetype": "impact",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q492"
+        }
+      }
+    },
+    {
+      "id": "Q493",
+      "text": "Does assessed evidence for execution of the bound process on the bound host show the named observed metric change against a comparable baseline within the bound interval?",
+      "label": "Host: impact assessment",
+      "category": "Host",
+      "archetype": "impact",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q493"
+        }
+      }
+    },
+    {
+      "id": "Q506",
+      "text": "Does assessed evidence for the bound communication between the bound endpoints show the named observed metric change against a comparable baseline within the bound interval?",
+      "label": "Network: impact assessment",
+      "category": "Network",
+      "archetype": "impact",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q506"
+        }
+      }
+    },
+    {
+      "id": "Q507",
+      "text": "Does assessed evidence for the bound control-plane operation on the bound cloud resource show the named observed metric change against a comparable baseline within the bound interval?",
+      "label": "Cloud: impact assessment",
+      "category": "Cloud",
+      "archetype": "impact",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q507"
+        }
+      }
+    },
+    {
+      "id": "Q508",
+      "text": "Does assessed evidence for delivery of the bound message to the bound mailbox show the named observed metric change against a comparable baseline within the bound interval?",
+      "label": "Email: impact assessment",
+      "category": "Email",
+      "archetype": "impact",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q508"
+        }
+      }
+    },
+    {
+      "id": "Q509",
+      "text": "Does assessed evidence for handling of the bound request by the bound application show the named observed metric change against a comparable baseline within the bound interval?",
+      "label": "Application: impact assessment",
+      "category": "Application",
+      "archetype": "impact",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q509"
+        }
+      }
+    },
+    {
+      "id": "Q558",
+      "text": "Have the supported hypothesis and bounded scope for the bound identity action by the bound principal retained separate relationship, technical-source and observed-effect assessments with all negative answers, unknowns and limitations?",
+      "label": "Identity: assessed assessment",
+      "category": "Identity",
+      "archetype": "terminal",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q558"
+        }
+      }
+    },
+    {
+      "id": "Q559",
+      "text": "Have the supported hypothesis and bounded scope for execution of the bound process on the bound host retained separate relationship, technical-source and observed-effect assessments with all negative answers, unknowns and limitations?",
+      "label": "Host: assessed assessment",
+      "category": "Host",
+      "archetype": "terminal",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q559"
+        }
+      }
+    },
+    {
+      "id": "Q560",
+      "text": "Have the supported hypothesis and bounded scope for the bound communication between the bound endpoints retained separate relationship, technical-source and observed-effect assessments with all negative answers, unknowns and limitations?",
+      "label": "Network: assessed assessment",
+      "category": "Network",
+      "archetype": "terminal",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q560"
+        }
+      }
+    },
+    {
+      "id": "Q561",
+      "text": "Have the supported hypothesis and bounded scope for the bound control-plane operation on the bound cloud resource retained separate relationship, technical-source and observed-effect assessments with all negative answers, unknowns and limitations?",
+      "label": "Cloud: assessed assessment",
+      "category": "Cloud",
+      "archetype": "terminal",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q561"
+        }
+      }
+    },
+    {
+      "id": "Q562",
+      "text": "Have the supported hypothesis and bounded scope for delivery of the bound message to the bound mailbox retained separate relationship, technical-source and observed-effect assessments with all negative answers, unknowns and limitations?",
+      "label": "Email: assessed assessment",
+      "category": "Email",
+      "archetype": "terminal",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q562"
+        }
+      }
+    },
+    {
+      "id": "Q563",
+      "text": "Have the supported hypothesis and bounded scope for handling of the bound request by the bound application retained separate relationship, technical-source and observed-effect assessments with all negative answers, unknowns and limitations?",
+      "label": "Application: assessed assessment",
+      "category": "Application",
+      "archetype": "terminal",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q563"
+        }
+      }
+    },
+    {
+      "id": "Q581",
+      "text": "Does assessed evidence for presence of the bound file on the bound system show the named observed metric change against a comparable baseline within the bound interval?",
+      "label": "File: impact assessment",
+      "category": "File",
+      "archetype": "impact",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q581"
+        }
+      }
+    },
+    {
+      "id": "Q588",
+      "text": "Have the supported hypothesis and bounded scope for presence of the bound file on the bound system retained separate relationship, technical-source and observed-effect assessments with all negative answers, unknowns and limitations?",
+      "label": "File: assessed assessment",
+      "category": "File",
+      "archetype": "terminal",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q588"
+        }
+      }
+    },
+    {
+      "id": "Q589",
+      "text": "Does the examined evidence support excluding the bound identity action by the bound principal within the bound time interval?",
+      "label": "Identity: Bounded absence assessment",
+      "category": "Identity",
+      "archetype": "terminal",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q589"
+        }
+      }
+    },
+    {
+      "id": "Q590",
+      "text": "Does the examined evidence support excluding execution of the bound process on the bound host within the bound time interval?",
+      "label": "Host: Bounded absence assessment",
+      "category": "Host",
+      "archetype": "terminal",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q590"
+        }
+      }
+    },
+    {
+      "id": "Q591",
+      "text": "Does the examined evidence support excluding the bound communication between the bound endpoints within the bound time interval?",
+      "label": "Network: Bounded absence assessment",
+      "category": "Network",
+      "archetype": "terminal",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q591"
+        }
+      }
+    },
+    {
+      "id": "Q592",
+      "text": "Does the examined evidence support excluding the bound control-plane operation on the bound cloud resource within the bound time interval?",
+      "label": "Cloud: Bounded absence assessment",
+      "category": "Cloud",
+      "archetype": "terminal",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q592"
+        }
+      }
+    },
+    {
+      "id": "Q593",
+      "text": "Does the examined evidence support excluding delivery of the bound message to the bound mailbox within the bound time interval?",
+      "label": "Email: Bounded absence assessment",
+      "category": "Email",
+      "archetype": "terminal",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q593"
+        }
+      }
+    },
+    {
+      "id": "Q594",
+      "text": "Does the examined evidence support excluding handling of the bound request by the bound application within the bound time interval?",
+      "label": "Application: Bounded absence assessment",
+      "category": "Application",
+      "archetype": "terminal",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q594"
+        }
+      }
+    },
+    {
+      "id": "Q595",
+      "text": "Does the examined evidence support excluding presence of the bound file on the bound system within the bound time interval?",
+      "label": "File: Bounded absence assessment",
+      "category": "File",
+      "archetype": "terminal",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q595"
+        }
+      }
+    },
+    {
+      "id": "Q596",
+      "text": "Is the bound identity action by the bound principal within the bound time interval unresolved because the evidence is incomplete, conflicting, or unverified?",
+      "label": "Identity: Unresolved event assessment",
+      "category": "Identity",
+      "archetype": "terminal",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q596"
+        }
+      }
+    },
+    {
+      "id": "Q597",
+      "text": "Is execution of the bound process on the bound host within the bound time interval unresolved because the evidence is incomplete, conflicting, or unverified?",
+      "label": "Host: Unresolved event assessment",
+      "category": "Host",
+      "archetype": "terminal",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q597"
+        }
+      }
+    },
+    {
+      "id": "Q598",
+      "text": "Is the bound communication between the bound endpoints within the bound time interval unresolved because the evidence is incomplete, conflicting, or unverified?",
+      "label": "Network: Unresolved event assessment",
+      "category": "Network",
+      "archetype": "terminal",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q598"
+        }
+      }
+    },
+    {
+      "id": "Q599",
+      "text": "Is the bound control-plane operation on the bound cloud resource within the bound time interval unresolved because the evidence is incomplete, conflicting, or unverified?",
+      "label": "Cloud: Unresolved event assessment",
+      "category": "Cloud",
+      "archetype": "terminal",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q599"
+        }
+      }
+    },
+    {
+      "id": "Q600",
+      "text": "Is delivery of the bound message to the bound mailbox within the bound time interval unresolved because the evidence is incomplete, conflicting, or unverified?",
+      "label": "Email: Unresolved event assessment",
+      "category": "Email",
+      "archetype": "terminal",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q600"
+        }
+      }
+    },
+    {
+      "id": "Q601",
+      "text": "Is handling of the bound request by the bound application within the bound time interval unresolved because the evidence is incomplete, conflicting, or unverified?",
+      "label": "Application: Unresolved event assessment",
+      "category": "Application",
+      "archetype": "terminal",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q601"
+        }
+      }
+    },
+    {
+      "id": "Q602",
+      "text": "Is presence of the bound file on the bound system within the bound time interval unresolved because the evidence is incomplete, conflicting, or unverified?",
+      "label": "File: Unresolved event assessment",
+      "category": "File",
+      "archetype": "terminal",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q602"
+        }
+      }
+    },
+    {
+      "id": "Q603",
+      "text": "Is the declared technical hypothesis for the bound identity action by the bound principal contradicted by the retained discriminating evidence within the bound interval?",
+      "label": "Identity: refuted assessment",
+      "category": "Identity",
+      "archetype": "terminal",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q603"
+        }
+      }
+    },
+    {
+      "id": "Q604",
+      "text": "Is the declared technical hypothesis for execution of the bound process on the bound host contradicted by the retained discriminating evidence within the bound interval?",
+      "label": "Host: refuted assessment",
+      "category": "Host",
+      "archetype": "terminal",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q604"
+        }
+      }
+    },
+    {
+      "id": "Q605",
+      "text": "Is the declared technical hypothesis for the bound communication between the bound endpoints contradicted by the retained discriminating evidence within the bound interval?",
+      "label": "Network: refuted assessment",
+      "category": "Network",
+      "archetype": "terminal",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q605"
+        }
+      }
+    },
+    {
+      "id": "Q606",
+      "text": "Is the declared technical hypothesis for the bound control-plane operation on the bound cloud resource contradicted by the retained discriminating evidence within the bound interval?",
+      "label": "Cloud: refuted assessment",
+      "category": "Cloud",
+      "archetype": "terminal",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q606"
+        }
+      }
+    },
+    {
+      "id": "Q607",
+      "text": "Is the declared technical hypothesis for delivery of the bound message to the bound mailbox contradicted by the retained discriminating evidence within the bound interval?",
+      "label": "Email: refuted assessment",
+      "category": "Email",
+      "archetype": "terminal",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q607"
+        }
+      }
+    },
+    {
+      "id": "Q608",
+      "text": "Is the declared technical hypothesis for handling of the bound request by the bound application contradicted by the retained discriminating evidence within the bound interval?",
+      "label": "Application: refuted assessment",
+      "category": "Application",
+      "archetype": "terminal",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q608"
+        }
+      }
+    },
+    {
+      "id": "Q609",
+      "text": "Is the declared technical hypothesis for presence of the bound file on the bound system contradicted by the retained discriminating evidence within the bound interval?",
+      "label": "File: refuted assessment",
+      "category": "File",
+      "archetype": "terminal",
+      "extensions": {
+        "tensor:evidenceCriteria": {
+          "document": "entry-evidence-criteria.json",
+          "version": "0.20261011b",
+          "nodeId": "Q609"
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "Q1-yes-Q155",
+      "source": "Q1",
+      "target": "Q155",
+      "decision": "yes"
+    },
+    {
+      "id": "Q1-no-Q589",
+      "source": "Q1",
+      "target": "Q589",
+      "decision": "no"
+    },
+    {
+      "id": "Q1-unknown-Q8",
+      "source": "Q1",
+      "target": "Q8",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q2-yes-Q156",
+      "source": "Q2",
+      "target": "Q156",
+      "decision": "yes"
+    },
+    {
+      "id": "Q2-no-Q590",
+      "source": "Q2",
+      "target": "Q590",
+      "decision": "no"
+    },
+    {
+      "id": "Q2-unknown-Q9",
+      "source": "Q2",
+      "target": "Q9",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q3-yes-Q152",
+      "source": "Q3",
+      "target": "Q152",
+      "decision": "yes"
+    },
+    {
+      "id": "Q3-no-Q591",
+      "source": "Q3",
+      "target": "Q591",
+      "decision": "no"
+    },
+    {
+      "id": "Q3-unknown-Q10",
+      "source": "Q3",
+      "target": "Q10",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q4-yes-Q153",
+      "source": "Q4",
+      "target": "Q153",
+      "decision": "yes"
+    },
+    {
+      "id": "Q4-no-Q592",
+      "source": "Q4",
+      "target": "Q592",
+      "decision": "no"
+    },
+    {
+      "id": "Q4-unknown-Q11",
+      "source": "Q4",
+      "target": "Q11",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q5-yes-Q154",
+      "source": "Q5",
+      "target": "Q154",
+      "decision": "yes"
+    },
+    {
+      "id": "Q5-no-Q593",
+      "source": "Q5",
+      "target": "Q593",
+      "decision": "no"
+    },
+    {
+      "id": "Q5-unknown-Q12",
+      "source": "Q5",
+      "target": "Q12",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q6-yes-Q85",
+      "source": "Q6",
+      "target": "Q85",
+      "decision": "yes"
+    },
+    {
+      "id": "Q6-no-Q594",
+      "source": "Q6",
+      "target": "Q594",
+      "decision": "no"
+    },
+    {
+      "id": "Q6-unknown-Q13",
+      "source": "Q6",
+      "target": "Q13",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q7-yes-Q86",
+      "source": "Q7",
+      "target": "Q86",
+      "decision": "yes"
+    },
+    {
+      "id": "Q7-no-Q595",
+      "source": "Q7",
+      "target": "Q595",
+      "decision": "no"
+    },
+    {
+      "id": "Q7-unknown-Q14",
+      "source": "Q7",
+      "target": "Q14",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q8-yes-Q150",
+      "source": "Q8",
+      "target": "Q150",
+      "decision": "yes"
+    },
+    {
+      "id": "Q8-no-Q596",
+      "source": "Q8",
+      "target": "Q596",
+      "decision": "no"
+    },
+    {
+      "id": "Q8-unknown-Q596",
+      "source": "Q8",
+      "target": "Q596",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q9-yes-Q151",
+      "source": "Q9",
+      "target": "Q151",
+      "decision": "yes"
+    },
+    {
+      "id": "Q9-no-Q597",
+      "source": "Q9",
+      "target": "Q597",
+      "decision": "no"
+    },
+    {
+      "id": "Q9-unknown-Q597",
+      "source": "Q9",
+      "target": "Q597",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q10-yes-Q82",
+      "source": "Q10",
+      "target": "Q82",
+      "decision": "yes"
+    },
+    {
+      "id": "Q10-no-Q598",
+      "source": "Q10",
+      "target": "Q598",
+      "decision": "no"
+    },
+    {
+      "id": "Q10-unknown-Q598",
+      "source": "Q10",
+      "target": "Q598",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q11-yes-Q83",
+      "source": "Q11",
+      "target": "Q83",
+      "decision": "yes"
+    },
+    {
+      "id": "Q11-no-Q599",
+      "source": "Q11",
+      "target": "Q599",
+      "decision": "no"
+    },
+    {
+      "id": "Q11-unknown-Q599",
+      "source": "Q11",
+      "target": "Q599",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q12-yes-Q147",
+      "source": "Q12",
+      "target": "Q147",
+      "decision": "yes"
+    },
+    {
+      "id": "Q12-no-Q600",
+      "source": "Q12",
+      "target": "Q600",
+      "decision": "no"
+    },
+    {
+      "id": "Q12-unknown-Q600",
+      "source": "Q12",
+      "target": "Q600",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q13-yes-Q148",
+      "source": "Q13",
+      "target": "Q148",
+      "decision": "yes"
+    },
+    {
+      "id": "Q13-no-Q601",
+      "source": "Q13",
+      "target": "Q601",
+      "decision": "no"
+    },
+    {
+      "id": "Q13-unknown-Q601",
+      "source": "Q13",
+      "target": "Q601",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q14-yes-Q149",
+      "source": "Q14",
+      "target": "Q149",
+      "decision": "yes"
+    },
+    {
+      "id": "Q14-no-Q602",
+      "source": "Q14",
+      "target": "Q602",
+      "decision": "no"
+    },
+    {
+      "id": "Q14-unknown-Q602",
+      "source": "Q14",
+      "target": "Q602",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q82-yes-Q187",
+      "source": "Q82",
+      "target": "Q187",
+      "decision": "yes"
+    },
+    {
+      "id": "Q82-no-Q598",
+      "source": "Q82",
+      "target": "Q598",
+      "decision": "no"
+    },
+    {
+      "id": "Q82-unknown-Q598",
+      "source": "Q82",
+      "target": "Q598",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q83-yes-Q188",
+      "source": "Q83",
+      "target": "Q188",
+      "decision": "yes"
+    },
+    {
+      "id": "Q83-no-Q599",
+      "source": "Q83",
+      "target": "Q599",
+      "decision": "no"
+    },
+    {
+      "id": "Q83-unknown-Q599",
+      "source": "Q83",
+      "target": "Q599",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q85-yes-Q190",
+      "source": "Q85",
+      "target": "Q190",
+      "decision": "yes"
+    },
+    {
+      "id": "Q85-no-Q601",
+      "source": "Q85",
+      "target": "Q601",
+      "decision": "no"
+    },
+    {
+      "id": "Q85-unknown-Q601",
+      "source": "Q85",
+      "target": "Q601",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q86-yes-Q184",
+      "source": "Q86",
+      "target": "Q184",
+      "decision": "yes"
+    },
+    {
+      "id": "Q86-no-Q602",
+      "source": "Q86",
+      "target": "Q602",
+      "decision": "no"
+    },
+    {
+      "id": "Q86-unknown-Q602",
+      "source": "Q86",
+      "target": "Q602",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q147-yes-Q224",
+      "source": "Q147",
+      "target": "Q224",
+      "decision": "yes"
+    },
+    {
+      "id": "Q147-no-Q600",
+      "source": "Q147",
+      "target": "Q600",
+      "decision": "no"
+    },
+    {
+      "id": "Q147-unknown-Q600",
+      "source": "Q147",
+      "target": "Q600",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q148-yes-Q225",
+      "source": "Q148",
+      "target": "Q225",
+      "decision": "yes"
+    },
+    {
+      "id": "Q148-no-Q601",
+      "source": "Q148",
+      "target": "Q601",
+      "decision": "no"
+    },
+    {
+      "id": "Q148-unknown-Q601",
+      "source": "Q148",
+      "target": "Q601",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q149-yes-Q219",
+      "source": "Q149",
+      "target": "Q219",
+      "decision": "yes"
+    },
+    {
+      "id": "Q149-no-Q602",
+      "source": "Q149",
+      "target": "Q602",
+      "decision": "no"
+    },
+    {
+      "id": "Q149-unknown-Q602",
+      "source": "Q149",
+      "target": "Q602",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q150-yes-Q233",
+      "source": "Q150",
+      "target": "Q233",
+      "decision": "yes"
+    },
+    {
+      "id": "Q150-no-Q596",
+      "source": "Q150",
+      "target": "Q596",
+      "decision": "no"
+    },
+    {
+      "id": "Q150-unknown-Q596",
+      "source": "Q150",
+      "target": "Q596",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q151-yes-Q221",
+      "source": "Q151",
+      "target": "Q221",
+      "decision": "yes"
+    },
+    {
+      "id": "Q151-no-Q597",
+      "source": "Q151",
+      "target": "Q597",
+      "decision": "no"
+    },
+    {
+      "id": "Q151-unknown-Q597",
+      "source": "Q151",
+      "target": "Q597",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q152-yes-Q159",
+      "source": "Q152",
+      "target": "Q159",
+      "decision": "yes"
+    },
+    {
+      "id": "Q152-no-Q598",
+      "source": "Q152",
+      "target": "Q598",
+      "decision": "no"
+    },
+    {
+      "id": "Q152-unknown-Q598",
+      "source": "Q152",
+      "target": "Q598",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q153-yes-Q223",
+      "source": "Q153",
+      "target": "Q223",
+      "decision": "yes"
+    },
+    {
+      "id": "Q153-no-Q599",
+      "source": "Q153",
+      "target": "Q599",
+      "decision": "no"
+    },
+    {
+      "id": "Q153-unknown-Q599",
+      "source": "Q153",
+      "target": "Q599",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q154-yes-Q161",
+      "source": "Q154",
+      "target": "Q161",
+      "decision": "yes"
+    },
+    {
+      "id": "Q154-no-Q600",
+      "source": "Q154",
+      "target": "Q600",
+      "decision": "no"
+    },
+    {
+      "id": "Q154-unknown-Q600",
+      "source": "Q154",
+      "target": "Q600",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q155-yes-Q233",
+      "source": "Q155",
+      "target": "Q233",
+      "decision": "yes"
+    },
+    {
+      "id": "Q155-no-Q596",
+      "source": "Q155",
+      "target": "Q596",
+      "decision": "no"
+    },
+    {
+      "id": "Q155-unknown-Q596",
+      "source": "Q155",
+      "target": "Q596",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q156-yes-Q214",
+      "source": "Q156",
+      "target": "Q214",
+      "decision": "yes"
+    },
+    {
+      "id": "Q156-no-Q597",
+      "source": "Q156",
+      "target": "Q597",
+      "decision": "no"
+    },
+    {
+      "id": "Q156-unknown-Q597",
+      "source": "Q156",
+      "target": "Q597",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q159-yes-Q303",
+      "source": "Q159",
+      "target": "Q303",
+      "decision": "yes"
+    },
+    {
+      "id": "Q159-no-Q605",
+      "source": "Q159",
+      "target": "Q605",
+      "decision": "no"
+    },
+    {
+      "id": "Q159-unknown-Q598",
+      "source": "Q159",
+      "target": "Q598",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q161-yes-Q299",
+      "source": "Q161",
+      "target": "Q299",
+      "decision": "yes"
+    },
+    {
+      "id": "Q161-no-Q607",
+      "source": "Q161",
+      "target": "Q607",
+      "decision": "no"
+    },
+    {
+      "id": "Q161-unknown-Q600",
+      "source": "Q161",
+      "target": "Q600",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q184-yes-Q245",
+      "source": "Q184",
+      "target": "Q245",
+      "decision": "yes"
+    },
+    {
+      "id": "Q184-no-Q609",
+      "source": "Q184",
+      "target": "Q609",
+      "decision": "no"
+    },
+    {
+      "id": "Q184-unknown-Q602",
+      "source": "Q184",
+      "target": "Q602",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q187-yes-Q283",
+      "source": "Q187",
+      "target": "Q283",
+      "decision": "yes"
+    },
+    {
+      "id": "Q187-no-Q605",
+      "source": "Q187",
+      "target": "Q605",
+      "decision": "no"
+    },
+    {
+      "id": "Q187-unknown-Q598",
+      "source": "Q187",
+      "target": "Q598",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q188-yes-Q284",
+      "source": "Q188",
+      "target": "Q284",
+      "decision": "yes"
+    },
+    {
+      "id": "Q188-no-Q606",
+      "source": "Q188",
+      "target": "Q606",
+      "decision": "no"
+    },
+    {
+      "id": "Q188-unknown-Q599",
+      "source": "Q188",
+      "target": "Q599",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q190-yes-Q279",
+      "source": "Q190",
+      "target": "Q279",
+      "decision": "yes"
+    },
+    {
+      "id": "Q190-no-Q608",
+      "source": "Q190",
+      "target": "Q608",
+      "decision": "no"
+    },
+    {
+      "id": "Q190-unknown-Q601",
+      "source": "Q190",
+      "target": "Q601",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q214-yes-Q268",
+      "source": "Q214",
+      "target": "Q268",
+      "decision": "yes"
+    },
+    {
+      "id": "Q214-no-Q604",
+      "source": "Q214",
+      "target": "Q604",
+      "decision": "no"
+    },
+    {
+      "id": "Q214-unknown-Q597",
+      "source": "Q214",
+      "target": "Q597",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q219-yes-Q259",
+      "source": "Q219",
+      "target": "Q259",
+      "decision": "yes"
+    },
+    {
+      "id": "Q219-no-Q609",
+      "source": "Q219",
+      "target": "Q609",
+      "decision": "no"
+    },
+    {
+      "id": "Q219-unknown-Q602",
+      "source": "Q219",
+      "target": "Q602",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q221-yes-Q261",
+      "source": "Q221",
+      "target": "Q261",
+      "decision": "yes"
+    },
+    {
+      "id": "Q221-no-Q604",
+      "source": "Q221",
+      "target": "Q604",
+      "decision": "no"
+    },
+    {
+      "id": "Q221-unknown-Q597",
+      "source": "Q221",
+      "target": "Q597",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q223-yes-Q256",
+      "source": "Q223",
+      "target": "Q256",
+      "decision": "yes"
+    },
+    {
+      "id": "Q223-no-Q606",
+      "source": "Q223",
+      "target": "Q606",
+      "decision": "no"
+    },
+    {
+      "id": "Q223-unknown-Q599",
+      "source": "Q223",
+      "target": "Q599",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q224-yes-Q257",
+      "source": "Q224",
+      "target": "Q257",
+      "decision": "yes"
+    },
+    {
+      "id": "Q224-no-Q607",
+      "source": "Q224",
+      "target": "Q607",
+      "decision": "no"
+    },
+    {
+      "id": "Q224-unknown-Q600",
+      "source": "Q224",
+      "target": "Q600",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q225-yes-Q258",
+      "source": "Q225",
+      "target": "Q258",
+      "decision": "yes"
+    },
+    {
+      "id": "Q225-no-Q608",
+      "source": "Q225",
+      "target": "Q608",
+      "decision": "no"
+    },
+    {
+      "id": "Q225-unknown-Q601",
+      "source": "Q225",
+      "target": "Q601",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q233-yes-Q253",
+      "source": "Q233",
+      "target": "Q253",
+      "decision": "yes"
+    },
+    {
+      "id": "Q233-no-Q603",
+      "source": "Q233",
+      "target": "Q603",
+      "decision": "no"
+    },
+    {
+      "id": "Q233-unknown-Q596",
+      "source": "Q233",
+      "target": "Q596",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q245-yes-Q346",
+      "source": "Q245",
+      "target": "Q346",
+      "decision": "yes"
+    },
+    {
+      "id": "Q245-no-Q602",
+      "source": "Q245",
+      "target": "Q602",
+      "decision": "no"
+    },
+    {
+      "id": "Q245-unknown-Q602",
+      "source": "Q245",
+      "target": "Q602",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q253-yes-Q379",
+      "source": "Q253",
+      "target": "Q379",
+      "decision": "yes"
+    },
+    {
+      "id": "Q253-no-Q596",
+      "source": "Q253",
+      "target": "Q596",
+      "decision": "no"
+    },
+    {
+      "id": "Q253-unknown-Q596",
+      "source": "Q253",
+      "target": "Q596",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q256-yes-Q364",
+      "source": "Q256",
+      "target": "Q364",
+      "decision": "yes"
+    },
+    {
+      "id": "Q256-no-Q599",
+      "source": "Q256",
+      "target": "Q599",
+      "decision": "no"
+    },
+    {
+      "id": "Q256-unknown-Q599",
+      "source": "Q256",
+      "target": "Q599",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q257-yes-Q323",
+      "source": "Q257",
+      "target": "Q323",
+      "decision": "yes"
+    },
+    {
+      "id": "Q257-no-Q600",
+      "source": "Q257",
+      "target": "Q600",
+      "decision": "no"
+    },
+    {
+      "id": "Q257-unknown-Q600",
+      "source": "Q257",
+      "target": "Q600",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q258-yes-Q345",
+      "source": "Q258",
+      "target": "Q345",
+      "decision": "yes"
+    },
+    {
+      "id": "Q258-no-Q601",
+      "source": "Q258",
+      "target": "Q601",
+      "decision": "no"
+    },
+    {
+      "id": "Q258-unknown-Q601",
+      "source": "Q258",
+      "target": "Q601",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q259-yes-Q346",
+      "source": "Q259",
+      "target": "Q346",
+      "decision": "yes"
+    },
+    {
+      "id": "Q259-no-Q602",
+      "source": "Q259",
+      "target": "Q602",
+      "decision": "no"
+    },
+    {
+      "id": "Q259-unknown-Q602",
+      "source": "Q259",
+      "target": "Q602",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q261-yes-Q348",
+      "source": "Q261",
+      "target": "Q348",
+      "decision": "yes"
+    },
+    {
+      "id": "Q261-no-Q597",
+      "source": "Q261",
+      "target": "Q597",
+      "decision": "no"
+    },
+    {
+      "id": "Q261-unknown-Q597",
+      "source": "Q261",
+      "target": "Q597",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q268-yes-Q348",
+      "source": "Q268",
+      "target": "Q348",
+      "decision": "yes"
+    },
+    {
+      "id": "Q268-no-Q597",
+      "source": "Q268",
+      "target": "Q597",
+      "decision": "no"
+    },
+    {
+      "id": "Q268-unknown-Q597",
+      "source": "Q268",
+      "target": "Q597",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q279-yes-Q345",
+      "source": "Q279",
+      "target": "Q345",
+      "decision": "yes"
+    },
+    {
+      "id": "Q279-no-Q601",
+      "source": "Q279",
+      "target": "Q601",
+      "decision": "no"
+    },
+    {
+      "id": "Q279-unknown-Q601",
+      "source": "Q279",
+      "target": "Q601",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q283-yes-Q356",
+      "source": "Q283",
+      "target": "Q356",
+      "decision": "yes"
+    },
+    {
+      "id": "Q283-no-Q598",
+      "source": "Q283",
+      "target": "Q598",
+      "decision": "no"
+    },
+    {
+      "id": "Q283-unknown-Q598",
+      "source": "Q283",
+      "target": "Q598",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q284-yes-Q364",
+      "source": "Q284",
+      "target": "Q364",
+      "decision": "yes"
+    },
+    {
+      "id": "Q284-no-Q599",
+      "source": "Q284",
+      "target": "Q599",
+      "decision": "no"
+    },
+    {
+      "id": "Q284-unknown-Q599",
+      "source": "Q284",
+      "target": "Q599",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q299-yes-Q323",
+      "source": "Q299",
+      "target": "Q323",
+      "decision": "yes"
+    },
+    {
+      "id": "Q299-no-Q600",
+      "source": "Q299",
+      "target": "Q600",
+      "decision": "no"
+    },
+    {
+      "id": "Q299-unknown-Q600",
+      "source": "Q299",
+      "target": "Q600",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q303-yes-Q356",
+      "source": "Q303",
+      "target": "Q356",
+      "decision": "yes"
+    },
+    {
+      "id": "Q303-no-Q598",
+      "source": "Q303",
+      "target": "Q598",
+      "decision": "no"
+    },
+    {
+      "id": "Q303-unknown-Q598",
+      "source": "Q303",
+      "target": "Q598",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q323-yes-Q441",
+      "source": "Q323",
+      "target": "Q441",
+      "decision": "yes"
+    },
+    {
+      "id": "Q323-no-Q441",
+      "source": "Q323",
+      "target": "Q441",
+      "decision": "no"
+    },
+    {
+      "id": "Q323-unknown-Q441",
+      "source": "Q323",
+      "target": "Q441",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q345-yes-Q430",
+      "source": "Q345",
+      "target": "Q430",
+      "decision": "yes"
+    },
+    {
+      "id": "Q345-no-Q430",
+      "source": "Q345",
+      "target": "Q430",
+      "decision": "no"
+    },
+    {
+      "id": "Q345-unknown-Q430",
+      "source": "Q345",
+      "target": "Q430",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q346-yes-Q417",
+      "source": "Q346",
+      "target": "Q417",
+      "decision": "yes"
+    },
+    {
+      "id": "Q346-no-Q417",
+      "source": "Q346",
+      "target": "Q417",
+      "decision": "no"
+    },
+    {
+      "id": "Q346-unknown-Q417",
+      "source": "Q346",
+      "target": "Q417",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q348-yes-Q426",
+      "source": "Q348",
+      "target": "Q426",
+      "decision": "yes"
+    },
+    {
+      "id": "Q348-no-Q426",
+      "source": "Q348",
+      "target": "Q426",
+      "decision": "no"
+    },
+    {
+      "id": "Q348-unknown-Q426",
+      "source": "Q348",
+      "target": "Q426",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q356-yes-Q439",
+      "source": "Q356",
+      "target": "Q439",
+      "decision": "yes"
+    },
+    {
+      "id": "Q356-no-Q439",
+      "source": "Q356",
+      "target": "Q439",
+      "decision": "no"
+    },
+    {
+      "id": "Q356-unknown-Q439",
+      "source": "Q356",
+      "target": "Q439",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q364-yes-Q440",
+      "source": "Q364",
+      "target": "Q440",
+      "decision": "yes"
+    },
+    {
+      "id": "Q364-no-Q440",
+      "source": "Q364",
+      "target": "Q440",
+      "decision": "no"
+    },
+    {
+      "id": "Q364-unknown-Q440",
+      "source": "Q364",
+      "target": "Q440",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q379-yes-Q425",
+      "source": "Q379",
+      "target": "Q425",
+      "decision": "yes"
+    },
+    {
+      "id": "Q379-no-Q425",
+      "source": "Q379",
+      "target": "Q425",
+      "decision": "no"
+    },
+    {
+      "id": "Q379-unknown-Q425",
+      "source": "Q379",
+      "target": "Q425",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q417-yes-Q581",
+      "source": "Q417",
+      "target": "Q581",
+      "decision": "yes"
+    },
+    {
+      "id": "Q417-no-Q581",
+      "source": "Q417",
+      "target": "Q581",
+      "decision": "no"
+    },
+    {
+      "id": "Q417-unknown-Q581",
+      "source": "Q417",
+      "target": "Q581",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q425-yes-Q492",
+      "source": "Q425",
+      "target": "Q492",
+      "decision": "yes"
+    },
+    {
+      "id": "Q425-no-Q492",
+      "source": "Q425",
+      "target": "Q492",
+      "decision": "no"
+    },
+    {
+      "id": "Q425-unknown-Q492",
+      "source": "Q425",
+      "target": "Q492",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q426-yes-Q493",
+      "source": "Q426",
+      "target": "Q493",
+      "decision": "yes"
+    },
+    {
+      "id": "Q426-no-Q493",
+      "source": "Q426",
+      "target": "Q493",
+      "decision": "no"
+    },
+    {
+      "id": "Q426-unknown-Q493",
+      "source": "Q426",
+      "target": "Q493",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q430-yes-Q509",
+      "source": "Q430",
+      "target": "Q509",
+      "decision": "yes"
+    },
+    {
+      "id": "Q430-no-Q509",
+      "source": "Q430",
+      "target": "Q509",
+      "decision": "no"
+    },
+    {
+      "id": "Q430-unknown-Q509",
+      "source": "Q430",
+      "target": "Q509",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q439-yes-Q506",
+      "source": "Q439",
+      "target": "Q506",
+      "decision": "yes"
+    },
+    {
+      "id": "Q439-no-Q506",
+      "source": "Q439",
+      "target": "Q506",
+      "decision": "no"
+    },
+    {
+      "id": "Q439-unknown-Q506",
+      "source": "Q439",
+      "target": "Q506",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q440-yes-Q507",
+      "source": "Q440",
+      "target": "Q507",
+      "decision": "yes"
+    },
+    {
+      "id": "Q440-no-Q507",
+      "source": "Q440",
+      "target": "Q507",
+      "decision": "no"
+    },
+    {
+      "id": "Q440-unknown-Q507",
+      "source": "Q440",
+      "target": "Q507",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q441-yes-Q508",
+      "source": "Q441",
+      "target": "Q508",
+      "decision": "yes"
+    },
+    {
+      "id": "Q441-no-Q508",
+      "source": "Q441",
+      "target": "Q508",
+      "decision": "no"
+    },
+    {
+      "id": "Q441-unknown-Q508",
+      "source": "Q441",
+      "target": "Q508",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q492-yes-Q558",
+      "source": "Q492",
+      "target": "Q558",
+      "decision": "yes"
+    },
+    {
+      "id": "Q492-no-Q558",
+      "source": "Q492",
+      "target": "Q558",
+      "decision": "no"
+    },
+    {
+      "id": "Q492-unknown-Q558",
+      "source": "Q492",
+      "target": "Q558",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q493-yes-Q559",
+      "source": "Q493",
+      "target": "Q559",
+      "decision": "yes"
+    },
+    {
+      "id": "Q493-no-Q559",
+      "source": "Q493",
+      "target": "Q559",
+      "decision": "no"
+    },
+    {
+      "id": "Q493-unknown-Q559",
+      "source": "Q493",
+      "target": "Q559",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q506-yes-Q560",
+      "source": "Q506",
+      "target": "Q560",
+      "decision": "yes"
+    },
+    {
+      "id": "Q506-no-Q560",
+      "source": "Q506",
+      "target": "Q560",
+      "decision": "no"
+    },
+    {
+      "id": "Q506-unknown-Q560",
+      "source": "Q506",
+      "target": "Q560",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q507-yes-Q561",
+      "source": "Q507",
+      "target": "Q561",
+      "decision": "yes"
+    },
+    {
+      "id": "Q507-no-Q561",
+      "source": "Q507",
+      "target": "Q561",
+      "decision": "no"
+    },
+    {
+      "id": "Q507-unknown-Q561",
+      "source": "Q507",
+      "target": "Q561",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q508-yes-Q562",
+      "source": "Q508",
+      "target": "Q562",
+      "decision": "yes"
+    },
+    {
+      "id": "Q508-no-Q562",
+      "source": "Q508",
+      "target": "Q562",
+      "decision": "no"
+    },
+    {
+      "id": "Q508-unknown-Q562",
+      "source": "Q508",
+      "target": "Q562",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q509-yes-Q563",
+      "source": "Q509",
+      "target": "Q563",
+      "decision": "yes"
+    },
+    {
+      "id": "Q509-no-Q563",
+      "source": "Q509",
+      "target": "Q563",
+      "decision": "no"
+    },
+    {
+      "id": "Q509-unknown-Q563",
+      "source": "Q509",
+      "target": "Q563",
+      "decision": "unknown"
+    },
+    {
+      "id": "Q581-yes-Q588",
+      "source": "Q581",
+      "target": "Q588",
+      "decision": "yes"
+    },
+    {
+      "id": "Q581-no-Q588",
+      "source": "Q581",
+      "target": "Q588",
+      "decision": "no"
+    },
+    {
+      "id": "Q581-unknown-Q588",
+      "source": "Q581",
+      "target": "Q588",
+      "decision": "unknown"
+    }
+  ]
+}

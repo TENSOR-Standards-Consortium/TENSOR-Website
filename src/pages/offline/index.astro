@@ -1,4 +1,5 @@
 ---
+import ContentCard from '../../components/ContentCard.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { seo } from '../../data/seo';
 
@@ -12,7 +13,7 @@ const meta = seo.offline;
   ogType={meta.ogType}
   noindex={meta.noindex}
 >
-  <div class="container prose-card offline-card">
+  <ContentCard class="offline-card">
     <h2>You Are Offline</h2>
     <p>
       TENSOR can still serve cached docs and Graph Studio data when a connection is unavailable.
@@ -27,5 +28,5 @@ const meta = seo.offline;
     <p>
       The offline package includes key framework pages, AI reliability guidance, and local graph/schema assets.
     </p>
-  </div>
+  </ContentCard>
 </BaseLayout>

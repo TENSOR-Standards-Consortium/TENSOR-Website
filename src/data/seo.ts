@@ -91,9 +91,9 @@ export const seo = {
     ogType: 'article',
   },
   graphs: {
-    title: 'TENSOR Legacy Graph Releases',
+    title: 'TENSOR Working Graph',
     description:
-      'Explore the preserved TENSOR question graph and release archive, with explicit semantic review requirements for migration to the new Core candidate.',
+      'Explore the current working question graph, inspect evidence criteria and available routes, or open preserved published graph releases.',
     canonicalPath: '/graphs/',
     ogType: 'article',
   },

@@ -574,7 +574,7 @@ export default function MetricsDashboard() {
         <div className="metrics-dashboard-export-row">
           <button
             type="button"
-            className="metrics-export-btn"
+            className="btn btn-secondary metrics-export-btn"
             onClick={exportHistoryCsv}
             disabled={baseState.history.length === 0}
           >
@@ -582,7 +582,7 @@ export default function MetricsDashboard() {
           </button>
           <button
             type="button"
-            className="metrics-export-btn"
+            className="btn btn-secondary metrics-export-btn"
             onClick={exportGateCsv}
             disabled={gateChecks.length === 0}
           >
@@ -590,7 +590,7 @@ export default function MetricsDashboard() {
           </button>
           <button
             type="button"
-            className="metrics-export-btn"
+            className="btn btn-secondary metrics-export-btn"
             onClick={exportMatrixCsv}
             disabled={matrixDomains.length === 0}
           >
@@ -598,7 +598,7 @@ export default function MetricsDashboard() {
           </button>
           <button
             type="button"
-            className="metrics-export-btn"
+            className="btn btn-secondary metrics-export-btn"
             onClick={exportTrendPng}
             disabled={pngExporting || baseState.history.length === 0}
           >
@@ -638,7 +638,7 @@ export default function MetricsDashboard() {
             <p className="metrics-block-meta">
               Source artifact: {reportState.sourceName || 'release report channel'}
             </p>
-            <div className="metrics-table-wrap">
+            <div className="metrics-table-wrap" tabIndex={0} role="region" aria-label="Scrollable metrics table">
               <table className="metrics-table matrix-table">
                 <thead>
                   <tr>

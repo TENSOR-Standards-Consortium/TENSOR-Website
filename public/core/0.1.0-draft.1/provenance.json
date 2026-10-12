@@ -212,6 +212,24 @@
       "bytes": 933
     },
     {
+      "source": "drafts/core/entry-evidence-criteria.json",
+      "target": "public/graphs/working/entry-evidence-criteria.json",
+      "sha256": "0595cdd6a27c44ca87839981a2b4b93d51452a234a7af8d400da68c900cf1e49",
+      "bytes": 86963
+    },
+    {
+      "source": "drafts/core/source/entry_nodes.json",
+      "target": "public/graphs/working/source/entry_nodes.json",
+      "sha256": "f4c50d88d48478047a25fd8bda7a3897b9b9a2cde8344a5590f025d3ab06625a",
+      "bytes": 156
+    },
+    {
+      "source": "drafts/core/tensor.core.graph.json",
+      "target": "public/graphs/working/tensor.core.graph.json",
+      "sha256": "8b83f19f83d7d796c96b404d37f4ae093d36415b35123602133f34cad5c172be",
+      "bytes": 80967
+    },
+    {
       "source": "releases/core/graphs/v0.20260206e/tensor.core.graph.json",
       "target": "public/legacy/0.20260206e/tensor.core.graph.json",
       "sha256": "dfc3f1a965c01b6f7ade253e426e69abcbad688fab20d9d00065d71c777c010c",

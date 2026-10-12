@@ -1,4 +1,5 @@
 ---
+import ContentCard from '../../components/ContentCard.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { seo } from '../../data/seo';
 import snapshot from '../../../public/review/2026-10-11.1/manifest.json';
@@ -8,7 +9,7 @@ const source = `${snapshot.sourceRepository}/tree/${snapshot.sourceCommit}`;
 ---
 
 <BaseLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType}>
-  <div class="container prose-card review-package">
+  <ContentCard class="review-package">
     <p class="section-kicker">Technical review · {snapshot.reviewId}</p>
     <h2>Can someone else understand and continue the investigation?</h2>
     <p>TENSOR proposes a public investigative layer for all cyber investigations, usable by humans and agents. It carries the question, context, evidence basis, uncertainty, attribution and decision history between people and tools. Vendor products and business policy build above that shared meaning.</p>
@@ -66,7 +67,7 @@ python3 scripts/evaluate_entry_scenarios.py`}</code></pre>
     <p>John Schieferle Uhlenbrock is the accepted bootstrap steward, convenor, Core editor and conformance maintainer under the TENSOR Standards Consortium project identity. These roles currently concentrate in one founder. The broader governance proposal remains unadopted; conflict disclosure and infrastructure continuity confirmations remain pending.</p>
     <div class="cta-group"><a class="btn btn-primary" href="https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework/issues/new?template=implementation-report.yml">Prepare a technical finding</a><a class="btn btn-secondary" href="/governance/">Read stewardship and review handling</a></div>
     <p>For sensitive reports, use <a href="https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework/security/advisories/new">private vulnerability reporting</a>. Public findings must contain no confidential case material. <a href="/docs/review-process.md">The finding process</a> preserves objections, responses and dissent; publication or issue closure is not independent approval.</p>
-  </div>
+  </ContentCard>
 </BaseLayout>
 
 <style>

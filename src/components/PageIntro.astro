@@ -1,0 +1,11 @@
+---
+interface Props { title: string; eyebrow?: string; workspace?: boolean }
+const { title, eyebrow = 'TENSOR Framework', workspace = false } = Astro.props;
+---
+<section class:list={['page-title-bar', { 'workspace-intro': workspace }]}>
+  <div class="container">
+    <p class="page-eyebrow">{eyebrow}</p>
+    <h1 class="page-title">{title}</h1>
+    <slot />
+  </div>
+</section>

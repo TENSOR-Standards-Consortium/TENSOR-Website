@@ -1,4 +1,5 @@
 ---
+import ContentCard from '../../components/ContentCard.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { absoluteUrl, seo } from '../../data/seo';
 
@@ -14,7 +15,7 @@ const jsonLd = {
 ---
 
 <BaseLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
-  <div class="container prose-card">
+  <ContentCard>
     <p class="section-kicker">Reuse, then prove the relationship</p>
     <h2>An investigative layer alongside existing standards</h2>
     <p>TENSOR makes questions, evidence, uncertainty, and decisions portable across an investigation. Existing standards already describe adversary behavior, defensive knowledge, evidence, events, and operational workflows. Core should connect that work with explicit, tested mappings.</p>
@@ -50,5 +51,5 @@ const jsonLd = {
       <li>Positive, negative, and lossy fixtures with explicit exchange results.</li>
     </ul>
     <p><a href="/core/">Inspect Core</a> · <a href="/conformance/">Review validation scope</a> · <a href="/contribute/">Propose a mapping</a></p>
-  </div>
+  </ContentCard>
 </BaseLayout>

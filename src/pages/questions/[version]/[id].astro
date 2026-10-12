@@ -1,4 +1,5 @@
 ---
+import ContentCard from '../../../components/ContentCard.astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { legacyGraph, legacyQuestions, questionById, questionPath, LEGACY_VERSION, LEGACY_SHA256, LEGACY_DOWNLOAD, LEGACY_SOURCE } from '../../../data/legacy-questions';
 
@@ -16,8 +17,8 @@ const citationUrl = new URL(questionPath(question.id), Astro.site || 'https://te
 ---
 
 <BaseLayout title={title} description={question.text} canonicalPath={questionPath(question.id)}>
-  <article class="container prose-card">
-    <p><a href="/questions/">← Question library</a></p>
+  <ContentCard as="article">
+    <p><a href="/questions/">← Question library</a> · <a href={`/studio/?graph=${LEGACY_VERSION}&node=${encodeURIComponent(question.id)}`}>View this node in the published graph</a></p>
     <p class="section-kicker">Preserved graph release · {LEGACY_VERSION}</p>
     <h2>{question.text}</h2>
     <dl class="question-facts">
@@ -49,7 +50,7 @@ const citationUrl = new URL(questionPath(question.id), Astro.site || 'https://te
       <a href="/questions/">All questions</a>
       {next && <a href={questionPath(next.id)}>{next.id} →</a>}
     </nav>
-  </article>
+  </ContentCard>
 </BaseLayout>
 
 <style>
