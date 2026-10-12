@@ -12,6 +12,6 @@ export const footerNavigation = [
   { title: 'Governance', url: '/governance/' },
   { title: 'Validation', url: '/conformance/' },
   { title: 'Questions', url: '/questions/' },
-  { title: 'Legacy Studio', url: '/studio/' },
+  { title: 'Atlas', url: '/graphs/' },
   { title: 'GitHub', url: 'https://github.com/tensor-standards-consortium/TENSOR-Framework' },
 ];
