@@ -1,4 +1,8 @@
-# Restored graph website validation
+# Historical initial-restoration verification
+
+This receipt describes the initial restoration below. The current working revision is `0.20261012b`; see the [seven-domain challenge review](https://tensor-standards.pages.dev/graphs/working/reviews/2026-10-12-independent-review/README.md) and the current public provenance manifest for its source. The later review replaced unrelated topic routes, tightened evidence handling and recorded additional public event-profile gaps.
+
+## Initial restoration receipt
 
 Framework source: clean merged `22a1be5d6f2b46b16ccc738efef04599c052c082` (restoration PR #14 and documentation PR #15). Draft `0.20261012a`: 609 questions and 1,554 routes. Public provenance pins every synchronized artifact to its exact bytes.
 
