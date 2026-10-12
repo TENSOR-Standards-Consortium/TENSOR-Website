@@ -1,16 +1,22 @@
 # Bringing the full investigation knowledge forward
 
-Status: author review and draft reinclusion complete; independent semantic review pending. TENSOR remains a public standard for all cyber investigations, usable by humans and agents. Vendor and business policy layers sit above its technical contract.
+Status: source reinclusion and separate AI-assisted challenge review complete; external domain review and additional event profiles remain open. TENSOR remains a public standard for all cyber investigations, usable by humans and agents. Vendor and business policy layers sit above its technical contract.
 
 ## Current inventory
 
-The preserved release `0.20260206e` contains 588 questions and 1,554 routes. Working draft `0.20261012a` now contains **all 588 original IDs plus 21 repair questions: 609 questions and 1,554 routes**, with unchanged schema `0.20260206e`.
+The preserved release `0.20260206e` contains 588 questions and 1,554 routes. Working draft `0.20261012b` now contains **all 588 original IDs plus 21 repair questions: 609 questions and 1,554 routes**, with unchanged schema `0.20260206e`.
 
 The historical sequence is 588 → 219 → 184 → 103 → 609. The earlier reductions removed 369, 49 and 88 original IDs respectively. The 103-question revision repaired seven entry paths and their downstream evidence semantics. Those repairs are preserved. The 506 absent original IDs have returned after explicit source-family analysis and per-ID predicate, route, duplicate and scenario accounting. Original unsupported edges have not been reattached.
 
 The [coverage inventory](../drafts/core/coverage-inventory.json) retains each original prompt, first removal stage, target reference, meaning-change rationale, issues and scenario references. The [restoration review](../drafts/core/reviews/2026-10-12-restoration/README.md) explains the decisions; its analysis records every original route and repaired target route. Reproduce using `python3 scripts/restore_original_questions.py --check` and `python3 scripts/audit_graph_coverage.py --check`.
 
 **No original IDs remain absent. This does not establish semantic equivalence or complete investigative coverage.** The source has 479 distinct exact prompts and 107 repeated-prompt groups involving 216 IDs. No duplicate is automatically consolidated. The 82 prior repairs are broader parameterized questions; the 506 restored questions have explicitly revised technical predicates. Unsupported intent, policy, business-loss and closure assertions were removed or bounded, with changed meaning recorded. None of the 588 dispositions is independently approved.
+
+## Challenge review and remaining coverage
+
+A separate routing reviewer audited all 609 cards and 1,554 routes. A separate evidence reviewer authored realistic normalized investigations in all seven domains without using generated fixtures. The [review findings and receipts](../drafts/core/reviews/2026-10-12-independent-review/README.md) distinguish these agent checks from external approval. Fixed-facet topic jumps have been replaced by explicit context-preserving adapters to general questions; optional negatives remain separate, full dependency identities/directions are tested, and evidence conflicts, clocks and retained contexts fail closed.
+
+The returned IDs do not provide every cyber event profile. The current domain bindings remain specific: principal/action, host/process, endpoint communication, cloud resource/operation (base control plane), message/mailbox, application/request, and file/system presence. State-only host changes, network configuration, cloud data-plane access, mailbox rules without a message, background application state and file deletion/lineage need separately reviewed public event profiles. These are concrete coverage gaps, not missing IDs, and remain visible in every affected ledger row. Do not fill absent subject fields with invented identifiers to make an unsupported event pass.
 
 ## Next review sequence
 

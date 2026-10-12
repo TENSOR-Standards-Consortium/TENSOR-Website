@@ -20,7 +20,7 @@ test('working graph and criteria stay pinned together and every route/entry reso
   assert.deepEqual(new Set(graph.entryNodeIds), new Set([
     ...Object.values(criteria.domains).map(domain => domain.entry), ...criteria.restoration.resumeEntryIds,
   ]));
-  assert.equal(graph.entryNodeIds.length, 104);
+  assert.equal(graph.entryNodeIds.length, 359);
   assert.equal(graph.nodes.length, 609);
   const ids = new Set(graph.nodes.map((node) => node.id));
   for (const node of graph.nodes) {
