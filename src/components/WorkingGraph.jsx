@@ -9,7 +9,7 @@ import '../styles/graph-atlas.css';
 
 export default function WorkingGraph({ graph: working, published, criteria, source }) {
   const graphs = useMemo(() => ({ working, published }), [working, published]);
-  const [state, setState] = useState({ dataset: 'published', node: null, view: 'all', renderer: 'atlas', guideId: null, step: 0, visibility: 'all' });
+  const [state, setState] = useState({ dataset: 'working', node: null, view: 'all', renderer: 'atlas', guideId: null, step: 0, visibility: 'all' });
   const [playing, setPlaying] = useState(false), [speed, setSpeed] = useState(7000);
   const stateRef = useRef(state); stateRef.current = state;
   const [outline, setOutline] = useState(false), [query, setQuery] = useState('');
@@ -63,8 +63,8 @@ export default function WorkingGraph({ graph: working, published, criteria, sour
     </div>
     <div className="atlas-toolbar">
       <div className="atlas-source-tabs" role="group" aria-label="Graph version">
-        <button aria-pressed={!isWorking} onClick={() => { setPlaying(false); change({ dataset: 'published', guideId:null, node: null, view: 'all' }); setQuery(''); }}><span>Published graph</span><strong>{published.nodes.length}</strong></button>
         <button aria-pressed={isWorking} onClick={() => { setPlaying(false); change({ dataset: 'working', guideId:null, node: null, view: 'all' }); setQuery(''); }}><span>Working draft</span><strong>{working.nodes.length}</strong></button>
+        <button aria-pressed={!isWorking} onClick={() => { setPlaying(false); change({ dataset: 'published', guideId:null, node: null, view: 'all' }); setQuery(''); }}><span>Published graph</span><strong>{published.nodes.length}</strong></button>
       </div>
       <div className="atlas-version"><span>{isWorking ? 'UNRATIFIED' : 'PRESERVED RELEASE'}</span><code>{graph.version}</code></div>
       <div className="atlas-render-tabs" role="group" aria-label="Graph presentation"><button aria-pressed={state.renderer === 'atlas'} onClick={() => change({renderer:'atlas'})}>Atlas</button><button aria-pressed={state.renderer === '3d'} onClick={() => change({renderer:'3d'})}>3D nebula</button></div>
@@ -81,6 +81,7 @@ export default function WorkingGraph({ graph: working, published, criteria, sour
         <ul className="atlas-routes">{outgoing.map((e, i) => <li key={i}><Badge value={e.decision} /><button onClick={() => select(e.target)}><code>{e.target}</code> {byId.get(e.target)?.label}<span aria-hidden="true">→</span></button></li>)}</ul>
         {incoming.length > 0 && <details><summary>Incoming routes · {incoming.length}</summary><ul>{incoming.map((e, i) => <li key={i}><button onClick={() => select(e.source)}>{e.source} on {e.decision}</button></li>)}</ul></details>}
         <h3>Evidence criteria</h3>{rule ? <dl>{['yes', 'no', 'unknown'].map((outcome) => <div key={outcome}><dt><Badge value={outcome} /></dt><dd>{rule[outcome]}</dd></div>)}</dl> : <p>This preserved release predates the working evidence criteria. Its question and routes are shown as published; current criteria are not silently applied to it.</p>}
+        {evidence?.sourceFacet && <div className="atlas-resumption"><h3>Assessment context</h3><p>Evidence focus: <strong>{evidence.sourceFacet}</strong>.</p><p>{evidence.resumePrerequisites?.length ? `Before assessing: ${evidence.resumePrerequisites.map(s => s.replaceAll('-', ' ')).join(', ')}. Recheck these against the bound evidence when resuming here.` : 'Bind the subjects, event, evidence material and time interval before assessing.'}</p><p>Each next question needs its own evidence. Following an arrow does not supply its answer.</p><a href={`/graphs/coverage/#${node.id}`}>Original wording &amp; review disposition ↗</a></div>}
         {evidence && <details><summary>Bindings and assessment record</summary><p>Bind: {evidence.boundSubjectFields?.join(', ')} and the exact time interval.</p><p>Record: {evidence.requiredAssessmentRecord?.join(', ')}.</p><ul>{criteria.bindingRules.map((text, i) => <li key={i}>{text}</li>)}</ul></details>}
         {!isWorking && <a href={`/questions/0.20260206e/${node.id}/`}>Open published question page ↗</a>}
       </aside>}

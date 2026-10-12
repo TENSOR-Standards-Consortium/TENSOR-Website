@@ -1,8 +1,8 @@
 // Authored, illustrative walkthroughs. These are definition-route demonstrations,
 // not incident records, Core exchange bundles, or independently verified findings.
-export const GUIDE_GRAPH_VERSION = '0.20261011b';
-export const GUIDE_GRAPH_SHA256 = '8b83f19f83d7d796c96b404d37f4ae093d36415b35123602133f34cad5c172be';
-export const GUIDE_CRITERIA_SHA256 = '0595cdd6a27c44ca87839981a2b4b93d51452a234a7af8d400da68c900cf1e49';
+export const GUIDE_GRAPH_VERSION = '0.20261012a';
+export const GUIDE_GRAPH_SHA256 = '90dfdc2209634bb8108f8e449d8dc623a02aed8ea190a054e6bdad9fd1d22620';
+export const GUIDE_CRITERIA_SHA256 = '137c2f02087b6a1cef25931381e9a9ba867523ea4ca9b7021ee0db5a34b2db5f';
 export const GUIDE_PROVENANCE = 'TENSOR-authored illustrative evidence and assessments; no real incident data. Steps are presentation order, not event-time chronology. These guides demonstrate the working graph, not Core record conformance or investigation effectiveness.';
 const step = (questionId, outcome, title, evidence, rationale, limitation) => ({ questionId, outcome, title, evidence, rationale, limitation });
 export const GUIDES = [

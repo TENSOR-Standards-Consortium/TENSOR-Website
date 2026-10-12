@@ -15,7 +15,8 @@ const LEGACY = 'releases/core/graphs/v0.20260206e/tensor.core.graph.json';
 const LEGACY_TARGET = 'public/legacy/0.20260206e/tensor.core.graph.json';
 const LEGACY_SHA256 = 'dfc3f1a965c01b6f7ade253e426e69abcbad688fab20d9d00065d71c777c010c';
 const REVIEW = 'review/2026-10-11.1';
-const WORKING = ['tensor.core.graph.json', 'entry-evidence-criteria.json', 'source/entry_nodes.json', 'coverage-inventory.json'];
+const WORKING = ['tensor.core.graph.json', 'entry-evidence-criteria.json', 'source/entry_nodes.json', 'coverage-inventory.json',
+  'reviews/2026-10-12-restoration/README.md', 'reviews/2026-10-12-restoration/analysis.json'];
 const WORKING_TARGET = 'public/graphs/working';
 const REVIEW_DOCS = ['stewardship.md', 'review-process.md', 'graph-coverage-roadmap.md', 'legacy-migration.md'];
 const MANIFEST = `${PUBLIC_CORE}/provenance.json`;

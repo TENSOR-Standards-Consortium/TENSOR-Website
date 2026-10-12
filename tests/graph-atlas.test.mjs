@@ -27,8 +27,8 @@ test('source, selection and focus round-trip through URL; invalid states recover
     assert.deepEqual(readAtlasState(search, graphs), state);
     assert.equal(new URLSearchParams(search).get('keep'), 'external');
   }
-  assert.deepEqual(readAtlasState('?graph=evil&node=missing&view=focus', graphs), { dataset: 'published', node: null, view: 'all' });
-  assert.deepEqual(readAtlasState('', graphs), { dataset: 'published', node: null, view: 'all' });
+  assert.deepEqual(readAtlasState('?graph=evil&node=missing&view=focus', graphs), { dataset: 'working', node: null, view: 'all' });
+  assert.deepEqual(readAtlasState('', graphs), { dataset: 'working', node: null, view: 'all' });
   assert.deepEqual(readAtlasState('?graph=published&node=Q609', graphs), { dataset: 'published', node: null, view: 'all' });
 });
 test('coverage ledger is pinned to both graph artifacts and records all originals without equating shared IDs', async () => {
@@ -36,8 +36,17 @@ test('coverage ledger is pinned to both graph artifacts and records all original
   assert.equal(ledger.published.sha256, createHash('sha256').update(await bytes('legacy/0.20260206e/tensor.core.graph.json')).digest('hex'));
   assert.equal(ledger.working.sha256, createHash('sha256').update(await bytes('graphs/working/tensor.core.graph.json')).digest('hex'));
   assert.equal(ledger.originalQuestions.length, 588);
-  assert.equal(ledger.summary.absentOriginal, 506);
-  assert.equal(ledger.summary.sameIdRewritten, 82);
+  assert.equal(ledger.summary.absentOriginal, 0);
+  assert.equal(ledger.summary.sameIdRewritten, 588);
   assert.equal(ledger.newQuestionIds.length, 21);
-  assert.ok(ledger.originalQuestions.every(r => r.semanticReview === 'pending' && r.disposition === null));
+  assert.ok(ledger.originalQuestions.every(r => r.semanticReview === 'author-reviewed-independent-review-pending' && r.disposition && r.scenarioRefs.length));
+  const analysis = await read('graphs/working/reviews/2026-10-12-restoration/analysis.json');
+  assert.equal(analysis.graphSha256, ledger.working.sha256);
+  assert.equal(analysis.summary.independentlyApprovedDispositions, 0);
+  assert.equal(analysis.summary.distinctSourcePrompts, 479);
+  const targets = new Map(graphs.working.nodes.map(n => [n.id, n]));
+  for (const row of analysis.questions) {
+    assert.equal(targets.get(row.targetId)?.text, row.targetText);
+    assert.ok(row.issues.length && row.sourceFacet && row.meaningChange && row.scenarioRefs.length);
+  }
 });

@@ -17,7 +17,11 @@ test('working graph and criteria stay pinned together and every route/entry reso
   const bytes = await readFile(new URL('../public/graphs/working/tensor.core.graph.json', import.meta.url));
   assert.equal(createHash('sha256').update(bytes).digest('hex'), criteria.graphSha256);
   assert.equal(graph.version, criteria.graphVersion);
-  assert.equal(graph.entryNodeIds.length, 7);
+  assert.deepEqual(new Set(graph.entryNodeIds), new Set([
+    ...Object.values(criteria.domains).map(domain => domain.entry), ...criteria.restoration.resumeEntryIds,
+  ]));
+  assert.equal(graph.entryNodeIds.length, 104);
+  assert.equal(graph.nodes.length, 609);
   const ids = new Set(graph.nodes.map((node) => node.id));
   for (const node of graph.nodes) {
     const rule = criteria.rules[criteria.nodes[node.id].rule];
