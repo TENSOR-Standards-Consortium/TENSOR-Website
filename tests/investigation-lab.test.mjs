@@ -8,11 +8,12 @@ import {
 } from '../src/lib/investigationLab.mjs';
 
 async function example(id = 'case-a') {
-  const text = await readFile(new URL(`../public/core/0.1.0-draft.1/examples/${id}.bundle.json`, import.meta.url), 'utf8');
+  const sample=CASES.find(c=>c.id===id);
+  const text = await readFile(new URL(`../public${sample.path}`, import.meta.url), 'utf8');
   return parseBundle(validateImportSize(text), { maxBytes: MAX_BUNDLE_BYTES });
 }
 
-test('both selectable reference cases validate against the vendored runtime', async () => {
+test('all selectable reference cases validate against the vendored runtime', async () => {
   for (const sample of CASES) {
     const bundle = await example(sample.id);
     const report = await validateBundle(bundle, { maxBytes: MAX_BUNDLE_BYTES });

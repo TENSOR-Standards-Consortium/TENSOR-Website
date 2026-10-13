@@ -1,0 +1,443 @@
+{
+  "id": "urn:tensor:example:workload-cloud-egress:composed-definition",
+  "version": "1.0.0",
+  "publicationStatus": "draft",
+  "title": "Workload identity, cloud read, and network egress",
+  "contractRef": {
+    "proposal": "0.1.0",
+    "bindingVersion": "0.1.0-draft.1",
+    "status": "candidate; unratified"
+  },
+  "questions": [
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:public:question-1",
+      "prompt": "Was token tx-71 issued for workload job-17?",
+      "proposition": "Was token tx-71 issued for workload job-17? Bound subject: urn:tensor:example:workload-cloud-egress:job-17; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "parameters": {
+        "subject": {
+          "type": "URI",
+          "required": true,
+          "bindsTo": "subject:subject"
+        },
+        "window": {
+          "type": "timeContext",
+          "required": true,
+          "bindsTo": "timeContext"
+        }
+      },
+      "applicabilityCriteria": "Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.",
+      "assessmentCriteria": {
+        "yes": "Validated issuer and workload discriminators bind tx-71 to job-17 in the interval.",
+        "no": "Validated discriminators contradict this particular workload/token binding.",
+        "unknown": "A label alone, missing issuer provenance, or unresolved workload binding prevents an answer."
+      },
+      "evidenceRequirements": [
+        "Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.",
+        "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
+      ],
+      "metadata": {
+        "displayId": "S1",
+        "domain": "Identity",
+        "layerId": "public",
+        "layerVersion": "1.0.0",
+        "archetype": "detect"
+      }
+    },
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:public:question-2",
+      "prompt": "Was object obj-9 read using tx-71?",
+      "proposition": "Was object obj-9 read using tx-71? Bound subject: urn:tensor:example:workload-cloud-egress:object-obj9; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "parameters": {
+        "subject": {
+          "type": "URI",
+          "required": true,
+          "bindsTo": "subject:subject"
+        },
+        "window": {
+          "type": "timeContext",
+          "required": true,
+          "bindsTo": "timeContext"
+        }
+      },
+      "applicabilityCriteria": "Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.",
+      "assessmentCriteria": {
+        "yes": "A validated completed-read event binds obj-9 and tx-71 in the interval.",
+        "no": "Complete authoritative read coverage contradicts that specific object/token read.",
+        "unknown": "An attempted call, incomplete logging, or unresolved token mapping is insufficient."
+      },
+      "evidenceRequirements": [
+        "Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.",
+        "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
+      ],
+      "metadata": {
+        "displayId": "S2",
+        "domain": "Cloud",
+        "layerId": "public",
+        "layerVersion": "1.0.0",
+        "archetype": "correlate"
+      }
+    },
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:vendor:question-3",
+      "prompt": "Did the job-17 runtime originate outbound flow f-8?",
+      "proposition": "Did the job-17 runtime originate outbound flow f-8? Bound subject: urn:tensor:example:workload-cloud-egress:flow-f8; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "parameters": {
+        "subject": {
+          "type": "URI",
+          "required": true,
+          "bindsTo": "subject:subject"
+        },
+        "window": {
+          "type": "timeContext",
+          "required": true,
+          "bindsTo": "timeContext"
+        }
+      },
+      "applicabilityCriteria": "Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.",
+      "assessmentCriteria": {
+        "yes": "Independent runtime and gateway discriminators establish the named process-to-flow relationship.",
+        "no": "Chronology, socket identity, or NAT mapping contradicts this named relationship.",
+        "unknown": "Shared IP addresses or copied trace identifiers without independent discrimination are insufficient."
+      },
+      "evidenceRequirements": [
+        "Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.",
+        "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
+      ],
+      "metadata": {
+        "displayId": "S3",
+        "domain": "Network",
+        "layerId": "vendor",
+        "layerVersion": "1.0.0",
+        "archetype": "correlate"
+      }
+    },
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:company:question-4",
+      "prompt": "Did the approved ticket cover job-17 reading obj-9?",
+      "proposition": "Did the approved ticket cover job-17 reading obj-9? Bound subject: urn:tensor:example:workload-cloud-egress:object-obj9; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "parameters": {
+        "subject": {
+          "type": "URI",
+          "required": true,
+          "bindsTo": "subject:subject"
+        },
+        "window": {
+          "type": "timeContext",
+          "required": true,
+          "bindsTo": "timeContext"
+        }
+      },
+      "applicabilityCriteria": "Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.",
+      "assessmentCriteria": {
+        "yes": "A valid effective ticket explicitly covers job-17 and obj-9.",
+        "no": "Complete authoritative ticket evidence explicitly excludes the named object or job.",
+        "unknown": "Ticket completeness, object identity, effective interval, or policy applicability is unresolved."
+      },
+      "evidenceRequirements": [
+        "Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.",
+        "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
+      ],
+      "metadata": {
+        "displayId": "S4",
+        "domain": "Cloud",
+        "layerId": "company",
+        "layerVersion": "1.0.0",
+        "archetype": "classify"
+      }
+    },
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:public:question-5",
+      "prompt": "Is delivery of obj-9’s content through f-8 established?",
+      "proposition": "Is delivery of obj-9’s content through f-8 established? Bound subject: urn:tensor:example:workload-cloud-egress:flow-f8; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "parameters": {
+        "subject": {
+          "type": "URI",
+          "required": true,
+          "bindsTo": "subject:subject"
+        },
+        "window": {
+          "type": "timeContext",
+          "required": true,
+          "bindsTo": "timeContext"
+        }
+      },
+      "applicabilityCriteria": "Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.",
+      "assessmentCriteria": {
+        "yes": "Content discriminators and independently originating destination evidence link obj-9 delivery to f-8.",
+        "no": "Complete content and delivery coverage contradicts this exact transfer proposition.",
+        "unknown": "A cloud read plus a temporally nearby flow does not establish content delivery."
+      },
+      "evidenceRequirements": [
+        "Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.",
+        "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
+      ],
+      "metadata": {
+        "displayId": "S5",
+        "domain": "Network",
+        "layerId": "public",
+        "layerVersion": "1.0.0",
+        "archetype": "correlate"
+      }
+    },
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:company:question-6",
+      "prompt": "Does the proposed job-17 suspension meet CLOUD-12’s scoped approval conditions?",
+      "proposition": "Does the proposed job-17 suspension meet CLOUD-12’s scoped approval conditions? Bound subject: urn:tensor:example:workload-cloud-egress:job-17; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "parameters": {
+        "subject": {
+          "type": "URI",
+          "required": true,
+          "bindsTo": "subject:subject"
+        },
+        "window": {
+          "type": "timeContext",
+          "required": true,
+          "bindsTo": "timeContext"
+        }
+      },
+      "applicabilityCriteria": "Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.",
+      "assessmentCriteria": {
+        "yes": "The recorded proposal and claimed responder role satisfy the exact scoped policy conditions.",
+        "no": "A material scope or role condition contradicts the policy.",
+        "unknown": "Required approval, scope, or claimed role remains unresolved."
+      },
+      "evidenceRequirements": [
+        "Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.",
+        "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
+      ],
+      "metadata": {
+        "displayId": "S6",
+        "domain": "Cloud",
+        "layerId": "company",
+        "layerVersion": "1.0.0",
+        "archetype": "classify"
+      }
+    },
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:public:question-7",
+      "prompt": "Does the handoff keep identity, object-read, flow, ticket, and delivery findings distinct?",
+      "proposition": "Does the handoff keep identity, object-read, flow, ticket, and delivery findings distinct? Bound subject: urn:tensor:example:workload-cloud-egress:flow-f8; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "parameters": {
+        "subject": {
+          "type": "URI",
+          "required": true,
+          "bindsTo": "subject:subject"
+        },
+        "window": {
+          "type": "timeContext",
+          "required": true,
+          "bindsTo": "timeContext"
+        }
+      },
+      "applicabilityCriteria": "Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.",
+      "assessmentCriteria": {
+        "yes": "The required independent findings, evidence references, and limits are all retained.",
+        "no": "A named finding or material uncertainty is demonstrably omitted.",
+        "unknown": "Record availability is insufficient to assess the handoff content."
+      },
+      "evidenceRequirements": [
+        "Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.",
+        "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
+      ],
+      "metadata": {
+        "displayId": "S7",
+        "domain": "Network",
+        "layerId": "public",
+        "layerVersion": "1.0.0",
+        "archetype": "terminal"
+      }
+    }
+  ],
+  "transitions": [
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:route-1-yes",
+      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-1",
+      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-2",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:route-1-no",
+      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-1",
+      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-2",
+      "guardOutcome": "no",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:route-1-unknown",
+      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-1",
+      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-2",
+      "guardOutcome": "unknown",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:route-2-yes",
+      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-2",
+      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:vendor:question-3",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:route-2-no",
+      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-2",
+      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:vendor:question-3",
+      "guardOutcome": "no",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:route-2-unknown",
+      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-2",
+      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:vendor:question-3",
+      "guardOutcome": "unknown",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:route-3-yes",
+      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:vendor:question-3",
+      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:company:question-4",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:route-3-no",
+      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:vendor:question-3",
+      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:company:question-4",
+      "guardOutcome": "no",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:route-3-unknown",
+      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:vendor:question-3",
+      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:company:question-4",
+      "guardOutcome": "unknown",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:route-4-yes",
+      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:company:question-4",
+      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-5",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:route-4-no",
+      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:company:question-4",
+      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-5",
+      "guardOutcome": "no",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:route-4-unknown",
+      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:company:question-4",
+      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-5",
+      "guardOutcome": "unknown",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:route-5-yes",
+      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-5",
+      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:company:question-6",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:route-5-no",
+      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-5",
+      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:company:question-6",
+      "guardOutcome": "no",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:route-5-unknown",
+      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-5",
+      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:company:question-6",
+      "guardOutcome": "unknown",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:route-6-yes",
+      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:company:question-6",
+      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-7",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:route-6-no",
+      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:company:question-6",
+      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-7",
+      "guardOutcome": "no",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:route-6-unknown",
+      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:company:question-6",
+      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-7",
+      "guardOutcome": "unknown",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    }
+  ],
+  "entryQuestionIds": [
+    "urn:tensor:example:workload-cloud-egress:public:question-1"
+  ],
+  "dependencies": [],
+  "metadata": {
+    "illustrative": true,
+    "layers": [
+      {
+        "id": "public",
+        "label": "Public investigation questions",
+        "owner": "TENSOR Standards Consortium",
+        "version": "1.0.0"
+      },
+      {
+        "id": "vendor",
+        "label": "Example vendor telemetry graph",
+        "owner": "Fictional telemetry vendor",
+        "version": "1.0.0"
+      },
+      {
+        "id": "company",
+        "label": "Example company policy graph",
+        "owner": "Fictional company",
+        "version": "1.0.0"
+      }
+    ],
+    "composition": "Case-specific questions composed in one pinned artifact. These are additional example definitions, not routes added to the public working or published graph."
+  }
+}

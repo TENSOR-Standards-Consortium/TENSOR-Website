@@ -1,0 +1,565 @@
+{
+  "id": "urn:tensor:example:attachment-host-tool:composed-definition",
+  "version": "1.0.0",
+  "publicationStatus": "draft",
+  "title": "Email attachment, host execution, and an application tool",
+  "contractRef": {
+    "proposal": "0.1.0",
+    "bindingVersion": "0.1.0-draft.1",
+    "status": "candidate; unratified"
+  },
+  "questions": [
+    {
+      "id": "urn:tensor:example:attachment-host-tool:public:question-1",
+      "prompt": "Was message m-31 delivered to the named mailbox?",
+      "proposition": "Was message m-31 delivered to the named mailbox? Bound subject: urn:tensor:example:attachment-host-tool:message-m31; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "parameters": {
+        "subject": {
+          "type": "URI",
+          "required": true,
+          "bindsTo": "subject:subject"
+        },
+        "window": {
+          "type": "timeContext",
+          "required": true,
+          "bindsTo": "timeContext"
+        }
+      },
+      "applicabilityCriteria": "Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.",
+      "assessmentCriteria": {
+        "yes": "A validated mailbox delivery event matches the message and named mailbox.",
+        "no": "Complete validated delivery coverage contradicts this particular message delivery.",
+        "unknown": "A sender claim or gateway acceptance alone does not establish mailbox delivery."
+      },
+      "evidenceRequirements": [
+        "Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.",
+        "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
+      ],
+      "metadata": {
+        "displayId": "S1",
+        "domain": "Email",
+        "layerId": "public",
+        "layerVersion": "1.0.0",
+        "archetype": "detect"
+      }
+    },
+    {
+      "id": "urn:tensor:example:attachment-host-tool:vendor:question-2",
+      "prompt": "Do retained file f-31’s bytes match the attachment in m-31?",
+      "proposition": "Do retained file f-31’s bytes match the attachment in m-31? Bound subject: urn:tensor:example:attachment-host-tool:file-f31; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "parameters": {
+        "subject": {
+          "type": "URI",
+          "required": true,
+          "bindsTo": "subject:subject"
+        },
+        "window": {
+          "type": "timeContext",
+          "required": true,
+          "bindsTo": "timeContext"
+        }
+      },
+      "applicabilityCriteria": "Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.",
+      "assessmentCriteria": {
+        "yes": "Independent byte acquisitions and a documented digest comparison establish this named artifact match.",
+        "no": "Verified digest or size evidence contradicts equality of these exact artifacts.",
+        "unknown": "A filename, missing bytes, or copied hash value without independent acquisition is insufficient."
+      },
+      "evidenceRequirements": [
+        "Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.",
+        "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
+      ],
+      "metadata": {
+        "displayId": "S2",
+        "domain": "File",
+        "layerId": "vendor",
+        "layerVersion": "1.0.0",
+        "archetype": "correlate"
+      }
+    },
+    {
+      "id": "urn:tensor:example:attachment-host-tool:vendor:question-3",
+      "prompt": "Did process p-204 execute the retained f-31 artifact on h-17?",
+      "proposition": "Did process p-204 execute the retained f-31 artifact on h-17? Bound subject: urn:tensor:example:attachment-host-tool:process-p204; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "parameters": {
+        "subject": {
+          "type": "URI",
+          "required": true,
+          "bindsTo": "subject:subject"
+        },
+        "window": {
+          "type": "timeContext",
+          "required": true,
+          "bindsTo": "timeContext"
+        }
+      },
+      "applicabilityCriteria": "Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.",
+      "assessmentCriteria": {
+        "yes": "Validated process-instance and artifact discriminators establish execution of these bytes on h-17.",
+        "no": "Validated process or digest discrimination contradicts that particular execution claim.",
+        "unknown": "A process name, filesystem presence, or incomplete execution telemetry cannot resolve the claim."
+      },
+      "evidenceRequirements": [
+        "Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.",
+        "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
+      ],
+      "metadata": {
+        "displayId": "S3",
+        "domain": "Host",
+        "layerId": "vendor",
+        "layerVersion": "1.0.0",
+        "archetype": "correlate"
+      }
+    },
+    {
+      "id": "urn:tensor:example:attachment-host-tool:vendor:question-4",
+      "prompt": "Did p-204 originate application tool request req-42?",
+      "proposition": "Did p-204 originate application tool request req-42? Bound subject: urn:tensor:example:attachment-host-tool:request-req42; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "parameters": {
+        "subject": {
+          "type": "URI",
+          "required": true,
+          "bindsTo": "subject:subject"
+        },
+        "window": {
+          "type": "timeContext",
+          "required": true,
+          "bindsTo": "timeContext"
+        }
+      },
+      "applicabilityCriteria": "Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.",
+      "assessmentCriteria": {
+        "yes": "Independent connection and authenticated request discriminators establish the named process-to-request relationship.",
+        "no": "Chronology or authenticated connection evidence contradicts this particular relationship.",
+        "unknown": "A shared client label or temporal proximity without independent binding is insufficient."
+      },
+      "evidenceRequirements": [
+        "Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.",
+        "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
+      ],
+      "metadata": {
+        "displayId": "S4",
+        "domain": "Application",
+        "layerId": "vendor",
+        "layerVersion": "1.0.0",
+        "archetype": "correlate"
+      }
+    },
+    {
+      "id": "urn:tensor:example:attachment-host-tool:public:question-5",
+      "prompt": "Did req-42 request an external upload of the restricted report?",
+      "proposition": "Did req-42 request an external upload of the restricted report? Bound subject: urn:tensor:example:attachment-host-tool:request-req42; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "parameters": {
+        "subject": {
+          "type": "URI",
+          "required": true,
+          "bindsTo": "subject:subject"
+        },
+        "window": {
+          "type": "timeContext",
+          "required": true,
+          "bindsTo": "timeContext"
+        }
+      },
+      "applicabilityCriteria": "Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.",
+      "assessmentCriteria": {
+        "yes": "Validated request-body content identifies the restricted report and an external destination under the declared criterion.",
+        "no": "Validated complete request content contradicts this exact report/destination criterion.",
+        "unknown": "A tool name, redacted body, missing report binding, or missing destination test prevents classification."
+      },
+      "evidenceRequirements": [
+        "Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.",
+        "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
+      ],
+      "metadata": {
+        "displayId": "S5",
+        "domain": "Application",
+        "layerId": "public",
+        "layerVersion": "1.0.0",
+        "archetype": "correlate"
+      }
+    },
+    {
+      "id": "urn:tensor:example:attachment-host-tool:company:question-6",
+      "prompt": "Was the external upload request approved under IR-07?",
+      "proposition": "Was the external upload request approved under IR-07? Bound subject: urn:tensor:example:attachment-host-tool:request-req42; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "parameters": {
+        "subject": {
+          "type": "URI",
+          "required": true,
+          "bindsTo": "subject:subject"
+        },
+        "window": {
+          "type": "timeContext",
+          "required": true,
+          "bindsTo": "timeContext"
+        }
+      },
+      "applicabilityCriteria": "Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.",
+      "assessmentCriteria": {
+        "yes": "An effective exception explicitly covers the report, destination, and request.",
+        "no": "Applicable policy and complete authoritative exception coverage establish absence of the required approval.",
+        "unknown": "Policy applicability, exception coverage, or request binding is unresolved."
+      },
+      "evidenceRequirements": [
+        "Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.",
+        "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
+      ],
+      "metadata": {
+        "displayId": "S6",
+        "domain": "Application",
+        "layerId": "company",
+        "layerVersion": "1.0.0",
+        "archetype": "classify"
+      }
+    },
+    {
+      "id": "urn:tensor:example:attachment-host-tool:public:question-7",
+      "prompt": "Is successful delivery of the restricted report established?",
+      "proposition": "Is successful delivery of the restricted report established? Bound subject: urn:tensor:example:attachment-host-tool:request-req42; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "parameters": {
+        "subject": {
+          "type": "URI",
+          "required": true,
+          "bindsTo": "subject:subject"
+        },
+        "window": {
+          "type": "timeContext",
+          "required": true,
+          "bindsTo": "timeContext"
+        }
+      },
+      "applicabilityCriteria": "Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.",
+      "assessmentCriteria": {
+        "yes": "Independent destination and content discriminators establish actual delivery of the named report.",
+        "no": "Complete delivery evidence contradicts this exact report delivery.",
+        "unknown": "A request or a copy of its trace cannot establish successful delivery."
+      },
+      "evidenceRequirements": [
+        "Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.",
+        "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
+      ],
+      "metadata": {
+        "displayId": "S7",
+        "domain": "Application",
+        "layerId": "public",
+        "layerVersion": "1.0.0",
+        "archetype": "correlate"
+      }
+    },
+    {
+      "id": "urn:tensor:example:attachment-host-tool:company:question-8",
+      "prompt": "Does the proposed h-17 isolation and req-42 pause satisfy IR-07’s approval conditions?",
+      "proposition": "Does the proposed h-17 isolation and req-42 pause satisfy IR-07’s approval conditions? Bound subject: urn:tensor:example:attachment-host-tool:host-h17; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "parameters": {
+        "subject": {
+          "type": "URI",
+          "required": true,
+          "bindsTo": "subject:subject"
+        },
+        "window": {
+          "type": "timeContext",
+          "required": true,
+          "bindsTo": "timeContext"
+        }
+      },
+      "applicabilityCriteria": "Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.",
+      "assessmentCriteria": {
+        "yes": "The proposal and claimed responder role satisfy the exact host/request scope conditions.",
+        "no": "A material role or scope condition contradicts IR-07.",
+        "unknown": "The proposal, policy, or claimed role cannot be resolved."
+      },
+      "evidenceRequirements": [
+        "Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.",
+        "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
+      ],
+      "metadata": {
+        "displayId": "S8",
+        "domain": "Host",
+        "layerId": "company",
+        "layerVersion": "1.0.0",
+        "archetype": "classify"
+      }
+    },
+    {
+      "id": "urn:tensor:example:attachment-host-tool:public:question-9",
+      "prompt": "Does the handoff preserve the earlier unknown content assessment and its evidence-driven revision?",
+      "proposition": "Does the handoff preserve the earlier unknown content assessment and its evidence-driven revision? Bound subject: urn:tensor:example:attachment-host-tool:request-req42; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "parameters": {
+        "subject": {
+          "type": "URI",
+          "required": true,
+          "bindsTo": "subject:subject"
+        },
+        "window": {
+          "type": "timeContext",
+          "required": true,
+          "bindsTo": "timeContext"
+        }
+      },
+      "applicabilityCriteria": "Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.",
+      "assessmentCriteria": {
+        "yes": "Both assessment versions, their separate inputs, decisions, and unresolved questions remain in the record.",
+        "no": "The earlier assessment or the material basis for its revision is demonstrably missing.",
+        "unknown": "Available history is insufficient to assess retention of the revision."
+      },
+      "evidenceRequirements": [
+        "Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.",
+        "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
+      ],
+      "metadata": {
+        "displayId": "S9",
+        "domain": "Application",
+        "layerId": "public",
+        "layerVersion": "1.0.0",
+        "archetype": "terminal"
+      }
+    }
+  ],
+  "transitions": [
+    {
+      "id": "urn:tensor:example:attachment-host-tool:route-1-yes",
+      "sourceQuestionId": "urn:tensor:example:attachment-host-tool:public:question-1",
+      "targetQuestionId": "urn:tensor:example:attachment-host-tool:vendor:question-2",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:attachment-host-tool:route-1-no",
+      "sourceQuestionId": "urn:tensor:example:attachment-host-tool:public:question-1",
+      "targetQuestionId": "urn:tensor:example:attachment-host-tool:vendor:question-2",
+      "guardOutcome": "no",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:attachment-host-tool:route-1-unknown",
+      "sourceQuestionId": "urn:tensor:example:attachment-host-tool:public:question-1",
+      "targetQuestionId": "urn:tensor:example:attachment-host-tool:vendor:question-2",
+      "guardOutcome": "unknown",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:attachment-host-tool:route-2-yes",
+      "sourceQuestionId": "urn:tensor:example:attachment-host-tool:vendor:question-2",
+      "targetQuestionId": "urn:tensor:example:attachment-host-tool:vendor:question-3",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:attachment-host-tool:route-2-no",
+      "sourceQuestionId": "urn:tensor:example:attachment-host-tool:vendor:question-2",
+      "targetQuestionId": "urn:tensor:example:attachment-host-tool:vendor:question-3",
+      "guardOutcome": "no",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:attachment-host-tool:route-2-unknown",
+      "sourceQuestionId": "urn:tensor:example:attachment-host-tool:vendor:question-2",
+      "targetQuestionId": "urn:tensor:example:attachment-host-tool:vendor:question-3",
+      "guardOutcome": "unknown",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:attachment-host-tool:route-3-yes",
+      "sourceQuestionId": "urn:tensor:example:attachment-host-tool:vendor:question-3",
+      "targetQuestionId": "urn:tensor:example:attachment-host-tool:vendor:question-4",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:attachment-host-tool:route-3-no",
+      "sourceQuestionId": "urn:tensor:example:attachment-host-tool:vendor:question-3",
+      "targetQuestionId": "urn:tensor:example:attachment-host-tool:vendor:question-4",
+      "guardOutcome": "no",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:attachment-host-tool:route-3-unknown",
+      "sourceQuestionId": "urn:tensor:example:attachment-host-tool:vendor:question-3",
+      "targetQuestionId": "urn:tensor:example:attachment-host-tool:vendor:question-4",
+      "guardOutcome": "unknown",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:attachment-host-tool:route-4-yes",
+      "sourceQuestionId": "urn:tensor:example:attachment-host-tool:vendor:question-4",
+      "targetQuestionId": "urn:tensor:example:attachment-host-tool:public:question-5",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:attachment-host-tool:route-4-no",
+      "sourceQuestionId": "urn:tensor:example:attachment-host-tool:vendor:question-4",
+      "targetQuestionId": "urn:tensor:example:attachment-host-tool:public:question-5",
+      "guardOutcome": "no",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:attachment-host-tool:route-4-unknown",
+      "sourceQuestionId": "urn:tensor:example:attachment-host-tool:vendor:question-4",
+      "targetQuestionId": "urn:tensor:example:attachment-host-tool:public:question-5",
+      "guardOutcome": "unknown",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:attachment-host-tool:route-5-yes",
+      "sourceQuestionId": "urn:tensor:example:attachment-host-tool:public:question-5",
+      "targetQuestionId": "urn:tensor:example:attachment-host-tool:company:question-6",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:attachment-host-tool:route-5-no",
+      "sourceQuestionId": "urn:tensor:example:attachment-host-tool:public:question-5",
+      "targetQuestionId": "urn:tensor:example:attachment-host-tool:company:question-6",
+      "guardOutcome": "no",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:attachment-host-tool:route-5-unknown",
+      "sourceQuestionId": "urn:tensor:example:attachment-host-tool:public:question-5",
+      "targetQuestionId": "urn:tensor:example:attachment-host-tool:company:question-6",
+      "guardOutcome": "unknown",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:attachment-host-tool:route-6-yes",
+      "sourceQuestionId": "urn:tensor:example:attachment-host-tool:company:question-6",
+      "targetQuestionId": "urn:tensor:example:attachment-host-tool:public:question-7",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:attachment-host-tool:route-6-no",
+      "sourceQuestionId": "urn:tensor:example:attachment-host-tool:company:question-6",
+      "targetQuestionId": "urn:tensor:example:attachment-host-tool:public:question-7",
+      "guardOutcome": "no",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:attachment-host-tool:route-6-unknown",
+      "sourceQuestionId": "urn:tensor:example:attachment-host-tool:company:question-6",
+      "targetQuestionId": "urn:tensor:example:attachment-host-tool:public:question-7",
+      "guardOutcome": "unknown",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:attachment-host-tool:route-7-yes",
+      "sourceQuestionId": "urn:tensor:example:attachment-host-tool:public:question-7",
+      "targetQuestionId": "urn:tensor:example:attachment-host-tool:company:question-8",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:attachment-host-tool:route-7-no",
+      "sourceQuestionId": "urn:tensor:example:attachment-host-tool:public:question-7",
+      "targetQuestionId": "urn:tensor:example:attachment-host-tool:company:question-8",
+      "guardOutcome": "no",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:attachment-host-tool:route-7-unknown",
+      "sourceQuestionId": "urn:tensor:example:attachment-host-tool:public:question-7",
+      "targetQuestionId": "urn:tensor:example:attachment-host-tool:company:question-8",
+      "guardOutcome": "unknown",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:attachment-host-tool:route-8-yes",
+      "sourceQuestionId": "urn:tensor:example:attachment-host-tool:company:question-8",
+      "targetQuestionId": "urn:tensor:example:attachment-host-tool:public:question-9",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:attachment-host-tool:route-8-no",
+      "sourceQuestionId": "urn:tensor:example:attachment-host-tool:company:question-8",
+      "targetQuestionId": "urn:tensor:example:attachment-host-tool:public:question-9",
+      "guardOutcome": "no",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:attachment-host-tool:route-8-unknown",
+      "sourceQuestionId": "urn:tensor:example:attachment-host-tool:company:question-8",
+      "targetQuestionId": "urn:tensor:example:attachment-host-tool:public:question-9",
+      "guardOutcome": "unknown",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    }
+  ],
+  "entryQuestionIds": [
+    "urn:tensor:example:attachment-host-tool:public:question-1"
+  ],
+  "dependencies": [],
+  "metadata": {
+    "illustrative": true,
+    "layers": [
+      {
+        "id": "public",
+        "label": "Public investigation questions",
+        "owner": "TENSOR Standards Consortium",
+        "version": "1.0.0"
+      },
+      {
+        "id": "vendor",
+        "label": "Example vendor telemetry graph",
+        "owner": "Fictional telemetry vendor",
+        "version": "1.0.0"
+      },
+      {
+        "id": "company",
+        "label": "Example company policy graph",
+        "owner": "Fictional company",
+        "version": "1.0.0"
+      }
+    ],
+    "composition": "Case-specific questions composed in one pinned artifact. These are additional example definitions, not routes added to the public working or published graph."
+  }
+}

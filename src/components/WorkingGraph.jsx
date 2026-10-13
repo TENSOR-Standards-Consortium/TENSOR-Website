@@ -74,7 +74,7 @@ export default function WorkingGraph({ graph: working, published, criteria: base
   const file = source.files.find((f) => f.target === (isWorking ? 'public/graphs/working/tensor.core.graph.json' : 'public/legacy/0.20260206e/tensor.core.graph.json'));
   return <div className="atlas" aria-busy={!ready} ref={shell}>
     <WorkspaceHeading className="atlas-heading" title="Investigation atlas" eyebrow="TENSOR / Investigation knowledge">
-      <div className="segmented-control atlas-mode-tabs" role="group" aria-label="Workspace mode"><button aria-pressed={!guide} onClick={() => { setPlaying(false); change({guideId:null,node:null,view:'all'}); }}>Explore</button><button aria-pressed={!!guide} onClick={() => chooseGuide(state.guideId || guides[0].id)}>Follow an investigation</button></div>
+      <div className="segmented-control atlas-mode-tabs" role="group" aria-label="Workspace mode"><button aria-pressed={!guide} onClick={() => { setPlaying(false); change({guideId:null,node:null,view:'all'}); }}>Explore</button><button aria-pressed={!!guide} onClick={() => chooseGuide(state.guideId || guides[0].id)}>Follow an investigation</button></div>{!guide&&<a className="btn btn-secondary" href="/investigations/">Cross-domain cases ↗</a>}
     </WorkspaceHeading>
     <div className={`atlas-tools ${guide ? 'is-collapsible' : ''}`} data-open={toolsOpen}>
     {guide && <button ref={toolsToggle} className="atlas-tools-toggle" aria-expanded={toolsOpen} aria-controls="atlas-view-controls" onClick={() => setToolsOpen(!toolsOpen)}><span>Working draft <strong>{graph.nodes.length}</strong> · {state.renderer === '3d' ? '3D nebula' : 'Atlas'}</span><span>{toolsOpen ? 'Hide controls −' : 'View controls +'}</span></button>}

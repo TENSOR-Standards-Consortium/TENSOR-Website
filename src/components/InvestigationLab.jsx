@@ -7,6 +7,7 @@ import {
 import '../styles/investigation-lab.css';
 import { Badge } from './WorkspaceUI.jsx';
 import InvestigationGraph from './InvestigationGraph.jsx';
+import CaseInvestigation from './CaseInvestigation.jsx';
 
 const PAGE_SIZE = 30;
 
@@ -46,7 +47,7 @@ function EntryCard({ entry, questions, entriesById, onInspect }) {
     <p className="il-attribution">{attributionLabel(entry, entriesById)}<span aria-hidden="true"> · </span><time>{asText(entry.recordedAt || 'Recorded time unspecified')}</time></p>
     {entry.type === 'QuestionInstance' && <>
       {!question && <p className="il-caption">The pinned question is unavailable or ambiguous. Details are in the validation report and complete instance JSON.</p>}
-      <dl className="il-fields"><Field label="Subject" value={entry.subjectBindings} /><Field label="Time context" value={entry.timeContext} /><Field label="Definition version" value={entry.definitionRef?.version} /><Field label="Origin" value={entry.origin?.rationale || entry.origin?.kind} /></dl>
+      <dl className="il-fields"><Field label="Subject" value={entry.subjectBindings} /><Field label="Time context" value={entry.timeContext} /><Field label="Definition version" value={entry.definitionRef?.version} /><Field label="Domain" value={question?.metadata?.domain} /><Field label="Graph layer" value={question?.metadata?.layerId} /><Field label="Layer version" value={question?.metadata?.layerVersion} /><Field label="Origin" value={entry.origin?.rationale || entry.origin?.kind} /></dl>
       {question && <details className="il-criteria"><summary>Question criteria and parameter bindings</summary><p>{asText(question.proposition)}</p><dl className="il-fields"><Field label="Yes" value={question.assessmentCriteria?.yes} /><Field label="No" value={question.assessmentCriteria?.no} /><Field label="Unknown" value={question.assessmentCriteria?.unknown} /><Field label="Applicability" value={question.applicabilityCriteria} /><Field label="Bindings" value={entry.parameterBindings} /></dl></details>}
     </>}
     {entry.type === 'EvidenceReference' && <dl className="il-fields"><Field label="Source" value={entry.source} /><Field label="Access limitation" value={entry.locatorAbsentReason} /><Field label="Restrictions" value={entry.accessRestrictions} /><Field label="Locator (not opened)" value={entry.locator} /><Field label="Integrity" value={entry.integrity} /></dl>}
@@ -109,9 +110,17 @@ export default function InvestigationLab() {
   const [selectedEntryId, setSelectedEntryId] = useState('');
   const [questions, setQuestions] = useState(() => new Map());
   const [page, setPage] = useState(0);
+  const [caseStep,setCaseStep]=useState(0);
   const [paste, setPaste] = useState('');
   const operation = useRef(0);
   const contentRef = useRef(null);
+  useEffect(()=>{if(bundle&&source?.walkthrough)window.requestAnimationFrame(()=>{contentRef.current?.focus({preventScroll:true});contentRef.current?.closest('.il-workbench')?.scrollIntoView({block:'start',behavior:'instant'});});},[bundle,source]);
+  const autoOpened = useRef(false);
+  useEffect(()=>{
+    if(!ready||autoOpened.current)return;autoOpened.current=true;
+    const sample=CASES.find(c=>c.id===new URLSearchParams(window.location.search).get('case'));
+    if(sample)loadCase(sample);
+  },[ready]);
   const entries = useMemo(() => getEntries(bundle), [bundle]);
   const entriesById = useMemo(() => indexEntries(entries), [entries]);
   const groups = useMemo(() => groupEntries(entries), [entries]);
@@ -126,7 +135,9 @@ export default function InvestigationLab() {
     const [result, questionIndex] = await Promise.all([validateBundle(parsed, { maxBytes: MAX_BUNDLE_BYTES }), getDefinitionQuestions(parsed)]);
     if (ticket !== operation.current) return;
     setBundle(parsed); setReport(result); setSource(nextSource); setQuestions(questionIndex);
-    setSection('overview'); setQuery(''); setSelectedEntryId(''); setPage(0);
+    setSection(nextSource.walkthrough?'walkthrough':'overview'); setQuery(''); setSelectedEntryId(''); setPage(0);
+    const params=new URLSearchParams(window.location.search),requested=Number(params.get('step')||0);
+    setCaseStep(nextSource.caseId===params.get('case')&&Number.isInteger(requested)&&requested>=0?requested:0);
     setNotice(`Opened ${nextSource.label}. ${summarizeValidation(result).title}.`);
   }
 
@@ -145,7 +156,7 @@ export default function InvestigationLab() {
       if (!response.ok) throw new Error(`The example could not be loaded (${response.status}). Download it below or try again.`);
       const declared = Number(response.headers.get('content-length'));
       if (Number.isFinite(declared) && declared > MAX_BUNDLE_BYTES) throw new Error('The example exceeds the 2 MiB import limit.');
-      await importText(decodeBundleBytes(await response.arrayBuffer()), { label: sample.title, kind: 'synthetic' }, ticket);
+      await importText(decodeBundleBytes(await response.arrayBuffer()), { label: sample.title, kind: 'synthetic', caseId: sample.id, walkthrough: sample.walkthrough }, ticket);
     });
   }
 
@@ -179,7 +190,7 @@ export default function InvestigationLab() {
     <section className="tensor-panel il-start" aria-labelledby="il-start-title">
       <div className="il-start-heading"><div><p className="il-eyebrow">Core investigation bundles</p><h2 id="il-start-title">Open an investigation</h2></div><span className="il-version">Core {BINDING_VERSION}</span></div>
       <p className="il-lead">Example investigations and local imports include questions, evidence, assessments, decisions, and retained history.</p>
-      <div className="il-case-grid">{CASES.map((sample, index) => <button type="button" className={`il-case ${source?.label === sample.title ? 'is-selected' : ''}`} key={sample.id} disabled={busy || !ready} onClick={() => loadCase(sample)}><span className="il-case-number">0{index + 1} / EXAMPLE INVESTIGATION</span><strong>{sample.title}</strong><span>{sample.description}</span><span className="il-case-action">Open reference case <span aria-hidden="true">↗</span></span></button>)}</div>
+      <details className="il-examples" open={!bundle}><summary>Example investigations · {CASES.length} cases</summary><div className="il-case-grid">{CASES.map((sample, index) => <button type="button" className={`il-case ${source?.label === sample.title ? 'is-selected' : ''}`} key={sample.id} disabled={busy || !ready} onClick={() => loadCase(sample)}><span className="il-case-number">0{index + 1} / EXAMPLE INVESTIGATION</span><strong>{sample.title}</strong><span>{sample.description}</span><span className="il-case-action">Open reference case <span aria-hidden="true">↗</span></span></button>)}</div></details>
       <div className="il-import-row"><div><label htmlFor="il-bundle-file" className="il-file-label">Import a local bundle</label><input id="il-bundle-file" type="file" accept=".json,application/json" onChange={importFile} disabled={busy || !ready} aria-describedby="il-privacy" /></div><p id="il-privacy">JSON · up to 2 MiB · Browser-only processing, without upload, evidence retrieval, or action execution.</p></div>
       <details className="il-paste"><summary>Or paste bundle JSON</summary><form onSubmit={(event) => { event.preventDefault(); runOperation((ticket) => importText(paste, { label: 'Pasted bundle', kind: 'import' }, ticket)); }}><label htmlFor="il-json-paste">Bundle JSON to open</label><textarea id="il-json-paste" value={paste} onChange={(event) => setPaste(event.target.value)} spellCheck="false" rows={7} placeholder='{ "format": "tensor-investigation-bundle", … }' maxLength={MAX_BUNDLE_BYTES} /><button type="submit" className="btn btn-primary" disabled={busy || !ready || !paste.trim()}>Open pasted bundle</button></form></details>
       <div className="il-live" aria-live="polite" aria-atomic="true">{!ready ? 'Preparing local tools…' : busy ? 'Validating bundle locally…' : notice}</div>
@@ -190,9 +201,9 @@ export default function InvestigationLab() {
       <section className="tensor-panel il-workspace-bar" aria-label="Open bundle"><div><span className="il-eyebrow">{source.kind === 'synthetic' ? 'Illustrative reference case' : 'Imported record · assertions unverified'}</span><h2>{source.label}</h2><p>{asText(bundle.record?.scope?.purpose || 'No readable scope purpose supplied.')}</p></div><div className="il-workspace-actions"><button type="button" className="btn btn-secondary" disabled={busy || !ready} onClick={() => runOperation(async (ticket) => { const result = await validateBundle(bundle, { maxBytes: MAX_BUNDLE_BYTES }); if (ticket === operation.current) { setReport(result); setNotice(summarizeValidation(result).title); } })}>Run checks again</button><button type="button" className="btn btn-primary" onClick={() => { try { download(serializeForLab(bundle), downloadName(bundle)); } catch (caught) { setError(caught instanceof Error ? caught.message : 'Export failed.'); } }}>Download bundle ↓</button></div></section>
       {report && <ValidationReport report={report} onDownload={() => download(JSON.stringify(report, null, 2), downloadName(bundle, 'validation'))} />}
       <div className="tensor-panel il-workbench">
-        <nav className="il-sections" aria-label="Investigation sections">{SECTIONS.map((item) => <button type="button" key={item.id} className={section === item.id ? 'is-active' : ''} aria-current={section === item.id ? 'page' : undefined} onClick={() => showSection(item.id)}><span>{item.label}</span>{!['overview', 'graph'].includes(item.id) && <span className="il-count">{item.id === 'all' || item.id === 'history' ? entries.length : (groups[item.id]?.length || 0)}</span>}</button>)}<p>Entries retain attribution and revision history.</p></nav>
+        <nav className="il-sections" aria-label="Investigation sections">{SECTIONS.filter(item=>item.id!=='walkthrough'||bundle.record?.metadata?.walkthrough?.format==='tensor-example-walkthrough').map((item) => <button type="button" key={item.id} className={section === item.id ? 'is-active' : ''} aria-current={section === item.id ? 'page' : undefined} onClick={() => showSection(item.id)}><span>{item.label}</span>{!['overview', 'graph', 'walkthrough'].includes(item.id) && <span className="il-count">{item.id === 'all' || item.id === 'history' ? entries.length : (groups[item.id]?.length || 0)}</span>}</button>)}<p>Entries retain attribution and revision history.</p></nav>
         <section className="il-content" ref={contentRef} tabIndex={-1} aria-label={SECTIONS.find((item) => item.id === section)?.label || 'Record contents'}>
-          {section === 'graph' ? <InvestigationGraph bundle={bundle} questions={questions} onInspect={inspectEntry} /> : section === 'overview' ? <>
+          {section === 'walkthrough' ? <CaseInvestigation bundle={bundle} initialStep={caseStep} onStep={setCaseStep} publicCaseId={source.caseId} labMode onInspect={inspectEntry}/> : section === 'graph' ? <InvestigationGraph bundle={bundle} questions={questions} onInspect={inspectEntry} /> : section === 'overview' ? <>
             <div className="il-content-heading"><p className="il-eyebrow">Investigation context</p><h2>Scope and handoff</h2></div>
             <div className="il-overview-metrics"><div><strong>{entries.length}</strong><span>inspectable entries</span></div><div><strong>{groups.QuestionInstance?.length || 0}</strong><span>question instances</span></div><div><strong>{groups.Actor?.length || 0}</strong><span>actor entries</span></div></div>
             <article className="tensor-panel il-overview-card"><h3>Record boundary</h3><dl className="il-fields"><Field label="Purpose" value={bundle.record?.scope?.purpose} /><Field label="Subjects" value={bundle.record?.scope?.subjectBoundary} /><Field label="Exchange scope" value={bundle.record?.completeness?.exchangeScope} /><Field label="Completeness meaning" value={bundle.record?.completeness?.meaning} /><Field label="Investigation ID" value={bundle.record?.investigationId} /><Field label="Snapshot ID" value={bundle.record?.snapshotId} /><Field label="Recorded at" value={bundle.record?.recordedAt} /><Field label="Producer" value={bundle.record?.producer} /></dl><JsonDetails value={bundle.record?.scope} label="Complete scope" /></article>

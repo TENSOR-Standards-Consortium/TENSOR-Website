@@ -1,12 +1,15 @@
 import { parseJSON } from '../vendor/tensor-core/json.mjs';
 import { serializeBundle, sha256 } from '../vendor/tensor-core/index.mjs';
+import catalog from '../../public/investigations/v1/catalog.json' with { type: 'json' };
 
 export const MAX_BUNDLE_BYTES = 2 * 1024 * 1024;
 export const CASES = Object.freeze([
   { id: 'case-a', title: 'An agent’s outbound transfer', description: 'An unknown payload, a precautionary pause, and a revised assessment after new evidence.', path: '/core/0.1.0-draft.1/examples/case-a.bundle.json' },
   { id: 'case-b', title: 'An ambiguous identity incident', description: 'A human–agent handoff, competing explanations, and a correction with retained uncertainty.', path: '/core/0.1.0-draft.1/examples/case-b.bundle.json' },
+  ...catalog.scenarios.map(s=>({id:s.id,title:s.title,description:s.description,path:`/investigations/v1/${s.bundle}`,walkthrough:true})),
 ]);
 export const SECTIONS = Object.freeze([
+  { id: 'walkthrough', label: 'Case walkthrough' },
   { id: 'overview', label: 'Scope & handoff' },
   { id: 'graph', label: 'Recorded path' },
   { id: 'QuestionInstance', label: 'Questions' },

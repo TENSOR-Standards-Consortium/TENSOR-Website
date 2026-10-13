@@ -1,8 +1,8 @@
 ---
-interface Props { title: string; eyebrow?: string; workspace?: boolean }
-const { title, eyebrow = 'TENSOR', workspace = false } = Astro.props;
+interface Props { title: string; eyebrow?: string; workspace?: boolean; compact?: boolean }
+const { title, eyebrow = 'TENSOR', workspace = false, compact = false } = Astro.props;
 ---
-<section class:list={['page-title-bar', { 'workspace-intro': workspace }]}>
+<section class:list={['page-title-bar', { 'workspace-intro': workspace, 'is-compact': compact }]}>
   <div class="container">
     <p class="page-eyebrow">{eyebrow}</p>
     <h1 class="page-title">{title}</h1>

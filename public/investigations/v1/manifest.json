@@ -1,0 +1,33 @@
+{
+  "version": "1.0.0",
+  "files": [
+    {
+      "path": "soc-signin.definition.json",
+      "sha256": "f09b6ead7a0f8aa4dff237a7c9919fd41f09071081b2bf8ed48665c35a6b0574"
+    },
+    {
+      "path": "soc-signin.bundle.json",
+      "sha256": "84b2218484c81c47abeb7803800fe3ed110e7d9fa51c46a832f106a3049b5338"
+    },
+    {
+      "path": "workload-cloud-egress.definition.json",
+      "sha256": "00db9d7f22cac27934153f7b136c91923dde890dcf6e7b0470bb44e31f418107"
+    },
+    {
+      "path": "workload-cloud-egress.bundle.json",
+      "sha256": "09ab06f3cbda7dce0b48400b6bd0a1c4bf01e803b7c3099d3c0b446dbacf564f"
+    },
+    {
+      "path": "attachment-host-tool.definition.json",
+      "sha256": "242c00a2691bb3bf26e7bbaa823600b21aa0b99bf80ae8061305bcdc868f07bb"
+    },
+    {
+      "path": "attachment-host-tool.bundle.json",
+      "sha256": "20f77f65b206a02f51d02a7176dd5a1ef582a93cf9e726a7ba588f76b540d668"
+    },
+    {
+      "path": "catalog.json",
+      "sha256": "ad22a6ddc633814288e6b5895739fe8dc05a9fd3b6f5473ef586d8220c6bfcb6"
+    }
+  ]
+}

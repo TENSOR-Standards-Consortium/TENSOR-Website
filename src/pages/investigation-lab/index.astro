@@ -3,15 +3,16 @@ import PageIntro from '../../components/PageIntro.astro';
 import InvestigationLab from '../../components/InvestigationLab.jsx';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import '../../styles/investigation-lab.css';
+import catalog from '../../../public/investigations/v1/catalog.json';
 
 const title = 'TENSOR Investigation Lab';
 const description = 'Inspect, validate, and exchange portable investigation records locally in the browser using the Core candidate binding.';
 ---
 
 <BaseLayout title={title} description={description} canonicalPath="/investigation-lab/" ogType="article" hidePageTitle={true}>
-  <PageIntro title="Investigation Lab" eyebrow="Core records / Browser reference tool" workspace>
+  <PageIntro title="Investigation Lab" eyebrow="Core records / Browser reference tool" workspace compact>
     <p>Local inspection and validation of Core investigation bundles. Reference cases include questions, evidence references, assessments, decisions, and retained revisions, with a replayable recorded path.</p>
-    <div class="cta-group"><a href="/graphs/?investigation=agent-request">Graph walkthroughs →</a><a href="/graphs/">Graph atlas</a><a href="/core/">Core contract</a><a href="/conformance/">Validation scope</a></div>
+    <div class="cta-group"><a href="/investigations/">Cross-domain cases →</a><a href="/graphs/">Graph atlas</a><a href="/core/">Core contract</a><a href="/conformance/">Validation scope</a></div>
   </PageIntro>
 
   <section class="container" aria-label="Investigation Lab workspace">
@@ -25,6 +26,7 @@ const description = 'Inspect, validate, and exchange portable investigation reco
       The downloads below work without JavaScript. The interactive inspector and local validation require JavaScript.
     </p>
     <ul>
+      {catalog.scenarios.map(s=><li><a href={`/investigations/v1/${s.bundle}`} download>{s.title} · JSON</a></li>)}
       <li><a href="/core/0.1.0-draft.1/examples/case-a.bundle.json" download>Agent transfer investigation · JSON</a></li>
       <li><a href="/core/0.1.0-draft.1/examples/case-b.bundle.json" download>Identity incident investigation · JSON</a></li>
     </ul>

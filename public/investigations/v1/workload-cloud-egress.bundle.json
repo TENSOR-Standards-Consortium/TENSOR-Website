@@ -1,0 +1,1068 @@
+{
+  "format": "tensor-investigation-bundle",
+  "bindingVersion": "0.1.0-draft.1",
+  "record": {
+    "snapshotId": "urn:tensor:example:workload-cloud-egress:snapshot-1",
+    "investigationId": "urn:tensor:example:workload-cloud-egress:investigation",
+    "contractRef": {
+      "proposal": "0.1.0",
+      "bindingVersion": "0.1.0-draft.1",
+      "status": "candidate; unratified"
+    },
+    "producer": {
+      "label": "TENSOR illustrative investigation authoring",
+      "version": "1.0.0",
+      "implementationStatus": "Fictional example, not an operational deployment"
+    },
+    "recordedAt": "2026-10-13T09:00:40.000Z",
+    "scope": {
+      "purpose": "Investigate workload job-17, token tx-71, object obj-9, and flow f-8 during the bound interval.",
+      "subjectBoundary": [
+        "urn:tensor:example:workload-cloud-egress:job-17",
+        "urn:tensor:example:workload-cloud-egress:object-obj9",
+        "urn:tensor:example:workload-cloud-egress:flow-f8"
+      ]
+    },
+    "definitionReferences": [
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:composed-definition",
+        "version": "1.0.0",
+        "sha256": "00db9d7f22cac27934153f7b136c91923dde890dcf6e7b0470bb44e31f418107",
+        "artifact": "workload-cloud-egress.definition.json"
+      }
+    ],
+    "dependencies": [],
+    "entries": [
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:actor-analyst",
+        "type": "Actor",
+        "recordedAt": "2026-10-13T09:00:00.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-analyst"
+        },
+        "kind": "human",
+        "label": "SOC analyst",
+        "identityStatus": "selfDeclared"
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:actor-agent",
+        "type": "Actor",
+        "recordedAt": "2026-10-13T09:00:01.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-agent"
+        },
+        "kind": "agent",
+        "label": "Assisting investigation agent",
+        "identityStatus": "selfDeclared"
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:actor-responder",
+        "type": "Actor",
+        "recordedAt": "2026-10-13T09:00:02.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-responder"
+        },
+        "kind": "human",
+        "label": "On-duty response lead",
+        "identityStatus": "selfDeclared"
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:policy",
+        "type": "PolicyReference",
+        "recordedAt": "2026-10-13T09:00:03.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-analyst"
+        },
+        "policyIdentity": "urn:tensor:example:workload-cloud-egress:company-response-policy",
+        "version": "1.0.0",
+        "effectiveTime": {
+          "status": "known",
+          "start": "2026-10-01T00:00:00Z"
+        },
+        "applicableScope": "Investigate workload job-17, token tx-71, object obj-9, and flow f-8 during the bound interval.",
+        "locatorAbsentReason": "Fictional example policy; conditions are retained here.",
+        "conditions": "CLOUD-12 v1. A read outside the declared object set needs a ticket covering the exact job and object. The on-duty responder may suspend job-17 pending investigation; tenant-wide key rotation needs separate approval."
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:authority",
+        "type": "AuthorityAssertion",
+        "recordedAt": "2026-10-13T09:00:04.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-responder"
+        },
+        "issuerId": "urn:tensor:example:workload-cloud-egress:actor-responder",
+        "granteeId": "urn:tensor:example:workload-cloud-egress:actor-responder",
+        "permittedOperation": "Approve a scoped suspension of job-17 and request independent destination evidence",
+        "scope": "Investigate workload job-17, token tx-71, object obj-9, and flow f-8 during the bound interval.",
+        "validityStatus": {
+          "status": "claimedValid",
+          "reason": "The example asserts this actor is the designated on-duty responder."
+        },
+        "basisReferences": [
+          "urn:tensor:example:workload-cloud-egress:policy"
+        ],
+        "receiverLocalVerification": "notPerformed"
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:instance-1",
+        "type": "QuestionInstance",
+        "recordedAt": "2026-10-13T09:00:05.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-analyst"
+        },
+        "definitionRef": {
+          "id": "urn:tensor:example:workload-cloud-egress:composed-definition",
+          "version": "1.0.0",
+          "sha256": "00db9d7f22cac27934153f7b136c91923dde890dcf6e7b0470bb44e31f418107",
+          "artifact": "workload-cloud-egress.definition.json"
+        },
+        "questionId": "urn:tensor:example:workload-cloud-egress:public:question-1",
+        "subjectBindings": {
+          "subject": "urn:tensor:example:workload-cloud-egress:job-17"
+        },
+        "timeContext": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        },
+        "parameterBindings": {
+          "subject": "urn:tensor:example:workload-cloud-egress:job-17",
+          "window": {
+            "status": "bounded",
+            "start": "2026-10-13T08:35:00Z",
+            "end": "2026-10-13T09:00:00Z"
+          }
+        },
+        "origin": {
+          "kind": "entry",
+          "rationale": "Open the bounded example investigation."
+        }
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:evidence-1",
+        "type": "EvidenceReference",
+        "recordedAt": "2026-10-13T09:00:06.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-analyst"
+        },
+        "description": "C1 · Fictional issuer and workload records share an authenticated workload identifier, token transaction tx-71, and issuance time 08:41 UTC; collector receipts and event meanings are retained.",
+        "source": {
+          "label": "Identity example evidence",
+          "provenanceStatus": "Authored fictional evidence; no real incident source is authenticated"
+        },
+        "availability": "unavailable",
+        "locatorAbsentReason": "The example supplies observations and references, not real source evidence bytes."
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:observation-1",
+        "type": "Observation",
+        "recordedAt": "2026-10-13T09:00:07.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-analyst"
+        },
+        "statement": "C1 · Fictional issuer and workload records share an authenticated workload identifier, token transaction tx-71, and issuance time 08:41 UTC; collector receipts and event meanings are retained.",
+        "evidenceRefIds": [
+          "urn:tensor:example:workload-cloud-egress:evidence-1"
+        ],
+        "method": "Authored observation; discriminator and collection limits are described in the statement.",
+        "eventTime": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        }
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:assessment-1",
+        "type": "Assessment",
+        "recordedAt": "2026-10-13T09:00:08.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:workload-cloud-egress:instance-1",
+        "applicability": {
+          "status": "applicable",
+          "rationale": "The declared subject, interval, and required parameters are resolved."
+        },
+        "outcome": "yes",
+        "rationale": "Validated issuer and workload discriminators bind tx-71 to job-17 in the interval. A workload binding does not establish the controlling person or permission.",
+        "inputs": [
+          {
+            "entryId": "urn:tensor:example:workload-cloud-egress:observation-1",
+            "role": "supports"
+          }
+        ],
+        "method": "Authored example applies the pinned question criteria to retained illustrative observations."
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:decision-1",
+        "type": "Decision",
+        "recordedAt": "2026-10-13T09:00:09.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:workload-cloud-egress:instance-1",
+        "selectedAssessmentId": "urn:tensor:example:workload-cloud-egress:assessment-1",
+        "selectedInputIds": [
+          "urn:tensor:example:workload-cloud-egress:assessment-1"
+        ],
+        "disposition": "transition",
+        "rationale": "Retain this assessment and its limitations while continuing the next separately assessed question.",
+        "policyStatus": {
+          "status": "notApplicable"
+        },
+        "authorityStatus": {
+          "status": "notApplicable"
+        },
+        "limitations": [
+          "A workload binding does not establish the controlling person or permission."
+        ],
+        "selections": [
+          {
+            "transitionId": "urn:tensor:example:workload-cloud-egress:route-1-yes",
+            "targetInstanceId": "urn:tensor:example:workload-cloud-egress:instance-2"
+          }
+        ]
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:instance-2",
+        "type": "QuestionInstance",
+        "recordedAt": "2026-10-13T09:00:10.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-agent"
+        },
+        "definitionRef": {
+          "id": "urn:tensor:example:workload-cloud-egress:composed-definition",
+          "version": "1.0.0",
+          "sha256": "00db9d7f22cac27934153f7b136c91923dde890dcf6e7b0470bb44e31f418107",
+          "artifact": "workload-cloud-egress.definition.json"
+        },
+        "questionId": "urn:tensor:example:workload-cloud-egress:public:question-2",
+        "subjectBindings": {
+          "subject": "urn:tensor:example:workload-cloud-egress:object-obj9"
+        },
+        "timeContext": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        },
+        "parameterBindings": {
+          "subject": "urn:tensor:example:workload-cloud-egress:object-obj9",
+          "window": {
+            "status": "bounded",
+            "start": "2026-10-13T08:35:00Z",
+            "end": "2026-10-13T09:00:00Z"
+          }
+        },
+        "origin": {
+          "kind": "transition",
+          "rationale": "Continue a separately assessed question with the prior answer retained.",
+          "originDecisionId": "urn:tensor:example:workload-cloud-egress:decision-1"
+        }
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:evidence-2",
+        "type": "EvidenceReference",
+        "recordedAt": "2026-10-13T09:00:11.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-agent"
+        },
+        "description": "C2 · A fictional object audit records a completed read of obj-9 with the token transaction discriminator tx-71. The export and parser basis are assessed.",
+        "source": {
+          "label": "Cloud example evidence",
+          "provenanceStatus": "Authored fictional evidence; no real incident source is authenticated"
+        },
+        "availability": "unavailable",
+        "locatorAbsentReason": "The example supplies observations and references, not real source evidence bytes."
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:observation-2",
+        "type": "Observation",
+        "recordedAt": "2026-10-13T09:00:12.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-agent"
+        },
+        "statement": "C2 · A fictional object audit records a completed read of obj-9 with the token transaction discriminator tx-71. The export and parser basis are assessed.",
+        "evidenceRefIds": [
+          "urn:tensor:example:workload-cloud-egress:evidence-2"
+        ],
+        "method": "Authored observation; discriminator and collection limits are described in the statement.",
+        "eventTime": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        }
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:assessment-2",
+        "type": "Assessment",
+        "recordedAt": "2026-10-13T09:00:13.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-agent"
+        },
+        "targetInstanceId": "urn:tensor:example:workload-cloud-egress:instance-2",
+        "applicability": {
+          "status": "applicable",
+          "rationale": "The declared subject, interval, and required parameters are resolved."
+        },
+        "outcome": "yes",
+        "rationale": "A validated completed-read event binds obj-9 and tx-71 in the interval. One read is supported; other objects and regions remain unexamined.",
+        "inputs": [
+          {
+            "entryId": "urn:tensor:example:workload-cloud-egress:observation-2",
+            "role": "supports"
+          }
+        ],
+        "method": "Authored example applies the pinned question criteria to retained illustrative observations."
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:decision-2",
+        "type": "Decision",
+        "recordedAt": "2026-10-13T09:00:14.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:workload-cloud-egress:instance-2",
+        "selectedAssessmentId": "urn:tensor:example:workload-cloud-egress:assessment-2",
+        "selectedInputIds": [
+          "urn:tensor:example:workload-cloud-egress:assessment-2"
+        ],
+        "disposition": "transition",
+        "rationale": "Retain this assessment and its limitations while continuing the next separately assessed question.",
+        "policyStatus": {
+          "status": "notApplicable"
+        },
+        "authorityStatus": {
+          "status": "notApplicable"
+        },
+        "limitations": [
+          "One read is supported; other objects and regions remain unexamined."
+        ],
+        "selections": [
+          {
+            "transitionId": "urn:tensor:example:workload-cloud-egress:route-2-yes",
+            "targetInstanceId": "urn:tensor:example:workload-cloud-egress:instance-3"
+          }
+        ]
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:instance-3",
+        "type": "QuestionInstance",
+        "recordedAt": "2026-10-13T09:00:15.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-agent"
+        },
+        "definitionRef": {
+          "id": "urn:tensor:example:workload-cloud-egress:composed-definition",
+          "version": "1.0.0",
+          "sha256": "00db9d7f22cac27934153f7b136c91923dde890dcf6e7b0470bb44e31f418107",
+          "artifact": "workload-cloud-egress.definition.json"
+        },
+        "questionId": "urn:tensor:example:workload-cloud-egress:vendor:question-3",
+        "subjectBindings": {
+          "subject": "urn:tensor:example:workload-cloud-egress:flow-f8"
+        },
+        "timeContext": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        },
+        "parameterBindings": {
+          "subject": "urn:tensor:example:workload-cloud-egress:flow-f8",
+          "window": {
+            "status": "bounded",
+            "start": "2026-10-13T08:35:00Z",
+            "end": "2026-10-13T09:00:00Z"
+          }
+        },
+        "origin": {
+          "kind": "transition",
+          "rationale": "Continue a separately assessed question with the prior answer retained.",
+          "originDecisionId": "urn:tensor:example:workload-cloud-egress:decision-2"
+        }
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:evidence-3",
+        "type": "EvidenceReference",
+        "recordedAt": "2026-10-13T09:00:16.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-agent"
+        },
+        "description": "C3 · Fictional runtime socket telemetry and an independent gateway flow record agree on process instance, five-tuple, NAT mapping, and time. The adapter version and mapping method are retained.",
+        "source": {
+          "label": "Network example evidence",
+          "provenanceStatus": "Authored fictional evidence; no real incident source is authenticated"
+        },
+        "availability": "unavailable",
+        "locatorAbsentReason": "The example supplies observations and references, not real source evidence bytes."
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:observation-3",
+        "type": "Observation",
+        "recordedAt": "2026-10-13T09:00:17.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-agent"
+        },
+        "statement": "C3 · Fictional runtime socket telemetry and an independent gateway flow record agree on process instance, five-tuple, NAT mapping, and time. The adapter version and mapping method are retained.",
+        "evidenceRefIds": [
+          "urn:tensor:example:workload-cloud-egress:evidence-3"
+        ],
+        "method": "Authored observation; discriminator and collection limits are described in the statement.",
+        "eventTime": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        }
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:assessment-3",
+        "type": "Assessment",
+        "recordedAt": "2026-10-13T09:00:18.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-agent"
+        },
+        "targetInstanceId": "urn:tensor:example:workload-cloud-egress:instance-3",
+        "applicability": {
+          "status": "applicable",
+          "rationale": "The declared subject, interval, and required parameters are resolved."
+        },
+        "outcome": "yes",
+        "rationale": "Independent runtime and gateway discriminators establish the named process-to-flow relationship. A flow does not establish which object bytes were transmitted.",
+        "inputs": [
+          {
+            "entryId": "urn:tensor:example:workload-cloud-egress:observation-3",
+            "role": "supports"
+          }
+        ],
+        "method": "Authored example applies the pinned question criteria to retained illustrative observations."
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:decision-3",
+        "type": "Decision",
+        "recordedAt": "2026-10-13T09:00:19.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:workload-cloud-egress:instance-3",
+        "selectedAssessmentId": "urn:tensor:example:workload-cloud-egress:assessment-3",
+        "selectedInputIds": [
+          "urn:tensor:example:workload-cloud-egress:assessment-3"
+        ],
+        "disposition": "transition",
+        "rationale": "Retain this assessment and its limitations while continuing the next separately assessed question.",
+        "policyStatus": {
+          "status": "notApplicable"
+        },
+        "authorityStatus": {
+          "status": "notApplicable"
+        },
+        "limitations": [
+          "A flow does not establish which object bytes were transmitted."
+        ],
+        "selections": [
+          {
+            "transitionId": "urn:tensor:example:workload-cloud-egress:route-3-yes",
+            "targetInstanceId": "urn:tensor:example:workload-cloud-egress:instance-4"
+          }
+        ]
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:instance-4",
+        "type": "QuestionInstance",
+        "recordedAt": "2026-10-13T09:00:20.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-analyst"
+        },
+        "definitionRef": {
+          "id": "urn:tensor:example:workload-cloud-egress:composed-definition",
+          "version": "1.0.0",
+          "sha256": "00db9d7f22cac27934153f7b136c91923dde890dcf6e7b0470bb44e31f418107",
+          "artifact": "workload-cloud-egress.definition.json"
+        },
+        "questionId": "urn:tensor:example:workload-cloud-egress:company:question-4",
+        "subjectBindings": {
+          "subject": "urn:tensor:example:workload-cloud-egress:object-obj9"
+        },
+        "timeContext": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        },
+        "parameterBindings": {
+          "subject": "urn:tensor:example:workload-cloud-egress:object-obj9",
+          "window": {
+            "status": "bounded",
+            "start": "2026-10-13T08:35:00Z",
+            "end": "2026-10-13T09:00:00Z"
+          }
+        },
+        "origin": {
+          "kind": "transition",
+          "rationale": "Continue a separately assessed question with the prior answer retained.",
+          "originDecisionId": "urn:tensor:example:workload-cloud-egress:decision-3"
+        }
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:evidence-4",
+        "type": "EvidenceReference",
+        "recordedAt": "2026-10-13T09:00:21.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-analyst"
+        },
+        "description": "C4 · The complete authoritative ticket names job-17 and obj-8 only. Object identity and effective interval exclude obj-9; the policy owner confirms CLOUD-12 applies.",
+        "source": {
+          "label": "Cloud example evidence",
+          "provenanceStatus": "Authored fictional evidence; no real incident source is authenticated"
+        },
+        "availability": "unavailable",
+        "locatorAbsentReason": "The example supplies observations and references, not real source evidence bytes."
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:observation-4",
+        "type": "Observation",
+        "recordedAt": "2026-10-13T09:00:22.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-analyst"
+        },
+        "statement": "C4 · The complete authoritative ticket names job-17 and obj-8 only. Object identity and effective interval exclude obj-9; the policy owner confirms CLOUD-12 applies.",
+        "evidenceRefIds": [
+          "urn:tensor:example:workload-cloud-egress:evidence-4"
+        ],
+        "method": "Authored observation; discriminator and collection limits are described in the statement.",
+        "eventTime": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        }
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:assessment-4",
+        "type": "Assessment",
+        "recordedAt": "2026-10-13T09:00:23.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:workload-cloud-egress:instance-4",
+        "applicability": {
+          "status": "applicable",
+          "rationale": "The declared subject, interval, and required parameters are resolved."
+        },
+        "outcome": "no",
+        "rationale": "Complete authoritative ticket evidence explicitly excludes the named object or job. A scope mismatch is not proof of intent.",
+        "inputs": [
+          {
+            "entryId": "urn:tensor:example:workload-cloud-egress:observation-4",
+            "role": "contradicts"
+          }
+        ],
+        "method": "Authored example applies the pinned question criteria to retained illustrative observations.",
+        "policyBinding": {
+          "policyRefId": "urn:tensor:example:workload-cloud-egress:policy",
+          "parameterBindings": {}
+        }
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:decision-4",
+        "type": "Decision",
+        "recordedAt": "2026-10-13T09:00:24.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:workload-cloud-egress:instance-4",
+        "selectedAssessmentId": "urn:tensor:example:workload-cloud-egress:assessment-4",
+        "selectedInputIds": [
+          "urn:tensor:example:workload-cloud-egress:assessment-4"
+        ],
+        "disposition": "transition",
+        "rationale": "Retain this assessment and its limitations while continuing the next separately assessed question.",
+        "policyStatus": {
+          "status": "referenced",
+          "policyRefIds": [
+            "urn:tensor:example:workload-cloud-egress:policy"
+          ]
+        },
+        "authorityStatus": {
+          "status": "notApplicable"
+        },
+        "limitations": [
+          "A scope mismatch is not proof of intent."
+        ],
+        "selections": [
+          {
+            "transitionId": "urn:tensor:example:workload-cloud-egress:route-4-no",
+            "targetInstanceId": "urn:tensor:example:workload-cloud-egress:instance-5"
+          }
+        ]
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:instance-5",
+        "type": "QuestionInstance",
+        "recordedAt": "2026-10-13T09:00:25.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-agent"
+        },
+        "definitionRef": {
+          "id": "urn:tensor:example:workload-cloud-egress:composed-definition",
+          "version": "1.0.0",
+          "sha256": "00db9d7f22cac27934153f7b136c91923dde890dcf6e7b0470bb44e31f418107",
+          "artifact": "workload-cloud-egress.definition.json"
+        },
+        "questionId": "urn:tensor:example:workload-cloud-egress:public:question-5",
+        "subjectBindings": {
+          "subject": "urn:tensor:example:workload-cloud-egress:flow-f8"
+        },
+        "timeContext": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        },
+        "parameterBindings": {
+          "subject": "urn:tensor:example:workload-cloud-egress:flow-f8",
+          "window": {
+            "status": "bounded",
+            "start": "2026-10-13T08:35:00Z",
+            "end": "2026-10-13T09:00:00Z"
+          }
+        },
+        "origin": {
+          "kind": "transition",
+          "rationale": "Continue a separately assessed question with the prior answer retained.",
+          "originDecisionId": "urn:tensor:example:workload-cloud-egress:decision-4"
+        }
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:evidence-5",
+        "type": "EvidenceReference",
+        "recordedAt": "2026-10-13T09:00:26.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-agent"
+        },
+        "description": "C5 · The retained network record contains flow metadata, not payload bytes or an independent destination receipt. The cloud read and network connection are distinct observations.",
+        "source": {
+          "label": "Network example evidence",
+          "provenanceStatus": "Authored fictional evidence; no real incident source is authenticated"
+        },
+        "availability": "unavailable",
+        "locatorAbsentReason": "The example supplies observations and references, not real source evidence bytes."
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:observation-5",
+        "type": "Observation",
+        "recordedAt": "2026-10-13T09:00:27.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-agent"
+        },
+        "statement": "C5 · The retained network record contains flow metadata, not payload bytes or an independent destination receipt. The cloud read and network connection are distinct observations.",
+        "evidenceRefIds": [
+          "urn:tensor:example:workload-cloud-egress:evidence-5"
+        ],
+        "method": "Authored observation; discriminator and collection limits are described in the statement.",
+        "eventTime": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        }
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:assessment-5",
+        "type": "Assessment",
+        "recordedAt": "2026-10-13T09:00:28.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-agent"
+        },
+        "targetInstanceId": "urn:tensor:example:workload-cloud-egress:instance-5",
+        "applicability": {
+          "status": "applicable",
+          "rationale": "The declared subject, interval, and required parameters are resolved."
+        },
+        "outcome": "unknown",
+        "rationale": "A cloud read plus a temporally nearby flow does not establish content delivery. Do not infer exfiltration from correlation alone.",
+        "inputs": [
+          {
+            "entryId": "urn:tensor:example:workload-cloud-egress:observation-5",
+            "role": "context"
+          }
+        ],
+        "method": "Authored example applies the pinned question criteria to retained illustrative observations.",
+        "unknownReasons": [
+          {
+            "code": "insufficient",
+            "explanation": "A cloud read plus a temporally nearby flow does not establish content delivery. Do not infer exfiltration from correlation alone."
+          }
+        ]
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:decision-5",
+        "type": "Decision",
+        "recordedAt": "2026-10-13T09:00:29.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:workload-cloud-egress:instance-5",
+        "selectedAssessmentId": "urn:tensor:example:workload-cloud-egress:assessment-5",
+        "selectedInputIds": [
+          "urn:tensor:example:workload-cloud-egress:assessment-5"
+        ],
+        "disposition": "transition",
+        "rationale": "Retain this assessment and its limitations while continuing the next separately assessed question.",
+        "policyStatus": {
+          "status": "notApplicable"
+        },
+        "authorityStatus": {
+          "status": "notApplicable"
+        },
+        "limitations": [
+          "Do not infer exfiltration from correlation alone."
+        ],
+        "selections": [
+          {
+            "transitionId": "urn:tensor:example:workload-cloud-egress:route-5-unknown",
+            "targetInstanceId": "urn:tensor:example:workload-cloud-egress:instance-6"
+          }
+        ]
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:instance-6",
+        "type": "QuestionInstance",
+        "recordedAt": "2026-10-13T09:00:30.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-responder"
+        },
+        "definitionRef": {
+          "id": "urn:tensor:example:workload-cloud-egress:composed-definition",
+          "version": "1.0.0",
+          "sha256": "00db9d7f22cac27934153f7b136c91923dde890dcf6e7b0470bb44e31f418107",
+          "artifact": "workload-cloud-egress.definition.json"
+        },
+        "questionId": "urn:tensor:example:workload-cloud-egress:company:question-6",
+        "subjectBindings": {
+          "subject": "urn:tensor:example:workload-cloud-egress:job-17"
+        },
+        "timeContext": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        },
+        "parameterBindings": {
+          "subject": "urn:tensor:example:workload-cloud-egress:job-17",
+          "window": {
+            "status": "bounded",
+            "start": "2026-10-13T08:35:00Z",
+            "end": "2026-10-13T09:00:00Z"
+          }
+        },
+        "origin": {
+          "kind": "transition",
+          "rationale": "Continue a separately assessed question with the prior answer retained.",
+          "originDecisionId": "urn:tensor:example:workload-cloud-egress:decision-5"
+        }
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:evidence-6",
+        "type": "EvidenceReference",
+        "recordedAt": "2026-10-13T09:00:31.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-responder"
+        },
+        "description": "C6 · The named responder approves suspension of job-17 under CLOUD-12 and requests destination evidence; no tenant-wide rotation is approved.",
+        "source": {
+          "label": "Cloud example evidence",
+          "provenanceStatus": "Authored fictional evidence; no real incident source is authenticated"
+        },
+        "availability": "unavailable",
+        "locatorAbsentReason": "The example supplies observations and references, not real source evidence bytes."
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:observation-6",
+        "type": "Observation",
+        "recordedAt": "2026-10-13T09:00:32.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-responder"
+        },
+        "statement": "C6 · The named responder approves suspension of job-17 under CLOUD-12 and requests destination evidence; no tenant-wide rotation is approved.",
+        "evidenceRefIds": [
+          "urn:tensor:example:workload-cloud-egress:evidence-6"
+        ],
+        "method": "Authored observation; discriminator and collection limits are described in the statement.",
+        "eventTime": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        }
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:assessment-6",
+        "type": "Assessment",
+        "recordedAt": "2026-10-13T09:00:33.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-responder"
+        },
+        "targetInstanceId": "urn:tensor:example:workload-cloud-egress:instance-6",
+        "applicability": {
+          "status": "applicable",
+          "rationale": "The declared subject, interval, and required parameters are resolved."
+        },
+        "outcome": "yes",
+        "rationale": "The recorded proposal and claimed responder role satisfy the exact scoped policy conditions. The action is planned; no cloud control is executed.",
+        "inputs": [
+          {
+            "entryId": "urn:tensor:example:workload-cloud-egress:observation-6",
+            "role": "supports"
+          }
+        ],
+        "method": "Authored example applies the pinned question criteria to retained illustrative observations.",
+        "policyBinding": {
+          "policyRefId": "urn:tensor:example:workload-cloud-egress:policy",
+          "parameterBindings": {}
+        }
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:decision-6",
+        "type": "Decision",
+        "recordedAt": "2026-10-13T09:00:34.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-responder"
+        },
+        "targetInstanceId": "urn:tensor:example:workload-cloud-egress:instance-6",
+        "selectedAssessmentId": "urn:tensor:example:workload-cloud-egress:assessment-6",
+        "selectedInputIds": [
+          "urn:tensor:example:workload-cloud-egress:assessment-6"
+        ],
+        "disposition": "transition",
+        "rationale": "Approve a scoped suspension of job-17 and request independent destination evidence",
+        "policyStatus": {
+          "status": "referenced",
+          "policyRefIds": [
+            "urn:tensor:example:workload-cloud-egress:policy"
+          ]
+        },
+        "authorityStatus": {
+          "status": "referenced",
+          "authorityRefIds": [
+            "urn:tensor:example:workload-cloud-egress:authority"
+          ]
+        },
+        "limitations": [
+          "The action is planned; no cloud control is executed."
+        ],
+        "selections": [
+          {
+            "transitionId": "urn:tensor:example:workload-cloud-egress:route-6-yes",
+            "targetInstanceId": "urn:tensor:example:workload-cloud-egress:instance-7"
+          }
+        ]
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:action-6",
+        "type": "ActionRecord",
+        "recordedAt": "2026-10-13T09:00:35.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-responder"
+        },
+        "operationDescription": "Approve a scoped suspension of job-17 and request independent destination evidence",
+        "operationSubject": "urn:tensor:example:workload-cloud-egress:job-17",
+        "stage": "planned",
+        "decisionId": "urn:tensor:example:workload-cloud-egress:decision-6",
+        "eventTime": {
+          "status": "unknown",
+          "reason": "No action is executed in this example."
+        }
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:instance-7",
+        "type": "QuestionInstance",
+        "recordedAt": "2026-10-13T09:00:36.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-analyst"
+        },
+        "definitionRef": {
+          "id": "urn:tensor:example:workload-cloud-egress:composed-definition",
+          "version": "1.0.0",
+          "sha256": "00db9d7f22cac27934153f7b136c91923dde890dcf6e7b0470bb44e31f418107",
+          "artifact": "workload-cloud-egress.definition.json"
+        },
+        "questionId": "urn:tensor:example:workload-cloud-egress:public:question-7",
+        "subjectBindings": {
+          "subject": "urn:tensor:example:workload-cloud-egress:flow-f8"
+        },
+        "timeContext": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        },
+        "parameterBindings": {
+          "subject": "urn:tensor:example:workload-cloud-egress:flow-f8",
+          "window": {
+            "status": "bounded",
+            "start": "2026-10-13T08:35:00Z",
+            "end": "2026-10-13T09:00:00Z"
+          }
+        },
+        "origin": {
+          "kind": "transition",
+          "rationale": "Continue a separately assessed question with the prior answer retained.",
+          "originDecisionId": "urn:tensor:example:workload-cloud-egress:decision-6"
+        }
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:evidence-7",
+        "type": "EvidenceReference",
+        "recordedAt": "2026-10-13T09:00:37.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-analyst"
+        },
+        "description": "C7 · The handoff retains C1–C6 with their separate discriminators, the negative ticket finding, unknown content delivery, and unexamined regions.",
+        "source": {
+          "label": "Network example evidence",
+          "provenanceStatus": "Authored fictional evidence; no real incident source is authenticated"
+        },
+        "availability": "unavailable",
+        "locatorAbsentReason": "The example supplies observations and references, not real source evidence bytes."
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:observation-7",
+        "type": "Observation",
+        "recordedAt": "2026-10-13T09:00:38.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-analyst"
+        },
+        "statement": "C7 · The handoff retains C1–C6 with their separate discriminators, the negative ticket finding, unknown content delivery, and unexamined regions.",
+        "evidenceRefIds": [
+          "urn:tensor:example:workload-cloud-egress:evidence-7"
+        ],
+        "method": "Authored observation; discriminator and collection limits are described in the statement.",
+        "eventTime": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        }
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:assessment-7",
+        "type": "Assessment",
+        "recordedAt": "2026-10-13T09:00:39.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:workload-cloud-egress:instance-7",
+        "applicability": {
+          "status": "applicable",
+          "rationale": "The declared subject, interval, and required parameters are resolved."
+        },
+        "outcome": "yes",
+        "rationale": "The required independent findings, evidence references, and limits are all retained. The observed chain does not establish wider compromise or case closure.",
+        "inputs": [
+          {
+            "entryId": "urn:tensor:example:workload-cloud-egress:observation-7",
+            "role": "supports"
+          }
+        ],
+        "method": "Authored example applies the pinned question criteria to retained illustrative observations."
+      },
+      {
+        "id": "urn:tensor:example:workload-cloud-egress:decision-7",
+        "type": "Decision",
+        "recordedAt": "2026-10-13T09:00:40.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:workload-cloud-egress:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:workload-cloud-egress:instance-7",
+        "selectedAssessmentId": "urn:tensor:example:workload-cloud-egress:assessment-7",
+        "selectedInputIds": [
+          "urn:tensor:example:workload-cloud-egress:assessment-7"
+        ],
+        "disposition": "handoff",
+        "rationale": "Retain this assessment and its limitations while continuing the next separately assessed question.",
+        "policyStatus": {
+          "status": "notApplicable"
+        },
+        "authorityStatus": {
+          "status": "notApplicable"
+        },
+        "limitations": [
+          "The observed chain does not establish wider compromise or case closure."
+        ]
+      }
+    ],
+    "completeness": {
+      "exchangeScope": "full",
+      "meaning": "All referenced Core entries and exact definition bytes are included; actual source evidence bytes do not exist in this fictional example."
+    },
+    "omissions": [],
+    "losses": [],
+    "view": {
+      "mode": "historical"
+    },
+    "metadata": {
+      "illustrative": true,
+      "walkthrough": {
+        "format": "tensor-example-walkthrough",
+        "version": 1,
+        "id": "workload-cloud-egress",
+        "title": "Workload identity, cloud read, and network egress",
+        "description": "A workload token, an object read, and an outbound connection are tested separately before a company response.",
+        "domains": [
+          "Identity",
+          "Cloud",
+          "Network"
+        ],
+        "frames": [
+          {
+            "title": "Observe the workload binding",
+            "assessmentId": "urn:tensor:example:workload-cloud-egress:assessment-1",
+            "decisionId": "urn:tensor:example:workload-cloud-egress:decision-1",
+            "through": 10,
+            "limitation": "A workload binding does not establish the controlling person or permission."
+          },
+          {
+            "title": "Observe the object read",
+            "assessmentId": "urn:tensor:example:workload-cloud-egress:assessment-2",
+            "decisionId": "urn:tensor:example:workload-cloud-egress:decision-2",
+            "through": 15,
+            "limitation": "One read is supported; other objects and regions remain unexamined."
+          },
+          {
+            "title": "Test the network relationship",
+            "assessmentId": "urn:tensor:example:workload-cloud-egress:assessment-3",
+            "decisionId": "urn:tensor:example:workload-cloud-egress:decision-3",
+            "through": 20,
+            "limitation": "A flow does not establish which object bytes were transmitted."
+          },
+          {
+            "title": "Reject the ticket explanation",
+            "assessmentId": "urn:tensor:example:workload-cloud-egress:assessment-4",
+            "decisionId": "urn:tensor:example:workload-cloud-egress:decision-4",
+            "through": 25,
+            "limitation": "A scope mismatch is not proof of intent."
+          },
+          {
+            "title": "Keep content transfer unknown",
+            "assessmentId": "urn:tensor:example:workload-cloud-egress:assessment-5",
+            "decisionId": "urn:tensor:example:workload-cloud-egress:decision-5",
+            "through": 30,
+            "limitation": "Do not infer exfiltration from correlation alone."
+          },
+          {
+            "title": "Approve a bounded response",
+            "assessmentId": "urn:tensor:example:workload-cloud-egress:assessment-6",
+            "decisionId": "urn:tensor:example:workload-cloud-egress:decision-6",
+            "through": 36,
+            "limitation": "The action is planned; no cloud control is executed."
+          },
+          {
+            "title": "Retain the cross-domain handoff",
+            "assessmentId": "urn:tensor:example:workload-cloud-egress:assessment-7",
+            "decisionId": "urn:tensor:example:workload-cloud-egress:decision-7",
+            "through": 41,
+            "limitation": "The observed chain does not establish wider compromise or case closure."
+          }
+        ]
+      }
+    }
+  },
+  "definitions": [
+    {
+      "path": "workload-cloud-egress.definition.json",
+      "content": "{\n  \"id\": \"urn:tensor:example:workload-cloud-egress:composed-definition\",\n  \"version\": \"1.0.0\",\n  \"publicationStatus\": \"draft\",\n  \"title\": \"Workload identity, cloud read, and network egress\",\n  \"contractRef\": {\n    \"proposal\": \"0.1.0\",\n    \"bindingVersion\": \"0.1.0-draft.1\",\n    \"status\": \"candidate; unratified\"\n  },\n  \"questions\": [\n    {\n      \"id\": \"urn:tensor:example:workload-cloud-egress:public:question-1\",\n      \"prompt\": \"Was token tx-71 issued for workload job-17?\",\n      \"proposition\": \"Was token tx-71 issued for workload job-17? Bound subject: urn:tensor:example:workload-cloud-egress:job-17; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).\",\n      \"parameters\": {\n        \"subject\": {\n          \"type\": \"URI\",\n          \"required\": true,\n          \"bindsTo\": \"subject:subject\"\n        },\n        \"window\": {\n          \"type\": \"timeContext\",\n          \"required\": true,\n          \"bindsTo\": \"timeContext\"\n        }\n      },\n      \"applicabilityCriteria\": \"Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.\",\n      \"assessmentCriteria\": {\n        \"yes\": \"Validated issuer and workload discriminators bind tx-71 to job-17 in the interval.\",\n        \"no\": \"Validated discriminators contradict this particular workload/token binding.\",\n        \"unknown\": \"A label alone, missing issuer provenance, or unresolved workload binding prevents an answer.\"\n      },\n      \"evidenceRequirements\": [\n        \"Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.\",\n        \"Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit.\"\n      ],\n      \"metadata\": {\n        \"displayId\": \"S1\",\n        \"domain\": \"Identity\",\n        \"layerId\": \"public\",\n        \"layerVersion\": \"1.0.0\",\n        \"archetype\": \"detect\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:workload-cloud-egress:public:question-2\",\n      \"prompt\": \"Was object obj-9 read using tx-71?\",\n      \"proposition\": \"Was object obj-9 read using tx-71? Bound subject: urn:tensor:example:workload-cloud-egress:object-obj9; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).\",\n      \"parameters\": {\n        \"subject\": {\n          \"type\": \"URI\",\n          \"required\": true,\n          \"bindsTo\": \"subject:subject\"\n        },\n        \"window\": {\n          \"type\": \"timeContext\",\n          \"required\": true,\n          \"bindsTo\": \"timeContext\"\n        }\n      },\n      \"applicabilityCriteria\": \"Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.\",\n      \"assessmentCriteria\": {\n        \"yes\": \"A validated completed-read event binds obj-9 and tx-71 in the interval.\",\n        \"no\": \"Complete authoritative read coverage contradicts that specific object/token read.\",\n        \"unknown\": \"An attempted call, incomplete logging, or unresolved token mapping is insufficient.\"\n      },\n      \"evidenceRequirements\": [\n        \"Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.\",\n        \"Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit.\"\n      ],\n      \"metadata\": {\n        \"displayId\": \"S2\",\n        \"domain\": \"Cloud\",\n        \"layerId\": \"public\",\n        \"layerVersion\": \"1.0.0\",\n        \"archetype\": \"correlate\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:workload-cloud-egress:vendor:question-3\",\n      \"prompt\": \"Did the job-17 runtime originate outbound flow f-8?\",\n      \"proposition\": \"Did the job-17 runtime originate outbound flow f-8? Bound subject: urn:tensor:example:workload-cloud-egress:flow-f8; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).\",\n      \"parameters\": {\n        \"subject\": {\n          \"type\": \"URI\",\n          \"required\": true,\n          \"bindsTo\": \"subject:subject\"\n        },\n        \"window\": {\n          \"type\": \"timeContext\",\n          \"required\": true,\n          \"bindsTo\": \"timeContext\"\n        }\n      },\n      \"applicabilityCriteria\": \"Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.\",\n      \"assessmentCriteria\": {\n        \"yes\": \"Independent runtime and gateway discriminators establish the named process-to-flow relationship.\",\n        \"no\": \"Chronology, socket identity, or NAT mapping contradicts this named relationship.\",\n        \"unknown\": \"Shared IP addresses or copied trace identifiers without independent discrimination are insufficient.\"\n      },\n      \"evidenceRequirements\": [\n        \"Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.\",\n        \"Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit.\"\n      ],\n      \"metadata\": {\n        \"displayId\": \"S3\",\n        \"domain\": \"Network\",\n        \"layerId\": \"vendor\",\n        \"layerVersion\": \"1.0.0\",\n        \"archetype\": \"correlate\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:workload-cloud-egress:company:question-4\",\n      \"prompt\": \"Did the approved ticket cover job-17 reading obj-9?\",\n      \"proposition\": \"Did the approved ticket cover job-17 reading obj-9? Bound subject: urn:tensor:example:workload-cloud-egress:object-obj9; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).\",\n      \"parameters\": {\n        \"subject\": {\n          \"type\": \"URI\",\n          \"required\": true,\n          \"bindsTo\": \"subject:subject\"\n        },\n        \"window\": {\n          \"type\": \"timeContext\",\n          \"required\": true,\n          \"bindsTo\": \"timeContext\"\n        }\n      },\n      \"applicabilityCriteria\": \"Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.\",\n      \"assessmentCriteria\": {\n        \"yes\": \"A valid effective ticket explicitly covers job-17 and obj-9.\",\n        \"no\": \"Complete authoritative ticket evidence explicitly excludes the named object or job.\",\n        \"unknown\": \"Ticket completeness, object identity, effective interval, or policy applicability is unresolved.\"\n      },\n      \"evidenceRequirements\": [\n        \"Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.\",\n        \"Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit.\"\n      ],\n      \"metadata\": {\n        \"displayId\": \"S4\",\n        \"domain\": \"Cloud\",\n        \"layerId\": \"company\",\n        \"layerVersion\": \"1.0.0\",\n        \"archetype\": \"classify\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:workload-cloud-egress:public:question-5\",\n      \"prompt\": \"Is delivery of obj-9’s content through f-8 established?\",\n      \"proposition\": \"Is delivery of obj-9’s content through f-8 established? Bound subject: urn:tensor:example:workload-cloud-egress:flow-f8; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).\",\n      \"parameters\": {\n        \"subject\": {\n          \"type\": \"URI\",\n          \"required\": true,\n          \"bindsTo\": \"subject:subject\"\n        },\n        \"window\": {\n          \"type\": \"timeContext\",\n          \"required\": true,\n          \"bindsTo\": \"timeContext\"\n        }\n      },\n      \"applicabilityCriteria\": \"Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.\",\n      \"assessmentCriteria\": {\n        \"yes\": \"Content discriminators and independently originating destination evidence link obj-9 delivery to f-8.\",\n        \"no\": \"Complete content and delivery coverage contradicts this exact transfer proposition.\",\n        \"unknown\": \"A cloud read plus a temporally nearby flow does not establish content delivery.\"\n      },\n      \"evidenceRequirements\": [\n        \"Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.\",\n        \"Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit.\"\n      ],\n      \"metadata\": {\n        \"displayId\": \"S5\",\n        \"domain\": \"Network\",\n        \"layerId\": \"public\",\n        \"layerVersion\": \"1.0.0\",\n        \"archetype\": \"correlate\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:workload-cloud-egress:company:question-6\",\n      \"prompt\": \"Does the proposed job-17 suspension meet CLOUD-12’s scoped approval conditions?\",\n      \"proposition\": \"Does the proposed job-17 suspension meet CLOUD-12’s scoped approval conditions? Bound subject: urn:tensor:example:workload-cloud-egress:job-17; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).\",\n      \"parameters\": {\n        \"subject\": {\n          \"type\": \"URI\",\n          \"required\": true,\n          \"bindsTo\": \"subject:subject\"\n        },\n        \"window\": {\n          \"type\": \"timeContext\",\n          \"required\": true,\n          \"bindsTo\": \"timeContext\"\n        }\n      },\n      \"applicabilityCriteria\": \"Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.\",\n      \"assessmentCriteria\": {\n        \"yes\": \"The recorded proposal and claimed responder role satisfy the exact scoped policy conditions.\",\n        \"no\": \"A material scope or role condition contradicts the policy.\",\n        \"unknown\": \"Required approval, scope, or claimed role remains unresolved.\"\n      },\n      \"evidenceRequirements\": [\n        \"Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.\",\n        \"Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit.\"\n      ],\n      \"metadata\": {\n        \"displayId\": \"S6\",\n        \"domain\": \"Cloud\",\n        \"layerId\": \"company\",\n        \"layerVersion\": \"1.0.0\",\n        \"archetype\": \"classify\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:workload-cloud-egress:public:question-7\",\n      \"prompt\": \"Does the handoff keep identity, object-read, flow, ticket, and delivery findings distinct?\",\n      \"proposition\": \"Does the handoff keep identity, object-read, flow, ticket, and delivery findings distinct? Bound subject: urn:tensor:example:workload-cloud-egress:flow-f8; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).\",\n      \"parameters\": {\n        \"subject\": {\n          \"type\": \"URI\",\n          \"required\": true,\n          \"bindsTo\": \"subject:subject\"\n        },\n        \"window\": {\n          \"type\": \"timeContext\",\n          \"required\": true,\n          \"bindsTo\": \"timeContext\"\n        }\n      },\n      \"applicabilityCriteria\": \"Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.\",\n      \"assessmentCriteria\": {\n        \"yes\": \"The required independent findings, evidence references, and limits are all retained.\",\n        \"no\": \"A named finding or material uncertainty is demonstrably omitted.\",\n        \"unknown\": \"Record availability is insufficient to assess the handoff content.\"\n      },\n      \"evidenceRequirements\": [\n        \"Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.\",\n        \"Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit.\"\n      ],\n      \"metadata\": {\n        \"displayId\": \"S7\",\n        \"domain\": \"Network\",\n        \"layerId\": \"public\",\n        \"layerVersion\": \"1.0.0\",\n        \"archetype\": \"terminal\"\n      }\n    }\n  ],\n  \"transitions\": [\n    {\n      \"id\": \"urn:tensor:example:workload-cloud-egress:route-1-yes\",\n      \"sourceQuestionId\": \"urn:tensor:example:workload-cloud-egress:public:question-1\",\n      \"targetQuestionId\": \"urn:tensor:example:workload-cloud-egress:public:question-2\",\n      \"guardOutcome\": \"yes\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:workload-cloud-egress:route-1-no\",\n      \"sourceQuestionId\": \"urn:tensor:example:workload-cloud-egress:public:question-1\",\n      \"targetQuestionId\": \"urn:tensor:example:workload-cloud-egress:public:question-2\",\n      \"guardOutcome\": \"no\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:workload-cloud-egress:route-1-unknown\",\n      \"sourceQuestionId\": \"urn:tensor:example:workload-cloud-egress:public:question-1\",\n      \"targetQuestionId\": \"urn:tensor:example:workload-cloud-egress:public:question-2\",\n      \"guardOutcome\": \"unknown\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:workload-cloud-egress:route-2-yes\",\n      \"sourceQuestionId\": \"urn:tensor:example:workload-cloud-egress:public:question-2\",\n      \"targetQuestionId\": \"urn:tensor:example:workload-cloud-egress:vendor:question-3\",\n      \"guardOutcome\": \"yes\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:workload-cloud-egress:route-2-no\",\n      \"sourceQuestionId\": \"urn:tensor:example:workload-cloud-egress:public:question-2\",\n      \"targetQuestionId\": \"urn:tensor:example:workload-cloud-egress:vendor:question-3\",\n      \"guardOutcome\": \"no\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:workload-cloud-egress:route-2-unknown\",\n      \"sourceQuestionId\": \"urn:tensor:example:workload-cloud-egress:public:question-2\",\n      \"targetQuestionId\": \"urn:tensor:example:workload-cloud-egress:vendor:question-3\",\n      \"guardOutcome\": \"unknown\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:workload-cloud-egress:route-3-yes\",\n      \"sourceQuestionId\": \"urn:tensor:example:workload-cloud-egress:vendor:question-3\",\n      \"targetQuestionId\": \"urn:tensor:example:workload-cloud-egress:company:question-4\",\n      \"guardOutcome\": \"yes\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:workload-cloud-egress:route-3-no\",\n      \"sourceQuestionId\": \"urn:tensor:example:workload-cloud-egress:vendor:question-3\",\n      \"targetQuestionId\": \"urn:tensor:example:workload-cloud-egress:company:question-4\",\n      \"guardOutcome\": \"no\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:workload-cloud-egress:route-3-unknown\",\n      \"sourceQuestionId\": \"urn:tensor:example:workload-cloud-egress:vendor:question-3\",\n      \"targetQuestionId\": \"urn:tensor:example:workload-cloud-egress:company:question-4\",\n      \"guardOutcome\": \"unknown\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:workload-cloud-egress:route-4-yes\",\n      \"sourceQuestionId\": \"urn:tensor:example:workload-cloud-egress:company:question-4\",\n      \"targetQuestionId\": \"urn:tensor:example:workload-cloud-egress:public:question-5\",\n      \"guardOutcome\": \"yes\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:workload-cloud-egress:route-4-no\",\n      \"sourceQuestionId\": \"urn:tensor:example:workload-cloud-egress:company:question-4\",\n      \"targetQuestionId\": \"urn:tensor:example:workload-cloud-egress:public:question-5\",\n      \"guardOutcome\": \"no\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:workload-cloud-egress:route-4-unknown\",\n      \"sourceQuestionId\": \"urn:tensor:example:workload-cloud-egress:company:question-4\",\n      \"targetQuestionId\": \"urn:tensor:example:workload-cloud-egress:public:question-5\",\n      \"guardOutcome\": \"unknown\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:workload-cloud-egress:route-5-yes\",\n      \"sourceQuestionId\": \"urn:tensor:example:workload-cloud-egress:public:question-5\",\n      \"targetQuestionId\": \"urn:tensor:example:workload-cloud-egress:company:question-6\",\n      \"guardOutcome\": \"yes\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:workload-cloud-egress:route-5-no\",\n      \"sourceQuestionId\": \"urn:tensor:example:workload-cloud-egress:public:question-5\",\n      \"targetQuestionId\": \"urn:tensor:example:workload-cloud-egress:company:question-6\",\n      \"guardOutcome\": \"no\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:workload-cloud-egress:route-5-unknown\",\n      \"sourceQuestionId\": \"urn:tensor:example:workload-cloud-egress:public:question-5\",\n      \"targetQuestionId\": \"urn:tensor:example:workload-cloud-egress:company:question-6\",\n      \"guardOutcome\": \"unknown\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:workload-cloud-egress:route-6-yes\",\n      \"sourceQuestionId\": \"urn:tensor:example:workload-cloud-egress:company:question-6\",\n      \"targetQuestionId\": \"urn:tensor:example:workload-cloud-egress:public:question-7\",\n      \"guardOutcome\": \"yes\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:workload-cloud-egress:route-6-no\",\n      \"sourceQuestionId\": \"urn:tensor:example:workload-cloud-egress:company:question-6\",\n      \"targetQuestionId\": \"urn:tensor:example:workload-cloud-egress:public:question-7\",\n      \"guardOutcome\": \"no\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:workload-cloud-egress:route-6-unknown\",\n      \"sourceQuestionId\": \"urn:tensor:example:workload-cloud-egress:company:question-6\",\n      \"targetQuestionId\": \"urn:tensor:example:workload-cloud-egress:public:question-7\",\n      \"guardOutcome\": \"unknown\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    }\n  ],\n  \"entryQuestionIds\": [\n    \"urn:tensor:example:workload-cloud-egress:public:question-1\"\n  ],\n  \"dependencies\": [],\n  \"metadata\": {\n    \"illustrative\": true,\n    \"layers\": [\n      {\n        \"id\": \"public\",\n        \"label\": \"Public investigation questions\",\n        \"owner\": \"TENSOR Standards Consortium\",\n        \"version\": \"1.0.0\"\n      },\n      {\n        \"id\": \"vendor\",\n        \"label\": \"Example vendor telemetry graph\",\n        \"owner\": \"Fictional telemetry vendor\",\n        \"version\": \"1.0.0\"\n      },\n      {\n        \"id\": \"company\",\n        \"label\": \"Example company policy graph\",\n        \"owner\": \"Fictional company\",\n        \"version\": \"1.0.0\"\n      }\n    ],\n    \"composition\": \"Case-specific questions composed in one pinned artifact. These are additional example definitions, not routes added to the public working or published graph.\"\n  }\n}\n"
+    }
+  ]
+}

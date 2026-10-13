@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { nebulaLayout } from '../lib/graphNebula.mjs';
 
 // One scene, one renderer. Positions are definition coordinates, never causal distance.
-export default function GraphThreeCanvas({ graph, view, selectedId, trace, onSelect, onFallback, shell }) {
+export default function GraphThreeCanvas({ graph, view, selectedId, trace, onSelect, onFallback, shell, accessibleLabel = '3D clustered definition graph. Drag to orbit, pinch to zoom. Use Questions for accessible selection.' }) {
   const spatial = useMemo(() => nebulaLayout(graph), [graph]);
   const host = useRef(null), engine = useRef(null);
   const live = useRef({ selectedId, trace, view, onSelect });
@@ -193,7 +193,7 @@ export default function GraphThreeCanvas({ graph, view, selectedId, trace, onSel
   }, [graph, spatial]);
   useEffect(() => { if(ready) { engine.current?.update(); if(trace?.visibleIds || view === 'focus') engine.current?.focus(); else if(previousSubset.current || previousFocus.current) engine.current?.home(); previousSubset.current=!!trace?.visibleIds; previousFocus.current=view==='focus'; } }, [selectedId,trace,view,ready]);
   return <div className="atlas-map-wrap atlas-three">
-    <div ref={host} className="atlas-stage" role="img" aria-label="3D clustered definition graph. Drag to orbit, pinch to zoom. Use Questions for accessible selection." data-graph-ready={String(ready)} data-renderer="three" data-node-count={graph.nodes.length} data-edge-count={graph.edges.length} data-layout="nebula" tabIndex={0} onKeyDown={e=>{ if(e.key==='ArrowLeft'||e.key==='ArrowRight') { e.preventDefault(); engine.current?.orbit(e.key==='ArrowLeft'?-.15:.15); } if(e.key==='+'||e.key==='-') { e.preventDefault(); engine.current?.zoom(e.key==='+'?.8:1.25); } }} />
+    <div ref={host} className="atlas-stage" role="img" aria-label={accessibleLabel} data-graph-ready={String(ready)} data-renderer="three" data-node-count={graph.nodes.length} data-edge-count={graph.edges.length} data-layout="nebula" tabIndex={0} onKeyDown={e=>{ if(e.key==='ArrowLeft'||e.key==='ArrowRight') { e.preventDefault(); engine.current?.orbit(e.key==='ArrowLeft'?-.15:.15); } if(e.key==='+'||e.key==='-') { e.preventDefault(); engine.current?.zoom(e.key==='+'?.8:1.25); } }} />
     <div className="three-labels" aria-hidden="true">{labels.map((l,i)=><span key={`${l.text}-${i}`} className={`three-label three-label-${l.kind} ${l.active?'is-active':''}`} style={{left:l.x,top:l.y,color:l.color}}>{l.text}{l.detail && <small>{l.detail}</small>}</span>)}</div>
     <div className="atlas-map-caption"><span className="atlas-status-light"/><span role="status">{error || notice || (ready ? `${graph.nodes.length} questions · ${graph.edges.length.toLocaleString()} routes · nebula ready` : 'Loading the 3D graph…')}<small>{trace?.visibleIds ? `${graph.nodes.find(n=>n.id===trace.currentId)?.category} / ${graph.nodes.find(n=>n.id===trace.currentId)?.archetype} · ${trace.visitedIds.length} visited · ${trace.nextIds.length} next options` : trace ? 'Domain clusters · stage subgroups · arrows define routes' : 'Choose a domain or question · Focus selection for detail'}</small></span></div>
     {error && <div className="three-fallback"><p>{error}</p><button className="btn btn-primary" onClick={onFallback}>Return to atlas</button></div>}
