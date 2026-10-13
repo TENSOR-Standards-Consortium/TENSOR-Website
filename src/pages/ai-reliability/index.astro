@@ -16,30 +16,20 @@ const jsonLd = {
 
 <DocumentLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
   <ContentCard>
-    <p class="section-kicker">The same investigative contract</p>
-    <h2>Humans and agents can exchange an investigation</h2>
-    <p>Investigators need to know which question was answered, about whom and when, using what evidence and criteria. That need is the same whether the assessment came from a person, an agent, or a mixed team.</p>
-    <p>AI security teams are the first adoption audience. Core's scope remains all cyber investigations: an agent can be the system under investigation, an investigator, or both in different contexts.</p>
-
-    <h2>Keep distinct claims distinct</h2>
-    <ul>
-      <li><strong>Observation:</strong> a tool-call log records an outbound request.</li>
-      <li><strong>Assessment:</strong> the available evidence is insufficient to establish what content left the system.</li>
-      <li><strong>Decision:</strong> an investigator selects further collection and records the applicable policy context.</li>
-      <li><strong>Action:</strong> a collection operation was requested, attempted, or completed; those are different states.</li>
-    </ul>
-    <p>An agent's explanation is not automatically evidence of an external event. Core requires an inspectable rationale and method, not disclosure of private model reasoning. Confidence values need their scale and interpretation.</p>
-
-    <h2>Disagreement survives the handoff</h2>
-    <p>Preserve competing assessments and the evidence each used. An explicit decision selects an assessment for a transition. Actor type, timestamp, or a larger confidence number does not silently select the winner. An unresolved conflict can remain <code>unknown</code>.</p>
-    <p>When new evidence changes an assessment, add a revision and review affected decisions. Keep the historical inputs intact. This supports examination of a decision without promising that rerunning a model will reproduce its output.</p>
-
-    <h2>Authority stays explicit</h2>
-    <p>Attribution identifies who or what made an entry. It does not establish permission, delegation, or credibility. Represent policy references and authority assertions separately, then enforce access and execution in the surrounding system.</p>
-    <p>Importing an investigation must not execute its recorded actions, fetch arbitrary locators, or grant access. Vendor and business layers remain responsible for their actual controls.</p>
-
-    <h2>Try both sides of the model</h2>
-    <p>The <a href="/investigation-lab/">Investigation Lab</a> includes an AI-system investigation and a conventional identity investigation involving an agent. Both are synthetic and use the same candidate binding.</p>
-    <p><a href="/core/">Core contract and examples</a> · <a href="/standards/">ATLAS, CASE/UCO, and other standards</a> · <a href="/conformance/">What validation can establish</a></p>
+<p class="section-kicker">Human, agent, and mixed-team investigations</p>
+    <h2>A common record across investigator types</h2>
+    <p>TENSOR uses the same question, evidence, assessment, and decision model for people and agents. An agent can participate in an investigation, be the subject of one, or occupy different roles in different contexts.</p>
+    <p>Attribution identifies the actor responsible for an entry. Question context identifies the subject, time, and parameters being assessed. These roles remain explicit during a handoff.</p>
+    <h2>Recorded claims</h2>
+    <table><thead><tr><th>Entry</th><th>Agent-transfer example</th></tr></thead><tbody><tr><td>Observation</td><td>A tool-call log records an outbound request.</td></tr><tr><td>Assessment</td><td>The available evidence initially leaves the transmitted content unknown.</td></tr><tr><td>Decision</td><td>An investigator records a collection decision and its policy context.</td></tr><tr><td>Action record</td><td>A collection operation is reported as planned, attempted, or completed.</td></tr></tbody></table>
+    <p>An assessment records its rationale, method, and evidence inputs. Confidence values include a scale and interpretation. The contract does not require disclosure of private model reasoning.</p>
+    <h2>Disagreement and revision</h2>
+    <p>Competing assessments retain their own evidence and attribution. A decision explicitly selects the assessment used for a transition. New evidence produces a revision with retained earlier inputs and a review of affected decisions.</p>
+    <p>Missing evidence can remain unknown. Recorded history supports examination of a decision even when a model run cannot be reproduced exactly.</p>
+    <h2>Policy and authority</h2>
+    <p>Policy references and authority assertions are distinct entries. The surrounding vendor or organization system enforces evidence access, delegation, and execution permissions. Import and validation are data operations; they do not retrieve evidence or execute recorded actions.</p>
+    <h2>Reference cases</h2>
+    <p>The <a href="/investigation-lab/">Investigation Lab</a> includes an agent-transfer case led by a human and an identity case prepared with agent assistance. Both use fictional evidence and the same Core binding.</p>
+    <p><a href="/core/">Core contract</a> · <a href="/extensions/">Vendor and organization layers</a> · <a href="/conformance/">Validation</a></p>
   </ContentCard>
 </DocumentLayout>

@@ -71,3 +71,25 @@ test('merging never invents question text, category, archetype, or branch decisi
 test('malformed layer extensions are not silently replaced', () => {
   assert.throws(() => mergeLegacyGraphWithLayers(graph, [{ id: 'bad', enabled: true, nodes: [{ id: 'Q999999', extensions: [] }], edges: [] }]), /extensions must be an object/);
 });
+
+test('published cloud layer examples work independently and preserve public questions and routes', async () => {
+  const pack = JSON.parse(await readFile(new URL('../public/examples/layers/cloud-investigation.layers.json', import.meta.url)));
+  for (const [index, file] of ['vendor-cloud.layer.json', 'organization-cloud.layer.json'].entries()) {
+    const individual = JSON.parse(await readFile(new URL(`../public/examples/layers/${file}`, import.meta.url)));
+    assert.deepEqual(pack.layers[index], individual.layer);
+  }
+  const original = copy(graph);
+  for (let enabled = 0; enabled < 4; enabled++) {
+    const layers = pack.layers.map((layer, index) => ({ ...layer.metadata, nodes: layer.nodes, edges: layer.edges, enabled: Boolean(enabled & (1 << index)) }));
+    const merged = copy(mergeLegacyGraphWithLayers(graph, layers));
+    const result = checkLegacyGraphStructure(merged, schema);
+    assert.equal(result.valid, true, JSON.stringify(result.errors));
+    assert.equal(merged.nodes.length, graph.nodes.length + layers.filter(layer => layer.enabled).length);
+    assert.deepEqual(merged.edges.slice(0, graph.edges.length), graph.edges);
+    for (const baseNode of graph.nodes) {
+      const found = data(merged.nodes.find(node => data(node).id === data(baseNode).id));
+      for (const [key, value] of Object.entries(data(baseNode))) assert.deepEqual(found[key], value);
+    }
+    assert.deepEqual(graph, original);
+  }
+});

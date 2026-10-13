@@ -1,4 +1,6 @@
 ---
+import ReferenceTable from '../../components/ReferenceTable.astro';
+import Button from '../../components/Button.astro';
 import ContentCard from '../../components/ContentCard.astro';
 import DocumentLayout from '../../layouts/DocumentLayout.astro';
 import { absoluteUrl, seo } from '../../data/seo';
@@ -16,39 +18,49 @@ const jsonLd = {
 
 <DocumentLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
   <ContentCard>
-    <p class="section-kicker">Implementation candidate · 0.1.0-draft.1</p>
-    <h2>Validate a portable investigation</h2>
-    <p>Start with two synthetic examples and the reference validator. This establishes a reproducible baseline for the candidate binding; it does not certify an integration or prove that the recorded conclusions are true.</p>
+<p class="section-kicker">Core 0.1.0-draft.1 · Getting started</p>
+    <h2>Implementation quick start</h2>
+    <p>The reference implementation validates portable investigation bundles. A bundle contains an investigation record and the exact definitions referenced by that record. The browser and command-line tools use the same candidate binding.</p>
+    <div class="cta-group"><Button variant="primary" href="/investigation-lab/">Open Investigation Lab</Button><Button variant="secondary" href="/extensions/">Vendor and organization graphs</Button></div>
 
-    <h2>1. Try a case in your browser</h2>
-    <p><a href="/investigation-lab/">Investigation Lab</a> lets you inspect, import, validate, and export a candidate bundle. Use the <a href="/core/0.1.0-draft.1/examples/case-a.bundle.json" download>AI-system case</a> or the <a href="/core/0.1.0-draft.1/examples/case-b.bundle.json" download>identity case</a>. Evidence in these examples is synthetic.</p>
+    <h2>Browser workflow</h2>
+    <ol>
+      <li>Open the <a href="/investigation-lab/">Investigation Lab</a> and select the agent-transfer or identity case.</li>
+      <li>Inspect Questions, Evidence, Assessments, Decisions, and History. The Recorded path view replays the entries and selected transitions.</li>
+      <li>Download the bundle and import that JSON file to inspect the retained record and validation result.</li>
+    </ol>
+    <p>Local files are processed in the browser without upload. The <a href="/core/0.1.0-draft.1/examples/case-a.bundle.json" download>agent-transfer bundle</a> and <a href="/core/0.1.0-draft.1/examples/case-b.bundle.json" download>identity bundle</a> are also available directly.</p>
 
-    <h2>2. Run the same candidate locally</h2>
-    <p>Use Node.js 24.21.0 and npm 11.19.0, as pinned in the repository. Check out the <a href="/review/">frozen review source</a> rather than a moving branch:</p>
+    <h2>Command-line workflow</h2>
+    <p>The reproducible Core baseline uses Node.js 24.21.0, npm 11.19.0, and the source commit pinned in the <a href="/review/">technical review package</a>:</p>
     <pre><code>{`git clone https://github.com/tensor-standards-consortium/TENSOR-Framework.git
 cd TENSOR-Framework
 git checkout --detach c82cd1c540b2ca6fbf5ba7ee3e38edcd2e1e6f8f
-git rev-parse HEAD
 npm ci
 npm run check
 node core/v0.1.0-draft.1/cli.mjs core/v0.1.0-draft.1/examples/case-a.bundle.json`}</code></pre>
-    <p>Record the commit returned by <code>git rev-parse HEAD</code> and match it to the frozen review manifest. The CLI prints a validation report. Inspect its findings and declared scope; a successful reference run is not an independent interoperability demonstration. <a href="/core/">Pin the candidate artifacts</a> when recording results.</p>
+    <p>The CLI returns a report with <code>pass</code>, <code>fail</code>, or <code>indeterminate</code> results and individual checks. <a href="/conformance/">Validation</a> explains those results and the information needed in an implementation report.</p>
 
-    <h2>3. Understand what travels together</h2>
+    <h2>Integration roles</h2>
+    <ReferenceTable label="Integration roles"><thead><tr><th>Role</th><th>Implementation work</th></tr></thead><tbody>
+      <tr><td>Definition producer</td><td>Publish versioned questions, parameters, evidence criteria, and transitions with exact-byte digest pins.</td></tr>
+      <tr><td>Record producer</td><td>Record question instances, evidence references, attributed assessments, decisions, and revisions.</td></tr>
+      <tr><td>Reader</td><td>Display supported records and identify missing or unsupported interpretation dependencies.</td></tr>
+      <tr><td>Exchanger</td><td>Import and export records, exact definition artifacts, and retained optional data; report any losses.</td></tr>
+      <tr><td>Transition interpreter</td><td>Resolve explicitly selected assessments and transitions against their pinned definitions.</td></tr>
+    </tbody></ReferenceTable>
+    <p>An implementation can support one or several roles. Its report identifies the binding version, supported profiles and extensions, checks performed, and exchange limitations.</p>
+
+    <h2>Vendor and organization integration</h2>
+    <p>Vendor graphs connect public questions to product-specific evidence, additional checks, and integrations. Organization graphs add local policy, escalation, ownership, and workflow. The <a href="/extensions/">layering guide</a> includes a working graph-layer example and the separate Core extension format.</p>
+
+    <h2>Artifacts and exchange</h2>
     <ul>
-      <li>A pinned definition carries question meaning, criteria, parameters, and transition guards.</li>
-      <li>The investigation record binds instances to subjects and time, attributes entries, and preserves revisions.</li>
-      <li>The bundle retains the exact definition bytes used by its digest pins.</li>
-      <li>Evidence can remain in an access-controlled repository. An evidence reference is not permission to retrieve it.</li>
+      <li><a href="/core/0.1.0-draft.1/binding.md">Binding rules</a> define object identity, parameters, references, revisions, and extensions.</li>
+      <li><a href="/schemas/">JSON Schemas</a> define structure; the semantic validator additionally checks references, pins, and transition selections.</li>
+      <li>Evidence references can point to controlled stores. The receiving implementation manages evidence access and action authorization.</li>
+      <li>Cross-tool exchange compares question context, evidence links, assessments, decisions, revisions, and declared losses.</li>
     </ul>
-    <p>Use the candidate <a href="/core/0.1.0-draft.1/binding.md">binding documentation</a> and <a href="/schemas/">JSON Schemas</a>. Do not substitute the legacy graph schema or reconstruct pinned definition bytes by reserializing a parsed object.</p>
-
-    <h2>4. Choose an implementation role</h2>
-    <p>The proposed roles are definition producer, record producer, reader, lossless exchanger, and transition interpreter. Implement the role your tool needs and declare its supported candidate version, profiles, required extensions, and limitations. An interpreter resolves recorded transition selections; Core does not authorize or execute tools.</p>
-    <p>Retain disagreement and unknowns. Preserve historical entries when an assessment changes. Report omissions and transformation losses before claiming a complete or lossless exchange.</p>
-
-    <h2>5. Bring back exchange evidence</h2>
-    <p>Try moving an investigation between separately developed implementations. Compare question context, evidence links, assessments, transition selections, revisions, and unsupported semantics. Publish a synthetic fixture and a scoped report through the <a href="/contribute/">contribution workflow</a>.</p>
-    <p><a href="/conformance/">Validation coverage and reporting</a> · <a href="/standards/">Reuse of existing standards</a> · <a href="/extensions/">Extension boundaries</a></p>
+    <p><a href="/contribute/">Implementation reports</a> provide a public place for reproducible results. The supplied cases are illustrative; a local round trip establishes reference-tool behavior rather than independent interoperability.</p>
   </ContentCard>
 </DocumentLayout>

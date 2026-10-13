@@ -8,7 +8,7 @@ const step = (questionId, outcome, title, evidence, rationale, limitation) => ({
 export const GUIDES = [
   {
     id: 'agent-request', title: 'An agent crosses a data boundary', domain: 'Application',
-    description: 'Follow a tool request from an application trace to a qualified handoff.',
+    description: 'A tool request, a technical content test, and a qualified handoff.',
     context: 'Application: assistant-gateway. Request: req-42, tool export_report, destination external.example. Interval: 09:00–09:10 UTC on the example day. Hypothesis: this request contained a restricted report addressed outside the declared internal destination set. This technical criterion is separate from authorization or malicious intent.',
     steps: [
       step('Q6','yes','A tool request appears','E01 · Gateway trace req-42 records export_report with report R7 and destination external.example at 09:04 UTC.','The examined trace matches the application, request ID and interval.','A request record does not establish successful delivery.'),
@@ -23,7 +23,7 @@ export const GUIDES = [
   },
   {
     id: 'identity-session', title: 'A session beyond its expected boundary', domain: 'Identity',
-    description: 'Separate a supported technical hypothesis from relationship, attribution and impact.',
+    description: 'An audience-mismatch finding with separate relationship, source, and impact assessments.',
     context: 'Principal: svc-report. Action: token exchange tx-71. Interval: 14:00–14:15 UTC on the example day. Hypothesis: the issued token audience differs from the explicitly declared reporting-service audience. Scope is one exchange; intent and authorization are separate questions.',
     steps: [
       step('Q1','yes','Find the exchange','I01 · Identity audit record tx-71 names svc-report, token exchange and 14:06 UTC.','The record matches every bound subject field and the interval.','Other exchanges are outside this initial observation.'),
@@ -37,7 +37,7 @@ export const GUIDES = [
     ],
   },
   {
-    id: 'host-alternative', title: 'The event is real. The hypothesis fails.', domain: 'Host',
+    id: 'host-alternative', title: 'Host event and refuted hypothesis', domain: 'Host',
     description: 'A negative classification preserves the event and rejects only the tested explanation.',
     context: 'Host: ws-17. Process: process instance p-204. Interval: 02:00–02:05 UTC on the example day. Hypothesis: p-204 executed outside the declared maintenance window (02:00–02:10 UTC).',
     steps: [
@@ -48,7 +48,7 @@ export const GUIDES = [
     ],
   },
   {
-    id: 'cloud-gap', title: 'An audit gap stays an audit gap', domain: 'Cloud',
+    id: 'cloud-gap', title: 'Cloud audit collection gap', domain: 'Cloud',
     description: 'Missing records lead to an unresolved handoff, not a declaration that nothing happened.',
     context: 'Resource: bucket reports-7. Operation: change access policy. Interval: 11:00–11:20 UTC on the example day. The primary audit export has a documented collection interruption. No exclusion claim is made.',
     steps: [

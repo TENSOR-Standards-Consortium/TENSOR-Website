@@ -1,0 +1,8 @@
+---
+interface Props { label: string }
+const { label } = Astro.props;
+---
+<p class="reference-table-hint" aria-hidden="true">Table · scroll horizontally →</p>
+<div class="reference-table" role="region" aria-label={label} tabindex="0">
+  <table><slot /></table>
+</div>

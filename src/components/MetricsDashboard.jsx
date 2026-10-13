@@ -575,10 +575,10 @@ export default function MetricsDashboard() {
     <section className="metrics-dashboard container">
       <div className="metrics-dashboard-shell">
         <div className="metrics-dashboard-head">
-          <p className="section-kicker">Legacy Graph Structure</p>
-          <h2>Historical Structural Metrics</h2>
+          <p className="section-kicker">Published graph diagnostics</p>
+          <h2>Release measurements</h2>
           <p>
-            Historical graph measurements only. These scores do not establish investigative effectiveness, security outcomes, or candidate Core record conformance.
+            Counts, route checks, and structural scores for the selected published release.
           </p>
         </div>
 
@@ -607,7 +607,7 @@ export default function MetricsDashboard() {
             onClick={exportHistoryCsv}
             disabled={baseState.history.length === 0}
           >
-            Export History CSV
+            Export history CSV
           </button>
           <button
             type="button"
@@ -615,7 +615,7 @@ export default function MetricsDashboard() {
             onClick={exportGateCsv}
             disabled={gateChecks.length === 0}
           >
-            Export Gates CSV
+            Export checks CSV
           </button>
           <button
             type="button"
@@ -623,7 +623,7 @@ export default function MetricsDashboard() {
             onClick={exportMatrixCsv}
             disabled={matrixDomains.length === 0}
           >
-            Export Matrix CSV
+            Export matrix CSV
           </button>
           <button
             type="button"
@@ -631,7 +631,7 @@ export default function MetricsDashboard() {
             onClick={exportTrendPng}
             disabled={pngExporting || baseState.history.length === 0}
           >
-            {pngExporting ? 'Exporting PNG...' : 'Export Trend PNG'}
+            {pngExporting ? 'Exporting PNG...' : 'Export chart PNG'}
           </button>
         </div>
 
@@ -647,7 +647,7 @@ export default function MetricsDashboard() {
           <article className="metrics-kpi-card">
             <span>Structural Coverage</span>
             <strong>{formatPercent(reportState.math?.summary?.coverageScore)}</strong>
-            <p>Configured domain/archetype representation</p>
+            <p>Configured domains and question stages</p>
           </article>
           <article className="metrics-kpi-card">
             <span>Routing</span>
@@ -663,7 +663,7 @@ export default function MetricsDashboard() {
 
         <div className="metrics-dashboard-grid">
           <article className="metrics-block metrics-block-wide">
-            <h3>Domain × Archetype Representation</h3>
+            <h3>Domain and question-stage representation</h3>
             <p className="metrics-block-meta">
               Source artifact: {reportState.sourceName || 'release report channel'}
             </p>
@@ -702,7 +702,7 @@ export default function MetricsDashboard() {
           </article>
 
           <article className="metrics-block">
-            <h3>Historical Gate Timeline</h3>
+            <h3>Release check history</h3>
             <table className="metrics-table">
               <thead>
                 <tr>
@@ -738,7 +738,7 @@ export default function MetricsDashboard() {
           </article>
 
           <article className="metrics-block">
-            <h3>Selected Historical Gate Results</h3>
+            <h3>Selected release checks</h3>
             <p className="metrics-block-meta">
               Version {selectedVersion || 'n/a'} · generated {formatDateTime(reportState.math?.generatedAt)}
             </p>
@@ -787,7 +787,7 @@ export default function MetricsDashboard() {
 
         <article className="metrics-trend-card">
           <div className="metrics-trend-head">
-            <h3>Historical Trend</h3>
+            <h3>Score history</h3>
             <p>{baseState.history.length} releases in history</p>
           </div>
           <div className="metrics-trend-viewport" role="region" aria-label="Historical scores chart; scroll horizontally on narrow screens" tabIndex={0}>

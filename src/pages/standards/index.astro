@@ -1,4 +1,5 @@
 ---
+import ReferenceTable from '../../components/ReferenceTable.astro';
 import ContentCard from '../../components/ContentCard.astro';
 import DocumentLayout from '../../layouts/DocumentLayout.astro';
 import { absoluteUrl, seo } from '../../data/seo';
@@ -16,13 +17,13 @@ const jsonLd = {
 
 <DocumentLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
   <ContentCard>
-    <p class="section-kicker">Reuse, then prove the relationship</p>
-    <h2>An investigative layer alongside existing standards</h2>
-    <p>TENSOR makes questions, evidence, uncertainty, and decisions portable across an investigation. Existing standards already describe adversary behavior, defensive knowledge, evidence, events, and operational workflows. Core should connect that work with explicit, tested mappings.</p>
-    <p>The relationships below are design boundaries. They do not establish implemented adapters, partnership, endorsement, or external conformance.</p>
+    <p class="section-kicker">Standards relationships</p>
+    <h2>Relationship to existing standards</h2>
+    <p>TENSOR represents investigation questions, evidence references, assessments, decisions, and revisions. Related standards cover adversary behavior, defensive knowledge, evidence, events, and operational workflows. The crosswalk identifies where their concepts can connect.</p>
+    <p>The relationships below are proposed mapping boundaries. Adapters and interoperability claims require separately published implementation and exchange evidence.</p>
 
-    <table>
-      <thead><tr><th>Existing work</th><th>Relationship to investigate</th></tr></thead>
+    <ReferenceTable label="Proposed standards relationships">
+      <thead><tr><th>Existing work</th><th>Proposed relationship</th></tr></thead>
       <tbody>
         <tr><td><a href="https://attack.mitre.org/">MITRE ATT&amp;CK</a></td><td>Reference adversary behavior that motivates a question; a technique label alone does not answer it.</td></tr>
         <tr><td><a href="https://d3fend.mitre.org/about/">MITRE D3FEND</a></td><td>Reference defensive techniques and artifact concepts; record observed control behavior separately.</td></tr>
@@ -33,23 +34,23 @@ const jsonLd = {
         <tr><td><a href="https://docs.oasis-open.org/cacao/security-playbooks/v2.0/cs01/security-playbooks-v2.0-cs01.html">CACAO 2.0</a></td><td>Bind collection and response procedures while preserving the reason for an investigative decision.</td></tr>
         <tr><td><a href="https://github.com/ocsf/ocsf-schema">OCSF</a></td><td>Reference normalized events and transformation provenance without implying evidence completeness.</td></tr>
       </tbody>
-    </table>
+    </ReferenceTable>
 
-    <h2>A provisional binding, an open reuse decision</h2>
+    <h2>Binding status</h2>
     <p>The candidate JSON binding makes the Core proposal executable for review. It is not a CASE/UCO adapter. Whether stable TENSOR should use a CASE profile, extension, or separately bound model remains subject to the two reference cases and independent review.</p>
-    <p><a href="/founding/03-standards-crosswalk.md">Read the source-backed standards crosswalk</a> for scope, references, and mapping acceptance requirements.</p>
+    <p><a href="/founding/03-standards-crosswalk.md">Source-backed standards crosswalk</a> for scope, references, and mapping acceptance requirements.</p>
 
-    <h2>Version identity carries meaning</h2>
+    <h2>Version identity</h2>
     <p>New Core definitions use a logical identity, an artifact version, and an exact-byte digest. A changed proposition, criterion, or transition meaning needs a new concept identity. A display correction still produces a new artifact version. Historical releases stay retrievable.</p>
     <p>Candidate versions may change during review. There is no stable compatibility guarantee yet. The <a href="/graphs/">legacy graph release channel</a> keeps its existing identifiers and artifacts; the new candidate does not silently reinterpret them.</p>
 
-    <h2>What a mapping must show</h2>
+    <h2>Mapping documentation</h2>
     <ul>
       <li>Pinned source and target versions, object identities, and a versioned mapping.</li>
       <li>Direction, cardinality, assumptions, transformations, and unmapped meaning.</li>
       <li>Handling of uncertainty, evidence, confidence, identity, time, revisions, and markings.</li>
       <li>Positive, negative, and lossy fixtures with explicit exchange results.</li>
     </ul>
-    <p><a href="/core/">Inspect Core</a> · <a href="/conformance/">Review validation scope</a> · <a href="/contribute/">Propose a mapping</a></p>
+    <p><a href="/core/">Core contract</a> · <a href="/conformance/">Validation scope</a> · <a href="/contribute/">Mapping proposals</a></p>
   </ContentCard>
 </DocumentLayout>

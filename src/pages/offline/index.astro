@@ -14,10 +14,9 @@ const meta = seo.offline;
   noindex={meta.noindex}
 >
   <ContentCard class="offline-card">
-    <h2>You Are Offline</h2>
+    <h2>Connection unavailable</h2>
     <p>
-      TENSOR can still serve cached docs and Graph Studio data when a connection is unavailable.
-      Reconnect and refresh to fetch the latest updates.
+      Previously cached resources may remain available. A connection is needed to load uncached pages, release channels, and updates.
     </p>
     <p>
       <a href="/studio/">Open Graph Studio</a>
@@ -26,7 +25,7 @@ const meta = seo.offline;
       from cached content.
     </p>
     <p>
-      The offline package includes key framework pages, AI reliability guidance, and local graph/schema assets.
+      Offline availability depends on the content already cached by the browser. Downloaded JSON bundles can be retained for local use.
     </p>
   </ContentCard>
 </BaseLayout>

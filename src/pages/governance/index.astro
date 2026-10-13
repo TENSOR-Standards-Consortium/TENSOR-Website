@@ -1,4 +1,5 @@
 ---
+import ReferenceTable from '../../components/ReferenceTable.astro';
 import ContentCard from '../../components/ContentCard.astro';
 import DocumentLayout from '../../layouts/DocumentLayout.astro';
 import { absoluteUrl, seo } from '../../data/seo';
@@ -16,41 +17,21 @@ const jsonLd = {
 
 <DocumentLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
   <ContentCard>
-    <p class="section-kicker">Proposed public stewardship</p>
-    <h2>A public standard needs accountable decisions</h2>
-    <p>TENSOR's intended specification, essential public profiles, schemas, and basic conformance materials should be accessible without buying a product or sponsorship. Vendor participation is welcome; funding must not purchase control over shared meaning.</p>
-    <p><strong>The governance proposal is not yet adopted.</strong> It does not appoint a council, create a legal entity, grant new intellectual-property rights, or establish institutional backing. Repository access alone is not independent oversight.</p>
-    <p><a href="/founding/02-governance.md">Download the complete governance proposal</a> · <a href="/founding/00-charter.md">Read the founding charter</a></p>
-
-    <h2>Accepted bootstrap stewardship</h2>
-    <p>On October 11, 2026, John Schieferle Uhlenbrock accepted bootstrap stewardship under the TENSOR Standards Consortium project identity, including the three operational roles below. These responsibilities currently concentrate in one founder; independent oversight is not established. <a href="/docs/stewardship.md">Read the dated record, disclosure status and pending account confirmations</a>.</p>
-    <table>
-      <thead><tr><th>Role</th><th>Responsibility</th><th>Status</th></tr></thead>
-      <tbody>
-        <tr><td>Convenor</td><td>Reviews, decisions, appeals, and scope.</td><td>John Schieferle Uhlenbrock</td></tr>
-        <tr><td>Core editor</td><td>Consistent semantics and specification text.</td><td>John Schieferle Uhlenbrock</td></tr>
-        <tr><td>Conformance maintainer</td><td>Fixtures, validation coverage, and implementation evidence.</td><td>John Schieferle Uhlenbrock</td></tr>
-        <tr><td>Profile editors</td><td>Domain content and source quality.</td><td>Unassigned in the proposal</td></tr>
-        <tr><td>Independent reviewers</td><td>Practitioner, research, and implementation challenge.</td><td>Open participation</td></tr>
-      </tbody>
-    </table>
-
-    <h2>Contact and feedback</h2>
-    <p>The bootstrap convenor coordinates public <a href="https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework/issues/new?template=implementation-report.yml">technical findings</a> and <a href="https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework/issues/new?template=core-rfc.yml">process proposals or escalation</a>. Sensitive reports use <a href="https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework/security/advisories/new">private vulnerability reporting</a>. No staffed service or independent appeal body is claimed.</p>
-    <p><a href="/docs/review-process.md">Finding and dissent handling</a> · <a href="/review/">Frozen technical review</a></p>
-
+<p class="section-kicker">Stewardship and public process</p>
+    <h2>Current stewardship</h2>
+    <p>TENSOR operates under the TENSOR Standards Consortium project identity. On October 11, 2026, John Schieferle Uhlenbrock accepted bootstrap stewardship and the operational roles below.</p>
+    <ReferenceTable label="Stewardship roles"><thead><tr><th>Role</th><th>Responsibility</th><th>Current holder</th></tr></thead><tbody><tr><td>Convenor</td><td>Review coordination, scope, decisions, and escalation.</td><td>John Schieferle Uhlenbrock</td></tr><tr><td>Core editor</td><td>Specification text and consistent semantics.</td><td>John Schieferle Uhlenbrock</td></tr><tr><td>Conformance maintainer</td><td>Fixtures, check coverage, and implementation evidence.</td><td>John Schieferle Uhlenbrock</td></tr><tr><td>Profile editors</td><td>Domain definitions and source quality.</td><td>Unassigned</td></tr><tr><td>Independent reviewers</td><td>Practitioner, research, and implementation review.</td><td>Open participation</td></tr></tbody></ReferenceTable>
+    <p>These operational roles currently rest with one founder. The <a href="/docs/stewardship.md">stewardship record</a> lists disclosure and infrastructure-continuity items that remain pending.</p>
+    <h2>Governance proposal</h2>
+    <p>The <a href="/founding/02-governance.md">governance proposal</a> defines public review, conflict disclosure, decision records, appeals, and a possible transition to broader stewardship. It remains unadopted; a council, independent appeal body, and separate legal entity are not established by that proposal.</p>
+    <p>The proposed public foundation includes the specification, essential profiles, schemas, and basic conformance materials. Vendor and organization participation is part of the model. Funding and sponsorship do not determine shared investigative meaning.</p>
     <h2>Proposed decision process</h2>
-    <ol>
-      <li>Publish a numbered proposal with the problem, examples, alternatives, compatibility effects, and acceptance evidence.</li>
-      <li>Allow at least 14 days for technical review and 30 days for breaking, charter, or governance changes.</li>
-      <li>Record substantive objections and their disposition. Material revisions restart review.</li>
-      <li>Publish the decision, rationale, reviewers, conflicts, and unresolved issues.</li>
-      <li>Archive approved text, schemas, fixtures, and migration guidance together.</li>
-    </ol>
-    <p>Before a first stable release, the proposal requires substantive assessments from at least two reviewers independent of the principal authors and each other. A later five-person council is a proposed transition, not a claim of current representation.</p>
-
-    <h2>Participation without privileged status</h2>
-    <p>Disclose affiliations and conflicts. Keep funding conditions visible. Record dissent and appeals. Use synthetic or authorized de-identified cases. Existing licenses remain applicable to existing materials; contribution, patent, and stewardship policies need explicit review before adoption.</p>
-    <p><a href="/contribute/">Contribute a review or implementation</a> · <a href="/founding/05-review-plan.md">Review the evidence gates</a></p>
+    <ol><li>A numbered proposal records the problem, examples, alternatives, compatibility effects, and acceptance evidence.</li><li>Review lasts at least 14 days for technical changes and 30 days for breaking, charter, or governance changes.</li><li>Substantive objections and their disposition remain in the public record. Material revisions restart review.</li><li>The decision record names the rationale, reviewers, conflicts, and unresolved issues.</li><li>Approved text, schemas, fixtures, and migration guidance are archived together.</li></ol>
+    <p>The proposed stable-release gate includes substantive assessments from at least two reviewers independent of the principal authors and each other.</p>
+    <h2>Findings and proposals</h2>
+    <p><a href="https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework/issues/new?template=implementation-report.yml">Technical findings and implementation reports</a> and <a href="https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework/issues/new?template=core-rfc.yml">change proposals</a> use the Framework repository. The convenor coordinates the <a href="/docs/review-process.md">finding, dissent, and escalation process</a>. Sensitive vulnerabilities use <a href="https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework/security/advisories/new">private reporting</a>.</p>
+    <h2>Rights and participation</h2>
+    <p>Existing materials retain their published licenses. Proposed contribution, patent, and stewardship policies require explicit review before adoption. Public contributions include source attribution, relevant affiliations, and conflict disclosures. Case material is illustrative or authorized for disclosure.</p>
+    <p><a href="/contribute/">Contribution guide</a> · <a href="/founding/00-charter.md">Founding charter</a> · <a href="/review/">Technical review</a></p>
   </ContentCard>
 </DocumentLayout>

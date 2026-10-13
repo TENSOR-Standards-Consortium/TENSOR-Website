@@ -1,4 +1,6 @@
 ---
+import ReferenceTable from '../../components/ReferenceTable.astro';
+import Button from '../../components/Button.astro';
 import ContentCard from '../../components/ContentCard.astro';
 import DocumentLayout from '../../layouts/DocumentLayout.astro';
 import { absoluteUrl, seo } from '../../data/seo';
@@ -16,27 +18,49 @@ const jsonLd = {
 
 <DocumentLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
   <ContentCard>
-    <p class="section-kicker">Build above shared meaning</p>
-    <h2>Profiles, vendor layers, and business context</h2>
-    <p>Core supplies a common investigative model. Public domain profiles add reviewed vocabulary, questions, and requirements. Vendor layers provide tooling and integrations. Business layers supply explicit policy, authority, thresholds, and organizational context.</p>
-    <p>Each can specialize an investigation. None may silently redefine a Core outcome, change a question's proposition under the same identity, or turn a policy judgment into an observation.</p>
+<p class="section-kicker">Public foundation · Product and organization layers</p>
+    <h2>Graphs built above TENSOR</h2>
+    <p>TENSOR separates shared investigation knowledge from product knowledge and organizational process. Vendors and organizations can add their own graphs, evidence mappings, and workflows above the public foundation.</p>
+    <p>A vendor layer describes how a product supports an investigation. An organization layer describes how the same findings fit local policy and operations. Both retain the identity and meaning of the public questions they extend.</p>
+    <div class="cta-group"><Button variant="primary" href={'/studio/?graph=0.20260206e&example=cloud-layers&node=Q4'}>Open the layering example</Button><Button variant="secondary" href="/examples/layers/cloud-investigation.layers.json" download>Download example layers</Button></div>
 
-    <h2>Publish the semantic dependency</h2>
+    <h2>Layer responsibilities</h2>
+    <ReferenceTable label="Layer responsibilities"><thead><tr><th>Layer</th><th>Typical graph content</th><th>Example</th></tr></thead><tbody>
+      <tr><td>Public investigation graph</td><td>Vendor-neutral technical questions, evidence criteria, and investigative routes.</td><td>Whether a cloud audit record supports a resource-operation finding.</td></tr>
+      <tr><td>Vendor graph</td><td>Product-specific data mappings, collection recipes, additional checks, and integration metadata.</td><td>Which audit export supplies the fields needed to assess the public question.</td></tr>
+      <tr><td>Organization graph</td><td>Local policy, resource ownership, review requirements, escalation, and response workflow.</td><td>Whether a supported cloud change requires review under a named policy version.</td></tr>
+      <tr><td>Investigation record</td><td>Bound subjects and time, evidence references, assessments, decisions, and revision history.</td><td>The observed resource change, its assessment, and the resulting policy-bound decision.</td></tr>
+    </tbody></ReferenceTable>
+    <p>Organization-specific graph content and case evidence can remain access-controlled. Public Core provides the common model; the surrounding implementation controls access, storage, and execution.</p>
+
+    <h2>Cloud investigation example</h2>
+    <p>The example layers extend question <code>Q4</code> in published graph <code>0.20260206e</code>. The vendor layer adds an audit-export check. The organization layer adds a policy-review question. Each layer can be enabled separately; the public question and its original routes remain intact.</p>
+    <ol>
+      <li><a href="/studio/?graph=0.20260206e&amp;example=cloud-layers&amp;node=Q4">Open the example in Graph Studio</a>. Both layers load with the published graph.</li>
+      <li>Inspect <code>Q4</code> and the added questions <code>Q9001</code> and <code>Q9002</code>. The Layer pack lists the owner and type of each layer.</li>
+      <li>Toggle either layer to compare the combined graph with the public foundation.</li>
+      <li>Export the merged graph or layer pack. The original question fields and layer provenance remain distinguishable in the JSON.</li>
+    </ol>
+    <p>The fictional examples describe collection and review requirements; the viewer does not collect evidence or perform the recorded workflow. A merged export is a local composition: its graph version identifies the base release, and its layer provenance identifies the additions.</p>
+    <ul><li><a href="/examples/layers/vendor-cloud.layer.json" download>Vendor cloud layer · JSON</a></li><li><a href="/examples/layers/organization-cloud.layer.json" download>Organization cloud layer · JSON</a></li><li><a href="/examples/layers/cloud-investigation.layers.json" download>Combined layer pack · JSON</a></li></ul>
+
+    <h2>Two extension formats</h2>
+    <ReferenceTable label="Extension formats"><thead><tr><th>Format</th><th>Available behavior</th><th>Reference</th></tr></thead><tbody>
+      <tr><td>Published graph layers</td><td>Graph Studio imports and exports <code>tensor-layer.v1</code> and <code>tensor-layer-pack.v1</code>. Layer annotations are preserved separately; added nodes and edges supply their own fields. Local checks cover graph structure.</td><td><a href="/studio/">Graph Studio</a> · <a href="/assets/data/core.schema.json">Published graph schema</a></td></tr>
+      <tr><td>Core record extensions</td><td>The candidate binding carries versioned, URI-namespaced extension data and declared dependencies. Unknown optional data is retained. Unsupported required meaning produces an <code>indeterminate</code> result.</td><td><a href="/core/0.1.0-draft.1/binding.md">Core binding, section 3</a></td></tr>
+    </tbody></ReferenceTable>
+    <p>The Atlas displays the public working and published graphs. Layer preview is currently provided by Graph Studio. The reference Core validator does not interpret additional vendor or organization extension semantics; those need an implementation and a tested contract.</p>
+
+    <h2>Publishing a layer or profile</h2>
     <ul>
-      <li>Give profiles and extension definitions an identity and version.</li>
-      <li>Declare constraints, dependencies, and whether an extension is required for interpretation.</li>
-      <li>Expose unsupported required meaning instead of returning a misleading successful interpretation.</li>
-      <li>Preserve unknown optional data when claiming lossless exchange.</li>
-      <li>Use explicit binding parameters or a new definition identity when local behavior changes a question's meaning.</li>
+      <li><strong>Identity and ownership:</strong> an owner, version, source, and controlled namespace for added meaning.</li>
+      <li><strong>Question meaning:</strong> an explicit proposition, subject and time context, evidence criteria, and route conditions.</li>
+      <li><strong>Dependencies:</strong> exact public graph or definition versions and any required profiles or extensions.</li>
+      <li><strong>Policy:</strong> named policy versions and parameters wherever a result depends on local rules.</li>
+      <li><strong>Exchange behavior:</strong> preserved data, unsupported meaning, transformations, and losses.</li>
+      <li><strong>Examples:</strong> supported, refuted, and unresolved cases that demonstrate the layer's intended behavior.</li>
     </ul>
-    <p>Follow the extension representation in the <a href="/core/0.1.0-draft.1/binding.md">candidate binding</a>. The logical proposal does not make arbitrary vendor key names interoperable.</p>
-
-    <h2>Keep policy visible</h2>
-    <p>A question about whether a tool call exceeded its permitted scope needs the relevant policy version and context. A risk score may support a decision if its scale, method, and interpretation are stated. A private score or hidden prompt cannot silently replace public assessment criteria.</p>
-    <p>Record claimed authority separately from attribution. A human, agent, system, or organization label alone grants no permission. Importing a record neither authorizes an action nor permits access to referenced evidence.</p>
-
-    <h2>Report exchange limits</h2>
-    <p>A vendor-specific ticket layout may be optional display metadata. A dependency that changes the interpretation of a decision is not. When a recipient cannot interpret required semantics, its report must identify the affected content. When an export drops content, declare the loss.</p>
-    <p><a href="/founding/01-core-contract.md">Read requirements TC-29 through TC-35</a> · <a href="/conformance/">Validation and exchange evidence</a></p>
+    <p>Published-format graph layers use Q-number node IDs and namespaced extension keys. Core definitions use URI identities and the binding's extension envelope. A layer that changes the meaning of a question needs a distinct definition identity.</p>
+    <p><a href="/implement/">Implementation guide</a> · <a href="/conformance/">Validation and exchange reports</a> · <a href="/contribute/">Layer and profile proposals</a></p>
   </ContentCard>
 </DocumentLayout>

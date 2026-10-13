@@ -13,6 +13,8 @@ TENSOR uses deep mineral surfaces, silver Manrope display headings, Inter body/c
 | `src/styles/atmosphere.css` / `CircuitFrame.astro` | Sparse decorative perimeter traces, separate from investigation geometry |
 | `src/styles/shell.css` | Header, footer, page introductions, responsive contextual navigation and document framing |
 | `Brand.astro` | Original logo and TENSOR wordmark shared by the header and footer, with compact and signature sizing |
+| `ReferenceTable.astro` | Labeled, keyboard-focusable reference tables with a shared scrolling layout on narrow screens |
+| `src/lib/navigation.ts` | Primary/footer destinations and the single resource inventory used by the directory and document navigation |
 | `BaseLayout.astro` | Document metadata, security/privacy settings, shared header/footer and global foundation |
 | `DocumentLayout.astro` | Reading-page composition with PageIntro and SectionNavigation; metadata title stays separate from the visible title |
 | `PageIntro.astro` / `WorkspaceHeading` in `WorkspaceUI.jsx` | Common heading hierarchy, with appropriate workspace density |
@@ -44,6 +46,10 @@ Primary text and actions are fully opaque on first paint. The home knowledge fie
 
 Run `npm run validate`. It includes `check:design`, which rejects independent page colors, root token overrides, body skins and shell restyling, and checks PWA theme consistency. The existing build gate checks identical primary/footer navigation, one header/main/footer/title, CSP, hosting headers and canonical URLs across all generated pages.
 
+`check:links` audits every built page's local link targets and HTML fragments, and requires all content pages to be reachable from the homepage. The offline and error responses are explicit system destinations. The resource directory and document navigation derive from the same `resourceGroups` inventory.
+
+The optional `scripts/check-resource-browser.mjs` gate exercises directory discovery, example-layer loading and independent toggles, layer and record round trips, unavailable-example handling, navigation breakpoints, and keyboard scrolling in reference tables. It uses `PLAYWRIGHT_MODULE` and `TENSOR_QA_BASE` like the design gate; `TENSOR_RESOURCE_OUTPUT` optionally retains screenshots and reports.
+
 For visual changes, also inspect desktop and mobile Home, a reading page, the graph and Lab. Exercise search, source switching, 3D, playback, local bundle round trip and preserved deep links. Verify overflow, keyboard focus, reduced motion, empty/failure states and downloads. Automated checks do not establish aesthetic acceptance, evidence truth, full accessibility certification or institutional readiness.
 
 The optional `scripts/check-design-browser.mjs` gate checks the 24 representative routes at desktop, tablet and both mobile widths against a running preview or deployed origin. It checks actual headline glyph bounds, mobile guided disclosure and graph visibility, settled historical report data, and exported chart colors. It uses an installed Playwright module (set `PLAYWRIGHT_MODULE` if it is outside normal Node resolution); `TENSOR_QA_BASE` selects the origin and `TENSOR_DESIGN_OUTPUT` optionally saves renders/results. The optional `scripts/check-graph-browser.mjs` gate opens every working question inspector and invokes every declared route control, deriving its inventory from the pinned graph. Both browser gates add no production dependency or network requirement to the offline gate.
@@ -57,3 +63,11 @@ Ordinary reading text uses `--reading-width` (640 pixels at the default root siz
 The opening combines a real graph field with a clear candidate identity and routes to exploration and the Core contract. An authored investigation example follows, then preserved reasoning principles, the Core/overlay architecture, practitioner/implementer/knowledge entry rows and the review invitation page link. Section scale and alternating compositions replace a stack of equivalent cards. Existing public destinations remain in the shared navigation and contextual content. No outbound invitations are sent.
 
 The original hexagonal, three-node TENSOR mark and wordmark form the shared identity. `Brand.astro` owns the header and footer lockups; use its variants instead of inventing text-only signatures or replacing the mark with an arrow. The header uses the existing compact `/icons/icon-192.png`; the larger footer uses `/icons/icon-512.png`, loaded lazily. Both share one color treatment in `shell.css`. The browser-tab and installed-app icons use the same original geometry. Preserve the image bytes and geometry; logo shape changes require an explicit request. Original full-size assets remain available unchanged.
+
+## Content language
+
+Pages are reference resources. Lead with the definition, available artifacts, or tool behavior. Use descriptive headings and direct resource names. Reserve imperative wording for actual procedure steps and control labels. Avoid visitor-directed persuasion, project-work narration, rhetorical headings, and repeated qualification paragraphs.
+
+Explain terms where they are introduced. Put status and interpretation limits where they affect use: candidate status on specification resources, format support in the layering guide, validation scope beside results, and historical context on archived material. Do not turn aspirations into shipped capability or add normative requirements through explanatory website prose.
+
+Vendor and organization graphs are part of TENSOR's main resource structure. Their guide distinguishes public technical questions, product mappings and checks, local policy and workflow, and investigation records. It also distinguishes the published graph-layer format from the separate candidate Core extension contract. Example layers and authored investigations are identified as illustrative. Pinned definitions, schemas, releases, and review artifacts retain their original content and identity.

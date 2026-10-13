@@ -2,16 +2,16 @@
 import ContentCard from '../../components/ContentCard.astro';
 import DocumentLayout from '../../layouts/DocumentLayout.astro';
 import { legacyGraph, legacyQuestions, legacyCategories, questionPath, LEGACY_VERSION, LEGACY_DOWNLOAD, LEGACY_SHA256, LEGACY_SOURCE } from '../../data/legacy-questions';
-const title = 'Question library';
+const title = 'Published question catalog';
 const description = `Browse and cite the ${legacyQuestions.length} questions in TENSOR's preserved graph release ${LEGACY_VERSION}.`;
 ---
 
 <DocumentLayout title={title} description={description} canonicalPath="/questions/">
   <ContentCard>
     <p class="section-kicker">Preserved graph release · {LEGACY_VERSION}</p>
-    <h2>Inspect and cite the questions already published</h2>
-    <p>This library preserves {legacyQuestions.length} questions and {legacyGraph.edges.length} recorded routes from the existing stable graph. Each question has a version-scoped page with its original wording, classification, and outgoing routes.</p>
-    <p>These are historical graph definitions, not completed investigations or definitions converted to the new candidate contract. Applicability, assessment criteria, evidence, and investigative context are not supplied by these entries. <a href="/core/">TENSOR Core</a> adds the proposed contract for recording that meaning explicitly.</p>
+    <h2>Published questions and citations</h2>
+    <p>This library preserves {legacyQuestions.length} questions and {legacyGraph.edges.length} recorded routes from the published graph. Each question has a version-scoped page with its original wording, classification, and outgoing routes.</p>
+    <p>The catalog retains the original wording and routes for citation. The <a href="/graphs/">working graph</a> supplies the revised questions and evidence criteria; the <a href="/graphs/coverage/">coverage ledger</a> links the two. Investigation records use the separate <a href="/core/">Core binding</a>.</p>
     <p><a href={LEGACY_DOWNLOAD} download>Download the original graph JSON</a> · <a href={LEGACY_SOURCE}>Inspect the pinned repository source</a></p>
     <details class="source-details"><summary>Release identity and digest</summary><p>Graph version: <code>{LEGACY_VERSION}</code><br />SHA-256 of the exact source bytes: <code class="digest">{LEGACY_SHA256}</code></p><p>Question identifiers are scoped to this release. A matching identifier in a different graph version does not establish equivalent meaning.</p></details>
 

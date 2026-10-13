@@ -36,7 +36,7 @@ try {
         const graph = JSON.parse(await readFile(new URL('../public/graphs/working/tensor.core.graph.json', import.meta.url)));
         assert.equal(await page.locator('.field-nodes > circle').count(), graph.nodes.length, 'hero preserves working-node inventory');
         assert.equal(await page.locator('.field-links > path').count(), graph.edges.length, 'hero uses declared routes');
-        assert.match(await page.locator('.hero-kicker').textContent(), /candidate/i);
+        assert.match(await page.locator('.candidate-status').textContent(), /implementation candidate/i);
         // Overflow clipping can conceal oversized glyphs without enlarging the page.
         const clippedHeadline = await page.locator('.hero-title').evaluate(title => {
           const bounds = title.getBoundingClientRect();
@@ -104,9 +104,9 @@ try {
 
   // Standalone images cannot inherit page CSS. Catch lost chart paint in exports.
   await page.goto(base + '/metrics/');
-  const exportButton = page.getByRole('button', { name: 'Export Trend PNG', exact: true });
+  const exportButton = page.getByRole('button', { name: 'Export chart PNG', exact: true });
   await exportButton.waitFor();
-  await page.waitForFunction(() => [...document.querySelectorAll('button')].some(button => button.textContent === 'Export Trend PNG' && !button.disabled));
+  await page.waitForFunction(() => [...document.querySelectorAll('button')].some(button => button.textContent === 'Export chart PNG' && !button.disabled));
   await page.locator('.metrics-gate-summary').waitFor();
   assert.equal(await page.locator('.matrix-table tbody tr').count(), 7, 'selected release retains domain matrix');
   assert.match(await page.locator('.metrics-gate-summary').textContent(), /Total 11.*Passed 11/);

@@ -13,7 +13,8 @@
     "check:core": "node scripts/sync-core.mjs --check",
     "check:urls": "node scripts/hosting-check-url-policy.mjs",
     "check:build": "node scripts/hosting-check-build.mjs",
-    "validate": "npm run check:core && npm run check:urls && npm run check:design && npm run check && npm test && npm run build && npm run check:build",
+    "check:links": "node scripts/check-resource-links.mjs",
+    "validate": "npm run check:core && npm run check:urls && npm run check:design && npm run check && npm test && npm run build && npm run check:build && npm run check:links",
     "check:design": "node scripts/check-design-system.mjs"
   },
   "dependencies": {
