@@ -33,14 +33,14 @@ export default function GraphThreeCanvas({ graph, view, selectedId, trace, onSel
       const controls = new OrbitControls(camera, renderer.domElement);
       controls.enableDamping = false; controls.minDistance = 80; controls.maxDistance = 4300;
       controls.maxPolarAngle = Math.PI * .94; controls.enablePan = true;
-      scene.add(new THREE.HemisphereLight(token('--light-sky'), token('--light-ground'), 2.8));
-      const light = new THREE.DirectionalLight(token('--light-white'), 3); light.position.set(400, 700, 900); scene.add(light);
+      scene.add(new THREE.HemisphereLight(token('--light-sky'), token('--light-ground'), 1.7));
+      const light = new THREE.DirectionalLight(token('--light-white'), 1.65); light.position.set(400, 700, 900); scene.add(light);
       const nodeColors = spatial.nodes.map(n => new THREE.Color(css.getPropertyValue(n.color.slice(4,-1)).trim()));
       const positions = spatial.nodes.map(n => new THREE.Vector3(n.position.x, n.position.y, n.position.z));
       const byId = new Map(spatial.nodes.map((n,i) => [n.id, i]));
       const dummy = new THREE.Object3D();
       const geometry = new THREE.IcosahedronGeometry(1, 2);
-      const material = new THREE.MeshStandardMaterial({ roughness: .32, metalness: .25 });
+      const material = new THREE.MeshStandardMaterial({ roughness: .65, metalness: .05 });
       const nodes = new THREE.InstancedMesh(geometry, material, positions.length);
       nodes.instanceMatrix.setUsage(THREE.DynamicDrawUsage); scene.add(nodes);
       const routes = new THREE.Group(); scene.add(routes);
@@ -103,7 +103,7 @@ export default function GraphThreeCanvas({ graph, view, selectedId, trace, onSel
           const curve = new THREE.QuadraticBezierCurve3(a,mid,b), points = curve.getPoints(16);
           const bucket = buckets.get(key);
           for(let i=0;i<points.length-1;i++) { if(e.decision === 'unknown' && i%2) continue; bucket.points.push(points[i],points[i+1]); }
-          bucket.arrows.push({ point: curve.getPoint(.84), direction: curve.getTangent(.84), size: connected || traversed ? 3 : 2 });
+          bucket.arrows.push({ point: curve.getPoint(.84), direction: curve.getTangent(.84), size: connected || traversed ? 1.8 : 1.4 });
         });
         for(const [key,bucket] of buckets) {
           const [kind,outcome,scope] = key.split(':');

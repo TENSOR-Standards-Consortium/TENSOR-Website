@@ -1,5 +1,7 @@
 # Graphite standards presentation, October 12, 2026
 
+Historical: the steward subsequently rejected this direction as generic and insufficiently cinematic. See `design-review-cinematic-2026-10-12.md`; the model acceptance recorded below is not user acceptance.
+
 ## Brief and sources
 
 The steward rejected the navy presentation despite prior model acceptance, and requested gray, illuminated lines and standards-level professionalism with style. The older gray wallpaper was also insufficient. A subsequent instruction requires finishing all deliverables and checking the graph from start to finish without changing its schema. Baseline main: `f1b3a00c64da801bbefa139e52557bb82fdef5a0`. Shared components, graph/record semantics, all published artifacts and no-invitation boundaries remain binding.

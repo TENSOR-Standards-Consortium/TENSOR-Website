@@ -96,6 +96,11 @@
   height: auto;
 }
 
+.metrics-trend-viewport { max-width: 100%; overflow-x: auto; }
+.metrics-trend-viewport .metrics-trend-chart { display: block; min-width: 600px; }
+.metrics-trend-chart .metrics-axis-label { fill: var(--text-secondary); font: 12px var(--font-mono); }
+.metrics-axis-caption { color: var(--text-muted); font-size: .7rem; margin-block: .5rem; }
+
 .metrics-trend-chart line {
   stroke: var(--line-soft);
   stroke-width: 1;
@@ -446,8 +451,8 @@
 }
 
 .metrics-gate-pill-fail {
-  border-color: color-mix(in srgb, var(--accent-primary) 50%, transparent);
-  color: var(--accent-primary);
+  border-color: color-mix(in srgb, var(--accent-danger) 50%, transparent);
+  color: var(--accent-danger);
 }
 
 .metrics-gate-pill-pass {
@@ -474,19 +479,19 @@
 }
 
 .metrics-trend-chart .is-overall {
-  stroke: var(--accent-primary);
+  stroke: var(--series-overall);
 }
 
 .metrics-trend-chart .is-coverage {
-  stroke: var(--accent-success);
+  stroke: var(--series-coverage);
 }
 
 .metrics-trend-chart .is-routing {
-  stroke: var(--accent-secondary);
+  stroke: var(--series-routing);
 }
 
 .metrics-trend-chart .is-robustness {
-  stroke: var(--accent-secondary);
+  stroke: var(--series-robustness);
 }
 
 .metrics-trend-legend {
@@ -505,23 +510,23 @@
 }
 
 .metrics-trend-legend .is-overall {
-  border-color: color-mix(in srgb, var(--accent-primary) 50%, transparent);
-  color: var(--accent-primary);
+  border-color: color-mix(in srgb, var(--series-overall) 50%, transparent);
+  color: var(--series-overall);
 }
 
 .metrics-trend-legend .is-coverage {
-  border-color: color-mix(in srgb, var(--accent-success) 50%, transparent);
-  color: var(--accent-success);
+  border-color: color-mix(in srgb, var(--series-coverage) 50%, transparent);
+  color: var(--series-coverage);
 }
 
 .metrics-trend-legend .is-routing {
-  border-color: color-mix(in srgb, var(--accent-secondary) 50%, transparent);
-  color: var(--accent-secondary);
+  border-color: color-mix(in srgb, var(--series-routing) 50%, transparent);
+  color: var(--series-routing);
 }
 
 .metrics-trend-legend .is-robustness {
-  border-color: color-mix(in srgb, var(--accent-secondary) 50%, transparent);
-  color: var(--accent-secondary);
+  border-color: color-mix(in srgb, var(--series-robustness) 50%, transparent);
+  color: var(--series-robustness);
 }
 
 .compact-metrics-card {
@@ -581,3 +586,9 @@
   font-size: 0.78rem;
 }
 
+
+.metrics-trend-chart .is-routing { stroke-dasharray: 7 4; }
+.metrics-trend-chart .is-robustness { stroke-dasharray: 2 5; }
+.metrics-trend-legend span::before { content: ""; display: inline-block; width: 18px; border-top: 2px solid currentColor; vertical-align: middle; margin-right: .4rem; }
+.metrics-trend-legend .is-routing::before { border-top-style: dashed; }
+.metrics-trend-legend .is-robustness::before { border-top-style: dotted; }

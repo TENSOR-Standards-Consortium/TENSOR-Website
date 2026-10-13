@@ -1,0 +1,44 @@
+---
+import graph from '../../public/graphs/working/tensor.core.graph.json';
+import { nebulaLayout } from '../lib/graphNebula.mjs';
+const layout = nebulaLayout(graph);
+// A projection of the actual working definitions. Positions are visual grouping,
+// not findings or causal distance; investigation controls live in the atlas.
+const points = new Map(layout.nodes.map(node => {
+  const { x, y, z } = node.position;
+  return [node.id, { x: 580 + x * .81 + z * .44, y: 365 + y * .66 - z * .39, depth: (z + 550) / 1100, color: node.color }];
+}));
+const paths = graph.edges.map(edge => {
+  const a = points.get(edge.source), b = points.get(edge.target);
+  return { ...edge, d: `M${a.x.toFixed(1)} ${a.y.toFixed(1)}Q${((a.x+b.x)/2).toFixed(1)} ${((a.y+b.y)/2-18).toFixed(1)} ${b.x.toFixed(1)} ${b.y.toFixed(1)}` };
+});
+const selected = paths.filter(edge => edge.source === 'Q1' || edge.source === 'Q155');
+const clusterLabels = layout.clusters.map(cluster => {
+  const {x,y,z} = cluster.position;
+  return {...cluster, x:580+x*.81+z*.44, y:365+y*.66-z*.39};
+});
+---
+<figure class="knowledge-field" aria-labelledby="field-caption" data-node-count={graph.nodes.length} data-route-count={graph.edges.length}>
+  <a class="field-open" href="/graphs/?renderer=3d" aria-label={`Explore all ${graph.nodes.length} working questions in the 3D graph`}>
+    <svg class="field-scene" viewBox="0 0 1100 740" role="img" aria-label="The working TENSOR graph, projected by investigation domain">
+      <defs>
+        <radialGradient id="field-aura"><stop stop-color="var(--field-glow)" stop-opacity=".17"/><stop offset="1" stop-color="var(--bg-app)" stop-opacity="0"/></radialGradient>
+        <radialGradient id="field-aura-cold"><stop stop-color="var(--field-ice)" stop-opacity=".16"/><stop offset="1" stop-color="var(--bg-app)" stop-opacity="0"/></radialGradient>
+        <filter id="field-bloom" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="4"/></filter>
+      </defs>
+      <ellipse cx="565" cy="370" rx="520" ry="340" fill="url(#field-aura)"/>
+      <ellipse cx="735" cy="310" rx="310" ry="240" fill="url(#field-aura-cold)"/>
+      <g class="field-coordinate" fill="none"><ellipse cx="580" cy="370" rx="468" ry="238" transform="rotate(-19 580 370)"/><ellipse cx="580" cy="370" rx="470" ry="245" transform="rotate(25 580 370)"/><path d="M88 370H1070M580 55V680" stroke-dasharray="2 9"/></g>
+      <g class="field-links" fill="none">{paths.map(edge => <path d={edge.d} />)}</g>
+      <g fill="none" class="field-selected">{selected.map(edge => <path d={edge.d}/>)}</g>
+      <g class="field-pulses" fill="none">{selected.map((edge,i) => <path class={`field-pulse field-pulse-${i%3}`} d={edge.d} pathLength="100"/>)}</g>
+      <g filter="url(#field-bloom)">{[...points.values()].map(p => <circle cx={p.x} cy={p.y} r={2.8+p.depth*2.7} fill={p.color} opacity=".55"/>)}</g>
+      <g class="field-nodes">{[...points.entries()].map(([id,p]) => <circle cx={p.x} cy={p.y} r={id==='Q1'?5:1.2+p.depth*1.5} fill={p.color} opacity={.48+p.depth*.5}/>)}</g>
+      <g class="field-crosshair" fill="none">{['Q1','Q155'].map(id => {const p=points.get(id);return <g><circle cx={p.x} cy={p.y} r="12"/><path d={`M${p.x-18} ${p.y}h8M${p.x+10} ${p.y}h8M${p.x} ${p.y-18}v8M${p.x} ${p.y+10}v8`}/></g>;})}</g>
+      <g class="field-domain-labels">{clusterLabels.map(c => <g transform={`translate(${c.x-20} ${c.y-74})`}><path d="M0 16V5H28"/><text x="7" y="0">{c.domain.toUpperCase()}</text></g>)}</g>
+      <g class="field-registration"><text x="132" y="664">TENSOR / KNOWLEDGE FIELD</text><text x="900" y="84">{String(layout.clusters.length).padStart(2, '0')} DOMAINS</text></g>
+    </svg>
+    <span class="field-launch"><span class="field-launch-icon" aria-hidden="true">↗</span><span>Enter the investigation atlas<small>Explore in 2D or 3D</small></span></span>
+  </a>
+  <figcaption id="field-caption"><span class="field-status">Working definitions</span><span>{graph.nodes.length} questions · {graph.edges.length.toLocaleString('en-US')} routes</span></figcaption>
+</figure>

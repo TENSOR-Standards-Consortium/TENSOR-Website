@@ -14,8 +14,9 @@ export default function WorkingGraph({ graph: working, published, criteria: base
   const [playing, setPlaying] = useState(false), [speed, setSpeed] = useState(7000);
   const stateRef = useRef(state); stateRef.current = state;
   const [outline, setOutline] = useState(false), [query, setQuery] = useState('');
+  const [toolsOpen, setToolsOpen] = useState(false);
   const [ready, setReady] = useState(false), [orientation, setOrientation] = useState('wide');
-  const shell = useRef(null), inspectorTitle = useRef(null), searchInput = useRef(null), findButton = useRef(null);
+  const shell = useRef(null), inspectorTitle = useRef(null), searchInput = useRef(null), findButton = useRef(null), toolsToggle = useRef(null);
   const sourceGraph = graphs[state.dataset], isWorking = state.dataset === 'working';
   const scoped = isWorking ? profileContext : null;
   const graph = useMemo(() => profileGraph(sourceGraph, scoped), [sourceGraph, scoped]);
@@ -58,8 +59,12 @@ export default function WorkingGraph({ graph: working, published, criteria: base
     document.addEventListener('visibilitychange',pause);
     return () => { clearTimeout(timer); document.removeEventListener('visibilitychange',pause); };
   }, [playing, guide, state.step, speed]);
-  const chooseGuide = (id) => { setPlaying(false); setOutline(false); change({ guideId: id, dataset: 'working', step: 0, node: null, view: 'all' }); };
+  const chooseGuide = (id) => { setPlaying(false); setOutline(false); setToolsOpen(false); change({ guideId: id, dataset: 'working', step: 0, node: null, view: 'all' }); };
   const select = (id) => { if (byId.has(id)) change({ node: id }); };
+  const restoreControlFocus = () => {
+    const target = guide && !toolsOpen && window.matchMedia('(max-width: 600px)').matches ? toolsToggle : findButton;
+    target.current?.focus();
+  };
   const node = byId.get(state.node);
   const evidence = isWorking && node ? criteria.nodes[node.id] : null;
   const rule = criteria.rules[evidence?.rule];
@@ -71,7 +76,9 @@ export default function WorkingGraph({ graph: working, published, criteria: base
     <WorkspaceHeading className="atlas-heading" title="The investigation atlas" eyebrow="TENSOR / Investigation knowledge">
       <div className="segmented-control atlas-mode-tabs" role="group" aria-label="Workspace mode"><button aria-pressed={!guide} onClick={() => { setPlaying(false); change({guideId:null,node:null,view:'all'}); }}>Explore</button><button aria-pressed={!!guide} onClick={() => chooseGuide(state.guideId || guides[0].id)}>Follow an investigation</button></div>
     </WorkspaceHeading>
-    <div className="atlas-toolbar">
+    <div className={`atlas-tools ${guide ? 'is-collapsible' : ''}`} data-open={toolsOpen}>
+    {guide && <button ref={toolsToggle} className="atlas-tools-toggle" aria-expanded={toolsOpen} aria-controls="atlas-view-controls" onClick={() => setToolsOpen(!toolsOpen)}><span>Working draft <strong>{graph.nodes.length}</strong> · {state.renderer === '3d' ? '3D nebula' : 'Atlas'}</span><span>{toolsOpen ? 'Hide controls −' : 'View controls +'}</span></button>}
+    <div className="atlas-toolbar" id="atlas-view-controls">
       <div className="atlas-source-tabs" role="group" aria-label="Graph version">
         <button aria-pressed={isWorking} onClick={() => { setPlaying(false); change({ dataset: 'working', guideId:null, node: null, view: 'all' }); setQuery(''); }}><span>Working draft</span><strong>{working.nodes.length}</strong></button>
         <button aria-pressed={!isWorking} onClick={() => { setPlaying(false); change({ dataset: 'published', guideId:null, node: null, view: 'all' }); setQuery(''); }}><span>Published graph</span><strong>{published.nodes.length}</strong></button>
@@ -80,14 +87,15 @@ export default function WorkingGraph({ graph: working, published, criteria: base
       <div className="segmented-control atlas-render-tabs" role="group" aria-label="Graph presentation"><button aria-pressed={state.renderer === 'atlas'} onClick={() => change({renderer:'atlas'})}>Atlas</button><button aria-pressed={state.renderer === '3d'} onClick={() => change({renderer:'3d'})}>3D nebula</button></div>
       <button ref={findButton} className="btn btn-secondary atlas-find" aria-expanded={outline} aria-controls="atlas-questions" onClick={() => setOutline(!outline)}>⌕ Questions <span>{graph.nodes.length}</span></button>
     </div>
+    </div>
     {scoped && <div className="atlas-profile-context"><strong>Event profile · {scoped.profile.title}</strong><span>{scoped.version} · Distinct scoped definitions; graph topology unchanged.</span><a href="/graphs/profiles/">Change event profile ↗</a></div>}
     {guide && <div className="atlas-follow-bar"><span><i className="timeline-live-dot" /><strong>{guide.title}</strong><small>{playing ? 'Playing' : 'Step through'} · {guide.domain}</small></span><div role="group" aria-label="Investigation graph context"><button aria-pressed={state.visibility === 'all'} onClick={() => change({visibility:'all'})}>Whole graph + path</button><button aria-pressed={state.visibility === 'path'} onClick={() => change({visibility:'path'})}>Path + next options</button></div></div>}
     <div className={`atlas-workbench ${guide ? 'is-guided' : ''}`}>
       {guide && <div className="guide-mobile-current"><div><small>STEP {state.step + 1} / {guide.steps.length} · {guide.steps[state.step].questionId}</small><strong>{guide.steps[state.step].title}</strong><Badge value={guide.steps[state.step].outcome} /></div><p>{guide.steps[state.step].evidence}</p><div className="guide-mobile-buttons"><button className="btn btn-primary" onClick={()=>{if(state.step===guide.steps.length-1&&!playing) advance(0);setPlaying(!playing);}}>{playing?'Pause investigation':'Play investigation'}</button><button className="btn btn-secondary" aria-label="Previous step on map" disabled={state.step===0} onClick={()=>{setPlaying(false);advance(state.step-1);}}>←</button><button className="btn btn-secondary" aria-label="Next step on map" disabled={state.step===guide.steps.length-1} onClick={()=>{setPlaying(false);advance(state.step+1);}}>→</button></div></div>}
       {state.renderer === '3d' ? <GraphThreeCanvas graph={graph} view={state.view} selectedId={state.node || trace?.currentId} trace={trace} onSelect={id=>{setPlaying(false);select(id);}} onFallback={()=>change({renderer:'atlas'})} shell={shell} /> : <GraphAtlasCanvas graph={graph} layout={layout} selectedId={state.node || trace?.currentId} view={state.view} trace={trace} onSelect={id=>{setPlaying(false);select(id);}} onWhole={() => change({ view: 'all', visibility:'all' })} onFocus={() => change({ view: 'focus' })} shell={shell} />}
       {guide && <InvestigationTimeline guides={guides} profileContext={scoped} guide={guide} index={state.step} playing={playing} setPlaying={setPlaying} advance={advance} chooseGuide={chooseGuide} graph={graph} criteria={criteria} inspect={select} speed={speed} setSpeed={setSpeed} />}
-      {outline && <aside className="atlas-question-drawer" id="atlas-questions" aria-label="Find a question"><div className="atlas-drawer-title"><h2>Questions</h2><button aria-label="Close questions" onClick={() => { setOutline(false); findButton.current?.focus(); }}>×</button></div><label htmlFor="atlas-search">Search ID, topic, or question</label><input ref={searchInput} id="atlas-search" type="search" value={query} onChange={(event) => setQuery(event.target.value)} /><p>{found.length} of {graph.nodes.length} questions</p><ul>{found.map((n) => <li key={n.id}><button aria-pressed={n.id === state.node} onClick={() => { select(n.id); setOutline(false); }}><code>{n.id}</code><span>{n.label}<small>{n.category} / {n.archetype}</small></span></button></li>)}</ul></aside>}
-      {node && <aside className="atlas-inspector" aria-label="Selected question"><div className="atlas-drawer-title"><p className="section-kicker">{node.id} / {node.category}</p><button aria-label="Close inspector" onClick={() => { change({ node: null, view: 'all' }); findButton.current?.focus(); }}>×</button></div><p className="atlas-node-stage">{node.archetype} · {isWorking ? 'Working definition' : 'Published definition'}</p><h2 ref={inspectorTitle} tabIndex={-1}>{node.text}</h2>
+      {outline && <aside className="atlas-question-drawer" id="atlas-questions" aria-label="Find a question"><div className="atlas-drawer-title"><h2>Questions</h2><button aria-label="Close questions" onClick={() => { setOutline(false); restoreControlFocus(); }}>×</button></div><label htmlFor="atlas-search">Search ID, topic, or question</label><input ref={searchInput} id="atlas-search" type="search" value={query} onChange={(event) => setQuery(event.target.value)} /><p>{found.length} of {graph.nodes.length} questions</p><ul>{found.map((n) => <li key={n.id}><button aria-pressed={n.id === state.node} onClick={() => { select(n.id); setOutline(false); }}><code>{n.id}</code><span>{n.label}<small>{n.category} / {n.archetype}</small></span></button></li>)}</ul></aside>}
+      {node && <aside className="atlas-inspector" aria-label="Selected question"><div className="atlas-drawer-title"><p className="section-kicker">{node.id} / {node.category}</p><button aria-label="Close inspector" onClick={() => { change({ node: null, view: 'all' }); restoreControlFocus(); }}>×</button></div><p className="atlas-node-stage">{node.archetype} · {isWorking ? 'Working definition' : 'Published definition'}</p><h2 ref={inspectorTitle} tabIndex={-1}>{node.text}</h2>
         <h3>{outgoing.length ? 'Follow a route' : 'Route endpoint'}</h3>{outgoing.some(e => e.extensions?.['tensor:contextAdapter']) && <p>Continue with general evidence checks, keeping this topic, subjects, interval, hypothesis and prior answers. Recheck each next question against its own evidence.</p>}{!outgoing.length && <p>This route stops here. The investigation can remain open.</p>}
         <ul className="atlas-routes">{outgoing.map((e, i) => <li key={i}><Badge value={e.decision} /><button onClick={() => select(e.target)}><code>{e.target}</code> {byId.get(e.target)?.label}<span aria-hidden="true">→</span></button></li>)}</ul>
         {incoming.length > 0 && <details><summary>Incoming routes · {incoming.length}</summary><ul>{incoming.map((e, i) => <li key={i}><button onClick={() => select(e.source)}>{e.source} on {e.decision}</button></li>)}</ul></details>}

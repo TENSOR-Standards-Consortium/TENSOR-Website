@@ -6,8 +6,8 @@
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "background_color": "#242629",
-  "theme_color": "#242629",
+  "background_color": "#0c0f12",
+  "theme_color": "#0c0f12",
   "shortcuts": [
     {
       "name": "Graph Studio",

@@ -9,11 +9,11 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { color-scheme: dark; scroll-padding-top: 6rem; }
-body { min-height: 100vh; font-family: var(--font-body); color: var(--text-primary); background: linear-gradient(180deg, var(--bg-wash), var(--bg-app) 580px); line-height: 1.65; position: relative; isolation: isolate; }
+body { min-height: 100vh; font-family: var(--font-body); color: var(--text-primary); background: var(--bg-app); line-height: 1.65; position: relative; isolation: isolate; }
 main { flex: 1 0 auto; min-width: 0; }
 a { color: var(--accent-secondary); text-underline-offset: .22em; text-decoration-thickness: 1px; }
 a:hover { color: var(--text-primary); }
-h1, h2, h3, h4, h5, h6 { color: var(--text-primary); font-family: var(--font-heading); letter-spacing: -.035em; line-height: 1.2; }
+h1, h2, h3, h4, h5, h6 { color: var(--text-primary); font-family: var(--font-heading); letter-spacing: var(--tracking-heading); line-height: 1.2; }
 hr { border: 0; border-top: 1px solid var(--line-soft); }
 img, svg { max-width: 100%; }
 img { display: block; }
@@ -22,8 +22,8 @@ button { cursor: pointer; }
 code, pre { font-family: var(--font-mono); }
 .container { width: min(var(--page-width), calc(100% - var(--page-gutter) * 2)); margin-inline: auto; }
 .app-shell { position: relative; z-index: 1; min-height: 100vh; display: flex; flex-direction: column; }
-.cta-group { display: flex; flex-wrap: wrap; gap: .65rem 1rem; align-items: center; margin-top: 1.4rem; }
-.section-kicker, .hero-kicker, .page-eyebrow { font: 500 var(--type-label)/1.6 var(--font-mono); text-transform: uppercase; letter-spacing: .14em; color: var(--accent-primary); }
+.cta-group { display: flex; flex-wrap: wrap; gap: .75rem 1rem; align-items: center; margin-top: 1.4rem; }
+.section-kicker, .hero-kicker, .page-eyebrow { font: 500 var(--type-label)/1.6 var(--font-mono); text-transform: uppercase; letter-spacing: .13em; color: var(--text-muted); }
 .is-hidden { display: none !important; }
 ::selection { background: var(--accent-primary); color: var(--text-inverse); }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }

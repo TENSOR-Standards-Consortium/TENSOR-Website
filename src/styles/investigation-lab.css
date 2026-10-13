@@ -15,7 +15,7 @@
 .il-start-heading, .il-validation-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
 .il-eyebrow { font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--il-accent); }
 .il-start h2 { font-size: clamp(1.6rem, 3vw, 2rem); margin-top: .25rem; }
-.il-version { color: var(--il-muted); font-family: var(--font-mono); font-size: .68rem; border: 1px solid var(--il-line); border-radius: 20px; padding: .3rem .7rem; white-space: nowrap; }
+.il-version { color: var(--il-muted); font-family: var(--font-mono); font-size: .68rem; border: 1px solid var(--il-line); border-radius: var(--radius-sm); padding: .3rem .7rem; white-space: nowrap; }
 .il-lead { color: var(--il-muted); max-width: 66ch; margin-top: .6rem; }
 .il-case-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem; }
 .il-case { display: flex; flex-direction: column; gap: .5rem; text-align: left; padding: 1.4rem; color: var(--il-text); background: var(--il-panel); border: 1px solid var(--il-line); border-radius: var(--radius-md); transition: border-color .15s ease, background .15s ease; }

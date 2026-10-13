@@ -8,7 +8,7 @@ import {
 const REFRESH_INTERVAL_MS = 4 * 60 * 1000;
 const CHART_WIDTH = 980;
 const CHART_HEIGHT = 260;
-const CHART_PADDING = 26;
+const CHART_PADDING = 38;
 
 const TREND_FIELDS = [
   { key: 'overallScore', label: 'Overall', className: 'is-overall' },
@@ -479,7 +479,7 @@ export default function MetricsDashboard() {
       const exportSvg = svgElement.cloneNode(true);
       const sourceNodes = [svgElement, ...svgElement.querySelectorAll('*')];
       const exportNodes = [exportSvg, ...exportSvg.querySelectorAll('*')];
-      const paintProperties = ['fill', 'fill-opacity', 'stroke', 'stroke-width', 'stroke-opacity', 'stroke-dasharray', 'stroke-linecap', 'stroke-linejoin', 'opacity'];
+      const paintProperties = ['fill', 'fill-opacity', 'stroke', 'stroke-width', 'stroke-opacity', 'stroke-dasharray', 'stroke-linecap', 'stroke-linejoin', 'opacity', 'font-family', 'font-size', 'font-weight', 'text-anchor'];
       sourceNodes.forEach((sourceNode, index) => {
         const paint = getComputedStyle(sourceNode);
         for (const property of paintProperties) exportNodes[index].style.setProperty(property, paint.getPropertyValue(property));
@@ -503,7 +503,7 @@ export default function MetricsDashboard() {
 
       const canvas = document.createElement('canvas');
       canvas.width = CHART_WIDTH;
-      canvas.height = CHART_HEIGHT;
+      canvas.height = CHART_HEIGHT + 100;
       const context = canvas.getContext('2d');
       if (!context) {
         throw new Error('Canvas context unavailable');
@@ -511,7 +511,23 @@ export default function MetricsDashboard() {
 
       context.fillStyle = exportBackground;
       context.fillRect(0, 0, canvas.width, canvas.height);
-      context.drawImage(image, 0, 0, canvas.width, canvas.height);
+      const exportText = getComputedStyle(svgElement).getPropertyValue('--text-secondary').trim();
+      context.fillStyle = exportText;
+      context.font = '600 16px sans-serif';
+      context.fillText('TENSOR · Historical graph scores', CHART_PADDING, 24);
+      context.drawImage(image, 0, 36, CHART_WIDTH, CHART_HEIGHT);
+      context.font = '12px sans-serif';
+      TREND_FIELDS.forEach((field, index) => {
+        const series = getComputedStyle(svgElement.querySelector(`.${field.className}`));
+        const x = CHART_PADDING + index * 220, y = CHART_HEIGHT + 60;
+        context.strokeStyle = series.stroke;
+        context.lineWidth = 2;
+        context.setLineDash(series.strokeDasharray === 'none' ? [] : series.strokeDasharray.split(/[ ,]+/).map(Number.parseFloat));
+        context.beginPath(); context.moveTo(x, y); context.lineTo(x + 22, y); context.stroke();
+        context.fillStyle = exportText;
+        context.fillText(field.label, x + 30, y + 4);
+      });
+      context.fillText('0–100 · Releases equally spaced · Historical structure, not investigation effectiveness', CHART_PADDING, CHART_HEIGHT + 87);
 
       URL.revokeObjectURL(svgUrl);
 
@@ -774,6 +790,7 @@ export default function MetricsDashboard() {
             <h3>Historical Trend</h3>
             <p>{baseState.history.length} releases in history</p>
           </div>
+          <div className="metrics-trend-viewport" role="region" aria-label="Historical scores chart; scroll horizontally on narrow screens" tabIndex={0}>
           <svg
             ref={trendSvgRef}
             className="metrics-trend-chart metrics-trend-chart-lg"
@@ -785,14 +802,18 @@ export default function MetricsDashboard() {
             <line x1={CHART_PADDING} y1={CHART_PADDING} x2={CHART_PADDING} y2={CHART_HEIGHT - CHART_PADDING} />
             {[0, 25, 50, 75, 100].map((value) => {
               const y = CHART_HEIGHT - CHART_PADDING - ((CHART_HEIGHT - CHART_PADDING * 2) * value) / 100;
-              return <line key={value} className="metrics-gridline" x1={CHART_PADDING} y1={y} x2={CHART_WIDTH - CHART_PADDING} y2={y} />;
+              return <g key={value}><line className="metrics-gridline" x1={CHART_PADDING} y1={y} x2={CHART_WIDTH - CHART_PADDING} y2={y} /><text className="metrics-axis-label" x={CHART_PADDING - 9} y={y + 4} textAnchor="end">{value}</text></g>;
             })}
+            {baseState.history.length > 0 && <text className="metrics-axis-label" x={CHART_PADDING} y={CHART_HEIGHT - 9}>{baseState.history[0].version}</text>}
+            {baseState.history.length > 1 && <text className="metrics-axis-label" x={CHART_WIDTH - CHART_PADDING} y={CHART_HEIGHT - 9} textAnchor="end">{baseState.history.at(-1).version}</text>}
             {TREND_FIELDS.map((field) =>
               trendLines[field.key] ? (
                 <polyline key={field.key} className={field.className} points={trendLines[field.key]} />
               ) : null
             )}
           </svg>
+          </div>
+          <p className="metrics-axis-caption">Scores from 0 to 100 · Releases in sequence, equally spaced</p>
           <div className="metrics-trend-legend">
             {TREND_FIELDS.map((field) => (
               <span key={field.key} className={field.className}>
