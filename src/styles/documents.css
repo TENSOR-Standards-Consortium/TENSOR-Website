@@ -188,6 +188,11 @@
 .prose-card > .section-kicker + h2 { border-top: 0; padding-top: 0; margin-top: 1rem; }
 .prose-card .section-kicker { color: var(--accent-primary); }
 .resource-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: var(--space-5); }
+.reference-table { max-width: 100%; overflow-x: auto; margin-top: .75rem; }
+.reference-table > table { min-width: 36rem; margin-top: 0; }
+.reference-table :is(th, td):first-child { min-width: 10rem; }
+.reference-table-hint { display: none; }
+@media (max-width: 700px) { .prose-card .reference-table-hint { display: block; color: var(--text-muted); font-size: .7rem; margin-top: 1rem; } }
 .layers { list-style: none; padding-left: 0; display: grid; gap: var(--space-2); }
 .layers li { border: 1px solid var(--line-soft); border-left: 3px solid var(--accent-secondary); padding: var(--space-3); background: var(--bg-input); }
 .layers strong, .layers span { display: block; }

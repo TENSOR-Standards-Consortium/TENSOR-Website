@@ -24,35 +24,10 @@ const jsonLd = {
 >
   <section class="studio-wrapper container">
     <div class="tensor-panel studio-intro-card">
-      <p>
-        <a href="/graphs/">Full graph atlas</a> · <a href="/investigation-lab/">Recorded investigation path</a></p><p>This archived Studio retains historical graph import and overlay tools. Use the atlas for full graph exploration, 3D and guided investigations.
-        Published graph releases remain available as reference material while the candidate Core contract adds portable investigation records.
-      </p>
-      <p>
-        Import a graph or a vendor layer, inspect the questions, and export a merged graph.
-        Overlays preserve the base question meaning as separate metadata. Added questions need explicit text, category, and archetype.
-        The local checks cover graph structure; they do not establish full JSON Schema validation or candidate Core conformance.
-      </p>
-      <p>
-        Click a question to inspect its incoming and outgoing branches. Loading release channels requires a connection.
-        Try the <a href="/investigation-lab/">Investigation Lab</a> to inspect and exchange complete candidate investigation records.
-      </p>
-      <p class="hub-links">
-        Next:
-        <a href="/implement/">Implementation guide</a>
-        ·
-        <a href="/conformance/">Candidate conformance scope</a>
-        ·
-        <a
-          href="/investigation-lab/"
-          data-telemetry-event="cta-open-investigation-lab"
-          data-telemetry-location="studio-intro"
-        >
-          Investigation Lab
-        </a>
-        ·
-        <a href="/metrics/">Historical structural metrics</a>
-      </p>
+      <h2>Published graph and layer editor</h2>
+      <p>Graph Studio imports, combines, and exports public graphs with vendor and organization layers. The layer pack preserves product and policy annotations separately from the base question fields. Added questions and routes provide their own definitions.</p>
+      <p><a href="/extensions/">Layering guide and formats</a> · <a href="/studio/?graph=0.20260206e&amp;example=cloud-layers&amp;node=Q4">Cloud layering example</a> · <a href="/examples/layers/cloud-investigation.layers.json" download>Example layer pack</a></p>
+      <p>This editor uses the published graph format. Its local checks cover node and route structure. The <a href="/graphs/">Atlas</a> provides the working public graph, 3D views, and guided investigations; the <a href="/investigation-lab/">Lab</a> provides Core record validation and exchange.</p>
     </div>
 
     <GraphExplorer client:load />

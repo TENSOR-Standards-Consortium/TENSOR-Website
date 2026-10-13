@@ -18,7 +18,7 @@ const citationUrl = new URL(questionPath(question.id), Astro.site || 'https://te
 
 <DocumentLayout title={title} description={question.text} canonicalPath={questionPath(question.id)}>
   <ContentCard as="article">
-    <p><a href="/questions/">← Question library</a> · <a href={`/graphs/?graph=published&node=${encodeURIComponent(question.id)}`}>View this node in the published graph</a></p>
+    <p><a href="/questions/">← Published question catalog</a> · <a href={`/graphs/?graph=published&node=${encodeURIComponent(question.id)}`}>Published graph view</a></p>
     <p class="section-kicker">Preserved graph release · {LEGACY_VERSION}</p>
     <h2>{question.text}</h2>
     <dl class="question-facts">
@@ -27,24 +27,24 @@ const citationUrl = new URL(questionPath(question.id), Astro.site || 'https://te
       <div><dt>Archetype</dt><dd>{question.archetype}</dd></div>
       <div><dt>Declared entry point</dt><dd>{isEntry ? 'Yes' : 'No'}</dd></div>
     </dl>
-    <p>The wording and classification above are preserved from this release. It does not contain assessment criteria, applicability rules, investigation-specific context, or evidence for this question. Those must not be inferred from the graph alone.</p>
+    <p>This page preserves the published wording and classification. <a href={`/graphs/?graph=working&node=${question.id}`}>The working definition</a> provides revised wording and evidence criteria; <a href={`/graphs/coverage/#${question.id}`}>the ledger</a> records the changes.</p>
 
-    <h2>Recorded outgoing routes</h2>
+    <h2>Published outgoing routes</h2>
     {outgoing.length > 0 ? <ul class="route-list">{outgoing.map((edge) => (
       <li><strong>{edge.decision}</strong><div><a href={questionPath(edge.target)}>{edge.target} · {questionById.get(edge.target)?.text}</a><p class="edge-id">Route ID: <code>{edge.id}</code></p></div></li>
-    ))}</ul> : <p>This release declares no outgoing routes for this question. That does not by itself establish that an investigation is complete.</p>}
-    <p>These links show the graph's published routing. Following a link does not record an assessment or authorize an action.</p>
+    ))}</ul> : <p>This question has no outgoing routes in the published release. Investigation status is recorded separately.</p>}
+    <p>Route labels describe the published graph's yes, no, and unknown branches.</p>
 
     {incoming.length > 0 && <details><summary>Incoming routes ({incoming.length})</summary><ul>{incoming.map((edge) => <li><a href={questionPath(edge.source)}>{edge.source}</a> on <strong>{edge.decision}</strong> <span class="edge-id">({edge.id})</span></li>)}</ul></details>}
 
-    <h2>Cite this exact question</h2>
-    <p>Include the question ID, graph version, and source digest so that later revisions cannot silently change the reference.</p>
+    <h2>Citation</h2>
+    <p>A version-specific citation identifies the question, graph release, and exact source digest.</p>
     <blockquote>TENSOR Framework, graph {LEGACY_VERSION}, question {question.id}: “{question.text}” <a href={citationUrl}>{citationUrl}</a></blockquote>
     <dl class="source-facts"><dt>Source SHA-256</dt><dd><code>{LEGACY_SHA256}</code></dd></dl>
     <p><a href={LEGACY_DOWNLOAD} download>Download the exact graph</a> · <a href={LEGACY_SOURCE}>Pinned repository source</a></p>
 
-    <h2>Using this question in the candidate Core</h2>
-    <p>This preserved entry is not a converted Core {"0.1.0-draft.1"} definition. A reviewed conversion must supply explicit assessment criteria and parameters, preserve the source identity, and document any change in meaning. See <a href="/core/">the candidate contract</a> and <a href="/contribute/">contribution process</a>.</p>
+    <h2>Core definition status</h2>
+    <p>The published graph format is separate from Core {"0.1.0-draft.1"}. A Core definition includes explicit parameters and criteria, versioned identity, and an exact artifact pin. <a href="/core/">The Core contract</a> defines these requirements.</p>
     <nav class="adjacent-questions" aria-label="Adjacent question identifiers">
       {previous && <a href={questionPath(previous.id)}>← {previous.id}</a>}
       <a href="/questions/">All questions</a>

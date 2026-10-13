@@ -1,4 +1,5 @@
 ---
+import ReferenceTable from '../../components/ReferenceTable.astro';
 import Button from '../../components/Button.astro';
 import ContentCard from '../../components/ContentCard.astro';
 import DocumentLayout from '../../layouts/DocumentLayout.astro';
@@ -17,34 +18,16 @@ const jsonLd = {
 
 <DocumentLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
   <ContentCard>
-    <p class="section-kicker">Help make investigations portable</p>
-    <h2>Bring a case, an implementation, or a careful review</h2>
-    <p>The next stage is proving that shared investigative meaning survives exchange. Contributions are most useful when they expose an ambiguity, demonstrate a real investigation need, or test a boundary between Core and another standard.</p>
-    <div class="cta-group"><Button variant="primary" href="https://github.com/tensor-standards-consortium/TENSOR-Framework/issues/new">Open a framework issue</Button><Button variant="secondary" href="https://github.com/tensor-standards-consortium/TENSOR-Framework/pulls">Review proposals and code</Button></div>
-
-    <p>For a bounded first task, use the <a href="/review/">frozen technical review package and walkthrough</a>. It identifies exact artifacts, evidence limits and the finding process.</p>
-
-    <h2>Useful first contributions</h2>
-    <ul>
-      <li><strong>Practitioners:</strong> describe a synthetic investigation where an assessment changed, evidence was unavailable, or two investigators disagreed.</li>
-      <li><strong>Implementers:</strong> build a reader or exporter independently and report the meaning preserved or lost.</li>
-      <li><strong>Researchers:</strong> evaluate whether Core supports review, handoff, and reproducibility in a defined task.</li>
-      <li><strong>Standards specialists:</strong> test the CASE/UCO and CACAO boundaries with the reference cases.</li>
-      <li><strong>Domain editors:</strong> review a legacy question's proposition, context, evidence requirements, and source quality before proposing a public profile.</li>
-    </ul>
-
-    <h2>Make a proposal reviewable</h2>
-    <ol>
-      <li>Identify the artifact and version, the problem, and the expected behavior.</li>
-      <li>Include a minimal synthetic example with both successful and failing cases where relevant.</li>
-      <li>Explain compatibility, privacy, and security implications, plus alternatives considered.</li>
-      <li>State which Core requirements or binding rules are affected and what remains untested.</li>
-      <li>Disclose relevant affiliations and retain source attribution.</li>
-    </ol>
-    <p>Do not include credentials, confidential incident data, or evidence you cannot share. A public standard does not require public disclosure of investigations. Use the repository's published security-reporting instructions for a vulnerability rather than a public incident-data dump.</p>
-
-    <h2>What happens next</h2>
-    <p>Repository review can improve this implementation candidate. Formal stewardship and independent review follow the <a href="/governance/">governance proposal</a> once adopted. A merged contribution is not a certification, partnership, or governance appointment.</p>
-    <p><a href="/founding/05-review-plan.md">Review and adoption plan</a> · <a href="/core/">Candidate artifacts</a> · <a href="/questions/">Legacy questions awaiting semantic review</a></p>
+<p class="section-kicker">Questions, layers, implementations, and review</p>
+    <h2>Contribution types</h2>
+    <ReferenceTable label="Contribution types"><thead><tr><th>Contribution</th><th>Useful content</th></tr></thead><tbody><tr><td>Question or profile review</td><td>A defined investigation need, evidence criteria, supported and unresolved examples, and source references.</td></tr><tr><td>Vendor or organization graph</td><td>Layer ownership, public dependencies, additional meaning, example files, and validation results.</td></tr><tr><td>Implementation report</td><td>Supported roles, binding versions, named checks, cross-tool exchange results, and known losses.</td></tr><tr><td>Standards mapping</td><td>Versioned source and target objects, property-level mappings, assumptions, and round-trip examples.</td></tr><tr><td>Technical finding</td><td>An exact requirement or artifact reference, a minimal counterexample, and observed versus expected behavior.</td></tr></tbody></ReferenceTable>
+    <div class="cta-group"><Button variant="primary" href="https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework/issues/new?template=implementation-report.yml">Implementation report</Button><Button variant="secondary" href="https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework/issues/new?template=core-rfc.yml">Change proposal</Button></div>
+    <h2>Proposal contents</h2>
+    <ol><li>Artifact identity and version, the problem, and expected behavior.</li><li>A minimal illustrative example, with successful and failing cases where relevant.</li><li>Compatibility, privacy, and security effects and alternatives considered.</li><li>Affected Core requirements or binding rules, check results, and untested scope.</li><li>Source attribution, relevant affiliations, and conflicts.</li></ol>
+    <h2>Case material</h2>
+    <p>Public fixtures use fictional or authorized, de-identified material. Confidential investigation records and credentials belong outside public issues. A public standard does not require public disclosure of case evidence. Vulnerabilities use the repository's <a href="https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework/security/advisories/new">private reporting channel</a>.</p>
+    <h2>Review process</h2>
+    <p>The <a href="/docs/review-process.md">finding process</a> records observations, responses, objections, and disposition. Proposed formal governance is described separately in <a href="/governance/">Governance</a>. A repository merge records a project change rather than certification or a governance appointment.</p>
+    <p><a href="/review/">Pinned technical review package</a> · <a href="/graphs/coverage/">Question review ledger</a> · <a href="/extensions/">Graph layering guide</a> · <a href="https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework/pulls">Code and proposals</a></p>
   </ContentCard>
 </DocumentLayout>

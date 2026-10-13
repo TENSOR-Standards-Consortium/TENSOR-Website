@@ -1,0 +1,113 @@
+{
+  "format": "tensor-layer-pack.v1",
+  "metadata": {
+    "name": "Cloud investigation layer example",
+    "baseGraphVersion": "0.20260206e",
+    "scope": "Fictional vendor and organization graph layers; no incident data or execution."
+  },
+  "layers": [
+    {
+      "metadata": {
+        "id": "example-vendor-cloud-1",
+        "name": "Example vendor \u00b7 cloud audit v1.0",
+        "owner": "Example vendor (fictional)",
+        "type": "vendor",
+        "description": "Collection mappings and an audit-export check above the published public graph.",
+        "source": "Example layer 1.0 \u00b7 published graph 0.20260206e",
+        "enabled": true
+      },
+      "nodes": [
+        {
+          "id": "Q4",
+          "extensions": {
+            "example.vendor:collection": {
+              "sourceType": "cloud audit export",
+              "requiredFields": [
+                "resource",
+                "operation",
+                "eventTime",
+                "sourceReceipt"
+              ],
+              "purpose": "Map product evidence to the public question; no query is executed."
+            }
+          }
+        },
+        {
+          "id": "Q9001",
+          "label": "Cloud: Audit export check",
+          "text": "Does the retained cloud audit export include source provenance and collection coverage?",
+          "category": "Cloud",
+          "archetype": "validate",
+          "extensions": {
+            "example.vendor:criteria": {
+              "yes": "The retained export identifies its origin, integrity basis, interval, and collection gaps.",
+              "no": "The examined export demonstrably lacks a required provenance or coverage field.",
+              "unknown": "The export or its collection basis is unavailable or unresolved."
+            }
+          }
+        }
+      ],
+      "edges": [
+        {
+          "id": "Q4-yes-Q9001",
+          "source": "Q4",
+          "target": "Q9001",
+          "decision": "yes",
+          "extensions": {
+            "example.vendor:purpose": "An additional product-layer evidence check, separate from the public graph routes."
+          }
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "id": "example-organization-cloud-1",
+        "name": "Example organization \u00b7 cloud review v1.0",
+        "owner": "Example organization (fictional)",
+        "type": "business",
+        "description": "Local policy context and a review question above the published public graph.",
+        "source": "Example layer 1.0 \u00b7 published graph 0.20260206e",
+        "enabled": true
+      },
+      "nodes": [
+        {
+          "id": "Q4",
+          "extensions": {
+            "example.organization:policy": {
+              "id": "https://example.org/policies/cloud-change-review",
+              "version": "1.0",
+              "resourceScope": "Example production cloud resources",
+              "reviewOwner": "Example cloud security team",
+              "purpose": "Policy context is separate from the public technical finding."
+            }
+          }
+        },
+        {
+          "id": "Q9002",
+          "label": "Cloud: Organization review",
+          "text": "Does the applicable organization policy require review of this supported cloud resource change?",
+          "category": "Cloud",
+          "archetype": "classify",
+          "extensions": {
+            "example.organization:criteria": {
+              "yes": "The named policy version and bound resource parameters require review.",
+              "no": "The named policy version and bound parameters exclude this change from review.",
+              "unknown": "The applicable policy, resource scope, or required parameters are unresolved."
+            }
+          }
+        }
+      ],
+      "edges": [
+        {
+          "id": "Q4-yes-Q9002",
+          "source": "Q4",
+          "target": "Q9002",
+          "decision": "yes",
+          "extensions": {
+            "example.organization:purpose": "An organization-layer policy question; it does not change the public technical finding or execute an escalation."
+          }
+        }
+      ]
+    }
+  ]
+}

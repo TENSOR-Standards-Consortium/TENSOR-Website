@@ -842,7 +842,7 @@ export default function GraphExplorer() {
       selectors.visibleEdges.textContent = String(visibleEdgeCount);
 
       const versionTag = state.activeGraphVersion ? `Graph ${state.activeGraphVersion}` : 'Graph custom';
-      const layerTag = activeLayers > 0 ? `${activeLayers} active layer${activeLayers === 1 ? '' : 's'}` : 'core only';
+      const layerTag = activeLayers > 0 ? `${activeLayers} active layer${activeLayers === 1 ? '' : 's'}` : 'base graph only';
       setPill(selectors.stats, `${versionTag} · ${layerTag}`, 'is-good');
     };
 
@@ -1597,17 +1597,18 @@ export default function GraphExplorer() {
       validateAndSetSchemaStatus();
     };
 
-    const importLayerFromFile = async (file) => {
-      const payload = await readJsonFile(file);
-      const parsedLayers = normalizeLayerPayload(payload, file.name.replace(/\.json$/i, ''));
+    const appendLayers = async (payload, label) => {
+      const parsedLayers = normalizeLayerPayload(payload, label.replace(/\.json$/i, ''));
 
       const nextLayers = [...state.layers, ...parsedLayers];
       // Check mergeability before mutating the UI state so a malformed layer can be retried.
       mergeLegacyGraphWithLayers(state.baseGraph, nextLayers);
       state.layers = nextLayers;
-      setPill(selectors.stats, `Imported ${parsedLayers.length} layer(s) from ${file.name}`, 'is-good');
+      setPill(selectors.stats, `Imported ${parsedLayers.length} layer(s) from ${label}`, 'is-good');
       await rebuildMergedGraphAndRender();
     };
+
+    const importLayerFromFile = async (file) => appendLayers(await readJsonFile(file), file.name);
 
     const bindControls = () => {
       selectors.searchInput.addEventListener('input', (event) => {
@@ -1813,6 +1814,17 @@ export default function GraphExplorer() {
         const requestedVersion = sanitizeVersion(params.get('graph'));
         // Deep links from the catalog retain the exact published graph version.
         await loadVersions(requestedVersion || selectors.graphVersionSelect.value, selectors.schemaVersionSelect.value);
+        // Only the explicit example link loads these public, non-executing fixtures.
+        if (params.get('example') === 'cloud-layers') {
+          try {
+            const response = await fetch('/examples/layers/cloud-investigation.layers.json', { credentials: 'omit', redirect: 'error' });
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            if (state.destroyed) return;
+            await appendLayers(await response.json(), 'Cloud layer example');
+          } catch (error) {
+            setPill(selectors.stats, `Example layers unavailable: ${error.message}. Local layer import remains available.`, 'is-warn');
+          }
+        }
         const requestedNode = params.get('node');
         const node = requestedNode && state.cy?.getElementById(requestedNode);
         if (node && node.length) {
@@ -1879,7 +1891,6 @@ export default function GraphExplorer() {
 
   return (
     <div ref={rootRef}>
-      <p className="detail-empty">Legacy graph explorer. Checks cover graph structure only, not full JSON Schema validation, investigative meaning, or candidate Core record conformance. Use the Investigation Lab for Core records.</p>
       <div className="studio-status-row">
         <span className="status-pill" id="data-source-pill">Loading data source...</span>
         <span className="status-pill" id="schema-pill">Checking graph structure...</span>
@@ -1890,9 +1901,9 @@ export default function GraphExplorer() {
 
       <div className="studio-grid">
         <aside className="tensor-panel studio-panel controls-panel">
-          <h2>Explorer Controls</h2>
+          <h2>Graph controls</h2>
 
-          <p className="studio-field">Release Versions</p>
+          <p className="studio-field">Published versions</p>
           <div className="version-grid">
             <label htmlFor="graph-version-select">Graph version</label>
             <select id="graph-version-select"></select>
@@ -1902,10 +1913,10 @@ export default function GraphExplorer() {
           </div>
 
           <div className="button-row button-row-single">
-            <button className="btn btn-secondary" type="button" id="load-versions-btn">Load Selected Versions</button>
+            <button className="btn btn-secondary" type="button" id="load-versions-btn">Load selected versions</button>
           </div>
 
-          <p className="studio-field">Import / Export</p>
+          <p className="studio-field">Import and export</p>
           <div className="button-row">
             <button className="btn btn-secondary" type="button" id="import-graph-btn">Import Graph</button>
             <button className="btn btn-secondary" type="button" id="import-schema-btn">Import Schema</button>
@@ -1915,7 +1926,7 @@ export default function GraphExplorer() {
             <button className="btn btn-secondary" type="button" id="export-layers-btn">Export Layers</button>
           </div>
           <div className="button-row">
-            <button className="btn btn-secondary" type="button" id="export-core-btn">Export Legacy Graph</button>
+            <button className="btn btn-secondary" type="button" id="export-core-btn">Export base graph</button>
             <button className="btn btn-secondary" type="button" id="export-merged-btn">Export Merged Graph</button>
           </div>
 
@@ -1970,22 +1981,22 @@ export default function GraphExplorer() {
             </div>
           </div>
 
-          <p className="studio-field">Layer Pack</p>
-          <div id="layer-empty" className="detail-empty">No custom layers loaded.</div>
+          <p className="studio-field">Layer pack</p>
+          <div id="layer-empty" className="detail-empty">No custom layers loaded. The layering example is available from the guide.</div>
           <div id="layer-list" className="layer-list"></div>
         </aside>
 
         <section className="tensor-panel studio-canvas" aria-label="Graph canvas">
           <div id="graph-canvas" className="graph-canvas"></div>
           <div className="canvas-empty is-hidden" id="canvas-empty">
-            No nodes match your current filters.
+            No questions match the current filters.
           </div>
         </section>
 
         <aside className="tensor-panel studio-panel details-panel">
-          <h2>Version Timeline & Selection</h2>
+          <h2>Release and selection details</h2>
           <p className="detail-kv detail-text" id="diff-summary">
-            Diff summary will appear after loading a release.
+            Release comparison appears after loading a version.
           </p>
 
           <div className="detail-section">
@@ -1995,7 +2006,7 @@ export default function GraphExplorer() {
 
           <div className="detail-section">
             <h3>Release Metrics</h3>
-            <p className="detail-empty">Historical graph structure only. These scores do not measure investigative effectiveness, security outcomes, or Core record conformance.</p>
+            <p className="detail-empty">Historical structural diagnostics for this graph release.</p>
             <div className="metrics-mini-grid">
               <p className="detail-kv"><span>Version</span><strong id="metrics-version">n/a</strong></p>
               <p className="detail-kv"><span>Overall</span><strong id="metrics-overall">n/a</strong></p>
@@ -2008,7 +2019,7 @@ export default function GraphExplorer() {
             <ul id="metrics-gates" className="release-notes"></ul>
           </div>
 
-          <h2>Selection Details</h2>
+          <h2>Selected question</h2>
           <div id="detail-empty" className="detail-empty">
             Select a node in the graph to inspect metadata and outgoing/incoming branches.
           </div>

@@ -9,16 +9,16 @@ const domains = ['Identity','Host','Network','Cloud','Email','Application','File
 ---
 <DocumentLayout title="Event profiles" description="Explicit event contexts and evidence walkthroughs across all seven TENSOR investigation domains." canonicalPath="/graphs/profiles/">
   <ContentCard>
-    <p class="section-kicker">Same graph · explicit event contexts</p>
-    <h2>Investigate the event you actually have.</h2>
-    <p>State changes, mailbox rules and autonomous actions need their own subjects and evidence. These <strong>{Object.keys(catalog.profiles).length} public draft profiles</strong> add those contexts above the complete 609-question graph. Follow {validation.scenarioCount} authored investigation routes, including contradicted hypotheses, unavailable evidence, independent fallback and coverage gaps.</p>
-    <p><strong>{catalog.version} · author-tested draft.</strong> Each profile publishes distinct, qualified question identities. The base graph, schema, published releases and frozen review package are unchanged. External domain review and independent exchange remain open.</p>
-    <div class="profile-domain-list">{domains.map(domain => <section aria-label={`${domain} event profiles`}><h3>{domain}</h3><div class="profile-cards">{Object.entries(catalog.profiles).filter(([,p])=>p.domain===domain).map(([id,p])=><ResourceCard class="profile-card" href={`/graphs/profiles/${id}/`} title={p.title}><p>{p.proposition}</p><small>Bind {p.bindings.join(' · ')}</small></ResourceCard>)}</div></section>)}</div>
-    <h2>Keep the distinctions visible</h2>
+    <p class="section-kicker">Public event profiles</p>
+    <h2>Event contexts across seven domains</h2>
+    <p>State changes, mailbox rules, autonomous actions, and other events have distinct subject and evidence requirements. The <strong>{Object.keys(catalog.profiles).length} public draft profiles</strong> supply those contexts above the 609-question public graph. The catalog includes {validation.scenarioCount} illustrative investigation routes covering supported, refuted, and unresolved findings.</p>
+    <p><strong>{catalog.version} · author-tested draft.</strong> Each profile has its own qualified question identities and declared context. External domain review and independent exchange remain open.</p>
+    <div class="profile-domain-list">{domains.map(domain => <section aria-label={`${domain} event profiles`}><h3>{domain}</h3><div class="profile-cards">{Object.entries(catalog.profiles).filter(([,p])=>p.domain===domain).map(([id,p])=><ResourceCard class="profile-card" href={`/graphs/profiles/${id}/`} title={p.title}><p>{p.proposition}</p><small>Subjects: {p.bindings.join(' · ')}</small></ResourceCard>)}</div></section>)}</div>
+    <h2>Interpretation notes</h2>
     <p>A snapshot does not establish a historical change. A requested or failed action does not prove success. A missing file does not prove deletion; unlink does not prove secure erasure. Unavailable content stays unknown for content-based hypotheses. Every relationship target retains its own profile, subjects, evidence and time context.</p>
-    <p>These are plausible investigations using fictitious identifiers and supplied assessed observations. They do not authenticate production evidence, demonstrate universal coverage or grant authority to act.</p>
+    <p>The walkthroughs use fictional identifiers and supplied observations. Their purpose is to demonstrate evidence criteria and route behavior.</p>
     <p><a href="/graphs/working/event-profiles/README.md">Profile contract and limits</a> · <a href="/graphs/working/event-profiles/catalog.json" download>Catalog</a> · <a href="/graphs/working/event-profiles/definitions.json" download>Qualified definitions</a> · <a href="/graphs/working/event-profiles/scenarios.json" download>Scenario evidence</a> · <a href="/graphs/working/event-profiles/validation.json" download>Validation and source pins</a></p>
-    <p><Button variant="secondary" href="/graphs/">Explore the base graph</Button> <Button variant="secondary" href="/graphs/coverage/">Original-question coverage ledger</Button></p>
+    <p><Button variant="secondary" href="/graphs/">Public graph</Button> <Button variant="secondary" href="/graphs/coverage/">Coverage ledger</Button></p>
   </ContentCard>
 </DocumentLayout>
 <style>

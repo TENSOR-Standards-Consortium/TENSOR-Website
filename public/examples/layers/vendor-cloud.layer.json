@@ -1,0 +1,56 @@
+{
+  "format": "tensor-layer.v1",
+  "layer": {
+    "metadata": {
+      "id": "example-vendor-cloud-1",
+      "name": "Example vendor \u00b7 cloud audit v1.0",
+      "owner": "Example vendor (fictional)",
+      "type": "vendor",
+      "description": "Collection mappings and an audit-export check above the published public graph.",
+      "source": "Example layer 1.0 \u00b7 published graph 0.20260206e",
+      "enabled": true
+    },
+    "nodes": [
+      {
+        "id": "Q4",
+        "extensions": {
+          "example.vendor:collection": {
+            "sourceType": "cloud audit export",
+            "requiredFields": [
+              "resource",
+              "operation",
+              "eventTime",
+              "sourceReceipt"
+            ],
+            "purpose": "Map product evidence to the public question; no query is executed."
+          }
+        }
+      },
+      {
+        "id": "Q9001",
+        "label": "Cloud: Audit export check",
+        "text": "Does the retained cloud audit export include source provenance and collection coverage?",
+        "category": "Cloud",
+        "archetype": "validate",
+        "extensions": {
+          "example.vendor:criteria": {
+            "yes": "The retained export identifies its origin, integrity basis, interval, and collection gaps.",
+            "no": "The examined export demonstrably lacks a required provenance or coverage field.",
+            "unknown": "The export or its collection basis is unavailable or unresolved."
+          }
+        }
+      }
+    ],
+    "edges": [
+      {
+        "id": "Q4-yes-Q9001",
+        "source": "Q4",
+        "target": "Q9001",
+        "decision": "yes",
+        "extensions": {
+          "example.vendor:purpose": "An additional product-layer evidence check, separate from the public graph routes."
+        }
+      }
+    ]
+  }
+}

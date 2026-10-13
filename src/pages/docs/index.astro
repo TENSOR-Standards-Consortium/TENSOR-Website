@@ -1,5 +1,7 @@
 ---
-import Button from '../../components/Button.astro';
+import ReferenceTable from '../../components/ReferenceTable.astro';
+import { resourceGroups } from '../../lib/navigation';
+import ResourceCard from '../../components/ResourceCard.astro';
 import ContentCard from '../../components/ContentCard.astro';
 import DocumentLayout from '../../layouts/DocumentLayout.astro';
 import { absoluteUrl, seo } from '../../data/seo';
@@ -17,38 +19,21 @@ const jsonLd = {
 
 <DocumentLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
   <ContentCard>
-    <p class="section-kicker">Documentation</p>
-    <h2>Start with an investigation you can inspect</h2>
-    <p>Open a synthetic case in the Investigation Lab, inspect the definition and its record, then export the bundle. The same candidate contract applies to a human investigating an agent and an agent assisting with a conventional identity incident.</p>
-    <p class="cta-group"><Button variant="primary" href="/investigation-lab/">Open Investigation Lab</Button><Button variant="secondary" href="/implement/">Run the validator locally</Button></p>
-
-    <h2>Build with Core</h2>
-    <p>Start with the <a href="/review/">frozen technical review package</a>. The candidate and preserved legacy releases are on the default branch, with separate identities. Use the pinned review snapshot when reporting findings.</p>
-    <table>
-      <thead><tr><th>Resource</th><th>Use it to</th></tr></thead>
-      <tbody>
-        <tr><td><a href="/core/">Core 0.1.0-draft.1</a></td><td>Find the pinned contract, schemas, binding, examples, and validation coverage.</td></tr>
-        <tr><td><a href="/founding/01-core-contract.md">Logical Core contract</a></td><td>Review the 38 proposed requirements independently of an implementation.</td></tr>
-        <tr><td><a href="/implement/">Implementation guide</a></td><td>Validate the examples and scope your own integration.</td></tr>
-        <tr><td><a href="/conformance/">Validation and conformance</a></td><td>Distinguish reference checks from an independently demonstrated interoperability claim.</td></tr>
-        <tr><td><a href="/extensions/">Profiles and extensions</a></td><td>Add domain and organization context without changing Core meaning.</td></tr>
-        <tr><td><a href="/ai-reliability/">Human and agent investigations</a></td><td>Represent attribution, disagreement, policy, and authority explicitly.</td></tr>
-      </tbody>
-    </table>
-
-    <h2>Understand the model</h2>
-    <ol>
-      <li><strong>Definition:</strong> a versioned question and its evidence and assessment criteria.</li>
-      <li><strong>Question instance:</strong> that question applied to a particular subject, time, and parameters.</li>
-      <li><strong>Record:</strong> attributed evidence references, observations, hypotheses, assessments, decisions, and actions.</li>
-      <li><strong>Revision:</strong> a new entry preserving the old one and identifying dependent decisions that need review.</li>
-    </ol>
-    <p>An assessment can be applicable, not applicable, or unresolved. Only an applicable assessment has a <code>yes</code>, <code>no</code>, or <code>unknown</code> outcome. Missing evidence does not mean “no.” A recorded action does not grant permission to execute it.</p>
-
-    <h2>Review the public standard</h2>
-    <p><a href="/founding/00-charter.md">Charter</a> · <a href="/governance/">Governance</a> · <a href="/standards/">Standards crosswalk</a> · <a href="/founding/05-review-plan.md">Review plan</a> · <a href="/founding/06-change-and-decision-register.md">Change and decision register</a></p>
-
-    <h2>Work with earlier TENSOR content</h2>
-    <p>The <a href="/graphs/">working graph</a> exposes draft questions, routes, and evidence criteria. Investigation Lab’s <strong>Recorded path</strong> shows explicit case transitions and retained assessments. The <a href="/questions/">question catalog</a> and <a href="/studio/">legacy Graph Studio</a> preserve the earlier graph model. Its schemas and version numbers are separate from this candidate. A legacy graph is not a complete Core investigation record.</p>
+<p class="section-kicker">Resource directory</p>
+    <h2>Specification, tools, and implementation resources</h2>
+    <p>TENSOR resources cover the public investigation model, domain graphs, vendor and organization layers, and record exchange. Core 0.1.0-draft.1 is the current implementation candidate.</p>
+    {resourceGroups.map(group => <section aria-label={group.title}><h2>{group.title}</h2><div class="resource-grid">{group.resources.map(item => <ResourceCard href={item.url} title={item.title}><p>{item.description}</p></ResourceCard>)}</div></section>)}
+    <h2>Direct downloads</h2>
+    <ReferenceTable label="Direct downloads"><thead><tr><th>Artifact</th><th>Format</th></tr></thead><tbody>
+      <tr><td><a href="/founding/01-core-contract.md">Core contract · 38 requirements</a></td><td>Markdown</td></tr>
+      <tr><td><a href="/core/0.1.0-draft.1/binding.md">Core JSON binding</a></td><td>Markdown</td></tr>
+      <tr><td><a href="/core/0.1.0-draft.1/examples/case-a.bundle.json" download>Agent-transfer investigation</a> · <a href="/core/0.1.0-draft.1/examples/case-b.bundle.json" download>Identity investigation</a></td><td>JSON bundles</td></tr>
+      <tr><td><a href="/graphs/working/tensor.core.graph.json" download>Working question graph</a> · <a href="/graphs/working/entry-evidence-criteria.json" download>Evidence criteria</a></td><td>JSON</td></tr>
+      <tr><td><a href="/examples/layers/cloud-investigation.layers.json" download>Vendor and organization layer example</a></td><td>JSON layer pack</td></tr>
+      <tr><td><a href="/graphs/working/event-profiles/catalog.json" download>Event-profile catalog</a> · <a href="/graphs/working/event-profiles/definitions.json" download>Qualified definitions</a></td><td>JSON</td></tr>
+      <tr><td><a href="/review/2026-10-11.1/review-package.zip" download>Technical review package · 2026-10-11.1</a></td><td>ZIP</td></tr>
+    </tbody></ReferenceTable>
+    <h2>Terms</h2>
+    <dl><dt>Definition</dt><dd>A versioned question with its proposition, parameters, evidence criteria, and transitions.</dd><dt>Question instance</dt><dd>A definition applied to specific subjects and a time context.</dd><dt>Assessment</dt><dd>An attributed evaluation of a question instance. Applicable assessments use yes, no, or unknown outcomes.</dd><dt>Decision</dt><dd>A recorded selection and rationale, including applicable policy and claimed authority.</dd><dt>Bundle</dt><dd>An investigation record packaged with its exact definition artifacts for exchange.</dd><dt>Layer</dt><dd>Additional product or organization graph content above the public foundation.</dd><dt>Profile</dt><dd>A versioned set of definitions or constraints for a particular investigation context.</dd></dl>
   </ContentCard>
 </DocumentLayout>

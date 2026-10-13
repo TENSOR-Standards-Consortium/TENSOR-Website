@@ -16,23 +16,16 @@ const jsonLd = {
 
 <DocumentLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
   <ContentCard>
-    <p class="section-kicker">Two contracts, separately versioned</p>
-    <h2>Core candidate schemas</h2>
-    <p>These JSON Schemas describe the experimental <strong>0.1.0-draft.1</strong> binding. Use them with the semantic validator: a structurally valid document can still have broken references, mismatched pins, or invalid transition selections.</p>
-    <ul>
-      <li><a href="/core/0.1.0-draft.1/schemas/bundle.schema.json" download>Bundle schema</a></li>
-      <li><a href="/core/0.1.0-draft.1/schemas/definition.schema.json" download>Definition schema</a></li>
-      <li><a href="/core/0.1.0-draft.1/schemas/record.schema.json" download>Investigation record schema</a></li>
-    </ul>
-    <p><a href="/core/0.1.0-draft.1/binding.md">Binding documentation</a> · <a href="/core/0.1.0-draft.1/coverage.md">Validation coverage</a> · <a href="/core/">Candidate release</a></p>
-
-    <h2>Legacy graph schema</h2>
-    <p>The earlier graph schema remains available for the graph release archive and legacy Graph Studio. It describes nodes and edges, not the new definition-and-record contract. Its release identifiers are unchanged.</p>
-    <ul>
-      <li><a href="/assets/data/core.schema.json" download>Legacy schema bundled with Graph Studio</a></li>
-      <li><a href="https://github.com/tensor-standards-consortium/TENSOR-Framework/tree/main/releases/core/schemas">Published legacy schema archive</a></li>
-    </ul>
-    <p>Pin an explicit version and content digest. A mutable “latest” location is a discovery convenience, not a reproducible pin.</p>
-    <p><a href="/graphs/">Legacy graph releases</a> · <a href="/implement/">Implement the new candidate</a></p>
+<p class="section-kicker">Versioned data formats</p>
+    <h2>Core record schemas</h2>
+    <p>Core <strong>0.1.0-draft.1</strong> provides JSON Schemas for bundles, definitions, and records. The semantic validator additionally checks references, definition pins, context, and transition selections.</p>
+    <ul><li><a href="/core/0.1.0-draft.1/schemas/bundle.schema.json" download>Bundle schema</a> — record and attached exact definition artifacts.</li><li><a href="/core/0.1.0-draft.1/schemas/definition.schema.json" download>Definition schema</a> — questions, parameters, criteria, and transitions.</li><li><a href="/core/0.1.0-draft.1/schemas/record.schema.json" download>Record schema</a> — investigation context, entries, references, and history.</li></ul>
+    <p><a href="/core/0.1.0-draft.1/binding.md">Binding rules</a> · <a href="/core/0.1.0-draft.1/coverage.md">Validation coverage</a> · <a href="/implement/">Implementation guide</a></p>
+    <h2>Published graph schema</h2>
+    <p>The graph schema describes nodes, edges, and namespaced graph extensions. It is the format used by the published release and Graph Studio, separate from the Core definition-and-record format.</p>
+    <ul><li><a href="/assets/data/core.schema.json" download>Graph Studio schema · 0.20260206e</a></li><li><a href="https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework/tree/main/releases/core/schemas">Published schema archive</a></li></ul>
+    <p><a href="/extensions/">Graph layer formats and examples</a> · <a href="/questions/">Published question catalog</a></p>
+    <h2>Artifact identity</h2>
+    <p>Reproducible references include an explicit version and exact content digest. The Core <a href="/core/0.1.0-draft.1/provenance.json">provenance manifest</a> and <a href="/review/2026-10-11.1/manifest.json">review manifest</a> publish the relevant source identities and hashes.</p>
   </ContentCard>
 </DocumentLayout>

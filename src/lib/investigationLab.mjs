@@ -3,8 +3,8 @@ import { serializeBundle, sha256 } from '../vendor/tensor-core/index.mjs';
 
 export const MAX_BUNDLE_BYTES = 2 * 1024 * 1024;
 export const CASES = Object.freeze([
-  { id: 'case-a', title: 'An agent’s outbound transfer', description: 'Follow a missing payload, a precautionary pause, and an assessment revised after new evidence.', path: '/core/0.1.0-draft.1/examples/case-a.bundle.json' },
-  { id: 'case-b', title: 'An ambiguous identity incident', description: 'Review a human–agent handoff, conflicting explanations, and a correction that keeps uncertainty visible.', path: '/core/0.1.0-draft.1/examples/case-b.bundle.json' },
+  { id: 'case-a', title: 'An agent’s outbound transfer', description: 'An unknown payload, a precautionary pause, and a revised assessment after new evidence.', path: '/core/0.1.0-draft.1/examples/case-a.bundle.json' },
+  { id: 'case-b', title: 'An ambiguous identity incident', description: 'A human–agent handoff, competing explanations, and a correction with retained uncertainty.', path: '/core/0.1.0-draft.1/examples/case-b.bundle.json' },
 ]);
 export const SECTIONS = Object.freeze([
   { id: 'overview', label: 'Scope & handoff' },
@@ -122,12 +122,12 @@ export function summarizeValidation(report) {
   const status = report?.status;
   return {
     counts,
-    title: status === 'pass' ? 'Bounded checks passed' : status === 'fail' ? 'Validation failed' : 'Interpretation remains indeterminate',
+    title: status === 'pass' ? 'Reference checks passed' : status === 'fail' ? 'Validation failed' : 'Interpretation remains indeterminate',
     description: status === 'pass'
-      ? 'The supplied bundle passes this reference implementation’s structural and semantic checks. Review the record’s evidence limits and unresolved judgments separately.'
+      ? 'The supplied bundle satisfies the supported structural and semantic checks for this binding.'
       : status === 'fail'
-        ? 'The validator found a structural or semantic error. You can inspect and download the supplied record, but these results do not establish conformance.'
-        : 'The validator cannot determine all affected meaning from the supplied record and supported dependencies. Review the specific checks below.',
+        ? 'A checked structural or semantic rule failed. The supplied record remains available for inspection and download.'
+        : 'Required information or interpretation is missing or unsupported. The individual checks identify the affected content.',
   };
 }
 

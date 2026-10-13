@@ -17,14 +17,14 @@ const profile = catalog.profiles[id];
 const guides = profileGuides(id,catalog,definitions,scenarios,validation);
 const context = { profileId: id, version: catalog.version, graphVersion: catalog.graphVersion, profile, definitions: definitions.profiles[id] };
 ---
-<BaseLayout title={`${profile.title} · Event profile`} description={`Follow supported, refuted and unresolved ${profile.title.toLowerCase()} investigations with explicit TENSOR evidence criteria.`} canonicalPath={`/graphs/profiles/${id}/`} hidePageTitle>
+<BaseLayout title={`${profile.title} · Event profile`} description={`Supported, refuted, and unresolved ${profile.title.toLowerCase()} investigations with explicit TENSOR evidence criteria.`} canonicalPath={`/graphs/profiles/${id}/`} hidePageTitle>
   <section class="atlas-page" aria-label={`${profile.title} investigation workspace`}>
     <WorkingGraph graph={graph} published={published} criteria={criteria} source={source} profileContext={context} guides={guides} client:load />
     <ContentCard>
       <p class="section-kicker">{profile.domain} / public event profile</p>
       <h2>{profile.title}</h2>
-      <p>{profile.proposition}. Bind <strong>{profile.bindings.join(', ')}</strong> and the exact interval. No substitute process, request, message or operation identifier is required.</p>
-      <p>Each walkthrough uses distinct profile-qualified question definitions above the unchanged graph. Choose an investigation variant, step through its evidence, or play the timeline in the Atlas or 3D nebula. “Whole graph + path” retains all 609 nodes; “Path + next options” shows the applicable route and alternatives.</p>
+      <p>{profile.proposition}. Required subjects: <strong>{profile.bindings.join(', ')}</strong>, with an explicit time interval.</p>
+      <p>Each walkthrough uses profile-qualified definitions with separate evidence and assessments. The timeline supports step-by-step and automatic playback in the Atlas and 3D views. “Whole graph + path” retains all nodes; “Path + next options” displays the route and its alternatives.</p>
       <ul>{profile.limitations.map(limit=><li>{limit}</li>)}</ul>
       <p><a href="/graphs/profiles/">All event profiles</a> · <a href="/graphs/working/event-profiles/README.md">Contract and evaluation method</a> · <a href="/graphs/working/event-profiles/scenarios.json" download>Complete normalized scenario evidence</a> · <a href="/graphs/working/event-profiles/validation.json" download>Observed validation traces and pins</a></p>
       <details><summary>All nine investigation routes · complete text alternative</summary>{guides.map(guide=><section id={guide.id}><h3>{guide.title}</h3><p>{guide.description}</p><p>{guide.context}</p><ol>{guide.steps.map(step=><li><strong>{step.questionId} · {step.outcome}</strong><p>{step.predicate}</p><p>{step.rationale}</p><code>{step.definitionId}</code></li>)}</ol></section>)}</details>

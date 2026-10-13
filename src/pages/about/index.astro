@@ -16,29 +16,17 @@ const jsonLd = {
 
 <DocumentLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
   <ContentCard>
-    <p class="section-kicker">One public investigative layer</p>
-    <h2>Shared meaning for every cyber investigation</h2>
-    <p>TENSOR is being developed as a public standard for cyber investigations. Humans, agents, and mixed teams use the same model to describe questions, evidence, uncertainty, assessments, decisions, and revisions. Those meanings should survive a handoff between people, organizations, and tools.</p>
-    <p>The scope includes incident response, threat hunting, forensics, identity, cloud, network, endpoint, application, and AI-system investigations. AI security teams governing agents and autonomous systems are the first adoption community; they do not define the limits of Core.</p>
-
-    <h2>What stays at the center</h2>
-    <p>The existing investigative questions and explicit <code>yes</code>, <code>no</code>, and <code>unknown</code> outcomes remain useful. Core now distinguishes a reusable investigation definition from the record of a particular investigation. A question instance binds a question to a subject, time, and parameters.</p>
-    <p>The <a href="/questions/">legacy question catalog</a> and <a href="/graphs/">published graph releases</a> remain available. Their content needs semantic review before it can become a candidate definition; no historic record or evidence has been invented during migration.</p>
-
-    <h2>Public Core, open room to build</h2>
-    <table>
-      <thead><tr><th>Layer</th><th>Responsibility</th></tr></thead>
-      <tbody>
-        <tr><td>Public TENSOR Core</td><td>Identity, context, attribution, provenance, uncertainty, decisions, revisions, and exchange.</td></tr>
-        <tr><td>Public domain profiles</td><td>Reviewed questions, evidence requirements, vocabulary, and standards references.</td></tr>
-        <tr><td>Vendor layer</td><td>Interfaces, connectors, storage, analytics, and execution systems.</td></tr>
-        <tr><td>Business layer</td><td>Organizational policy, authority, thresholds, escalation, and retention.</td></tr>
-      </tbody>
-    </table>
-    <p>Vendor and business layers may specialize behavior. They must not silently rewrite shared meaning. Core does not require a particular platform, interface, model provider, or execution engine.</p>
-
-    <h2>Current status</h2>
-    <p><strong>Core 0.1.0-draft.1 is an implementation candidate.</strong> It is not ratified, independently certified, or institutionally endorsed. The founding package proposes public stewardship; named appointments and a stable release remain open work.</p>
-    <p><a href="/founding/00-charter.md">Read the founding charter</a> · <a href="/core/">Inspect the Core candidate</a> · <a href="/governance/">Review proposed governance</a></p>
+<p class="section-kicker">TENSOR Standards Consortium</p>
+    <h2>Purpose and scope</h2>
+    <p>TENSOR is a public standard initiative for cyber investigations. Its shared model represents questions, evidence references, assessments, decisions, and revisions so an investigation can be understood and continued across people, agents, organizations, and tools.</p>
+    <p>The scope includes incident response, threat hunting, digital forensics, identity, host, network, cloud, email, application, file, and AI-system investigations.</p>
+    <h2>Public foundation, specialized implementations</h2>
+    <p>The public Core defines the investigation model. Public graphs and profiles supply shared technical questions and evidence criteria. Vendor and organization graphs add product knowledge, local policy, integrations, and operational workflow.</p>
+    <p>The shared model is independent of a particular interface, model provider, storage system, or execution engine. <a href="/extensions/">The layering guide</a> describes these responsibilities and includes a working example.</p>
+    <h2>Available resources</h2>
+    <ul><li><a href="/core/">Core 0.1.0-draft.1</a>: logical contract, JSON binding, schemas, and reference validator.</li><li><a href="/graphs/">Investigation atlas</a>: 609 working questions across seven domains, plus the preserved 588-question release.</li><li><a href="/graphs/profiles/">Event profiles</a>: sixteen draft event contexts and example investigation paths.</li><li><a href="/investigation-lab/">Investigation Lab</a>: local record inspection, validation, replay, and exchange.</li><li><a href="/studio/">Graph Studio</a>: graph and layer import, combination, and export.</li></ul>
+    <h2>Project status</h2>
+    <p>Core is an unratified implementation candidate. John Schieferle Uhlenbrock is the bootstrap steward, convenor, Core editor, and conformance maintainer under the TENSOR Standards Consortium project identity. The broader governance proposal, external review, and independent interoperability evidence remain open.</p>
+    <p><a href="/governance/">Stewardship and governance</a> · <a href="/review/">Technical review package</a> · <a href="/founding/00-charter.md">Founding charter</a> · <a href="/docs/">Resource directory</a></p>
   </ContentCard>
 </DocumentLayout>

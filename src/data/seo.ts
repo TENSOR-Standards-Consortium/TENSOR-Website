@@ -9,125 +9,110 @@ export interface RouteSeo {
 export const seo = {
   home: {
     title: 'TENSOR | A Public Standard for Cyber Investigations',
-    description:
-      'A shared investigative layer for humans and agents. Explore portable questions, evidence, decisions, and revisions in the TENSOR Core implementation candidate.',
+    description: 'Public investigation knowledge and a shared Core for human and agent records, with vendor and organization graphs above the same foundation. Core is an implementation candidate.',
     canonicalPath: '/',
     ogType: 'website',
   },
   review: {
-    title: 'Review TENSOR | Frozen Technical Candidate',
-    description: 'Review one pinned TENSOR candidate with a first-hour walkthrough, source archive, evidence criteria, reproducible checks and a clear feedback route.',
+    title: 'Technical review | TENSOR',
+    description: 'Pinned Core source, artifact manifest, reference cases, evaluation baseline, and technical finding forms.',
     canonicalPath: '/review/',
     ogType: 'article',
   },
   implement: {
-    title: 'Implement the TENSOR Core Candidate',
-    description:
-      'Validate synthetic investigation bundles with the TENSOR reference CLI, pin candidate artifacts, and test a scoped integration for portable investigative meaning.',
+    title: 'Implementation guide | TENSOR',
+    description: 'Browser and command-line quick starts, investigation bundles, integration roles, and vendor and organization graph resources.',
     canonicalPath: '/implement/',
     ogType: 'article',
   },
   standards: {
-    title: 'TENSOR and Existing Standards',
-    description:
-      'Review proposed TENSOR boundaries alongside ATT&CK, D3FEND, ATLAS, CASE/UCO, STIX, Attack Flow, CACAO, and OCSF. Mappings remain subject to exchange evidence.',
+    title: 'Standards relationships | TENSOR',
+    description: 'Proposed relationships with ATT&CK, D3FEND, ATLAS, CASE/UCO, STIX, Attack Flow, CACAO, and OCSF.',
     canonicalPath: '/standards/',
     ogType: 'article',
   },
   docs: {
-    title: 'TENSOR Documentation',
-    description:
-      'Find the Core contract, candidate binding, schemas, validation coverage, public governance proposal, and preserved legacy investigation graph.',
+    title: 'Resources | TENSOR',
+    description: 'The complete directory of TENSOR specifications, tools, graph resources, downloads, implementation guides, and project information.',
     canonicalPath: '/docs/',
     ogType: 'article',
   },
   conformance: {
-    title: 'TENSOR Validation and Conformance',
-    description:
-      'Run candidate reference checks and report their scope. Distinguish structural and semantic validation from independent interoperability and certification.',
+    title: 'Validation | TENSOR',
+    description: 'Reference validation scope, result meanings, supported implementation roles, and reproducible exchange reports.',
     canonicalPath: '/conformance/',
     ogType: 'article',
   },
   governance: {
-    title: 'Proposed TENSOR Governance',
-    description:
-      'Review proposed public stewardship, open roles, independent review, conflicts, appeals, and the evidence required before a stable TENSOR Core release.',
+    title: 'Governance | TENSOR',
+    description: 'Current TENSOR stewardship, proposed public governance, review handling, conflicts, and decision records.',
     canonicalPath: '/governance/',
     ogType: 'article',
   },
   contribute: {
-    title: 'Contribute to TENSOR',
-    description:
-      'Bring a synthetic investigation case, independent implementation, standards mapping, or technical review to help make cyber investigations portable.',
+    title: 'Contributions | TENSOR',
+    description: 'Question reviews, vendor and organization graphs, implementation reports, standards mappings, and technical proposals.',
     canonicalPath: '/contribute/',
     ogType: 'article',
   },
   about: {
     title: 'About TENSOR',
-    description:
-      'TENSOR is a public standard initiative for all cyber investigations, with one shared Core for humans and agents and vendor and business layers above it.',
+    description: 'Purpose, scope, available resources, public Core, vendor and organization layers, and project status.',
     canonicalPath: '/about/',
     ogType: 'article',
   },
   aiReliability: {
-    title: 'Human and Agent Investigations with TENSOR',
-    description:
-      'Represent questions, evidence, attribution, disagreement, decisions, and revisions consistently across human, agent, and mixed investigative teams.',
+    title: 'Human and agent investigations | TENSOR',
+    description: 'The common record model for attribution, questions, evidence, assessments, decisions, and revisions across human and agent teams.',
     canonicalPath: '/ai-reliability/',
     ogType: 'article',
   },
   metrics: {
-    title: 'TENSOR Legacy Graph Metrics',
-    description:
-      'Inspect structural properties and release checks for the legacy TENSOR graph. These diagnostics do not measure security effectiveness or adoption.',
+    title: 'Historical graph metrics | TENSOR',
+    description: 'Structural counts, route diagnostics, calculated scores, and check history for published TENSOR graph releases.',
     canonicalPath: '/metrics/',
     ogType: 'article',
   },
   schemas: {
-    title: 'TENSOR Candidate and Legacy Schemas',
-    description:
-      'Access versioned candidate schemas for investigation bundles, definitions, and records, plus the preserved legacy graph schema archive.',
+    title: 'JSON Schemas | TENSOR',
+    description: 'Versioned JSON Schemas for Core bundles, definitions, and records, plus the published graph format.',
     canonicalPath: '/schemas/',
     ogType: 'article',
   },
   graphs: {
-    title: 'TENSOR Investigation Atlas',
-    description:
-      'Explore the current working question graph, inspect evidence criteria and available routes, or open preserved published graph releases.',
+    title: 'Investigation atlas | TENSOR',
+    description: 'Working and published public graphs, question evidence criteria, routes, 3D views, and example investigations.',
     canonicalPath: '/graphs/',
     ogType: 'article',
   },
   extensions: {
-    title: 'TENSOR Profiles and Extensions',
-    description:
-      'Build public profiles, vendor tools, and business policy above TENSOR Core while declaring semantic dependencies, unsupported content, and exchange losses.',
+    title: 'Vendor & organization graphs | TENSOR',
+    description: 'Layer responsibilities, product and policy graphs, a working cloud example, downloadable layer files, and Core extension formats.',
     canonicalPath: '/extensions/',
     ogType: 'article',
   },
   studio: {
-    title: 'TENSOR Legacy Graph Studio',
-    description:
-      'Inspect the earlier TENSOR graph and schema releases. Legacy Graph Studio uses the graph-only model, separate from the new Core investigation record candidate.',
+    title: 'Graph Studio | TENSOR',
+    description: 'Graph and layer import, combination, and export for the published TENSOR graph format, including vendor and organization examples.',
     canonicalPath: '/studio/',
     ogType: 'article',
   },
   investigationLab: {
-    title: 'TENSOR Investigation Lab',
-    description:
-      'Inspect, import, validate, and export synthetic investigation bundles using the TENSOR Core candidate contract for humans and agents.',
+    title: 'Investigation Lab | TENSOR',
+    description: 'Local inspection, validation, recorded-path replay, and import/export of Core investigation bundles.',
     canonicalPath: '/investigation-lab/',
     ogType: 'article',
   },
   offline: {
-    title: 'TENSOR Offline Mode',
-    description: 'Offline mode for cached TENSOR documentation and Graph Studio assets.',
+    title: 'Connection unavailable | TENSOR',
+    description: 'Access to previously cached TENSOR resources when a connection is unavailable.',
     canonicalPath: '/offline/',
     ogType: 'website',
     noindex: true,
   },
   notFound: {
-    title: 'Page Not Found | TENSOR',
-    description: 'The requested TENSOR page could not be found.',
+    title: 'Page not found | TENSOR',
+    description: 'Resource directory and implementation links for an unavailable TENSOR page.',
     canonicalPath: '/404',
     ogType: 'website',
     noindex: true,
@@ -142,7 +127,7 @@ export function organizationJsonLd(siteUrl: string) {
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'TENSOR public standard initiative',
+    name: 'TENSOR Standards Consortium',
     url: absoluteUrl(siteUrl, '/'),
     sameAs: ['https://github.com/tensor-standards-consortium/tensor-framework'],
   };

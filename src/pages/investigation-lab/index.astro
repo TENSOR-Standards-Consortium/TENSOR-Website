@@ -5,13 +5,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import '../../styles/investigation-lab.css';
 
 const title = 'TENSOR Investigation Lab';
-const description = 'Inspect, validate, and exchange portable investigation records in your browser. Open Core draft examples or import a local bundle.';
+const description = 'Inspect, validate, and exchange portable investigation records locally in the browser using the Core candidate binding.';
 ---
 
 <BaseLayout title={title} description={description} canonicalPath="/investigation-lab/" ogType="article" hidePageTitle={true}>
-  <PageIntro title="An investigation you can carry forward." eyebrow="A working reference for TENSOR Core" workspace>
-    <p>Humans and agents can share the same questions, evidence references, assessments, and decisions. Open an example, follow its recorded path, and download a portable bundle for review.</p>
-    <div class="cta-group"><a href="/graphs/?investigation=agent-request">Follow a guided investigation →</a><a href="/graphs/">Explore the atlas</a><a href="/core/">Read the Core contract</a><a href="/conformance/">Validation boundary</a></div>
+  <PageIntro title="Investigation Lab" eyebrow="Core records / Browser reference tool" workspace>
+    <p>Local inspection and validation of Core investigation bundles. Reference cases include questions, evidence references, assessments, decisions, and retained revisions, with a replayable recorded path.</p>
+    <div class="cta-group"><a href="/graphs/?investigation=agent-request">Graph walkthroughs →</a><a href="/graphs/">Graph atlas</a><a href="/core/">Core contract</a><a href="/conformance/">Validation scope</a></div>
   </PageIntro>
 
   <section class="container" aria-label="Investigation Lab workspace">
@@ -19,9 +19,9 @@ const description = 'Inspect, validate, and exchange portable investigation reco
   </section>
 
   <section class="container il-static-downloads" aria-labelledby="il-downloads-title">
-    <h2 id="il-downloads-title">Take the examples with you</h2>
+    <h2 id="il-downloads-title">Example bundle downloads</h2>
     <p>
-      These synthetic bundles target the experimental Core 0.1.0-draft.1 binding. They contain no real incident evidence.
+      These illustrative bundles use Core 0.1.0-draft.1 and contain fictional actors, events, policies, and evidence references.
       The downloads below work without JavaScript. The interactive inspector and local validation require JavaScript.
     </p>
     <ul>

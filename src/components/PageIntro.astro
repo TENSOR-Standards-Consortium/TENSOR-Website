@@ -1,6 +1,6 @@
 ---
 interface Props { title: string; eyebrow?: string; workspace?: boolean }
-const { title, eyebrow = 'TENSOR Framework', workspace = false } = Astro.props;
+const { title, eyebrow = 'TENSOR', workspace = false } = Astro.props;
 ---
 <section class:list={['page-title-bar', { 'workspace-intro': workspace }]}>
   <div class="container">

@@ -1,4 +1,5 @@
 ---
+import ReferenceTable from '../../components/ReferenceTable.astro';
 import ContentCard from '../../components/ContentCard.astro';
 import DocumentLayout from '../../layouts/DocumentLayout.astro';
 import { absoluteUrl, seo } from '../../data/seo';
@@ -16,44 +17,26 @@ const jsonLd = {
 
 <DocumentLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
   <ContentCard>
-    <p class="section-kicker">Evidence before a compatibility claim</p>
-    <h2>Reference validation is the first step</h2>
-    <p>Core 0.1.0-draft.1 includes schemas, two synthetic cases, a reference validator, and executable tests. They exercise a candidate binding. They are not a certification program or proof of independent interoperability.</p>
-    <p><a href="/core/0.1.0-draft.1/coverage.md">Read the exact validation coverage and limitations</a> before describing an implementation as compatible.</p>
-
-    <h2>Run the reference checks</h2>
-    <p>From the <a href="/review/">frozen review snapshot</a> with Node.js 24.21.0, npm 11.19.0 and locked dependencies installed:</p>
+<p class="section-kicker">Core 0.1.0-draft.1 · Reference validation</p>
+    <h2>Validation scope</h2>
+    <p>The reference validator checks structural and supported semantic requirements in the candidate JSON binding. It checks the supplied representation of an investigation; evidence truth, actual permissions, and operational effectiveness require separate evaluation.</p>
+    <p><a href="/core/0.1.0-draft.1/coverage.md">Detailed check coverage</a> · <a href="/implement/">Setup instructions</a> · <a href="/investigation-lab/">Browser validator</a></p>
+    <h2>Reference commands</h2>
+    <p>From the <a href="/review/">pinned Core review source</a>, with Node.js 24.21.0, npm 11.19.0, and locked dependencies installed:</p>
     <pre><code>{`npm run check:schemas
 npm run validate:examples
 npm test`}</code></pre>
-    <p><a href="/implement/">Full setup instructions</a> · <a href="/investigation-lab/">Validate a bundle in the Lab</a></p>
-
-    <h2>What the checks can establish</h2>
-    <ul>
-      <li>Structural validity against the candidate binding and schemas.</li>
-      <li>Definition pins, reference closure, question context, and explicit transition selections.</li>
-      <li>Revision lineage, original inputs, and required review representation.</li>
-      <li>Declared handling of partial exchange and unsupported required semantics.</li>
-    </ul>
-    <p>They do not establish evidence truth, legal authority, investigative completeness, security effectiveness, or the safety of an implementation. The validator does not execute recorded actions or fetch evidence locators.</p>
-
-    <h2>Roles replace a universal badge</h2>
-    <table>
-      <thead><tr><th>Proposed role</th><th>Claim to substantiate</th></tr></thead>
-      <tbody>
-        <tr><td>Definition producer</td><td>Produces pinned, interpretable definitions with explicit question and transition meaning.</td></tr>
-        <tr><td>Record producer</td><td>Produces records with valid context, attribution, references, and revision behavior.</td></tr>
-        <tr><td>Reader</td><td>Interprets supported content and exposes missing or unsupported meaning.</td></tr>
-        <tr><td>Lossless exchanger</td><td>Preserves meaning, required original bytes, and unsupported optional content as opaque data through exchange.</td></tr>
-        <tr><td>Transition interpreter</td><td>Resolves explicitly selected assessments and guarded transitions without inventing a default.</td></tr>
-      </tbody>
-    </table>
-
-    <h2>Report a result others can reproduce</h2>
-    <p>Record the specification and binding versions, implementation version, role, profile, test suite and artifact digests, test date, named checks, outcomes, and known exclusions. Distinguish <code>pass</code>, <code>fail</code>, <code>indeterminate</code>, and <code>notRun</code>. An unknown investigative answer can be valid data.</p>
-    <p>The founding package supplies <a href="/founding/04-reference-cases-and-conformance.md">twelve acceptance scenarios</a>. They describe desired evidence and are broader than a single reference implementation. A self round trip is not an exchange between independent implementations.</p>
-
-    <h2>Earlier fixtures</h2>
-    <p>The previous website's graph-only starter fixtures belong to the legacy model. Use <a href="/core/">the candidate release page</a> for new work; do not combine the two contracts under one conformance claim.</p>
+    <h2>Result meanings</h2>
+    <ReferenceTable label="Validation results"><thead><tr><th>Result</th><th>Meaning</th></tr></thead><tbody><tr><td><code>pass</code></td><td>The supplied content satisfies the checks performed by this reference implementation.</td></tr><tr><td><code>fail</code></td><td>A checked structural or semantic rule is violated.</td></tr><tr><td><code>indeterminate</code></td><td>Required information or supported interpretation is insufficient to determine the affected meaning.</td></tr><tr><td><code>notRun</code></td><td>An individual check was not performed.</td></tr></tbody></ReferenceTable>
+    <p>An investigative <code>unknown</code> outcome can be valid data. It is distinct from an indeterminate validation result.</p>
+    <h2>Checked requirements</h2>
+    <ul><li>Candidate structure, exact definition pins, and typed references.</li><li>Question subjects, time context, parameters, and explicit transition selections.</li><li>Revision lineage, original inputs, and required review representation.</li><li>Declared partial exchange, losses, and unsupported required dependencies.</li></ul>
+    <h2>Implementation roles</h2>
+    <p>Reports identify the roles implemented: definition producer, record producer, reader, lossless exchanger, or transition interpreter. Each role has a bounded claim and relevant checks in the <a href="/founding/01-core-contract.md">Core contract</a>.</p>
+    <p>Vendor and organization extensions also identify their namespace, version, required dependencies, and supported interpretation. The reference runtime retains optional opaque data and reports unsupported required meaning as indeterminate.</p>
+    <h2>Implementation reports</h2>
+    <p>A reproducible report includes specification and binding versions, implementation version, supported roles and profiles, artifact digests, test date, named checks, results, and exclusions. Exchange reports identify both implementations and any transformed, omitted, or unsupported meaning.</p>
+    <p>The <a href="/founding/04-reference-cases-and-conformance.md">twelve acceptance scenarios</a> describe the proposed evaluation scope. Independent interoperability requires exchange between separately developed implementations. No certification program is currently established.</p>
+    <p><a href="/contribute/">Implementation report process</a> · <a href="/review/">Pinned review baseline</a> · <a href="/extensions/">Layer and extension formats</a></p>
   </ContentCard>
 </DocumentLayout>

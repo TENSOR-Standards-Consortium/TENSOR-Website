@@ -1,7 +1,7 @@
 {
-  "name": "TENSOR Framework",
+  "name": "TENSOR",
   "short_name": "TENSOR",
-  "description": "A public investigation standard for humans and agents, with reusable questions, evidence and decisions.",
+  "description": "Public investigation knowledge, Core records, and vendor and organization graphs for human and agent teams.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
@@ -15,14 +15,19 @@
       "url": "/studio/"
     },
     {
-      "name": "Documentation",
-      "short_name": "Docs",
+      "name": "Resources",
+      "short_name": "Resources",
       "url": "/docs/"
     },
     {
       "name": "Investigation Lab",
       "short_name": "Lab",
       "url": "/investigation-lab/"
+    },
+    {
+      "name": "Vendor and organization graphs",
+      "short_name": "Layers",
+      "url": "/extensions/"
     }
   ],
   "icons": [
