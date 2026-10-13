@@ -24,12 +24,12 @@ try {
  assert.equal(await page.getByRole('banner').getByRole('link',{name:'Start here',exact:true}).getAttribute('aria-current'),'page');
  assert.equal(await page.locator('.case-timeline > li').count(),5);
  assert.equal(await page.locator('.case-timeline details').count(),0,'introduction does not hide the investigation behind disclosures');
- await page.getByRole('link',{name:'Follow the SOC investigation',exact:false}).click();
+ await page.getByRole('link',{name:'Read the SOC investigation below',exact:false}).click();
  await page.waitForURL(base+'/start/#soc-investigation');
  assert.ok((await page.locator('#soc-investigation').boundingBox()).y<1000);
  for(const [name,url] of [
-  ['Follow an investigation','/graphs/?investigation=identity-session&step=0'],
-  ['Inspect a human–agent handoff','/investigation-lab/'],
+  ['Follow an investigation','/investigations/soc-signin/'],
+  ['Inspect a human–agent handoff','/investigation-lab/?case=soc-signin'],
   ['Add vendor and company layers','/extensions/'],
   ['Implement the shared record','/implement/'],
  ]) {
@@ -40,12 +40,13 @@ try {
  const introWords=(await page.locator('main').innerText()).split(/\s+/).length;
  assert.ok(introWords<=1250,'five-minute introduction stays within a bounded reading length');
  await page.getByRole('link',{name:'Follow an investigation',exact:false}).click();
- await page.waitForURL(base+'/graphs/?investigation=identity-session&step=0');
+ await page.waitForURL(base+'/investigations/soc-signin/');
+ await page.locator('[data-case-ready=true]').waitFor();
  await page.locator('[data-graph-ready=true]').waitFor();
- assert.match(await page.locator('.atlas-follow-bar strong').textContent(),/session beyond its expected boundary/i);
- await page.getByRole('button',{name:'Next step',exact:true}).click();
- await page.waitForURL(url=>url.pathname==='/graphs/'&&url.searchParams.get('investigation')==='identity-session'&&url.searchParams.get('step')==='1');
- checks.firstTimeJourney={steps:5,words:introWords,graphExample:'identity-session',result:'passed'};
+ assert.match(await page.locator('.case-heading h2').textContent(),/sign-in and mailbox forwarding/i);
+ await page.getByRole('button',{name:'Next case step',exact:true}).click();
+ await page.waitForURL(url=>url.pathname==='/investigations/soc-signin/'&&url.searchParams.get('step')==='1');
+ checks.firstTimeJourney={steps:5,words:introWords,graphExample:'soc-signin',result:'passed'};
  await page.getByRole('banner').getByRole('link',{name:'Start here',exact:true}).click();
  for(const width of [390,320]) {
   await page.setViewportSize({width,height:844});
@@ -62,13 +63,13 @@ try {
  await page.setViewportSize({width:1440,height:1000});
  await page.goto(base+'/start/');
  await page.screenshot({path:output+'/start-first-screen.png'});
- await page.getByRole('link',{name:'Follow the SOC investigation',exact:false}).click();
+ await page.getByRole('link',{name:'Read the SOC investigation below',exact:false}).click();
  await page.screenshot({path:output+'/soc-case-first-screen.png'});
  assert.deepEqual(introductionConsole,[]);checks.introductionConsole=introductionConsole;
  await page.goto(base+'/');
  await page.getByRole('banner').getByRole('link',{name:'Resources',exact:true}).click();
  await page.waitForURL(base+'/docs/');
- assert.equal(await page.locator('main .tensor-resource-card').count(),19);
+ assert.equal(await page.locator('main .tensor-resource-card').count(),20);
  for(const link of await page.locator('main .tensor-resource-card').all()) assert.equal(await link.isVisible(),true);
  await capture({path:output+'/resources.png',fullPage:true});
  await page.getByRole('banner').getByRole('link',{name:'Vendors & organizations',exact:true}).click();
@@ -138,5 +139,5 @@ try {
  await failure.close();
  assert.deepEqual(errors,[]);checks.pageErrors=errors;
  await writeFile(output+'/results.json',JSON.stringify(checks,null,2));
- console.log(JSON.stringify({base,layering:'passed',layerPackRoundTrip:'passed',recordRoundTrip:'passed',resources:19,navigationWidths:nav.length,errors,output}));
+ console.log(JSON.stringify({base,layering:'passed',layerPackRoundTrip:'passed',recordRoundTrip:'passed',resources:20,navigationWidths:nav.length,errors,output}));
 }finally{await browser.close();await rm(temporary,{recursive:true,force:true});}

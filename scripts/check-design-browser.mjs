@@ -16,7 +16,7 @@ try {
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   const routes = [
-    '/', '/start/', '/core/', '/docs/', '/about/', '/ai-reliability/', '/conformance/',
+    '/', '/start/', '/investigations/', '/investigations/soc-signin/', '/investigations/workload-cloud-egress/', '/investigations/attachment-host-tool/', '/core/', '/docs/', '/about/', '/ai-reliability/', '/conformance/',
     '/contribute/', '/extensions/', '/governance/', '/implement/', '/review/',
     '/schemas/', '/standards/', '/questions/', '/questions/0.20260206e/Q1/',
     '/graphs/', '/graphs/coverage/', '/graphs/profiles/',

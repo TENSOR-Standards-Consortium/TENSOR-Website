@@ -1,0 +1,1072 @@
+{
+  "format": "tensor-investigation-bundle",
+  "bindingVersion": "0.1.0-draft.1",
+  "record": {
+    "snapshotId": "urn:tensor:example:soc-signin:snapshot-1",
+    "investigationId": "urn:tensor:example:soc-signin:investigation",
+    "contractRef": {
+      "proposal": "0.1.0",
+      "bindingVersion": "0.1.0-draft.1",
+      "status": "candidate; unratified"
+    },
+    "producer": {
+      "label": "TENSOR illustrative investigation authoring",
+      "version": "1.0.0",
+      "implementationStatus": "Fictional example, not an operational deployment"
+    },
+    "recordedAt": "2026-10-13T09:00:40.000Z",
+    "scope": {
+      "purpose": "Investigate Morgan’s account and session s-42, mailbox rule r-7, approval, delivery, and the scoped response.",
+      "subjectBoundary": [
+        "urn:tensor:example:soc-signin:session-s42",
+        "urn:tensor:example:soc-signin:rule-r7"
+      ]
+    },
+    "definitionReferences": [
+      {
+        "id": "urn:tensor:example:soc-signin:composed-definition",
+        "version": "1.0.0",
+        "sha256": "f09b6ead7a0f8aa4dff237a7c9919fd41f09071081b2bf8ed48665c35a6b0574",
+        "artifact": "soc-signin.definition.json"
+      }
+    ],
+    "dependencies": [],
+    "entries": [
+      {
+        "id": "urn:tensor:example:soc-signin:actor-analyst",
+        "type": "Actor",
+        "recordedAt": "2026-10-13T09:00:00.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-analyst"
+        },
+        "kind": "human",
+        "label": "SOC analyst",
+        "identityStatus": "selfDeclared"
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:actor-agent",
+        "type": "Actor",
+        "recordedAt": "2026-10-13T09:00:01.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-agent"
+        },
+        "kind": "agent",
+        "label": "Assisting investigation agent",
+        "identityStatus": "selfDeclared"
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:actor-responder",
+        "type": "Actor",
+        "recordedAt": "2026-10-13T09:00:02.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-responder"
+        },
+        "kind": "human",
+        "label": "On-duty response lead",
+        "identityStatus": "selfDeclared"
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:policy",
+        "type": "PolicyReference",
+        "recordedAt": "2026-10-13T09:00:03.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-analyst"
+        },
+        "policyIdentity": "urn:tensor:example:soc-signin:company-response-policy",
+        "version": "1.0.0",
+        "effectiveTime": {
+          "status": "known",
+          "start": "2026-10-01T00:00:00Z"
+        },
+        "applicableScope": "Investigate Morgan’s account and session s-42, mailbox rule r-7, approval, delivery, and the scoped response.",
+        "locatorAbsentReason": "Fictional example policy; conditions are retained here.",
+        "conditions": "MAIL-04 v1. External forwarding requires approval in the authoritative register. The on-duty responder may approve revoking s-42 and removing r-7. Other accounts and broader containment need separate review."
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:authority",
+        "type": "AuthorityAssertion",
+        "recordedAt": "2026-10-13T09:00:04.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-responder"
+        },
+        "issuerId": "urn:tensor:example:soc-signin:actor-responder",
+        "granteeId": "urn:tensor:example:soc-signin:actor-responder",
+        "permittedOperation": "Approve revocation of s-42 and removal of r-7; request a separate delivery check",
+        "scope": "Investigate Morgan’s account and session s-42, mailbox rule r-7, approval, delivery, and the scoped response.",
+        "validityStatus": {
+          "status": "claimedValid",
+          "reason": "The example asserts this actor is the designated on-duty responder."
+        },
+        "basisReferences": [
+          "urn:tensor:example:soc-signin:policy"
+        ],
+        "receiverLocalVerification": "notPerformed"
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:instance-1",
+        "type": "QuestionInstance",
+        "recordedAt": "2026-10-13T09:00:05.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-analyst"
+        },
+        "definitionRef": {
+          "id": "urn:tensor:example:soc-signin:composed-definition",
+          "version": "1.0.0",
+          "sha256": "f09b6ead7a0f8aa4dff237a7c9919fd41f09071081b2bf8ed48665c35a6b0574",
+          "artifact": "soc-signin.definition.json"
+        },
+        "questionId": "urn:tensor:example:soc-signin:public:question-1",
+        "subjectBindings": {
+          "subject": "urn:tensor:example:soc-signin:session-s42"
+        },
+        "timeContext": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        },
+        "parameterBindings": {
+          "subject": "urn:tensor:example:soc-signin:session-s42",
+          "window": {
+            "status": "bounded",
+            "start": "2026-10-13T08:35:00Z",
+            "end": "2026-10-13T09:00:00Z"
+          }
+        },
+        "origin": {
+          "kind": "entry",
+          "rationale": "Open the bounded example investigation."
+        }
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:evidence-1",
+        "type": "EvidenceReference",
+        "recordedAt": "2026-10-13T09:00:06.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-analyst"
+        },
+        "description": "E1 · The fictional identity audit export records Morgan, s-42, and a successful sign-in at 08:42 UTC. The collection receipt, UTC conversion, and event meaning are assessed as matching.",
+        "source": {
+          "label": "Identity example evidence",
+          "provenanceStatus": "Authored fictional evidence; no real incident source is authenticated"
+        },
+        "availability": "unavailable",
+        "locatorAbsentReason": "The example supplies observations and references, not real source evidence bytes."
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:observation-1",
+        "type": "Observation",
+        "recordedAt": "2026-10-13T09:00:07.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-analyst"
+        },
+        "statement": "E1 · The fictional identity audit export records Morgan, s-42, and a successful sign-in at 08:42 UTC. The collection receipt, UTC conversion, and event meaning are assessed as matching.",
+        "evidenceRefIds": [
+          "urn:tensor:example:soc-signin:evidence-1"
+        ],
+        "method": "Authored observation; discriminator and collection limits are described in the statement.",
+        "eventTime": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        }
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:assessment-1",
+        "type": "Assessment",
+        "recordedAt": "2026-10-13T09:00:08.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:soc-signin:instance-1",
+        "applicability": {
+          "status": "applicable",
+          "rationale": "The declared subject, interval, and required parameters are resolved."
+        },
+        "outcome": "yes",
+        "rationale": "A validated successful-sign-in record matches Morgan, s-42, and the bound interval. The unfamiliar location alone does not establish compromise.",
+        "inputs": [
+          {
+            "entryId": "urn:tensor:example:soc-signin:observation-1",
+            "role": "supports"
+          }
+        ],
+        "method": "Authored example applies the pinned question criteria to retained illustrative observations."
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:decision-1",
+        "type": "Decision",
+        "recordedAt": "2026-10-13T09:00:09.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:soc-signin:instance-1",
+        "selectedAssessmentId": "urn:tensor:example:soc-signin:assessment-1",
+        "selectedInputIds": [
+          "urn:tensor:example:soc-signin:assessment-1"
+        ],
+        "disposition": "transition",
+        "rationale": "Retain this assessment and its limitations while continuing the next separately assessed question.",
+        "policyStatus": {
+          "status": "notApplicable"
+        },
+        "authorityStatus": {
+          "status": "notApplicable"
+        },
+        "limitations": [
+          "The unfamiliar location alone does not establish compromise."
+        ],
+        "selections": [
+          {
+            "transitionId": "urn:tensor:example:soc-signin:route-1-yes",
+            "targetInstanceId": "urn:tensor:example:soc-signin:instance-2"
+          }
+        ]
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:instance-2",
+        "type": "QuestionInstance",
+        "recordedAt": "2026-10-13T09:00:10.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-agent"
+        },
+        "definitionRef": {
+          "id": "urn:tensor:example:soc-signin:composed-definition",
+          "version": "1.0.0",
+          "sha256": "f09b6ead7a0f8aa4dff237a7c9919fd41f09071081b2bf8ed48665c35a6b0574",
+          "artifact": "soc-signin.definition.json"
+        },
+        "questionId": "urn:tensor:example:soc-signin:public:question-2",
+        "subjectBindings": {
+          "subject": "urn:tensor:example:soc-signin:session-s42"
+        },
+        "timeContext": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        },
+        "parameterBindings": {
+          "subject": "urn:tensor:example:soc-signin:session-s42",
+          "window": {
+            "status": "bounded",
+            "start": "2026-10-13T08:35:00Z",
+            "end": "2026-10-13T09:00:00Z"
+          }
+        },
+        "origin": {
+          "kind": "transition",
+          "rationale": "Continue a separately assessed question with the prior answer retained.",
+          "originDecisionId": "urn:tensor:example:soc-signin:decision-1"
+        }
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:evidence-2",
+        "type": "EvidenceReference",
+        "recordedAt": "2026-10-13T09:00:11.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-agent"
+        },
+        "description": "E2 · MFA succeeded, but the device record is missing. Travel, VPN egress, and session misuse remain competing explanations. No discriminating person-to-session binding is retained.",
+        "source": {
+          "label": "Identity example evidence",
+          "provenanceStatus": "Authored fictional evidence; no real incident source is authenticated"
+        },
+        "availability": "unavailable",
+        "locatorAbsentReason": "The example supplies observations and references, not real source evidence bytes."
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:observation-2",
+        "type": "Observation",
+        "recordedAt": "2026-10-13T09:00:12.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-agent"
+        },
+        "statement": "E2 · MFA succeeded, but the device record is missing. Travel, VPN egress, and session misuse remain competing explanations. No discriminating person-to-session binding is retained.",
+        "evidenceRefIds": [
+          "urn:tensor:example:soc-signin:evidence-2"
+        ],
+        "method": "Authored observation; discriminator and collection limits are described in the statement.",
+        "eventTime": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        }
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:assessment-2",
+        "type": "Assessment",
+        "recordedAt": "2026-10-13T09:00:13.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-agent"
+        },
+        "targetInstanceId": "urn:tensor:example:soc-signin:instance-2",
+        "applicability": {
+          "status": "applicable",
+          "rationale": "The declared subject, interval, and required parameters are resolved."
+        },
+        "outcome": "unknown",
+        "rationale": "MFA or a client label alone cannot identify the controller; discriminators are missing or conflicting. Neither Morgan’s presence nor a different person’s identity is established.",
+        "inputs": [
+          {
+            "entryId": "urn:tensor:example:soc-signin:observation-2",
+            "role": "context"
+          }
+        ],
+        "method": "Authored example applies the pinned question criteria to retained illustrative observations.",
+        "unknownReasons": [
+          {
+            "code": "insufficient",
+            "explanation": "MFA or a client label alone cannot identify the controller; discriminators are missing or conflicting. Neither Morgan’s presence nor a different person’s identity is established."
+          }
+        ]
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:decision-2",
+        "type": "Decision",
+        "recordedAt": "2026-10-13T09:00:14.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:soc-signin:instance-2",
+        "selectedAssessmentId": "urn:tensor:example:soc-signin:assessment-2",
+        "selectedInputIds": [
+          "urn:tensor:example:soc-signin:assessment-2"
+        ],
+        "disposition": "transition",
+        "rationale": "Retain this assessment and its limitations while continuing the next separately assessed question.",
+        "policyStatus": {
+          "status": "notApplicable"
+        },
+        "authorityStatus": {
+          "status": "notApplicable"
+        },
+        "limitations": [
+          "Neither Morgan’s presence nor a different person’s identity is established."
+        ],
+        "selections": [
+          {
+            "transitionId": "urn:tensor:example:soc-signin:route-2-unknown",
+            "targetInstanceId": "urn:tensor:example:soc-signin:instance-3"
+          }
+        ]
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:instance-3",
+        "type": "QuestionInstance",
+        "recordedAt": "2026-10-13T09:00:15.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-agent"
+        },
+        "definitionRef": {
+          "id": "urn:tensor:example:soc-signin:composed-definition",
+          "version": "1.0.0",
+          "sha256": "f09b6ead7a0f8aa4dff237a7c9919fd41f09071081b2bf8ed48665c35a6b0574",
+          "artifact": "soc-signin.definition.json"
+        },
+        "questionId": "urn:tensor:example:soc-signin:vendor:question-3",
+        "subjectBindings": {
+          "subject": "urn:tensor:example:soc-signin:rule-r7"
+        },
+        "timeContext": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        },
+        "parameterBindings": {
+          "subject": "urn:tensor:example:soc-signin:rule-r7",
+          "window": {
+            "status": "bounded",
+            "start": "2026-10-13T08:35:00Z",
+            "end": "2026-10-13T09:00:00Z"
+          }
+        },
+        "origin": {
+          "kind": "transition",
+          "rationale": "Continue a separately assessed question with the prior answer retained.",
+          "originDecisionId": "urn:tensor:example:soc-signin:decision-2"
+        }
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:evidence-3",
+        "type": "EvidenceReference",
+        "recordedAt": "2026-10-13T09:00:16.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-agent"
+        },
+        "description": "E3 · The fictional mailbox audit names r-7, its external destination, session s-42, and 08:47 UTC. The documented adapter mapping preserves the authenticated session discriminator across the two audit streams.",
+        "source": {
+          "label": "Email example evidence",
+          "provenanceStatus": "Authored fictional evidence; no real incident source is authenticated"
+        },
+        "availability": "unavailable",
+        "locatorAbsentReason": "The example supplies observations and references, not real source evidence bytes."
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:observation-3",
+        "type": "Observation",
+        "recordedAt": "2026-10-13T09:00:17.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-agent"
+        },
+        "statement": "E3 · The fictional mailbox audit names r-7, its external destination, session s-42, and 08:47 UTC. The documented adapter mapping preserves the authenticated session discriminator across the two audit streams.",
+        "evidenceRefIds": [
+          "urn:tensor:example:soc-signin:evidence-3"
+        ],
+        "method": "Authored observation; discriminator and collection limits are described in the statement.",
+        "eventTime": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        }
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:assessment-3",
+        "type": "Assessment",
+        "recordedAt": "2026-10-13T09:00:18.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-agent"
+        },
+        "targetInstanceId": "urn:tensor:example:soc-signin:instance-3",
+        "applicability": {
+          "status": "applicable",
+          "rationale": "The declared subject, interval, and required parameters are resolved."
+        },
+        "outcome": "yes",
+        "rationale": "Validated mailbox and identity records link r-7 creation to s-42 using the documented session discriminator. This establishes one relationship, not all account activity or intent.",
+        "inputs": [
+          {
+            "entryId": "urn:tensor:example:soc-signin:observation-3",
+            "role": "supports"
+          }
+        ],
+        "method": "Authored example applies the pinned question criteria to retained illustrative observations."
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:decision-3",
+        "type": "Decision",
+        "recordedAt": "2026-10-13T09:00:19.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:soc-signin:instance-3",
+        "selectedAssessmentId": "urn:tensor:example:soc-signin:assessment-3",
+        "selectedInputIds": [
+          "urn:tensor:example:soc-signin:assessment-3"
+        ],
+        "disposition": "transition",
+        "rationale": "Retain this assessment and its limitations while continuing the next separately assessed question.",
+        "policyStatus": {
+          "status": "notApplicable"
+        },
+        "authorityStatus": {
+          "status": "notApplicable"
+        },
+        "limitations": [
+          "This establishes one relationship, not all account activity or intent."
+        ],
+        "selections": [
+          {
+            "transitionId": "urn:tensor:example:soc-signin:route-3-yes",
+            "targetInstanceId": "urn:tensor:example:soc-signin:instance-4"
+          }
+        ]
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:instance-4",
+        "type": "QuestionInstance",
+        "recordedAt": "2026-10-13T09:00:20.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-analyst"
+        },
+        "definitionRef": {
+          "id": "urn:tensor:example:soc-signin:composed-definition",
+          "version": "1.0.0",
+          "sha256": "f09b6ead7a0f8aa4dff237a7c9919fd41f09071081b2bf8ed48665c35a6b0574",
+          "artifact": "soc-signin.definition.json"
+        },
+        "questionId": "urn:tensor:example:soc-signin:company:question-4",
+        "subjectBindings": {
+          "subject": "urn:tensor:example:soc-signin:rule-r7"
+        },
+        "timeContext": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        },
+        "parameterBindings": {
+          "subject": "urn:tensor:example:soc-signin:rule-r7",
+          "window": {
+            "status": "bounded",
+            "start": "2026-10-13T08:35:00Z",
+            "end": "2026-10-13T09:00:00Z"
+          }
+        },
+        "origin": {
+          "kind": "transition",
+          "rationale": "Continue a separately assessed question with the prior answer retained.",
+          "originDecisionId": "urn:tensor:example:soc-signin:decision-3"
+        }
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:evidence-4",
+        "type": "EvidenceReference",
+        "recordedAt": "2026-10-13T09:00:21.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-analyst"
+        },
+        "description": "E4 · MAIL-04 requires a recorded approval. A complete search of the authoritative approval register for r-7 finds none; the policy owner confirms the requirement applies.",
+        "source": {
+          "label": "Email example evidence",
+          "provenanceStatus": "Authored fictional evidence; no real incident source is authenticated"
+        },
+        "availability": "unavailable",
+        "locatorAbsentReason": "The example supplies observations and references, not real source evidence bytes."
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:observation-4",
+        "type": "Observation",
+        "recordedAt": "2026-10-13T09:00:22.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-analyst"
+        },
+        "statement": "E4 · MAIL-04 requires a recorded approval. A complete search of the authoritative approval register for r-7 finds none; the policy owner confirms the requirement applies.",
+        "evidenceRefIds": [
+          "urn:tensor:example:soc-signin:evidence-4"
+        ],
+        "method": "Authored observation; discriminator and collection limits are described in the statement.",
+        "eventTime": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        }
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:assessment-4",
+        "type": "Assessment",
+        "recordedAt": "2026-10-13T09:00:23.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:soc-signin:instance-4",
+        "applicability": {
+          "status": "applicable",
+          "rationale": "The declared subject, interval, and required parameters are resolved."
+        },
+        "outcome": "no",
+        "rationale": "MAIL-04 applies and a complete authoritative approval search establishes that the required approval is absent. An unapproved rule does not by itself establish malicious intent.",
+        "inputs": [
+          {
+            "entryId": "urn:tensor:example:soc-signin:observation-4",
+            "role": "contradicts"
+          }
+        ],
+        "method": "Authored example applies the pinned question criteria to retained illustrative observations.",
+        "policyBinding": {
+          "policyRefId": "urn:tensor:example:soc-signin:policy",
+          "parameterBindings": {}
+        }
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:decision-4",
+        "type": "Decision",
+        "recordedAt": "2026-10-13T09:00:24.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:soc-signin:instance-4",
+        "selectedAssessmentId": "urn:tensor:example:soc-signin:assessment-4",
+        "selectedInputIds": [
+          "urn:tensor:example:soc-signin:assessment-4"
+        ],
+        "disposition": "transition",
+        "rationale": "Retain this assessment and its limitations while continuing the next separately assessed question.",
+        "policyStatus": {
+          "status": "referenced",
+          "policyRefIds": [
+            "urn:tensor:example:soc-signin:policy"
+          ]
+        },
+        "authorityStatus": {
+          "status": "notApplicable"
+        },
+        "limitations": [
+          "An unapproved rule does not by itself establish malicious intent."
+        ],
+        "selections": [
+          {
+            "transitionId": "urn:tensor:example:soc-signin:route-4-no",
+            "targetInstanceId": "urn:tensor:example:soc-signin:instance-5"
+          }
+        ]
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:instance-5",
+        "type": "QuestionInstance",
+        "recordedAt": "2026-10-13T09:00:25.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-agent"
+        },
+        "definitionRef": {
+          "id": "urn:tensor:example:soc-signin:composed-definition",
+          "version": "1.0.0",
+          "sha256": "f09b6ead7a0f8aa4dff237a7c9919fd41f09071081b2bf8ed48665c35a6b0574",
+          "artifact": "soc-signin.definition.json"
+        },
+        "questionId": "urn:tensor:example:soc-signin:public:question-5",
+        "subjectBindings": {
+          "subject": "urn:tensor:example:soc-signin:rule-r7"
+        },
+        "timeContext": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        },
+        "parameterBindings": {
+          "subject": "urn:tensor:example:soc-signin:rule-r7",
+          "window": {
+            "status": "bounded",
+            "start": "2026-10-13T08:35:00Z",
+            "end": "2026-10-13T09:00:00Z"
+          }
+        },
+        "origin": {
+          "kind": "transition",
+          "rationale": "Continue a separately assessed question with the prior answer retained.",
+          "originDecisionId": "urn:tensor:example:soc-signin:decision-4"
+        }
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:evidence-5",
+        "type": "EvidenceReference",
+        "recordedAt": "2026-10-13T09:00:26.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-agent"
+        },
+        "description": "E5 · Rule creation is retained, but no independently originating delivery receipt or complete transport trace is available in this snapshot.",
+        "source": {
+          "label": "Email example evidence",
+          "provenanceStatus": "Authored fictional evidence; no real incident source is authenticated"
+        },
+        "availability": "unavailable",
+        "locatorAbsentReason": "The example supplies observations and references, not real source evidence bytes."
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:observation-5",
+        "type": "Observation",
+        "recordedAt": "2026-10-13T09:00:27.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-agent"
+        },
+        "statement": "E5 · Rule creation is retained, but no independently originating delivery receipt or complete transport trace is available in this snapshot.",
+        "evidenceRefIds": [
+          "urn:tensor:example:soc-signin:evidence-5"
+        ],
+        "method": "Authored observation; discriminator and collection limits are described in the statement.",
+        "eventTime": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        }
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:assessment-5",
+        "type": "Assessment",
+        "recordedAt": "2026-10-13T09:00:28.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-agent"
+        },
+        "targetInstanceId": "urn:tensor:example:soc-signin:instance-5",
+        "applicability": {
+          "status": "applicable",
+          "rationale": "The declared subject, interval, and required parameters are resolved."
+        },
+        "outcome": "unknown",
+        "rationale": "A configured rule or mailbox audit alone does not establish delivery; transport coverage is missing. Neither successful exfiltration nor zero exposure is claimed.",
+        "inputs": [
+          {
+            "entryId": "urn:tensor:example:soc-signin:observation-5",
+            "role": "context"
+          }
+        ],
+        "method": "Authored example applies the pinned question criteria to retained illustrative observations.",
+        "unknownReasons": [
+          {
+            "code": "insufficient",
+            "explanation": "A configured rule or mailbox audit alone does not establish delivery; transport coverage is missing. Neither successful exfiltration nor zero exposure is claimed."
+          }
+        ]
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:decision-5",
+        "type": "Decision",
+        "recordedAt": "2026-10-13T09:00:29.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:soc-signin:instance-5",
+        "selectedAssessmentId": "urn:tensor:example:soc-signin:assessment-5",
+        "selectedInputIds": [
+          "urn:tensor:example:soc-signin:assessment-5"
+        ],
+        "disposition": "transition",
+        "rationale": "Retain this assessment and its limitations while continuing the next separately assessed question.",
+        "policyStatus": {
+          "status": "notApplicable"
+        },
+        "authorityStatus": {
+          "status": "notApplicable"
+        },
+        "limitations": [
+          "Neither successful exfiltration nor zero exposure is claimed."
+        ],
+        "selections": [
+          {
+            "transitionId": "urn:tensor:example:soc-signin:route-5-unknown",
+            "targetInstanceId": "urn:tensor:example:soc-signin:instance-6"
+          }
+        ]
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:instance-6",
+        "type": "QuestionInstance",
+        "recordedAt": "2026-10-13T09:00:30.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-responder"
+        },
+        "definitionRef": {
+          "id": "urn:tensor:example:soc-signin:composed-definition",
+          "version": "1.0.0",
+          "sha256": "f09b6ead7a0f8aa4dff237a7c9919fd41f09071081b2bf8ed48665c35a6b0574",
+          "artifact": "soc-signin.definition.json"
+        },
+        "questionId": "urn:tensor:example:soc-signin:company:question-6",
+        "subjectBindings": {
+          "subject": "urn:tensor:example:soc-signin:rule-r7"
+        },
+        "timeContext": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        },
+        "parameterBindings": {
+          "subject": "urn:tensor:example:soc-signin:rule-r7",
+          "window": {
+            "status": "bounded",
+            "start": "2026-10-13T08:35:00Z",
+            "end": "2026-10-13T09:00:00Z"
+          }
+        },
+        "origin": {
+          "kind": "transition",
+          "rationale": "Continue a separately assessed question with the prior answer retained.",
+          "originDecisionId": "urn:tensor:example:soc-signin:decision-5"
+        }
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:evidence-6",
+        "type": "EvidenceReference",
+        "recordedAt": "2026-10-13T09:00:31.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-responder"
+        },
+        "description": "E6 · The on-duty responder records approval to revoke s-42, remove r-7, and request delivery verification. The policy and responder authority claim are retained.",
+        "source": {
+          "label": "Email example evidence",
+          "provenanceStatus": "Authored fictional evidence; no real incident source is authenticated"
+        },
+        "availability": "unavailable",
+        "locatorAbsentReason": "The example supplies observations and references, not real source evidence bytes."
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:observation-6",
+        "type": "Observation",
+        "recordedAt": "2026-10-13T09:00:32.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-responder"
+        },
+        "statement": "E6 · The on-duty responder records approval to revoke s-42, remove r-7, and request delivery verification. The policy and responder authority claim are retained.",
+        "evidenceRefIds": [
+          "urn:tensor:example:soc-signin:evidence-6"
+        ],
+        "method": "Authored observation; discriminator and collection limits are described in the statement.",
+        "eventTime": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        }
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:assessment-6",
+        "type": "Assessment",
+        "recordedAt": "2026-10-13T09:00:33.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-responder"
+        },
+        "targetInstanceId": "urn:tensor:example:soc-signin:instance-6",
+        "applicability": {
+          "status": "applicable",
+          "rationale": "The declared subject, interval, and required parameters are resolved."
+        },
+        "outcome": "yes",
+        "rationale": "The recorded response and claimed role satisfy the explicit policy conditions for this scope. Approval is recorded; execution and local permission verification are not performed.",
+        "inputs": [
+          {
+            "entryId": "urn:tensor:example:soc-signin:observation-6",
+            "role": "supports"
+          }
+        ],
+        "method": "Authored example applies the pinned question criteria to retained illustrative observations.",
+        "policyBinding": {
+          "policyRefId": "urn:tensor:example:soc-signin:policy",
+          "parameterBindings": {}
+        }
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:decision-6",
+        "type": "Decision",
+        "recordedAt": "2026-10-13T09:00:34.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-responder"
+        },
+        "targetInstanceId": "urn:tensor:example:soc-signin:instance-6",
+        "selectedAssessmentId": "urn:tensor:example:soc-signin:assessment-6",
+        "selectedInputIds": [
+          "urn:tensor:example:soc-signin:assessment-6"
+        ],
+        "disposition": "transition",
+        "rationale": "Approve revocation of s-42 and removal of r-7; request a separate delivery check",
+        "policyStatus": {
+          "status": "referenced",
+          "policyRefIds": [
+            "urn:tensor:example:soc-signin:policy"
+          ]
+        },
+        "authorityStatus": {
+          "status": "referenced",
+          "authorityRefIds": [
+            "urn:tensor:example:soc-signin:authority"
+          ]
+        },
+        "limitations": [
+          "Approval is recorded; execution and local permission verification are not performed."
+        ],
+        "selections": [
+          {
+            "transitionId": "urn:tensor:example:soc-signin:route-6-yes",
+            "targetInstanceId": "urn:tensor:example:soc-signin:instance-7"
+          }
+        ]
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:action-6",
+        "type": "ActionRecord",
+        "recordedAt": "2026-10-13T09:00:35.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-responder"
+        },
+        "operationDescription": "Approve revocation of s-42 and removal of r-7; request a separate delivery check",
+        "operationSubject": "urn:tensor:example:soc-signin:rule-r7",
+        "stage": "planned",
+        "decisionId": "urn:tensor:example:soc-signin:decision-6",
+        "eventTime": {
+          "status": "unknown",
+          "reason": "No action is executed in this example."
+        }
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:instance-7",
+        "type": "QuestionInstance",
+        "recordedAt": "2026-10-13T09:00:36.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-analyst"
+        },
+        "definitionRef": {
+          "id": "urn:tensor:example:soc-signin:composed-definition",
+          "version": "1.0.0",
+          "sha256": "f09b6ead7a0f8aa4dff237a7c9919fd41f09071081b2bf8ed48665c35a6b0574",
+          "artifact": "soc-signin.definition.json"
+        },
+        "questionId": "urn:tensor:example:soc-signin:public:question-7",
+        "subjectBindings": {
+          "subject": "urn:tensor:example:soc-signin:rule-r7"
+        },
+        "timeContext": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        },
+        "parameterBindings": {
+          "subject": "urn:tensor:example:soc-signin:rule-r7",
+          "window": {
+            "status": "bounded",
+            "start": "2026-10-13T08:35:00Z",
+            "end": "2026-10-13T09:00:00Z"
+          }
+        },
+        "origin": {
+          "kind": "transition",
+          "rationale": "Continue a separately assessed question with the prior answer retained.",
+          "originDecisionId": "urn:tensor:example:soc-signin:decision-6"
+        }
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:evidence-7",
+        "type": "EvidenceReference",
+        "recordedAt": "2026-10-13T09:00:37.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-analyst"
+        },
+        "description": "E7 · The review index retains E1–E6, unapproved forwarding, unresolved controller and delivery, unexamined accounts, and the planned scoped response.",
+        "source": {
+          "label": "Email example evidence",
+          "provenanceStatus": "Authored fictional evidence; no real incident source is authenticated"
+        },
+        "availability": "unavailable",
+        "locatorAbsentReason": "The example supplies observations and references, not real source evidence bytes."
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:observation-7",
+        "type": "Observation",
+        "recordedAt": "2026-10-13T09:00:38.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-analyst"
+        },
+        "statement": "E7 · The review index retains E1–E6, unapproved forwarding, unresolved controller and delivery, unexamined accounts, and the planned scoped response.",
+        "evidenceRefIds": [
+          "urn:tensor:example:soc-signin:evidence-7"
+        ],
+        "method": "Authored observation; discriminator and collection limits are described in the statement.",
+        "eventTime": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        }
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:assessment-7",
+        "type": "Assessment",
+        "recordedAt": "2026-10-13T09:00:39.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:soc-signin:instance-7",
+        "applicability": {
+          "status": "applicable",
+          "rationale": "The declared subject, interval, and required parameters are resolved."
+        },
+        "outcome": "yes",
+        "rationale": "The handoff contains the named evidence, separate assessments, response scope, and unresolved questions. A complete example handoff is not incident closure.",
+        "inputs": [
+          {
+            "entryId": "urn:tensor:example:soc-signin:observation-7",
+            "role": "supports"
+          }
+        ],
+        "method": "Authored example applies the pinned question criteria to retained illustrative observations."
+      },
+      {
+        "id": "urn:tensor:example:soc-signin:decision-7",
+        "type": "Decision",
+        "recordedAt": "2026-10-13T09:00:40.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:soc-signin:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:soc-signin:instance-7",
+        "selectedAssessmentId": "urn:tensor:example:soc-signin:assessment-7",
+        "selectedInputIds": [
+          "urn:tensor:example:soc-signin:assessment-7"
+        ],
+        "disposition": "handoff",
+        "rationale": "Retain this assessment and its limitations while continuing the next separately assessed question.",
+        "policyStatus": {
+          "status": "notApplicable"
+        },
+        "authorityStatus": {
+          "status": "notApplicable"
+        },
+        "limitations": [
+          "A complete example handoff is not incident closure."
+        ]
+      }
+    ],
+    "completeness": {
+      "exchangeScope": "full",
+      "meaning": "All referenced Core entries and exact definition bytes are included; actual source evidence bytes do not exist in this fictional example."
+    },
+    "omissions": [],
+    "losses": [],
+    "view": {
+      "mode": "historical"
+    },
+    "metadata": {
+      "illustrative": true,
+      "walkthrough": {
+        "format": "tensor-example-walkthrough",
+        "version": 1,
+        "id": "soc-signin",
+        "title": "Suspicious sign-in and mailbox forwarding",
+        "description": "The five-minute SOC case: an unfamiliar sign-in, unresolved controller, a forwarding rule, and a scoped response.",
+        "domains": [
+          "Identity",
+          "Email"
+        ],
+        "frames": [
+          {
+            "title": "Establish the sign-in",
+            "assessmentId": "urn:tensor:example:soc-signin:assessment-1",
+            "decisionId": "urn:tensor:example:soc-signin:decision-1",
+            "through": 10,
+            "limitation": "The unfamiliar location alone does not establish compromise."
+          },
+          {
+            "title": "Keep the controller unresolved",
+            "assessmentId": "urn:tensor:example:soc-signin:assessment-2",
+            "decisionId": "urn:tensor:example:soc-signin:decision-2",
+            "through": 15,
+            "limitation": "Neither Morgan’s presence nor a different person’s identity is established."
+          },
+          {
+            "title": "Link the mailbox change",
+            "assessmentId": "urn:tensor:example:soc-signin:assessment-3",
+            "decisionId": "urn:tensor:example:soc-signin:decision-3",
+            "through": 20,
+            "limitation": "This establishes one relationship, not all account activity or intent."
+          },
+          {
+            "title": "Check company approval",
+            "assessmentId": "urn:tensor:example:soc-signin:assessment-4",
+            "decisionId": "urn:tensor:example:soc-signin:decision-4",
+            "through": 25,
+            "limitation": "An unapproved rule does not by itself establish malicious intent."
+          },
+          {
+            "title": "Retain the delivery gap",
+            "assessmentId": "urn:tensor:example:soc-signin:assessment-5",
+            "decisionId": "urn:tensor:example:soc-signin:decision-5",
+            "through": 30,
+            "limitation": "Neither successful exfiltration nor zero exposure is claimed."
+          },
+          {
+            "title": "Record the scoped response",
+            "assessmentId": "urn:tensor:example:soc-signin:assessment-6",
+            "decisionId": "urn:tensor:example:soc-signin:decision-6",
+            "through": 36,
+            "limitation": "Approval is recorded; execution and local permission verification are not performed."
+          },
+          {
+            "title": "Hand off the bounded findings",
+            "assessmentId": "urn:tensor:example:soc-signin:assessment-7",
+            "decisionId": "urn:tensor:example:soc-signin:decision-7",
+            "through": 41,
+            "limitation": "A complete example handoff is not incident closure."
+          }
+        ]
+      }
+    }
+  },
+  "definitions": [
+    {
+      "path": "soc-signin.definition.json",
+      "content": "{\n  \"id\": \"urn:tensor:example:soc-signin:composed-definition\",\n  \"version\": \"1.0.0\",\n  \"publicationStatus\": \"draft\",\n  \"title\": \"Suspicious sign-in and mailbox forwarding\",\n  \"contractRef\": {\n    \"proposal\": \"0.1.0\",\n    \"bindingVersion\": \"0.1.0-draft.1\",\n    \"status\": \"candidate; unratified\"\n  },\n  \"questions\": [\n    {\n      \"id\": \"urn:tensor:example:soc-signin:public:question-1\",\n      \"prompt\": \"Was a successful sign-in recorded for Morgan’s account in the bound interval?\",\n      \"proposition\": \"Was a successful sign-in recorded for Morgan’s account in the bound interval? Bound subject: urn:tensor:example:soc-signin:session-s42; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).\",\n      \"parameters\": {\n        \"subject\": {\n          \"type\": \"URI\",\n          \"required\": true,\n          \"bindsTo\": \"subject:subject\"\n        },\n        \"window\": {\n          \"type\": \"timeContext\",\n          \"required\": true,\n          \"bindsTo\": \"timeContext\"\n        }\n      },\n      \"applicabilityCriteria\": \"Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.\",\n      \"assessmentCriteria\": {\n        \"yes\": \"A validated successful-sign-in record matches Morgan, s-42, and the bound interval.\",\n        \"no\": \"Complete, validated sign-in coverage contradicts the named successful-sign-in proposition.\",\n        \"unknown\": \"Record identity, provenance, meaning, or interval coverage is missing or conflicting.\"\n      },\n      \"evidenceRequirements\": [\n        \"Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.\",\n        \"Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit.\"\n      ],\n      \"metadata\": {\n        \"displayId\": \"S1\",\n        \"domain\": \"Identity\",\n        \"layerId\": \"public\",\n        \"layerVersion\": \"1.0.0\",\n        \"archetype\": \"detect\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:soc-signin:public:question-2\",\n      \"prompt\": \"Is the person controlling session s-42 established?\",\n      \"proposition\": \"Is the person controlling session s-42 established? Bound subject: urn:tensor:example:soc-signin:session-s42; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).\",\n      \"parameters\": {\n        \"subject\": {\n          \"type\": \"URI\",\n          \"required\": true,\n          \"bindsTo\": \"subject:subject\"\n        },\n        \"window\": {\n          \"type\": \"timeContext\",\n          \"required\": true,\n          \"bindsTo\": \"timeContext\"\n        }\n      },\n      \"applicabilityCriteria\": \"Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.\",\n      \"assessmentCriteria\": {\n        \"yes\": \"Independent, authenticated discriminators establish the named person controlling s-42.\",\n        \"no\": \"Discriminating evidence contradicts the specifically named person-to-session binding.\",\n        \"unknown\": \"MFA or a client label alone cannot identify the controller; discriminators are missing or conflicting.\"\n      },\n      \"evidenceRequirements\": [\n        \"Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.\",\n        \"Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit.\"\n      ],\n      \"metadata\": {\n        \"displayId\": \"S2\",\n        \"domain\": \"Identity\",\n        \"layerId\": \"public\",\n        \"layerVersion\": \"1.0.0\",\n        \"archetype\": \"correlate\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:soc-signin:vendor:question-3\",\n      \"prompt\": \"Did session s-42 create external forwarding rule r-7?\",\n      \"proposition\": \"Did session s-42 create external forwarding rule r-7? Bound subject: urn:tensor:example:soc-signin:rule-r7; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).\",\n      \"parameters\": {\n        \"subject\": {\n          \"type\": \"URI\",\n          \"required\": true,\n          \"bindsTo\": \"subject:subject\"\n        },\n        \"window\": {\n          \"type\": \"timeContext\",\n          \"required\": true,\n          \"bindsTo\": \"timeContext\"\n        }\n      },\n      \"applicabilityCriteria\": \"Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.\",\n      \"assessmentCriteria\": {\n        \"yes\": \"Validated mailbox and identity records link r-7 creation to s-42 using the documented session discriminator.\",\n        \"no\": \"Validated discriminators contradict this particular session-to-rule relationship.\",\n        \"unknown\": \"The adapter mapping, session discriminator, record meaning, or provenance is unresolved.\"\n      },\n      \"evidenceRequirements\": [\n        \"Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.\",\n        \"Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit.\"\n      ],\n      \"metadata\": {\n        \"displayId\": \"S3\",\n        \"domain\": \"Email\",\n        \"layerId\": \"vendor\",\n        \"layerVersion\": \"1.0.0\",\n        \"archetype\": \"correlate\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:soc-signin:company:question-4\",\n      \"prompt\": \"Was forwarding rule r-7 approved under MAIL-04?\",\n      \"proposition\": \"Was forwarding rule r-7 approved under MAIL-04? Bound subject: urn:tensor:example:soc-signin:rule-r7; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).\",\n      \"parameters\": {\n        \"subject\": {\n          \"type\": \"URI\",\n          \"required\": true,\n          \"bindsTo\": \"subject:subject\"\n        },\n        \"window\": {\n          \"type\": \"timeContext\",\n          \"required\": true,\n          \"bindsTo\": \"timeContext\"\n        }\n      },\n      \"applicabilityCriteria\": \"Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.\",\n      \"assessmentCriteria\": {\n        \"yes\": \"An authentic approval entry for r-7 satisfies the effective MAIL-04 requirements.\",\n        \"no\": \"MAIL-04 applies and a complete authoritative approval search establishes that the required approval is absent.\",\n        \"unknown\": \"Policy applicability, effective version, register authority, or search coverage is unresolved.\"\n      },\n      \"evidenceRequirements\": [\n        \"Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.\",\n        \"Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit.\"\n      ],\n      \"metadata\": {\n        \"displayId\": \"S4\",\n        \"domain\": \"Email\",\n        \"layerId\": \"company\",\n        \"layerVersion\": \"1.0.0\",\n        \"archetype\": \"classify\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:soc-signin:public:question-5\",\n      \"prompt\": \"Is actual external delivery through r-7 established?\",\n      \"proposition\": \"Is actual external delivery through r-7 established? Bound subject: urn:tensor:example:soc-signin:rule-r7; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).\",\n      \"parameters\": {\n        \"subject\": {\n          \"type\": \"URI\",\n          \"required\": true,\n          \"bindsTo\": \"subject:subject\"\n        },\n        \"window\": {\n          \"type\": \"timeContext\",\n          \"required\": true,\n          \"bindsTo\": \"timeContext\"\n        }\n      },\n      \"applicabilityCriteria\": \"Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.\",\n      \"assessmentCriteria\": {\n        \"yes\": \"Independent transport evidence links an actual delivered message to r-7 and its external destination.\",\n        \"no\": \"Complete comparable transport coverage contradicts the particular delivery proposition.\",\n        \"unknown\": \"A configured rule or mailbox audit alone does not establish delivery; transport coverage is missing.\"\n      },\n      \"evidenceRequirements\": [\n        \"Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.\",\n        \"Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit.\"\n      ],\n      \"metadata\": {\n        \"displayId\": \"S5\",\n        \"domain\": \"Email\",\n        \"layerId\": \"public\",\n        \"layerVersion\": \"1.0.0\",\n        \"archetype\": \"correlate\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:soc-signin:company:question-6\",\n      \"prompt\": \"Does the recorded scoped response satisfy MAIL-04’s approval conditions?\",\n      \"proposition\": \"Does the recorded scoped response satisfy MAIL-04’s approval conditions? Bound subject: urn:tensor:example:soc-signin:rule-r7; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).\",\n      \"parameters\": {\n        \"subject\": {\n          \"type\": \"URI\",\n          \"required\": true,\n          \"bindsTo\": \"subject:subject\"\n        },\n        \"window\": {\n          \"type\": \"timeContext\",\n          \"required\": true,\n          \"bindsTo\": \"timeContext\"\n        }\n      },\n      \"applicabilityCriteria\": \"Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.\",\n      \"assessmentCriteria\": {\n        \"yes\": \"The recorded response and claimed role satisfy the explicit policy conditions for this scope.\",\n        \"no\": \"A material response scope or role condition contradicts the effective policy.\",\n        \"unknown\": \"The policy, claimed role, or response scope cannot be resolved.\"\n      },\n      \"evidenceRequirements\": [\n        \"Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.\",\n        \"Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit.\"\n      ],\n      \"metadata\": {\n        \"displayId\": \"S6\",\n        \"domain\": \"Email\",\n        \"layerId\": \"company\",\n        \"layerVersion\": \"1.0.0\",\n        \"archetype\": \"classify\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:soc-signin:public:question-7\",\n      \"prompt\": \"Does the handoff retain the supported findings, unknowns, evidence references, and response scope?\",\n      \"proposition\": \"Does the handoff retain the supported findings, unknowns, evidence references, and response scope? Bound subject: urn:tensor:example:soc-signin:rule-r7; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).\",\n      \"parameters\": {\n        \"subject\": {\n          \"type\": \"URI\",\n          \"required\": true,\n          \"bindsTo\": \"subject:subject\"\n        },\n        \"window\": {\n          \"type\": \"timeContext\",\n          \"required\": true,\n          \"bindsTo\": \"timeContext\"\n        }\n      },\n      \"applicabilityCriteria\": \"Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.\",\n      \"assessmentCriteria\": {\n        \"yes\": \"The handoff contains the named evidence, separate assessments, response scope, and unresolved questions.\",\n        \"no\": \"A required finding, evidence reference, or material limitation is demonstrably absent.\",\n        \"unknown\": \"The retained record cannot establish whether the required handoff content is present.\"\n      },\n      \"evidenceRequirements\": [\n        \"Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.\",\n        \"Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit.\"\n      ],\n      \"metadata\": {\n        \"displayId\": \"S7\",\n        \"domain\": \"Email\",\n        \"layerId\": \"public\",\n        \"layerVersion\": \"1.0.0\",\n        \"archetype\": \"terminal\"\n      }\n    }\n  ],\n  \"transitions\": [\n    {\n      \"id\": \"urn:tensor:example:soc-signin:route-1-yes\",\n      \"sourceQuestionId\": \"urn:tensor:example:soc-signin:public:question-1\",\n      \"targetQuestionId\": \"urn:tensor:example:soc-signin:public:question-2\",\n      \"guardOutcome\": \"yes\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:soc-signin:route-1-no\",\n      \"sourceQuestionId\": \"urn:tensor:example:soc-signin:public:question-1\",\n      \"targetQuestionId\": \"urn:tensor:example:soc-signin:public:question-2\",\n      \"guardOutcome\": \"no\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:soc-signin:route-1-unknown\",\n      \"sourceQuestionId\": \"urn:tensor:example:soc-signin:public:question-1\",\n      \"targetQuestionId\": \"urn:tensor:example:soc-signin:public:question-2\",\n      \"guardOutcome\": \"unknown\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:soc-signin:route-2-yes\",\n      \"sourceQuestionId\": \"urn:tensor:example:soc-signin:public:question-2\",\n      \"targetQuestionId\": \"urn:tensor:example:soc-signin:vendor:question-3\",\n      \"guardOutcome\": \"yes\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:soc-signin:route-2-no\",\n      \"sourceQuestionId\": \"urn:tensor:example:soc-signin:public:question-2\",\n      \"targetQuestionId\": \"urn:tensor:example:soc-signin:vendor:question-3\",\n      \"guardOutcome\": \"no\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:soc-signin:route-2-unknown\",\n      \"sourceQuestionId\": \"urn:tensor:example:soc-signin:public:question-2\",\n      \"targetQuestionId\": \"urn:tensor:example:soc-signin:vendor:question-3\",\n      \"guardOutcome\": \"unknown\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:soc-signin:route-3-yes\",\n      \"sourceQuestionId\": \"urn:tensor:example:soc-signin:vendor:question-3\",\n      \"targetQuestionId\": \"urn:tensor:example:soc-signin:company:question-4\",\n      \"guardOutcome\": \"yes\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:soc-signin:route-3-no\",\n      \"sourceQuestionId\": \"urn:tensor:example:soc-signin:vendor:question-3\",\n      \"targetQuestionId\": \"urn:tensor:example:soc-signin:company:question-4\",\n      \"guardOutcome\": \"no\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:soc-signin:route-3-unknown\",\n      \"sourceQuestionId\": \"urn:tensor:example:soc-signin:vendor:question-3\",\n      \"targetQuestionId\": \"urn:tensor:example:soc-signin:company:question-4\",\n      \"guardOutcome\": \"unknown\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:soc-signin:route-4-yes\",\n      \"sourceQuestionId\": \"urn:tensor:example:soc-signin:company:question-4\",\n      \"targetQuestionId\": \"urn:tensor:example:soc-signin:public:question-5\",\n      \"guardOutcome\": \"yes\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:soc-signin:route-4-no\",\n      \"sourceQuestionId\": \"urn:tensor:example:soc-signin:company:question-4\",\n      \"targetQuestionId\": \"urn:tensor:example:soc-signin:public:question-5\",\n      \"guardOutcome\": \"no\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:soc-signin:route-4-unknown\",\n      \"sourceQuestionId\": \"urn:tensor:example:soc-signin:company:question-4\",\n      \"targetQuestionId\": \"urn:tensor:example:soc-signin:public:question-5\",\n      \"guardOutcome\": \"unknown\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:soc-signin:route-5-yes\",\n      \"sourceQuestionId\": \"urn:tensor:example:soc-signin:public:question-5\",\n      \"targetQuestionId\": \"urn:tensor:example:soc-signin:company:question-6\",\n      \"guardOutcome\": \"yes\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:soc-signin:route-5-no\",\n      \"sourceQuestionId\": \"urn:tensor:example:soc-signin:public:question-5\",\n      \"targetQuestionId\": \"urn:tensor:example:soc-signin:company:question-6\",\n      \"guardOutcome\": \"no\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:soc-signin:route-5-unknown\",\n      \"sourceQuestionId\": \"urn:tensor:example:soc-signin:public:question-5\",\n      \"targetQuestionId\": \"urn:tensor:example:soc-signin:company:question-6\",\n      \"guardOutcome\": \"unknown\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:soc-signin:route-6-yes\",\n      \"sourceQuestionId\": \"urn:tensor:example:soc-signin:company:question-6\",\n      \"targetQuestionId\": \"urn:tensor:example:soc-signin:public:question-7\",\n      \"guardOutcome\": \"yes\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:soc-signin:route-6-no\",\n      \"sourceQuestionId\": \"urn:tensor:example:soc-signin:company:question-6\",\n      \"targetQuestionId\": \"urn:tensor:example:soc-signin:public:question-7\",\n      \"guardOutcome\": \"no\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:soc-signin:route-6-unknown\",\n      \"sourceQuestionId\": \"urn:tensor:example:soc-signin:company:question-6\",\n      \"targetQuestionId\": \"urn:tensor:example:soc-signin:public:question-7\",\n      \"guardOutcome\": \"unknown\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    }\n  ],\n  \"entryQuestionIds\": [\n    \"urn:tensor:example:soc-signin:public:question-1\"\n  ],\n  \"dependencies\": [],\n  \"metadata\": {\n    \"illustrative\": true,\n    \"layers\": [\n      {\n        \"id\": \"public\",\n        \"label\": \"Public investigation questions\",\n        \"owner\": \"TENSOR Standards Consortium\",\n        \"version\": \"1.0.0\"\n      },\n      {\n        \"id\": \"vendor\",\n        \"label\": \"Example vendor telemetry graph\",\n        \"owner\": \"Fictional telemetry vendor\",\n        \"version\": \"1.0.0\"\n      },\n      {\n        \"id\": \"company\",\n        \"label\": \"Example company policy graph\",\n        \"owner\": \"Fictional company\",\n        \"version\": \"1.0.0\"\n      }\n    ],\n    \"composition\": \"Case-specific questions composed in one pinned artifact. These are additional example definitions, not routes added to the public working or published graph.\"\n  }\n}\n"
+    }
+  ]
+}

@@ -5,6 +5,8 @@ import Button from '../../components/Button.astro';
 import Surface from '../../components/Surface.astro';
 import ResourceCard from '../../components/ResourceCard.astro';
 import { absoluteUrl, seo } from '../../data/seo';
+import socBundle from '../../../public/investigations/v1/soc-signin.bundle.json';
+import { caseModel } from '../../lib/caseInvestigations.mjs';
 
 const meta = seo.start;
 const siteUrl = Astro.site?.toString() || 'https://tensor-standards.pages.dev/';
@@ -13,49 +15,32 @@ const jsonLd = {
   headline: meta.title, description: meta.description,
   url: absoluteUrl(siteUrl, meta.canonicalPath),
 };
-const steps = [
-  {
-    id: 'establish-event', actor: 'Human analyst', title: 'Establish what happened',
-    question: 'Was a successful sign-in recorded for Morgan’s account?', outcome: 'Yes', tone: 'yes',
-    evidence: 'E1 · The identity provider’s audit export records a successful sign-in for Morgan and session s-42 at 08:42 UTC. Its collection receipt, time conversion, and event meaning have been checked.',
-    explanation: 'The analyst binds the question to Morgan, s-42, and 08:35–09:00 UTC. The alert starts the investigation; the checked audit record supports this answer.',
-    retained: 'A sign-in occurred. The location alone does not establish compromise.',
-  },
-  {
-    id: 'retain-uncertainty', actor: 'Agent, reviewed by the analyst', title: 'Keep uncertainty visible',
-    question: 'Is the person controlling s-42 established?', outcome: 'Unknown', tone: 'unknown',
-    evidence: 'E2 · MFA succeeded, but the device record is missing. The unfamiliar location could reflect travel, a VPN, or misuse. No retained evidence distinguishes the person controlling the session.',
-    explanation: 'An agent assembles the evidence references and records this assessment under its own identity. The analyst reviews its reasoning. Neither treats successful MFA as proof of who was present.',
-    retained: 'The source remains unresolved. Unknown means more evidence is needed.',
-  },
-  {
-    id: 'vendor-check', actor: 'Vendor layer · product-specific check', title: 'Connect the product evidence',
-    question: 'Did session s-42 create an external forwarding rule?', outcome: 'Yes', tone: 'yes',
-    evidence: 'E3 · A checked mailbox audit record identifies rule r-7, an external destination, and the same session s-42 at 08:47 UTC. The vendor’s documented session mapping connects the two audit sources.',
-    explanation: 'The vendor graph supplies the product fields, query, and mapping needed for this check. A human or an agent can use it. The assessment cites that check’s version and the underlying records.',
-    retained: 'This rule is linked to this session. Other sessions and mailboxes remain unexamined.',
-  },
-  {
-    id: 'company-policy', actor: 'Company layer · local policy', title: 'Apply the company’s rule',
-    question: 'Was forwarding rule r-7 approved under company policy?', outcome: 'No', tone: 'no',
-    evidence: 'E4 · Policy MAIL-04 requires a recorded approval for external forwarding. A complete search of the authoritative approval register for r-7 finds none; the policy owner confirms the requirement applies.',
-    explanation: 'The company graph adds its approval test, responsible owner, and escalation route. The absence of an approval supports “no” here because the required register and search coverage are established. With incomplete coverage, the answer would stay unknown.',
-    retained: 'The rule is unapproved under this policy. That does not establish malicious intent.',
-  },
-  {
-    id: 'handoff', actor: 'Authorized human responder', title: 'Record the decision and hand off',
-    question: 'What response is justified, and who may authorize it?', outcome: 'Decision', tone: null,
-    evidence: 'E5 · The response policy assigns session revocation and rule removal to the on-duty responder. The responder approves those scoped actions and requests a separate check for actual forwarded messages.',
-    explanation: 'The record retains the chosen assessments, rationale, policy version, and claimed authority. Execution and its result require separate evidence. The next shift receives the same evidence references and open questions.',
-    retained: 'Unapproved forwarding is supported. The person responsible, actual delivery, and wider scope remain unresolved.',
-  },
+const model = caseModel(socBundle);
+const chapters = [
+  { frames: [0], title: 'Establish what happened', explanation: 'The analyst binds the question to Morgan’s account, s-42, and 08:35–09:00 UTC. The alert starts the investigation; the checked audit record supports this answer.' },
+  { frames: [1], title: 'Keep uncertainty visible', explanation: 'An assisting agent records its assessment under its own identity. The analyst can inspect the same inputs and reasoning; successful MFA does not establish the person present.' },
+  { frames: [2], title: 'Connect the product evidence', explanation: 'The vendor graph supplies product fields and a documented session mapping. A human or an agent can use the check, with its version and evidence references retained.' },
+  { frames: [3], title: 'Apply the company’s rule', explanation: 'The company graph adds its approval test, owner, and response scope. A complete authoritative approval search supports this negative answer; incomplete coverage would leave it unknown.' },
+  { frames: [4, 5, 6], title: 'Record the decision and hand off', explanation: 'The record keeps the delivery gap, scoped response approval, claimed responder authority, and handoff as distinct entries. Execution requires separate evidence; the next shift receives the same evidence references and open questions.' },
 ];
+const steps = chapters.map(chapter => {
+  const selected = chapter.frames.map(i => model.frames[i]);
+  const frame = selected[0];
+  return { id: ['establish-event','retain-uncertainty','vendor-check','company-policy','handoff'][chapters.indexOf(chapter)], title: chapter.title,
+    actor: chapter.frames.length > 1 ? 'Human responder / Recorded handoff' : `${frame.actor.kind === 'human' ? 'Human' : 'Agent'} · ${frame.node.layerId} layer`,
+    question: chapter.frames.length > 1 ? 'What response is justified, and what still needs investigation?' : frame.node.question.prompt,
+    outcome: chapter.frames.length > 1 ? 'Decision' : frame.assessment.outcome,
+    tone: chapter.frames.length > 1 ? null : frame.assessment.outcome,
+    evidence: selected.flatMap(f => f.inputs.map(input => input.statement)).join(' '), explanation: chapter.explanation,
+    retained: selected.map(f => f.limitation).join(' '),
+  };
+});
 ---
 
 <BaseLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd} hidePageTitle>
   <PageIntro title="TENSOR in five minutes" eyebrow="Start here / One investigation">
     <p>A shared way to ask questions, assess evidence, and carry an investigation forward—whether the work is done by a person or an agent.</p>
-    <div class="cta-group"><Button variant="primary" href="#soc-investigation">Follow the SOC investigation <span aria-hidden="true">↓</span></Button><a href="#how-it-fits">How the layers fit together</a></div>
+    <div class="cta-group"><Button variant="primary" href="/investigations/soc-signin/">Follow this case in the graph <span aria-hidden="true">↗</span></Button><Button href="/investigation-lab/?case=soc-signin">Open matching Lab record <span aria-hidden="true">↗</span></Button><a href="#soc-investigation">Read the SOC investigation below ↓</a></div>
   </PageIntro>
 
   <div class="container introduction">
@@ -111,10 +96,10 @@ const steps = [
 
     <section class="intro-section intro-next" aria-labelledby="next-title">
       <p class="section-kicker">The next step</p>
-      <div class="intro-copy"><h2 id="next-title">Try the part that fits the work.</h2><p>The introduction above is a reading example. The reference tools below provide interactive cases, downloadable records, and layer files.</p></div>
+      <div class="intro-copy"><h2 id="next-title">Follow the same case. Explore other domains.</h2><p>This SOC example has a matching interactive graph and Core record. Additional cases follow workload identity into cloud and network activity, and an email attachment into file, host, and application activity.</p><p><a href="/investigations/">All cross-domain investigations →</a></p></div>
       <div class="intro-resources">
-        <ResourceCard href={'/graphs/?investigation=identity-session&step=0'} title="Follow an investigation"><p>For analysts: step through a separate identity token-exchange example in the graph, with evidence and unknowns visible.</p><small>Graph atlas / Step-by-step</small></ResourceCard>
-        <ResourceCard href="/investigation-lab/" title="Inspect a human–agent handoff"><p>For SOC teams: select the identity case in the Lab, inspect its assessment history, and export its investigation bundle.</p><small>Investigation Lab / Identity case</small></ResourceCard>
+        <ResourceCard href="/investigations/soc-signin/" title="Follow an investigation"><p>For analysts: follow this sign-in and forwarding case in Atlas or 3D, with human, agent, vendor, and company roles visible.</p><small>Same SOC case / Step-by-step</small></ResourceCard>
+        <ResourceCard href="/investigation-lab/?case=soc-signin" title="Inspect a human–agent handoff"><p>For SOC teams: inspect this case’s evidence, assessments, decisions, and planned response, then export its Core bundle.</p><small>Investigation Lab / Same SOC record</small></ResourceCard>
         <ResourceCard href="/extensions/" title="Add vendor and company layers"><p>For vendors and organizations: combine the cloud example layers, then inspect their separate ownership and questions.</p><small>Layering guide / Working example</small></ResourceCard>
         <ResourceCard href="/implement/" title="Implement the shared record"><p>For developers: run the reference validator and use the Core contract and schemas to assess integration work.</p><small>Implementation guide / Browser and CLI</small></ResourceCard>
       </div>

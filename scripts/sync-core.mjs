@@ -15,6 +15,9 @@ const LEGACY = 'releases/core/graphs/v0.20260206e/tensor.core.graph.json';
 const LEGACY_TARGET = 'public/legacy/0.20260206e/tensor.core.graph.json';
 const LEGACY_SHA256 = 'dfc3f1a965c01b6f7ade253e426e69abcbad688fab20d9d00065d71c777c010c';
 const REVIEW = 'review/2026-10-11.1';
+const INVESTIGATIONS = 'examples/investigations/v1';
+const INVESTIGATION_TARGET = 'public/investigations/v1';
+const INVESTIGATION_FILES = ['README.md', 'catalog.json', 'manifest.json', ...['soc-signin', 'workload-cloud-egress', 'attachment-host-tool'].flatMap(id => [`${id}.bundle.json`, `${id}.definition.json`])];
 const WORKING = ['tensor.core.graph.json', 'entry-evidence-criteria.json', 'source/entry_nodes.json', 'coverage-inventory.json',
   'reviews/2026-10-12-restoration/README.md', 'reviews/2026-10-12-restoration/analysis.json',
   'reviews/2026-10-12-independent-review/README.md', 'reviews/2026-10-12-independent-review/review.json',
@@ -34,7 +37,7 @@ const FOUNDING_FILES = [
   'examples/manifest.json', 'examples/check_authoring.py',
 ];
 const LICENSE_TARGETS = ['src/vendor/tensor-core/LICENSE', `${PUBLIC_CORE}/LICENSE`];
-const OWNED_ROOTS = ['src/vendor/tensor-core', PUBLIC_CORE, 'public/founding', 'public/legacy/0.20260206e', 'public/review/2026-10-11.1', 'public/docs', WORKING_TARGET];
+const OWNED_ROOTS = ['src/vendor/tensor-core', PUBLIC_CORE, 'public/founding', 'public/legacy/0.20260206e', 'public/review/2026-10-11.1', 'public/docs', WORKING_TARGET, INVESTIGATION_TARGET];
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const fail = (message) => { throw new Error(message); };
 const lexicalOrder = (a, b) => a < b ? -1 : a > b ? 1 : 0;
@@ -109,6 +112,7 @@ async function sourceSnapshot(options) {
     ...FOUNDING_FILES.map((name) => ({ source: `${FOUNDING}/${name}`, readRoot: foundingRoot, readPath: `${foundingPrefix}${name}`, target: `public/founding/${name}` })),
     { source: LEGACY, target: LEGACY_TARGET },
     ...WORKING.map((name) => ({ source: `drafts/core/${name}`, target: `${WORKING_TARGET}/${name}` })),
+    ...INVESTIGATION_FILES.map(name => ({ source: `${INVESTIGATIONS}/${name}`, target: `${INVESTIGATION_TARGET}/${name}` })),
   ];
   for (const filename of await listFiles(source, REVIEW)) {
     pairs.push({ source: filename, target: `public/${filename}` });
@@ -148,6 +152,7 @@ async function checkManifest() {
   const manifest = JSON.parse(await readFile(await safePath(WEBSITE, MANIFEST), 'utf8'));
   if (manifest.format !== 'tensor-website-source-manifest' || manifest.manifestVersion !== 1 || manifest.bindingVersion !== VERSION || manifest.sourceRepository !== 'https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework' || !/^[0-9a-f]{40}$/.test(manifest.sourceCommit) || typeof manifest.sourceDirty !== 'boolean' || !['framework-repository', 'external-draft-bootstrap'].includes(manifest.foundingSource) || !Array.isArray(manifest.files)) fail('Invalid generated provenance manifest.');
   const seen = new Set();
+  for (const name of INVESTIGATION_FILES) if (!manifest.files.some(file=>file.target===`${INVESTIGATION_TARGET}/${name}`)) fail(`Missing investigation artifact: ${name}`);
   for (const file of manifest.files) {
     allowedTarget(file.target);
     safeRelative(file.source);

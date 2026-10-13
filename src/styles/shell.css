@@ -22,6 +22,9 @@
 .page-title { font-family: var(--font-display); max-width: 24ch; font-size: var(--type-title); font-weight: 500; line-height: 1.08; margin-top: 1.25rem; letter-spacing: var(--tracking-display); }
 .page-title-bar p:not(.page-eyebrow) { color: var(--text-secondary); max-width: 72ch; margin-top: 1.2rem; }
 .page-title-bar .cta-group { font-size: .85rem; }
+.page-title-bar.is-compact { padding-block: var(--space-4) var(--space-3); }
+.page-title-bar.is-compact .container { padding-bottom: var(--space-3); }
+.page-title-bar.is-compact .page-title { font-size: var(--type-workspace-title); margin-top: var(--space-2); }
 .page-eyebrow { color: var(--text-muted); }
 .page-eyebrow::before { content: ''; display: inline-block; width: 18px; height: 1px; background: var(--accent-primary); vertical-align: middle; margin-right: .8rem; }
 .document-layout { display: grid; grid-template-columns: 190px minmax(0,1fr); gap: clamp(2rem,5vw,5.5rem); align-items: start; }
@@ -72,6 +75,8 @@
 }
 @media (min-width: 851px) and (max-width: 1050px) { .document-nav { max-height: calc(100dvh - 10rem); } }
 @media(max-width:700px) {
+ .page-title-bar.is-compact { padding-block: var(--space-2); }
+ .page-title-bar.is-compact .container { padding-bottom: var(--space-2); }
  .site-header { position: relative; }
  .header-inner { flex-wrap: wrap; gap: .2rem; min-height: 0; padding-block: .65rem .35rem; }
  .header-brand-note { max-width: none; font-size: .56rem; }

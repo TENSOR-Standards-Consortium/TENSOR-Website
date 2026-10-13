@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Badge } from './WorkspaceUI.jsx';
 import { GUIDES, GUIDE_PROVENANCE, GUIDE_GRAPH_SHA256, GUIDE_CRITERIA_SHA256 } from '../lib/guidedInvestigations.mjs';
+import catalog from '../../public/investigations/v1/catalog.json';
 
 export default function InvestigationTimeline({ guides = GUIDES, profileContext = null, guide, index, playing, setPlaying, advance, chooseGuide, graph, criteria, inspect, speed, setSpeed }) {
   const current = guide.steps[index];
@@ -13,7 +14,7 @@ export default function InvestigationTimeline({ guides = GUIDES, profileContext 
     if (rail && item) rail.scrollTo({ top: item.offsetTop - 12, behavior: 'instant' });
   }, [index, guide]);
   return <aside className="investigation-timeline" aria-label="Guided investigation timeline">
-    <div className="timeline-heading"><p className="section-kicker">FOLLOW AN INVESTIGATION</p><label htmlFor="guide-select">Example investigation</label><select id="guide-select" value={guide.id} onChange={e => chooseGuide(e.target.value)}>{guides.map(g => <option key={g.id} value={g.id}>{g.title}</option>)}</select><p>{guide.description}</p></div>
+    <div className="timeline-heading"><p className="section-kicker">FOLLOW AN INVESTIGATION</p><label htmlFor="guide-select">Example investigation</label><select id="guide-select" value={guide.id} onChange={e => {const sample=catalog.scenarios.find(s=>`case:${s.id}`===e.target.value);if(sample)window.location.assign(`/investigations/${sample.id}/`);else chooseGuide(e.target.value);}}><optgroup label="Public graph demonstrations">{guides.map(g => <option key={g.id} value={g.id}>{g.title}</option>)}</optgroup><optgroup label="Cross-domain Core cases">{catalog.scenarios.map(s=><option key={s.id} value={`case:${s.id}`}>{s.title}</option>)}</optgroup></select><p>{guide.description}</p></div>
     <div className="timeline-playback">
       <div className="timeline-playback-buttons"><button className="btn btn-primary" onClick={() => { if (index === guide.steps.length - 1 && !playing) advance(0); setPlaying(!playing); }}>{playing ? 'Pause' : index === guide.steps.length - 1 ? 'Replay' : 'Play'}</button><button className="btn btn-secondary" aria-label="Previous step" disabled={index === 0} onClick={() => { setPlaying(false); advance(index - 1); }}>←</button><button className="btn btn-secondary" aria-label="Next step" disabled={index === guide.steps.length - 1} onClick={() => { setPlaying(false); advance(index + 1); }}>→</button><span>{String(index + 1).padStart(2,'0')} / {String(guide.steps.length).padStart(2,'0')}</span></div>
       <label className="sr-only" htmlFor="timeline-position">Investigation step</label><input id="timeline-position" type="range" min="0" max={guide.steps.length - 1} value={index} onChange={e => { setPlaying(false); advance(Number(e.target.value)); }} aria-valuetext={`Step ${index + 1}: ${current.title}`} />

@@ -1,0 +1,14 @@
+---
+import DocumentLayout from '../../layouts/DocumentLayout.astro';
+import ResourceCard from '../../components/ResourceCard.astro';
+import catalog from '../../../public/investigations/v1/catalog.json';
+---
+<DocumentLayout title="Cross-domain investigations | TENSOR" displayTitle="Cross-domain investigations" description="Interactive investigations across identity, email, cloud, network, file, host, and application domains, with matching Core records and vendor/company layers." canonicalPath="/investigations/">
+  <p class="introduction">Each case has one composed question graph and one matching Core record. Humans and agents assess evidence; vendor questions add product checks; company questions apply local policy. All cases are fictional and all response actions are planned.</p>
+  <div class="cases">{catalog.scenarios.map(sample=><section class="case-resource">
+    <ResourceCard href={`/investigations/${sample.id}/`} title={sample.title}><p>{sample.description}</p><small>{sample.domains.join(' → ')} · {sample.frames} steps</small></ResourceCard>
+    <p><a href={`/investigation-lab/?case=${sample.id}`}>Open matching Lab record</a> · <a href={`/investigations/v1/${sample.bundle}`} download>Download bundle</a> · <a href={`/investigations/v1/${sample.definition}`} download>Exact definitions</a></p>
+  </section>)}</div>
+  <p class="boundary">These are additional example definitions. Their cross-domain and layer routes do not modify the separate <a href="/graphs/">609-question working graph</a>, published graph, or Core schema. In each case, negative and unknown findings remain separate from later answers and response permission. <a href="/investigations/v1/README.md">Composition and evidence boundaries</a>.</p>
+</DocumentLayout>
+<style>.introduction,.boundary { max-width:var(--reading-width); color:var(--text-secondary); margin-bottom:var(--space-4); }.cases { display:grid; gap:var(--space-5); }.case-resource > p { margin-top:var(--space-2); font-size:.85rem; }.boundary { margin-top:var(--space-5); }</style>

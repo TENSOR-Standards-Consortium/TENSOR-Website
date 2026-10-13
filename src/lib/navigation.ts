@@ -25,6 +25,7 @@ export const resourceGroups = [
     { title: 'Investigation Lab', url: '/investigation-lab/', description: 'Local inspection, validation, replay, and exchange of investigation bundles.' },
   ] },
   { title: 'Graph resources', resources: [
+    { title: 'Cross-domain investigations', url: '/investigations/', description: 'Matching interactive graphs and Core records across seven domains, with human, agent, vendor, and company roles.' },
     { title: 'Investigation atlas', url: '/graphs/', description: 'All public working questions, evidence criteria, routes, and guided examples.' },
     { title: 'Event profiles', url: '/graphs/profiles/', description: 'Sixteen event contexts and example paths across seven domains.' },
     { title: 'Coverage ledger', url: '/graphs/coverage/', description: 'Original and revised questions, evidence changes, and review status.' },

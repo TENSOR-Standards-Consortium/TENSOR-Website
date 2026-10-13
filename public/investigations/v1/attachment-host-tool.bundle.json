@@ -1,0 +1,1398 @@
+{
+  "format": "tensor-investigation-bundle",
+  "bindingVersion": "0.1.0-draft.1",
+  "record": {
+    "snapshotId": "urn:tensor:example:attachment-host-tool:snapshot-1",
+    "investigationId": "urn:tensor:example:attachment-host-tool:investigation",
+    "contractRef": {
+      "proposal": "0.1.0",
+      "bindingVersion": "0.1.0-draft.1",
+      "status": "candidate; unratified"
+    },
+    "producer": {
+      "label": "TENSOR illustrative investigation authoring",
+      "version": "1.0.0",
+      "implementationStatus": "Fictional example, not an operational deployment"
+    },
+    "recordedAt": "2026-10-13T09:00:53.000Z",
+    "scope": {
+      "purpose": "Investigate message m-31, attachment f-31, host h-17 process p-204, and application tool request req-42.",
+      "subjectBoundary": [
+        "urn:tensor:example:attachment-host-tool:message-m31",
+        "urn:tensor:example:attachment-host-tool:file-f31",
+        "urn:tensor:example:attachment-host-tool:process-p204",
+        "urn:tensor:example:attachment-host-tool:request-req42",
+        "urn:tensor:example:attachment-host-tool:host-h17"
+      ]
+    },
+    "definitionReferences": [
+      {
+        "id": "urn:tensor:example:attachment-host-tool:composed-definition",
+        "version": "1.0.0",
+        "sha256": "242c00a2691bb3bf26e7bbaa823600b21aa0b99bf80ae8061305bcdc868f07bb",
+        "artifact": "attachment-host-tool.definition.json"
+      }
+    ],
+    "dependencies": [],
+    "entries": [
+      {
+        "id": "urn:tensor:example:attachment-host-tool:actor-analyst",
+        "type": "Actor",
+        "recordedAt": "2026-10-13T09:00:00.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-analyst"
+        },
+        "kind": "human",
+        "label": "SOC analyst",
+        "identityStatus": "selfDeclared"
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:actor-agent",
+        "type": "Actor",
+        "recordedAt": "2026-10-13T09:00:01.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-agent"
+        },
+        "kind": "agent",
+        "label": "Assisting investigation agent",
+        "identityStatus": "selfDeclared"
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:actor-responder",
+        "type": "Actor",
+        "recordedAt": "2026-10-13T09:00:02.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-responder"
+        },
+        "kind": "human",
+        "label": "On-duty response lead",
+        "identityStatus": "selfDeclared"
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:policy",
+        "type": "PolicyReference",
+        "recordedAt": "2026-10-13T09:00:03.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-analyst"
+        },
+        "policyIdentity": "urn:tensor:example:attachment-host-tool:company-response-policy",
+        "version": "1.0.0",
+        "effectiveTime": {
+          "status": "known",
+          "start": "2026-10-01T00:00:00Z"
+        },
+        "applicableScope": "Investigate message m-31, attachment f-31, host h-17 process p-204, and application tool request req-42.",
+        "locatorAbsentReason": "Fictional example policy; conditions are retained here.",
+        "conditions": "IR-07 v1. An unapproved external upload requires an incident review. The on-duty responder may approve isolation of h-17 and pausing req-42; execution and successful containment require separate evidence."
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:authority",
+        "type": "AuthorityAssertion",
+        "recordedAt": "2026-10-13T09:00:04.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-responder"
+        },
+        "issuerId": "urn:tensor:example:attachment-host-tool:actor-responder",
+        "granteeId": "urn:tensor:example:attachment-host-tool:actor-responder",
+        "permittedOperation": "Approve scoped isolation of h-17 and pausing req-42, pending delivery verification",
+        "scope": "Investigate message m-31, attachment f-31, host h-17 process p-204, and application tool request req-42.",
+        "validityStatus": {
+          "status": "claimedValid",
+          "reason": "The example asserts this actor is the designated on-duty responder."
+        },
+        "basisReferences": [
+          "urn:tensor:example:attachment-host-tool:policy"
+        ],
+        "receiverLocalVerification": "notPerformed"
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:instance-1",
+        "type": "QuestionInstance",
+        "recordedAt": "2026-10-13T09:00:05.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-analyst"
+        },
+        "definitionRef": {
+          "id": "urn:tensor:example:attachment-host-tool:composed-definition",
+          "version": "1.0.0",
+          "sha256": "242c00a2691bb3bf26e7bbaa823600b21aa0b99bf80ae8061305bcdc868f07bb",
+          "artifact": "attachment-host-tool.definition.json"
+        },
+        "questionId": "urn:tensor:example:attachment-host-tool:public:question-1",
+        "subjectBindings": {
+          "subject": "urn:tensor:example:attachment-host-tool:message-m31"
+        },
+        "timeContext": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        },
+        "parameterBindings": {
+          "subject": "urn:tensor:example:attachment-host-tool:message-m31",
+          "window": {
+            "status": "bounded",
+            "start": "2026-10-13T08:35:00Z",
+            "end": "2026-10-13T09:00:00Z"
+          }
+        },
+        "origin": {
+          "kind": "entry",
+          "rationale": "Open the bounded example investigation."
+        }
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:evidence-1",
+        "type": "EvidenceReference",
+        "recordedAt": "2026-10-13T09:00:06.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-analyst"
+        },
+        "description": "H1 · A fictional accepted-mailbox delivery event names m-31 and the mailbox at 08:40 UTC. Message discriminator, event meaning, and collector receipt are retained.",
+        "source": {
+          "label": "Email example evidence",
+          "provenanceStatus": "Authored fictional evidence; no real incident source is authenticated"
+        },
+        "availability": "unavailable",
+        "locatorAbsentReason": "The example supplies observations and references, not real source evidence bytes."
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:observation-1",
+        "type": "Observation",
+        "recordedAt": "2026-10-13T09:00:07.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-analyst"
+        },
+        "statement": "H1 · A fictional accepted-mailbox delivery event names m-31 and the mailbox at 08:40 UTC. Message discriminator, event meaning, and collector receipt are retained.",
+        "evidenceRefIds": [
+          "urn:tensor:example:attachment-host-tool:evidence-1"
+        ],
+        "method": "Authored observation; discriminator and collection limits are described in the statement.",
+        "eventTime": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        }
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:assessment-1",
+        "type": "Assessment",
+        "recordedAt": "2026-10-13T09:00:08.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:attachment-host-tool:instance-1",
+        "applicability": {
+          "status": "applicable",
+          "rationale": "The declared subject, interval, and required parameters are resolved."
+        },
+        "outcome": "yes",
+        "rationale": "A validated mailbox delivery event matches the message and named mailbox. Delivery does not establish that a person opened the attachment.",
+        "inputs": [
+          {
+            "entryId": "urn:tensor:example:attachment-host-tool:observation-1",
+            "role": "supports"
+          }
+        ],
+        "method": "Authored example applies the pinned question criteria to retained illustrative observations."
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:decision-1",
+        "type": "Decision",
+        "recordedAt": "2026-10-13T09:00:09.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:attachment-host-tool:instance-1",
+        "selectedAssessmentId": "urn:tensor:example:attachment-host-tool:assessment-1",
+        "selectedInputIds": [
+          "urn:tensor:example:attachment-host-tool:assessment-1"
+        ],
+        "disposition": "transition",
+        "rationale": "Retain this assessment and its limitations while continuing the next separately assessed question.",
+        "policyStatus": {
+          "status": "notApplicable"
+        },
+        "authorityStatus": {
+          "status": "notApplicable"
+        },
+        "limitations": [
+          "Delivery does not establish that a person opened the attachment."
+        ],
+        "selections": [
+          {
+            "transitionId": "urn:tensor:example:attachment-host-tool:route-1-yes",
+            "targetInstanceId": "urn:tensor:example:attachment-host-tool:instance-2"
+          }
+        ]
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:instance-2",
+        "type": "QuestionInstance",
+        "recordedAt": "2026-10-13T09:00:10.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-agent"
+        },
+        "definitionRef": {
+          "id": "urn:tensor:example:attachment-host-tool:composed-definition",
+          "version": "1.0.0",
+          "sha256": "242c00a2691bb3bf26e7bbaa823600b21aa0b99bf80ae8061305bcdc868f07bb",
+          "artifact": "attachment-host-tool.definition.json"
+        },
+        "questionId": "urn:tensor:example:attachment-host-tool:vendor:question-2",
+        "subjectBindings": {
+          "subject": "urn:tensor:example:attachment-host-tool:file-f31"
+        },
+        "timeContext": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        },
+        "parameterBindings": {
+          "subject": "urn:tensor:example:attachment-host-tool:file-f31",
+          "window": {
+            "status": "bounded",
+            "start": "2026-10-13T08:35:00Z",
+            "end": "2026-10-13T09:00:00Z"
+          }
+        },
+        "origin": {
+          "kind": "transition",
+          "rationale": "Continue a separately assessed question with the prior answer retained.",
+          "originDecisionId": "urn:tensor:example:attachment-host-tool:decision-1"
+        }
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:evidence-2",
+        "type": "EvidenceReference",
+        "recordedAt": "2026-10-13T09:00:11.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-agent"
+        },
+        "description": "H2 · Independently retained attachment and endpoint-file bytes have matching computed SHA-256 digests and size. The adapter retains both acquisition receipts and hashing method.",
+        "source": {
+          "label": "File example evidence",
+          "provenanceStatus": "Authored fictional evidence; no real incident source is authenticated"
+        },
+        "availability": "unavailable",
+        "locatorAbsentReason": "The example supplies observations and references, not real source evidence bytes."
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:observation-2",
+        "type": "Observation",
+        "recordedAt": "2026-10-13T09:00:12.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-agent"
+        },
+        "statement": "H2 · Independently retained attachment and endpoint-file bytes have matching computed SHA-256 digests and size. The adapter retains both acquisition receipts and hashing method.",
+        "evidenceRefIds": [
+          "urn:tensor:example:attachment-host-tool:evidence-2"
+        ],
+        "method": "Authored observation; discriminator and collection limits are described in the statement.",
+        "eventTime": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        }
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:assessment-2",
+        "type": "Assessment",
+        "recordedAt": "2026-10-13T09:00:13.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-agent"
+        },
+        "targetInstanceId": "urn:tensor:example:attachment-host-tool:instance-2",
+        "applicability": {
+          "status": "applicable",
+          "rationale": "The declared subject, interval, and required parameters are resolved."
+        },
+        "outcome": "yes",
+        "rationale": "Independent byte acquisitions and a documented digest comparison establish this named artifact match. Matching bytes do not establish execution or maliciousness.",
+        "inputs": [
+          {
+            "entryId": "urn:tensor:example:attachment-host-tool:observation-2",
+            "role": "supports"
+          }
+        ],
+        "method": "Authored example applies the pinned question criteria to retained illustrative observations."
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:decision-2",
+        "type": "Decision",
+        "recordedAt": "2026-10-13T09:00:14.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:attachment-host-tool:instance-2",
+        "selectedAssessmentId": "urn:tensor:example:attachment-host-tool:assessment-2",
+        "selectedInputIds": [
+          "urn:tensor:example:attachment-host-tool:assessment-2"
+        ],
+        "disposition": "transition",
+        "rationale": "Retain this assessment and its limitations while continuing the next separately assessed question.",
+        "policyStatus": {
+          "status": "notApplicable"
+        },
+        "authorityStatus": {
+          "status": "notApplicable"
+        },
+        "limitations": [
+          "Matching bytes do not establish execution or maliciousness."
+        ],
+        "selections": [
+          {
+            "transitionId": "urn:tensor:example:attachment-host-tool:route-2-yes",
+            "targetInstanceId": "urn:tensor:example:attachment-host-tool:instance-3"
+          }
+        ]
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:instance-3",
+        "type": "QuestionInstance",
+        "recordedAt": "2026-10-13T09:00:15.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-agent"
+        },
+        "definitionRef": {
+          "id": "urn:tensor:example:attachment-host-tool:composed-definition",
+          "version": "1.0.0",
+          "sha256": "242c00a2691bb3bf26e7bbaa823600b21aa0b99bf80ae8061305bcdc868f07bb",
+          "artifact": "attachment-host-tool.definition.json"
+        },
+        "questionId": "urn:tensor:example:attachment-host-tool:vendor:question-3",
+        "subjectBindings": {
+          "subject": "urn:tensor:example:attachment-host-tool:process-p204"
+        },
+        "timeContext": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        },
+        "parameterBindings": {
+          "subject": "urn:tensor:example:attachment-host-tool:process-p204",
+          "window": {
+            "status": "bounded",
+            "start": "2026-10-13T08:35:00Z",
+            "end": "2026-10-13T09:00:00Z"
+          }
+        },
+        "origin": {
+          "kind": "transition",
+          "rationale": "Continue a separately assessed question with the prior answer retained.",
+          "originDecisionId": "urn:tensor:example:attachment-host-tool:decision-2"
+        }
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:evidence-3",
+        "type": "EvidenceReference",
+        "recordedAt": "2026-10-13T09:00:16.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-agent"
+        },
+        "description": "H3 · Fictional endpoint execution telemetry links process instance p-204 on h-17 to f-31’s verified digest at 08:46 UTC. Process start semantics and collection continuity are assessed.",
+        "source": {
+          "label": "Host example evidence",
+          "provenanceStatus": "Authored fictional evidence; no real incident source is authenticated"
+        },
+        "availability": "unavailable",
+        "locatorAbsentReason": "The example supplies observations and references, not real source evidence bytes."
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:observation-3",
+        "type": "Observation",
+        "recordedAt": "2026-10-13T09:00:17.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-agent"
+        },
+        "statement": "H3 · Fictional endpoint execution telemetry links process instance p-204 on h-17 to f-31’s verified digest at 08:46 UTC. Process start semantics and collection continuity are assessed.",
+        "evidenceRefIds": [
+          "urn:tensor:example:attachment-host-tool:evidence-3"
+        ],
+        "method": "Authored observation; discriminator and collection limits are described in the statement.",
+        "eventTime": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        }
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:assessment-3",
+        "type": "Assessment",
+        "recordedAt": "2026-10-13T09:00:18.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-agent"
+        },
+        "targetInstanceId": "urn:tensor:example:attachment-host-tool:instance-3",
+        "applicability": {
+          "status": "applicable",
+          "rationale": "The declared subject, interval, and required parameters are resolved."
+        },
+        "outcome": "yes",
+        "rationale": "Validated process-instance and artifact discriminators establish execution of these bytes on h-17. This does not establish every action performed by p-204.",
+        "inputs": [
+          {
+            "entryId": "urn:tensor:example:attachment-host-tool:observation-3",
+            "role": "supports"
+          }
+        ],
+        "method": "Authored example applies the pinned question criteria to retained illustrative observations."
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:decision-3",
+        "type": "Decision",
+        "recordedAt": "2026-10-13T09:00:19.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:attachment-host-tool:instance-3",
+        "selectedAssessmentId": "urn:tensor:example:attachment-host-tool:assessment-3",
+        "selectedInputIds": [
+          "urn:tensor:example:attachment-host-tool:assessment-3"
+        ],
+        "disposition": "transition",
+        "rationale": "Retain this assessment and its limitations while continuing the next separately assessed question.",
+        "policyStatus": {
+          "status": "notApplicable"
+        },
+        "authorityStatus": {
+          "status": "notApplicable"
+        },
+        "limitations": [
+          "This does not establish every action performed by p-204."
+        ],
+        "selections": [
+          {
+            "transitionId": "urn:tensor:example:attachment-host-tool:route-3-yes",
+            "targetInstanceId": "urn:tensor:example:attachment-host-tool:instance-4"
+          }
+        ]
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:instance-4",
+        "type": "QuestionInstance",
+        "recordedAt": "2026-10-13T09:00:20.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-analyst"
+        },
+        "definitionRef": {
+          "id": "urn:tensor:example:attachment-host-tool:composed-definition",
+          "version": "1.0.0",
+          "sha256": "242c00a2691bb3bf26e7bbaa823600b21aa0b99bf80ae8061305bcdc868f07bb",
+          "artifact": "attachment-host-tool.definition.json"
+        },
+        "questionId": "urn:tensor:example:attachment-host-tool:vendor:question-4",
+        "subjectBindings": {
+          "subject": "urn:tensor:example:attachment-host-tool:request-req42"
+        },
+        "timeContext": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        },
+        "parameterBindings": {
+          "subject": "urn:tensor:example:attachment-host-tool:request-req42",
+          "window": {
+            "status": "bounded",
+            "start": "2026-10-13T08:35:00Z",
+            "end": "2026-10-13T09:00:00Z"
+          }
+        },
+        "origin": {
+          "kind": "transition",
+          "rationale": "Continue a separately assessed question with the prior answer retained.",
+          "originDecisionId": "urn:tensor:example:attachment-host-tool:decision-3"
+        }
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:evidence-4",
+        "type": "EvidenceReference",
+        "recordedAt": "2026-10-13T09:00:21.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-analyst"
+        },
+        "description": "H4 · Fictional endpoint socket telemetry and independently collected gateway authentication records share a discriminating connection binding for req-42; a copied request label alone is not used.",
+        "source": {
+          "label": "Application example evidence",
+          "provenanceStatus": "Authored fictional evidence; no real incident source is authenticated"
+        },
+        "availability": "unavailable",
+        "locatorAbsentReason": "The example supplies observations and references, not real source evidence bytes."
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:observation-4",
+        "type": "Observation",
+        "recordedAt": "2026-10-13T09:00:22.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-analyst"
+        },
+        "statement": "H4 · Fictional endpoint socket telemetry and independently collected gateway authentication records share a discriminating connection binding for req-42; a copied request label alone is not used.",
+        "evidenceRefIds": [
+          "urn:tensor:example:attachment-host-tool:evidence-4"
+        ],
+        "method": "Authored observation; discriminator and collection limits are described in the statement.",
+        "eventTime": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        }
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:assessment-4",
+        "type": "Assessment",
+        "recordedAt": "2026-10-13T09:00:23.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:attachment-host-tool:instance-4",
+        "applicability": {
+          "status": "applicable",
+          "rationale": "The declared subject, interval, and required parameters are resolved."
+        },
+        "outcome": "yes",
+        "rationale": "Independent connection and authenticated request discriminators establish the named process-to-request relationship. The application operator’s human identity and intent remain unresolved.",
+        "inputs": [
+          {
+            "entryId": "urn:tensor:example:attachment-host-tool:observation-4",
+            "role": "supports"
+          }
+        ],
+        "method": "Authored example applies the pinned question criteria to retained illustrative observations."
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:decision-4",
+        "type": "Decision",
+        "recordedAt": "2026-10-13T09:00:24.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:attachment-host-tool:instance-4",
+        "selectedAssessmentId": "urn:tensor:example:attachment-host-tool:assessment-4",
+        "selectedInputIds": [
+          "urn:tensor:example:attachment-host-tool:assessment-4"
+        ],
+        "disposition": "transition",
+        "rationale": "Retain this assessment and its limitations while continuing the next separately assessed question.",
+        "policyStatus": {
+          "status": "notApplicable"
+        },
+        "authorityStatus": {
+          "status": "notApplicable"
+        },
+        "limitations": [
+          "The application operator’s human identity and intent remain unresolved."
+        ],
+        "selections": [
+          {
+            "transitionId": "urn:tensor:example:attachment-host-tool:route-4-yes",
+            "targetInstanceId": "urn:tensor:example:attachment-host-tool:instance-5"
+          }
+        ]
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:instance-5",
+        "type": "QuestionInstance",
+        "recordedAt": "2026-10-13T09:00:25.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-agent"
+        },
+        "definitionRef": {
+          "id": "urn:tensor:example:attachment-host-tool:composed-definition",
+          "version": "1.0.0",
+          "sha256": "242c00a2691bb3bf26e7bbaa823600b21aa0b99bf80ae8061305bcdc868f07bb",
+          "artifact": "attachment-host-tool.definition.json"
+        },
+        "questionId": "urn:tensor:example:attachment-host-tool:public:question-5",
+        "subjectBindings": {
+          "subject": "urn:tensor:example:attachment-host-tool:request-req42"
+        },
+        "timeContext": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        },
+        "parameterBindings": {
+          "subject": "urn:tensor:example:attachment-host-tool:request-req42",
+          "window": {
+            "status": "bounded",
+            "start": "2026-10-13T08:35:00Z",
+            "end": "2026-10-13T09:00:00Z"
+          }
+        },
+        "origin": {
+          "kind": "transition",
+          "rationale": "Continue a separately assessed question with the prior answer retained.",
+          "originDecisionId": "urn:tensor:example:attachment-host-tool:decision-4"
+        }
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:early-evidence-5",
+        "type": "EvidenceReference",
+        "recordedAt": "2026-10-13T09:00:26.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-agent"
+        },
+        "description": "The first snapshot had no request-body receipt; content and destination were unresolved.",
+        "source": {
+          "label": "Initial example tool metadata",
+          "provenanceStatus": "Authored fictional evidence"
+        },
+        "availability": "unavailable",
+        "locatorAbsentReason": "No real source system or source bytes exist."
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:early-observation-5",
+        "type": "Observation",
+        "recordedAt": "2026-10-13T09:00:27.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-agent"
+        },
+        "statement": "The first snapshot had no request-body receipt; content and destination were unresolved.",
+        "evidenceRefIds": [
+          "urn:tensor:example:attachment-host-tool:early-evidence-5"
+        ],
+        "method": "Illustrative initial collection with a declared gap.",
+        "eventTime": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        }
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:early-assessment-5",
+        "type": "Assessment",
+        "recordedAt": "2026-10-13T09:00:28.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-agent"
+        },
+        "targetInstanceId": "urn:tensor:example:attachment-host-tool:instance-5",
+        "applicability": {
+          "status": "applicable",
+          "rationale": "The declared subject, interval, and required parameters are resolved."
+        },
+        "outcome": "unknown",
+        "rationale": "The first snapshot had no request-body receipt; content and destination were unresolved.",
+        "inputs": [
+          {
+            "entryId": "urn:tensor:example:attachment-host-tool:early-observation-5",
+            "role": "context"
+          }
+        ],
+        "method": "Authored example applies the pinned question criteria to retained illustrative observations.",
+        "unknownReasons": [
+          {
+            "code": "insufficient",
+            "explanation": "The first snapshot had no request-body receipt; content and destination were unresolved."
+          }
+        ]
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:evidence-5",
+        "type": "EvidenceReference",
+        "recordedAt": "2026-10-13T09:00:29.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-agent"
+        },
+        "description": "H5 · Initially only tool name upload_report was retained. Later a gateway body receipt identifies the exact report digest and destination outside the declared internal set.",
+        "source": {
+          "label": "Application example evidence",
+          "provenanceStatus": "Authored fictional evidence; no real incident source is authenticated"
+        },
+        "availability": "unavailable",
+        "locatorAbsentReason": "The example supplies observations and references, not real source evidence bytes."
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:observation-5",
+        "type": "Observation",
+        "recordedAt": "2026-10-13T09:00:30.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-agent"
+        },
+        "statement": "H5 · Initially only tool name upload_report was retained. Later a gateway body receipt identifies the exact report digest and destination outside the declared internal set.",
+        "evidenceRefIds": [
+          "urn:tensor:example:attachment-host-tool:evidence-5"
+        ],
+        "method": "Authored observation; discriminator and collection limits are described in the statement.",
+        "eventTime": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        }
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:assessment-5",
+        "type": "Assessment",
+        "recordedAt": "2026-10-13T09:00:31.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-agent"
+        },
+        "targetInstanceId": "urn:tensor:example:attachment-host-tool:instance-5",
+        "applicability": {
+          "status": "applicable",
+          "rationale": "The declared subject, interval, and required parameters are resolved."
+        },
+        "outcome": "yes",
+        "rationale": "Validated request-body content identifies the restricted report and an external destination under the declared criterion. A requested upload does not establish delivery.",
+        "inputs": [
+          {
+            "entryId": "urn:tensor:example:attachment-host-tool:observation-5",
+            "role": "supports"
+          }
+        ],
+        "method": "Authored example applies the pinned question criteria to retained illustrative observations.",
+        "supersedes": {
+          "entryId": "urn:tensor:example:attachment-host-tool:early-assessment-5",
+          "reason": "A later request-body receipt supplies the formerly missing content and destination discriminators."
+        }
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:decision-5",
+        "type": "Decision",
+        "recordedAt": "2026-10-13T09:00:32.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:attachment-host-tool:instance-5",
+        "selectedAssessmentId": "urn:tensor:example:attachment-host-tool:assessment-5",
+        "selectedInputIds": [
+          "urn:tensor:example:attachment-host-tool:assessment-5"
+        ],
+        "disposition": "transition",
+        "rationale": "Retain this assessment and its limitations while continuing the next separately assessed question.",
+        "policyStatus": {
+          "status": "notApplicable"
+        },
+        "authorityStatus": {
+          "status": "notApplicable"
+        },
+        "limitations": [
+          "A requested upload does not establish delivery."
+        ],
+        "selections": [
+          {
+            "transitionId": "urn:tensor:example:attachment-host-tool:route-5-yes",
+            "targetInstanceId": "urn:tensor:example:attachment-host-tool:instance-6"
+          }
+        ]
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:instance-6",
+        "type": "QuestionInstance",
+        "recordedAt": "2026-10-13T09:00:33.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-analyst"
+        },
+        "definitionRef": {
+          "id": "urn:tensor:example:attachment-host-tool:composed-definition",
+          "version": "1.0.0",
+          "sha256": "242c00a2691bb3bf26e7bbaa823600b21aa0b99bf80ae8061305bcdc868f07bb",
+          "artifact": "attachment-host-tool.definition.json"
+        },
+        "questionId": "urn:tensor:example:attachment-host-tool:company:question-6",
+        "subjectBindings": {
+          "subject": "urn:tensor:example:attachment-host-tool:request-req42"
+        },
+        "timeContext": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        },
+        "parameterBindings": {
+          "subject": "urn:tensor:example:attachment-host-tool:request-req42",
+          "window": {
+            "status": "bounded",
+            "start": "2026-10-13T08:35:00Z",
+            "end": "2026-10-13T09:00:00Z"
+          }
+        },
+        "origin": {
+          "kind": "transition",
+          "rationale": "Continue a separately assessed question with the prior answer retained.",
+          "originDecisionId": "urn:tensor:example:attachment-host-tool:decision-5"
+        }
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:evidence-6",
+        "type": "EvidenceReference",
+        "recordedAt": "2026-10-13T09:00:34.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-analyst"
+        },
+        "description": "H6 · IR-07 requires a recorded exception for this report and destination. The complete authoritative exception register has no matching approval; the policy owner confirms scope and effective version.",
+        "source": {
+          "label": "Application example evidence",
+          "provenanceStatus": "Authored fictional evidence; no real incident source is authenticated"
+        },
+        "availability": "unavailable",
+        "locatorAbsentReason": "The example supplies observations and references, not real source evidence bytes."
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:observation-6",
+        "type": "Observation",
+        "recordedAt": "2026-10-13T09:00:35.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-analyst"
+        },
+        "statement": "H6 · IR-07 requires a recorded exception for this report and destination. The complete authoritative exception register has no matching approval; the policy owner confirms scope and effective version.",
+        "evidenceRefIds": [
+          "urn:tensor:example:attachment-host-tool:evidence-6"
+        ],
+        "method": "Authored observation; discriminator and collection limits are described in the statement.",
+        "eventTime": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        }
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:assessment-6",
+        "type": "Assessment",
+        "recordedAt": "2026-10-13T09:00:36.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:attachment-host-tool:instance-6",
+        "applicability": {
+          "status": "applicable",
+          "rationale": "The declared subject, interval, and required parameters are resolved."
+        },
+        "outcome": "no",
+        "rationale": "Applicable policy and complete authoritative exception coverage establish absence of the required approval. The policy result is separate from technical content and motive.",
+        "inputs": [
+          {
+            "entryId": "urn:tensor:example:attachment-host-tool:observation-6",
+            "role": "contradicts"
+          }
+        ],
+        "method": "Authored example applies the pinned question criteria to retained illustrative observations.",
+        "policyBinding": {
+          "policyRefId": "urn:tensor:example:attachment-host-tool:policy",
+          "parameterBindings": {}
+        }
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:decision-6",
+        "type": "Decision",
+        "recordedAt": "2026-10-13T09:00:37.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:attachment-host-tool:instance-6",
+        "selectedAssessmentId": "urn:tensor:example:attachment-host-tool:assessment-6",
+        "selectedInputIds": [
+          "urn:tensor:example:attachment-host-tool:assessment-6"
+        ],
+        "disposition": "transition",
+        "rationale": "Retain this assessment and its limitations while continuing the next separately assessed question.",
+        "policyStatus": {
+          "status": "referenced",
+          "policyRefIds": [
+            "urn:tensor:example:attachment-host-tool:policy"
+          ]
+        },
+        "authorityStatus": {
+          "status": "notApplicable"
+        },
+        "limitations": [
+          "The policy result is separate from technical content and motive."
+        ],
+        "selections": [
+          {
+            "transitionId": "urn:tensor:example:attachment-host-tool:route-6-no",
+            "targetInstanceId": "urn:tensor:example:attachment-host-tool:instance-7"
+          }
+        ]
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:instance-7",
+        "type": "QuestionInstance",
+        "recordedAt": "2026-10-13T09:00:38.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-agent"
+        },
+        "definitionRef": {
+          "id": "urn:tensor:example:attachment-host-tool:composed-definition",
+          "version": "1.0.0",
+          "sha256": "242c00a2691bb3bf26e7bbaa823600b21aa0b99bf80ae8061305bcdc868f07bb",
+          "artifact": "attachment-host-tool.definition.json"
+        },
+        "questionId": "urn:tensor:example:attachment-host-tool:public:question-7",
+        "subjectBindings": {
+          "subject": "urn:tensor:example:attachment-host-tool:request-req42"
+        },
+        "timeContext": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        },
+        "parameterBindings": {
+          "subject": "urn:tensor:example:attachment-host-tool:request-req42",
+          "window": {
+            "status": "bounded",
+            "start": "2026-10-13T08:35:00Z",
+            "end": "2026-10-13T09:00:00Z"
+          }
+        },
+        "origin": {
+          "kind": "transition",
+          "rationale": "Continue a separately assessed question with the prior answer retained.",
+          "originDecisionId": "urn:tensor:example:attachment-host-tool:decision-6"
+        }
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:evidence-7",
+        "type": "EvidenceReference",
+        "recordedAt": "2026-10-13T09:00:39.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-agent"
+        },
+        "description": "H7 · Only a gateway request and its receipt are retained; no independently originating destination acknowledgement or complete delivery trace exists.",
+        "source": {
+          "label": "Application example evidence",
+          "provenanceStatus": "Authored fictional evidence; no real incident source is authenticated"
+        },
+        "availability": "unavailable",
+        "locatorAbsentReason": "The example supplies observations and references, not real source evidence bytes."
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:observation-7",
+        "type": "Observation",
+        "recordedAt": "2026-10-13T09:00:40.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-agent"
+        },
+        "statement": "H7 · Only a gateway request and its receipt are retained; no independently originating destination acknowledgement or complete delivery trace exists.",
+        "evidenceRefIds": [
+          "urn:tensor:example:attachment-host-tool:evidence-7"
+        ],
+        "method": "Authored observation; discriminator and collection limits are described in the statement.",
+        "eventTime": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        }
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:assessment-7",
+        "type": "Assessment",
+        "recordedAt": "2026-10-13T09:00:41.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-agent"
+        },
+        "targetInstanceId": "urn:tensor:example:attachment-host-tool:instance-7",
+        "applicability": {
+          "status": "applicable",
+          "rationale": "The declared subject, interval, and required parameters are resolved."
+        },
+        "outcome": "unknown",
+        "rationale": "A request or a copy of its trace cannot establish successful delivery. The revised request-content answer does not revise the independent delivery answer.",
+        "inputs": [
+          {
+            "entryId": "urn:tensor:example:attachment-host-tool:observation-7",
+            "role": "context"
+          }
+        ],
+        "method": "Authored example applies the pinned question criteria to retained illustrative observations.",
+        "unknownReasons": [
+          {
+            "code": "insufficient",
+            "explanation": "A request or a copy of its trace cannot establish successful delivery. The revised request-content answer does not revise the independent delivery answer."
+          }
+        ]
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:decision-7",
+        "type": "Decision",
+        "recordedAt": "2026-10-13T09:00:42.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:attachment-host-tool:instance-7",
+        "selectedAssessmentId": "urn:tensor:example:attachment-host-tool:assessment-7",
+        "selectedInputIds": [
+          "urn:tensor:example:attachment-host-tool:assessment-7"
+        ],
+        "disposition": "transition",
+        "rationale": "Retain this assessment and its limitations while continuing the next separately assessed question.",
+        "policyStatus": {
+          "status": "notApplicable"
+        },
+        "authorityStatus": {
+          "status": "notApplicable"
+        },
+        "limitations": [
+          "The revised request-content answer does not revise the independent delivery answer."
+        ],
+        "selections": [
+          {
+            "transitionId": "urn:tensor:example:attachment-host-tool:route-7-unknown",
+            "targetInstanceId": "urn:tensor:example:attachment-host-tool:instance-8"
+          }
+        ]
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:instance-8",
+        "type": "QuestionInstance",
+        "recordedAt": "2026-10-13T09:00:43.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-responder"
+        },
+        "definitionRef": {
+          "id": "urn:tensor:example:attachment-host-tool:composed-definition",
+          "version": "1.0.0",
+          "sha256": "242c00a2691bb3bf26e7bbaa823600b21aa0b99bf80ae8061305bcdc868f07bb",
+          "artifact": "attachment-host-tool.definition.json"
+        },
+        "questionId": "urn:tensor:example:attachment-host-tool:company:question-8",
+        "subjectBindings": {
+          "subject": "urn:tensor:example:attachment-host-tool:host-h17"
+        },
+        "timeContext": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        },
+        "parameterBindings": {
+          "subject": "urn:tensor:example:attachment-host-tool:host-h17",
+          "window": {
+            "status": "bounded",
+            "start": "2026-10-13T08:35:00Z",
+            "end": "2026-10-13T09:00:00Z"
+          }
+        },
+        "origin": {
+          "kind": "transition",
+          "rationale": "Continue a separately assessed question with the prior answer retained.",
+          "originDecisionId": "urn:tensor:example:attachment-host-tool:decision-7"
+        }
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:evidence-8",
+        "type": "EvidenceReference",
+        "recordedAt": "2026-10-13T09:00:44.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-responder"
+        },
+        "description": "H8 · The on-duty responder records approval for h-17 isolation and pausing req-42, preserving the report-delivery gap and excluding organization-wide containment.",
+        "source": {
+          "label": "Host example evidence",
+          "provenanceStatus": "Authored fictional evidence; no real incident source is authenticated"
+        },
+        "availability": "unavailable",
+        "locatorAbsentReason": "The example supplies observations and references, not real source evidence bytes."
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:observation-8",
+        "type": "Observation",
+        "recordedAt": "2026-10-13T09:00:45.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-responder"
+        },
+        "statement": "H8 · The on-duty responder records approval for h-17 isolation and pausing req-42, preserving the report-delivery gap and excluding organization-wide containment.",
+        "evidenceRefIds": [
+          "urn:tensor:example:attachment-host-tool:evidence-8"
+        ],
+        "method": "Authored observation; discriminator and collection limits are described in the statement.",
+        "eventTime": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        }
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:assessment-8",
+        "type": "Assessment",
+        "recordedAt": "2026-10-13T09:00:46.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-responder"
+        },
+        "targetInstanceId": "urn:tensor:example:attachment-host-tool:instance-8",
+        "applicability": {
+          "status": "applicable",
+          "rationale": "The declared subject, interval, and required parameters are resolved."
+        },
+        "outcome": "yes",
+        "rationale": "The proposal and claimed responder role satisfy the exact host/request scope conditions. Approval and a planned action do not establish successful containment.",
+        "inputs": [
+          {
+            "entryId": "urn:tensor:example:attachment-host-tool:observation-8",
+            "role": "supports"
+          }
+        ],
+        "method": "Authored example applies the pinned question criteria to retained illustrative observations.",
+        "policyBinding": {
+          "policyRefId": "urn:tensor:example:attachment-host-tool:policy",
+          "parameterBindings": {}
+        }
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:decision-8",
+        "type": "Decision",
+        "recordedAt": "2026-10-13T09:00:47.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-responder"
+        },
+        "targetInstanceId": "urn:tensor:example:attachment-host-tool:instance-8",
+        "selectedAssessmentId": "urn:tensor:example:attachment-host-tool:assessment-8",
+        "selectedInputIds": [
+          "urn:tensor:example:attachment-host-tool:assessment-8"
+        ],
+        "disposition": "transition",
+        "rationale": "Approve scoped isolation of h-17 and pausing req-42, pending delivery verification",
+        "policyStatus": {
+          "status": "referenced",
+          "policyRefIds": [
+            "urn:tensor:example:attachment-host-tool:policy"
+          ]
+        },
+        "authorityStatus": {
+          "status": "referenced",
+          "authorityRefIds": [
+            "urn:tensor:example:attachment-host-tool:authority"
+          ]
+        },
+        "limitations": [
+          "Approval and a planned action do not establish successful containment."
+        ],
+        "selections": [
+          {
+            "transitionId": "urn:tensor:example:attachment-host-tool:route-8-yes",
+            "targetInstanceId": "urn:tensor:example:attachment-host-tool:instance-9"
+          }
+        ]
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:action-8",
+        "type": "ActionRecord",
+        "recordedAt": "2026-10-13T09:00:48.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-responder"
+        },
+        "operationDescription": "Approve scoped isolation of h-17 and pausing req-42, pending delivery verification",
+        "operationSubject": "urn:tensor:example:attachment-host-tool:host-h17",
+        "stage": "planned",
+        "decisionId": "urn:tensor:example:attachment-host-tool:decision-8",
+        "eventTime": {
+          "status": "unknown",
+          "reason": "No action is executed in this example."
+        }
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:instance-9",
+        "type": "QuestionInstance",
+        "recordedAt": "2026-10-13T09:00:49.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-analyst"
+        },
+        "definitionRef": {
+          "id": "urn:tensor:example:attachment-host-tool:composed-definition",
+          "version": "1.0.0",
+          "sha256": "242c00a2691bb3bf26e7bbaa823600b21aa0b99bf80ae8061305bcdc868f07bb",
+          "artifact": "attachment-host-tool.definition.json"
+        },
+        "questionId": "urn:tensor:example:attachment-host-tool:public:question-9",
+        "subjectBindings": {
+          "subject": "urn:tensor:example:attachment-host-tool:request-req42"
+        },
+        "timeContext": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        },
+        "parameterBindings": {
+          "subject": "urn:tensor:example:attachment-host-tool:request-req42",
+          "window": {
+            "status": "bounded",
+            "start": "2026-10-13T08:35:00Z",
+            "end": "2026-10-13T09:00:00Z"
+          }
+        },
+        "origin": {
+          "kind": "transition",
+          "rationale": "Continue a separately assessed question with the prior answer retained.",
+          "originDecisionId": "urn:tensor:example:attachment-host-tool:decision-8"
+        }
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:evidence-9",
+        "type": "EvidenceReference",
+        "recordedAt": "2026-10-13T09:00:50.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-analyst"
+        },
+        "description": "H9 · The review retains H1–H8, the original unknown request-content answer, the later supported answer, its new receipt, independent unknown delivery, and scoped approval.",
+        "source": {
+          "label": "Application example evidence",
+          "provenanceStatus": "Authored fictional evidence; no real incident source is authenticated"
+        },
+        "availability": "unavailable",
+        "locatorAbsentReason": "The example supplies observations and references, not real source evidence bytes."
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:observation-9",
+        "type": "Observation",
+        "recordedAt": "2026-10-13T09:00:51.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-analyst"
+        },
+        "statement": "H9 · The review retains H1–H8, the original unknown request-content answer, the later supported answer, its new receipt, independent unknown delivery, and scoped approval.",
+        "evidenceRefIds": [
+          "urn:tensor:example:attachment-host-tool:evidence-9"
+        ],
+        "method": "Authored observation; discriminator and collection limits are described in the statement.",
+        "eventTime": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        }
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:assessment-9",
+        "type": "Assessment",
+        "recordedAt": "2026-10-13T09:00:52.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:attachment-host-tool:instance-9",
+        "applicability": {
+          "status": "applicable",
+          "rationale": "The declared subject, interval, and required parameters are resolved."
+        },
+        "outcome": "yes",
+        "rationale": "Both assessment versions, their separate inputs, decisions, and unresolved questions remain in the record. Retained history does not establish independent interoperability or closure.",
+        "inputs": [
+          {
+            "entryId": "urn:tensor:example:attachment-host-tool:observation-9",
+            "role": "supports"
+          }
+        ],
+        "method": "Authored example applies the pinned question criteria to retained illustrative observations."
+      },
+      {
+        "id": "urn:tensor:example:attachment-host-tool:decision-9",
+        "type": "Decision",
+        "recordedAt": "2026-10-13T09:00:53.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:attachment-host-tool:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:attachment-host-tool:instance-9",
+        "selectedAssessmentId": "urn:tensor:example:attachment-host-tool:assessment-9",
+        "selectedInputIds": [
+          "urn:tensor:example:attachment-host-tool:assessment-9"
+        ],
+        "disposition": "handoff",
+        "rationale": "Retain this assessment and its limitations while continuing the next separately assessed question.",
+        "policyStatus": {
+          "status": "notApplicable"
+        },
+        "authorityStatus": {
+          "status": "notApplicable"
+        },
+        "limitations": [
+          "Retained history does not establish independent interoperability or closure."
+        ]
+      }
+    ],
+    "completeness": {
+      "exchangeScope": "full",
+      "meaning": "All referenced Core entries and exact definition bytes are included; actual source evidence bytes do not exist in this fictional example."
+    },
+    "omissions": [],
+    "losses": [],
+    "view": {
+      "mode": "historical"
+    },
+    "metadata": {
+      "illustrative": true,
+      "walkthrough": {
+        "format": "tensor-example-walkthrough",
+        "version": 1,
+        "id": "attachment-host-tool",
+        "title": "Email attachment, host execution, and an application tool",
+        "description": "An attachment is traced across mail, file, endpoint, and application records, with a later evidence-driven revision.",
+        "domains": [
+          "Email",
+          "File",
+          "Host",
+          "Application"
+        ],
+        "frames": [
+          {
+            "title": "Establish the message",
+            "assessmentId": "urn:tensor:example:attachment-host-tool:assessment-1",
+            "decisionId": "urn:tensor:example:attachment-host-tool:decision-1",
+            "through": 10,
+            "limitation": "Delivery does not establish that a person opened the attachment."
+          },
+          {
+            "title": "Identify the attachment bytes",
+            "assessmentId": "urn:tensor:example:attachment-host-tool:assessment-2",
+            "decisionId": "urn:tensor:example:attachment-host-tool:decision-2",
+            "through": 15,
+            "limitation": "Matching bytes do not establish execution or maliciousness."
+          },
+          {
+            "title": "Bind execution to the file",
+            "assessmentId": "urn:tensor:example:attachment-host-tool:assessment-3",
+            "decisionId": "urn:tensor:example:attachment-host-tool:decision-3",
+            "through": 20,
+            "limitation": "This does not establish every action performed by p-204."
+          },
+          {
+            "title": "Test the application pivot",
+            "assessmentId": "urn:tensor:example:attachment-host-tool:assessment-4",
+            "decisionId": "urn:tensor:example:attachment-host-tool:decision-4",
+            "through": 25,
+            "limitation": "The application operator’s human identity and intent remain unresolved."
+          },
+          {
+            "title": "Content is initially unresolved",
+            "assessmentId": "urn:tensor:example:attachment-host-tool:early-assessment-5",
+            "through": 29,
+            "limitation": "A requested upload does not establish delivery."
+          },
+          {
+            "title": "Assess the requested content",
+            "assessmentId": "urn:tensor:example:attachment-host-tool:assessment-5",
+            "decisionId": "urn:tensor:example:attachment-host-tool:decision-5",
+            "through": 33,
+            "limitation": "A requested upload does not establish delivery."
+          },
+          {
+            "title": "Apply the organization’s approval test",
+            "assessmentId": "urn:tensor:example:attachment-host-tool:assessment-6",
+            "decisionId": "urn:tensor:example:attachment-host-tool:decision-6",
+            "through": 38,
+            "limitation": "The policy result is separate from technical content and motive."
+          },
+          {
+            "title": "Keep delivery unresolved",
+            "assessmentId": "urn:tensor:example:attachment-host-tool:assessment-7",
+            "decisionId": "urn:tensor:example:attachment-host-tool:decision-7",
+            "through": 43,
+            "limitation": "The revised request-content answer does not revise the independent delivery answer."
+          },
+          {
+            "title": "Approve scoped containment",
+            "assessmentId": "urn:tensor:example:attachment-host-tool:assessment-8",
+            "decisionId": "urn:tensor:example:attachment-host-tool:decision-8",
+            "through": 49,
+            "limitation": "Approval and a planned action do not establish successful containment."
+          },
+          {
+            "title": "Hand off the retained revision",
+            "assessmentId": "urn:tensor:example:attachment-host-tool:assessment-9",
+            "decisionId": "urn:tensor:example:attachment-host-tool:decision-9",
+            "through": 54,
+            "limitation": "Retained history does not establish independent interoperability or closure."
+          }
+        ]
+      }
+    }
+  },
+  "definitions": [
+    {
+      "path": "attachment-host-tool.definition.json",
+      "content": "{\n  \"id\": \"urn:tensor:example:attachment-host-tool:composed-definition\",\n  \"version\": \"1.0.0\",\n  \"publicationStatus\": \"draft\",\n  \"title\": \"Email attachment, host execution, and an application tool\",\n  \"contractRef\": {\n    \"proposal\": \"0.1.0\",\n    \"bindingVersion\": \"0.1.0-draft.1\",\n    \"status\": \"candidate; unratified\"\n  },\n  \"questions\": [\n    {\n      \"id\": \"urn:tensor:example:attachment-host-tool:public:question-1\",\n      \"prompt\": \"Was message m-31 delivered to the named mailbox?\",\n      \"proposition\": \"Was message m-31 delivered to the named mailbox? Bound subject: urn:tensor:example:attachment-host-tool:message-m31; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).\",\n      \"parameters\": {\n        \"subject\": {\n          \"type\": \"URI\",\n          \"required\": true,\n          \"bindsTo\": \"subject:subject\"\n        },\n        \"window\": {\n          \"type\": \"timeContext\",\n          \"required\": true,\n          \"bindsTo\": \"timeContext\"\n        }\n      },\n      \"applicabilityCriteria\": \"Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.\",\n      \"assessmentCriteria\": {\n        \"yes\": \"A validated mailbox delivery event matches the message and named mailbox.\",\n        \"no\": \"Complete validated delivery coverage contradicts this particular message delivery.\",\n        \"unknown\": \"A sender claim or gateway acceptance alone does not establish mailbox delivery.\"\n      },\n      \"evidenceRequirements\": [\n        \"Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.\",\n        \"Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit.\"\n      ],\n      \"metadata\": {\n        \"displayId\": \"S1\",\n        \"domain\": \"Email\",\n        \"layerId\": \"public\",\n        \"layerVersion\": \"1.0.0\",\n        \"archetype\": \"detect\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:attachment-host-tool:vendor:question-2\",\n      \"prompt\": \"Do retained file f-31’s bytes match the attachment in m-31?\",\n      \"proposition\": \"Do retained file f-31’s bytes match the attachment in m-31? Bound subject: urn:tensor:example:attachment-host-tool:file-f31; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).\",\n      \"parameters\": {\n        \"subject\": {\n          \"type\": \"URI\",\n          \"required\": true,\n          \"bindsTo\": \"subject:subject\"\n        },\n        \"window\": {\n          \"type\": \"timeContext\",\n          \"required\": true,\n          \"bindsTo\": \"timeContext\"\n        }\n      },\n      \"applicabilityCriteria\": \"Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.\",\n      \"assessmentCriteria\": {\n        \"yes\": \"Independent byte acquisitions and a documented digest comparison establish this named artifact match.\",\n        \"no\": \"Verified digest or size evidence contradicts equality of these exact artifacts.\",\n        \"unknown\": \"A filename, missing bytes, or copied hash value without independent acquisition is insufficient.\"\n      },\n      \"evidenceRequirements\": [\n        \"Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.\",\n        \"Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit.\"\n      ],\n      \"metadata\": {\n        \"displayId\": \"S2\",\n        \"domain\": \"File\",\n        \"layerId\": \"vendor\",\n        \"layerVersion\": \"1.0.0\",\n        \"archetype\": \"correlate\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:attachment-host-tool:vendor:question-3\",\n      \"prompt\": \"Did process p-204 execute the retained f-31 artifact on h-17?\",\n      \"proposition\": \"Did process p-204 execute the retained f-31 artifact on h-17? Bound subject: urn:tensor:example:attachment-host-tool:process-p204; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).\",\n      \"parameters\": {\n        \"subject\": {\n          \"type\": \"URI\",\n          \"required\": true,\n          \"bindsTo\": \"subject:subject\"\n        },\n        \"window\": {\n          \"type\": \"timeContext\",\n          \"required\": true,\n          \"bindsTo\": \"timeContext\"\n        }\n      },\n      \"applicabilityCriteria\": \"Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.\",\n      \"assessmentCriteria\": {\n        \"yes\": \"Validated process-instance and artifact discriminators establish execution of these bytes on h-17.\",\n        \"no\": \"Validated process or digest discrimination contradicts that particular execution claim.\",\n        \"unknown\": \"A process name, filesystem presence, or incomplete execution telemetry cannot resolve the claim.\"\n      },\n      \"evidenceRequirements\": [\n        \"Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.\",\n        \"Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit.\"\n      ],\n      \"metadata\": {\n        \"displayId\": \"S3\",\n        \"domain\": \"Host\",\n        \"layerId\": \"vendor\",\n        \"layerVersion\": \"1.0.0\",\n        \"archetype\": \"correlate\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:attachment-host-tool:vendor:question-4\",\n      \"prompt\": \"Did p-204 originate application tool request req-42?\",\n      \"proposition\": \"Did p-204 originate application tool request req-42? Bound subject: urn:tensor:example:attachment-host-tool:request-req42; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).\",\n      \"parameters\": {\n        \"subject\": {\n          \"type\": \"URI\",\n          \"required\": true,\n          \"bindsTo\": \"subject:subject\"\n        },\n        \"window\": {\n          \"type\": \"timeContext\",\n          \"required\": true,\n          \"bindsTo\": \"timeContext\"\n        }\n      },\n      \"applicabilityCriteria\": \"Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.\",\n      \"assessmentCriteria\": {\n        \"yes\": \"Independent connection and authenticated request discriminators establish the named process-to-request relationship.\",\n        \"no\": \"Chronology or authenticated connection evidence contradicts this particular relationship.\",\n        \"unknown\": \"A shared client label or temporal proximity without independent binding is insufficient.\"\n      },\n      \"evidenceRequirements\": [\n        \"Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.\",\n        \"Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit.\"\n      ],\n      \"metadata\": {\n        \"displayId\": \"S4\",\n        \"domain\": \"Application\",\n        \"layerId\": \"vendor\",\n        \"layerVersion\": \"1.0.0\",\n        \"archetype\": \"correlate\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:attachment-host-tool:public:question-5\",\n      \"prompt\": \"Did req-42 request an external upload of the restricted report?\",\n      \"proposition\": \"Did req-42 request an external upload of the restricted report? Bound subject: urn:tensor:example:attachment-host-tool:request-req42; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).\",\n      \"parameters\": {\n        \"subject\": {\n          \"type\": \"URI\",\n          \"required\": true,\n          \"bindsTo\": \"subject:subject\"\n        },\n        \"window\": {\n          \"type\": \"timeContext\",\n          \"required\": true,\n          \"bindsTo\": \"timeContext\"\n        }\n      },\n      \"applicabilityCriteria\": \"Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.\",\n      \"assessmentCriteria\": {\n        \"yes\": \"Validated request-body content identifies the restricted report and an external destination under the declared criterion.\",\n        \"no\": \"Validated complete request content contradicts this exact report/destination criterion.\",\n        \"unknown\": \"A tool name, redacted body, missing report binding, or missing destination test prevents classification.\"\n      },\n      \"evidenceRequirements\": [\n        \"Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.\",\n        \"Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit.\"\n      ],\n      \"metadata\": {\n        \"displayId\": \"S5\",\n        \"domain\": \"Application\",\n        \"layerId\": \"public\",\n        \"layerVersion\": \"1.0.0\",\n        \"archetype\": \"correlate\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:attachment-host-tool:company:question-6\",\n      \"prompt\": \"Was the external upload request approved under IR-07?\",\n      \"proposition\": \"Was the external upload request approved under IR-07? Bound subject: urn:tensor:example:attachment-host-tool:request-req42; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).\",\n      \"parameters\": {\n        \"subject\": {\n          \"type\": \"URI\",\n          \"required\": true,\n          \"bindsTo\": \"subject:subject\"\n        },\n        \"window\": {\n          \"type\": \"timeContext\",\n          \"required\": true,\n          \"bindsTo\": \"timeContext\"\n        }\n      },\n      \"applicabilityCriteria\": \"Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.\",\n      \"assessmentCriteria\": {\n        \"yes\": \"An effective exception explicitly covers the report, destination, and request.\",\n        \"no\": \"Applicable policy and complete authoritative exception coverage establish absence of the required approval.\",\n        \"unknown\": \"Policy applicability, exception coverage, or request binding is unresolved.\"\n      },\n      \"evidenceRequirements\": [\n        \"Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.\",\n        \"Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit.\"\n      ],\n      \"metadata\": {\n        \"displayId\": \"S6\",\n        \"domain\": \"Application\",\n        \"layerId\": \"company\",\n        \"layerVersion\": \"1.0.0\",\n        \"archetype\": \"classify\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:attachment-host-tool:public:question-7\",\n      \"prompt\": \"Is successful delivery of the restricted report established?\",\n      \"proposition\": \"Is successful delivery of the restricted report established? Bound subject: urn:tensor:example:attachment-host-tool:request-req42; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).\",\n      \"parameters\": {\n        \"subject\": {\n          \"type\": \"URI\",\n          \"required\": true,\n          \"bindsTo\": \"subject:subject\"\n        },\n        \"window\": {\n          \"type\": \"timeContext\",\n          \"required\": true,\n          \"bindsTo\": \"timeContext\"\n        }\n      },\n      \"applicabilityCriteria\": \"Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.\",\n      \"assessmentCriteria\": {\n        \"yes\": \"Independent destination and content discriminators establish actual delivery of the named report.\",\n        \"no\": \"Complete delivery evidence contradicts this exact report delivery.\",\n        \"unknown\": \"A request or a copy of its trace cannot establish successful delivery.\"\n      },\n      \"evidenceRequirements\": [\n        \"Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.\",\n        \"Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit.\"\n      ],\n      \"metadata\": {\n        \"displayId\": \"S7\",\n        \"domain\": \"Application\",\n        \"layerId\": \"public\",\n        \"layerVersion\": \"1.0.0\",\n        \"archetype\": \"correlate\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:attachment-host-tool:company:question-8\",\n      \"prompt\": \"Does the proposed h-17 isolation and req-42 pause satisfy IR-07’s approval conditions?\",\n      \"proposition\": \"Does the proposed h-17 isolation and req-42 pause satisfy IR-07’s approval conditions? Bound subject: urn:tensor:example:attachment-host-tool:host-h17; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).\",\n      \"parameters\": {\n        \"subject\": {\n          \"type\": \"URI\",\n          \"required\": true,\n          \"bindsTo\": \"subject:subject\"\n        },\n        \"window\": {\n          \"type\": \"timeContext\",\n          \"required\": true,\n          \"bindsTo\": \"timeContext\"\n        }\n      },\n      \"applicabilityCriteria\": \"Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.\",\n      \"assessmentCriteria\": {\n        \"yes\": \"The proposal and claimed responder role satisfy the exact host/request scope conditions.\",\n        \"no\": \"A material role or scope condition contradicts IR-07.\",\n        \"unknown\": \"The proposal, policy, or claimed role cannot be resolved.\"\n      },\n      \"evidenceRequirements\": [\n        \"Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.\",\n        \"Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit.\"\n      ],\n      \"metadata\": {\n        \"displayId\": \"S8\",\n        \"domain\": \"Host\",\n        \"layerId\": \"company\",\n        \"layerVersion\": \"1.0.0\",\n        \"archetype\": \"classify\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:attachment-host-tool:public:question-9\",\n      \"prompt\": \"Does the handoff preserve the earlier unknown content assessment and its evidence-driven revision?\",\n      \"proposition\": \"Does the handoff preserve the earlier unknown content assessment and its evidence-driven revision? Bound subject: urn:tensor:example:attachment-host-tool:request-req42; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).\",\n      \"parameters\": {\n        \"subject\": {\n          \"type\": \"URI\",\n          \"required\": true,\n          \"bindsTo\": \"subject:subject\"\n        },\n        \"window\": {\n          \"type\": \"timeContext\",\n          \"required\": true,\n          \"bindsTo\": \"timeContext\"\n        }\n      },\n      \"applicabilityCriteria\": \"Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.\",\n      \"assessmentCriteria\": {\n        \"yes\": \"Both assessment versions, their separate inputs, decisions, and unresolved questions remain in the record.\",\n        \"no\": \"The earlier assessment or the material basis for its revision is demonstrably missing.\",\n        \"unknown\": \"Available history is insufficient to assess retention of the revision.\"\n      },\n      \"evidenceRequirements\": [\n        \"Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.\",\n        \"Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit.\"\n      ],\n      \"metadata\": {\n        \"displayId\": \"S9\",\n        \"domain\": \"Application\",\n        \"layerId\": \"public\",\n        \"layerVersion\": \"1.0.0\",\n        \"archetype\": \"terminal\"\n      }\n    }\n  ],\n  \"transitions\": [\n    {\n      \"id\": \"urn:tensor:example:attachment-host-tool:route-1-yes\",\n      \"sourceQuestionId\": \"urn:tensor:example:attachment-host-tool:public:question-1\",\n      \"targetQuestionId\": \"urn:tensor:example:attachment-host-tool:vendor:question-2\",\n      \"guardOutcome\": \"yes\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:attachment-host-tool:route-1-no\",\n      \"sourceQuestionId\": \"urn:tensor:example:attachment-host-tool:public:question-1\",\n      \"targetQuestionId\": \"urn:tensor:example:attachment-host-tool:vendor:question-2\",\n      \"guardOutcome\": \"no\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:attachment-host-tool:route-1-unknown\",\n      \"sourceQuestionId\": \"urn:tensor:example:attachment-host-tool:public:question-1\",\n      \"targetQuestionId\": \"urn:tensor:example:attachment-host-tool:vendor:question-2\",\n      \"guardOutcome\": \"unknown\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:attachment-host-tool:route-2-yes\",\n      \"sourceQuestionId\": \"urn:tensor:example:attachment-host-tool:vendor:question-2\",\n      \"targetQuestionId\": \"urn:tensor:example:attachment-host-tool:vendor:question-3\",\n      \"guardOutcome\": \"yes\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:attachment-host-tool:route-2-no\",\n      \"sourceQuestionId\": \"urn:tensor:example:attachment-host-tool:vendor:question-2\",\n      \"targetQuestionId\": \"urn:tensor:example:attachment-host-tool:vendor:question-3\",\n      \"guardOutcome\": \"no\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:attachment-host-tool:route-2-unknown\",\n      \"sourceQuestionId\": \"urn:tensor:example:attachment-host-tool:vendor:question-2\",\n      \"targetQuestionId\": \"urn:tensor:example:attachment-host-tool:vendor:question-3\",\n      \"guardOutcome\": \"unknown\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:attachment-host-tool:route-3-yes\",\n      \"sourceQuestionId\": \"urn:tensor:example:attachment-host-tool:vendor:question-3\",\n      \"targetQuestionId\": \"urn:tensor:example:attachment-host-tool:vendor:question-4\",\n      \"guardOutcome\": \"yes\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:attachment-host-tool:route-3-no\",\n      \"sourceQuestionId\": \"urn:tensor:example:attachment-host-tool:vendor:question-3\",\n      \"targetQuestionId\": \"urn:tensor:example:attachment-host-tool:vendor:question-4\",\n      \"guardOutcome\": \"no\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:attachment-host-tool:route-3-unknown\",\n      \"sourceQuestionId\": \"urn:tensor:example:attachment-host-tool:vendor:question-3\",\n      \"targetQuestionId\": \"urn:tensor:example:attachment-host-tool:vendor:question-4\",\n      \"guardOutcome\": \"unknown\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:attachment-host-tool:route-4-yes\",\n      \"sourceQuestionId\": \"urn:tensor:example:attachment-host-tool:vendor:question-4\",\n      \"targetQuestionId\": \"urn:tensor:example:attachment-host-tool:public:question-5\",\n      \"guardOutcome\": \"yes\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:attachment-host-tool:route-4-no\",\n      \"sourceQuestionId\": \"urn:tensor:example:attachment-host-tool:vendor:question-4\",\n      \"targetQuestionId\": \"urn:tensor:example:attachment-host-tool:public:question-5\",\n      \"guardOutcome\": \"no\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:attachment-host-tool:route-4-unknown\",\n      \"sourceQuestionId\": \"urn:tensor:example:attachment-host-tool:vendor:question-4\",\n      \"targetQuestionId\": \"urn:tensor:example:attachment-host-tool:public:question-5\",\n      \"guardOutcome\": \"unknown\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:attachment-host-tool:route-5-yes\",\n      \"sourceQuestionId\": \"urn:tensor:example:attachment-host-tool:public:question-5\",\n      \"targetQuestionId\": \"urn:tensor:example:attachment-host-tool:company:question-6\",\n      \"guardOutcome\": \"yes\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:attachment-host-tool:route-5-no\",\n      \"sourceQuestionId\": \"urn:tensor:example:attachment-host-tool:public:question-5\",\n      \"targetQuestionId\": \"urn:tensor:example:attachment-host-tool:company:question-6\",\n      \"guardOutcome\": \"no\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:attachment-host-tool:route-5-unknown\",\n      \"sourceQuestionId\": \"urn:tensor:example:attachment-host-tool:public:question-5\",\n      \"targetQuestionId\": \"urn:tensor:example:attachment-host-tool:company:question-6\",\n      \"guardOutcome\": \"unknown\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:attachment-host-tool:route-6-yes\",\n      \"sourceQuestionId\": \"urn:tensor:example:attachment-host-tool:company:question-6\",\n      \"targetQuestionId\": \"urn:tensor:example:attachment-host-tool:public:question-7\",\n      \"guardOutcome\": \"yes\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:attachment-host-tool:route-6-no\",\n      \"sourceQuestionId\": \"urn:tensor:example:attachment-host-tool:company:question-6\",\n      \"targetQuestionId\": \"urn:tensor:example:attachment-host-tool:public:question-7\",\n      \"guardOutcome\": \"no\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:attachment-host-tool:route-6-unknown\",\n      \"sourceQuestionId\": \"urn:tensor:example:attachment-host-tool:company:question-6\",\n      \"targetQuestionId\": \"urn:tensor:example:attachment-host-tool:public:question-7\",\n      \"guardOutcome\": \"unknown\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:attachment-host-tool:route-7-yes\",\n      \"sourceQuestionId\": \"urn:tensor:example:attachment-host-tool:public:question-7\",\n      \"targetQuestionId\": \"urn:tensor:example:attachment-host-tool:company:question-8\",\n      \"guardOutcome\": \"yes\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:attachment-host-tool:route-7-no\",\n      \"sourceQuestionId\": \"urn:tensor:example:attachment-host-tool:public:question-7\",\n      \"targetQuestionId\": \"urn:tensor:example:attachment-host-tool:company:question-8\",\n      \"guardOutcome\": \"no\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:attachment-host-tool:route-7-unknown\",\n      \"sourceQuestionId\": \"urn:tensor:example:attachment-host-tool:public:question-7\",\n      \"targetQuestionId\": \"urn:tensor:example:attachment-host-tool:company:question-8\",\n      \"guardOutcome\": \"unknown\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:attachment-host-tool:route-8-yes\",\n      \"sourceQuestionId\": \"urn:tensor:example:attachment-host-tool:company:question-8\",\n      \"targetQuestionId\": \"urn:tensor:example:attachment-host-tool:public:question-9\",\n      \"guardOutcome\": \"yes\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:attachment-host-tool:route-8-no\",\n      \"sourceQuestionId\": \"urn:tensor:example:attachment-host-tool:company:question-8\",\n      \"targetQuestionId\": \"urn:tensor:example:attachment-host-tool:public:question-9\",\n      \"guardOutcome\": \"no\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:attachment-host-tool:route-8-unknown\",\n      \"sourceQuestionId\": \"urn:tensor:example:attachment-host-tool:company:question-8\",\n      \"targetQuestionId\": \"urn:tensor:example:attachment-host-tool:public:question-9\",\n      \"guardOutcome\": \"unknown\",\n      \"metadata\": {\n        \"meaning\": \"Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied.\"\n      }\n    }\n  ],\n  \"entryQuestionIds\": [\n    \"urn:tensor:example:attachment-host-tool:public:question-1\"\n  ],\n  \"dependencies\": [],\n  \"metadata\": {\n    \"illustrative\": true,\n    \"layers\": [\n      {\n        \"id\": \"public\",\n        \"label\": \"Public investigation questions\",\n        \"owner\": \"TENSOR Standards Consortium\",\n        \"version\": \"1.0.0\"\n      },\n      {\n        \"id\": \"vendor\",\n        \"label\": \"Example vendor telemetry graph\",\n        \"owner\": \"Fictional telemetry vendor\",\n        \"version\": \"1.0.0\"\n      },\n      {\n        \"id\": \"company\",\n        \"label\": \"Example company policy graph\",\n        \"owner\": \"Fictional company\",\n        \"version\": \"1.0.0\"\n      }\n    ],\n    \"composition\": \"Case-specific questions composed in one pinned artifact. These are additional example definitions, not routes added to the public working or published graph.\"\n  }\n}\n"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+---
+import { readFile } from 'node:fs/promises';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageIntro from '../../components/PageIntro.astro';
+import CaseInvestigation from '../../components/CaseInvestigation.jsx';
+import catalog from '../../../public/investigations/v1/catalog.json';
+export async function getStaticPaths() {
+  return Promise.all(catalog.scenarios.map(async sample=>({params:{case:sample.id},props:{sample,bundle:JSON.parse(await readFile(new URL(`../../../public/investigations/v1/${sample.bundle}`,import.meta.url),'utf8'))}})));
+}
+const {sample,bundle}=Astro.props;
+---
+<BaseLayout title={`${sample.title} | TENSOR`} description={sample.description} canonicalPath={`/investigations/${sample.id}/`} ogType="article" hidePageTitle>
+  <PageIntro title="Case walkthrough" eyebrow="TENSOR / Cross-domain case" workspace compact />
+  <section class="container case-page" aria-label={`${sample.title} workspace`}><CaseInvestigation bundle={bundle} publicCaseId={sample.id} linkState client:load /></section>
+  <section class="container case-links"><p><a href="/investigations/">All cross-domain cases</a> · <a href={`/investigations/v1/${sample.bundle}`} download>Download this Core bundle</a> · <a href={`/investigations/v1/${sample.definition}`} download>Exact case definitions</a> · <a href="/start/">TENSOR in five minutes</a></p>
+  <noscript><h2>Complete case · text view</h2><ol>{bundle.record.metadata.walkthrough.frames.map(frame=>{const assessment=bundle.record.entries.find(e=>e.id===frame.assessmentId);return <li><strong>{frame.title} · {assessment.outcome}</strong><p>{assessment.rationale}</p>{assessment.inputs.map(input=><p>{bundle.record.entries.find(e=>e.id===input.entryId)?.statement}</p>)}<p>{frame.limitation}</p></li>;})}</ol></noscript></section>
+</BaseLayout>
+<style>.case-page { margin-bottom:var(--space-4); }.case-links { margin-bottom:var(--space-6); font-size:.85rem; color:var(--text-secondary); }.case-links li { margin:var(--space-4) 0; }</style>

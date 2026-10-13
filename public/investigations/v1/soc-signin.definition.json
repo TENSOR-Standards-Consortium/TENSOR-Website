@@ -1,0 +1,443 @@
+{
+  "id": "urn:tensor:example:soc-signin:composed-definition",
+  "version": "1.0.0",
+  "publicationStatus": "draft",
+  "title": "Suspicious sign-in and mailbox forwarding",
+  "contractRef": {
+    "proposal": "0.1.0",
+    "bindingVersion": "0.1.0-draft.1",
+    "status": "candidate; unratified"
+  },
+  "questions": [
+    {
+      "id": "urn:tensor:example:soc-signin:public:question-1",
+      "prompt": "Was a successful sign-in recorded for Morgan’s account in the bound interval?",
+      "proposition": "Was a successful sign-in recorded for Morgan’s account in the bound interval? Bound subject: urn:tensor:example:soc-signin:session-s42; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "parameters": {
+        "subject": {
+          "type": "URI",
+          "required": true,
+          "bindsTo": "subject:subject"
+        },
+        "window": {
+          "type": "timeContext",
+          "required": true,
+          "bindsTo": "timeContext"
+        }
+      },
+      "applicabilityCriteria": "Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.",
+      "assessmentCriteria": {
+        "yes": "A validated successful-sign-in record matches Morgan, s-42, and the bound interval.",
+        "no": "Complete, validated sign-in coverage contradicts the named successful-sign-in proposition.",
+        "unknown": "Record identity, provenance, meaning, or interval coverage is missing or conflicting."
+      },
+      "evidenceRequirements": [
+        "Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.",
+        "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
+      ],
+      "metadata": {
+        "displayId": "S1",
+        "domain": "Identity",
+        "layerId": "public",
+        "layerVersion": "1.0.0",
+        "archetype": "detect"
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:public:question-2",
+      "prompt": "Is the person controlling session s-42 established?",
+      "proposition": "Is the person controlling session s-42 established? Bound subject: urn:tensor:example:soc-signin:session-s42; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "parameters": {
+        "subject": {
+          "type": "URI",
+          "required": true,
+          "bindsTo": "subject:subject"
+        },
+        "window": {
+          "type": "timeContext",
+          "required": true,
+          "bindsTo": "timeContext"
+        }
+      },
+      "applicabilityCriteria": "Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.",
+      "assessmentCriteria": {
+        "yes": "Independent, authenticated discriminators establish the named person controlling s-42.",
+        "no": "Discriminating evidence contradicts the specifically named person-to-session binding.",
+        "unknown": "MFA or a client label alone cannot identify the controller; discriminators are missing or conflicting."
+      },
+      "evidenceRequirements": [
+        "Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.",
+        "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
+      ],
+      "metadata": {
+        "displayId": "S2",
+        "domain": "Identity",
+        "layerId": "public",
+        "layerVersion": "1.0.0",
+        "archetype": "correlate"
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:vendor:question-3",
+      "prompt": "Did session s-42 create external forwarding rule r-7?",
+      "proposition": "Did session s-42 create external forwarding rule r-7? Bound subject: urn:tensor:example:soc-signin:rule-r7; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "parameters": {
+        "subject": {
+          "type": "URI",
+          "required": true,
+          "bindsTo": "subject:subject"
+        },
+        "window": {
+          "type": "timeContext",
+          "required": true,
+          "bindsTo": "timeContext"
+        }
+      },
+      "applicabilityCriteria": "Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.",
+      "assessmentCriteria": {
+        "yes": "Validated mailbox and identity records link r-7 creation to s-42 using the documented session discriminator.",
+        "no": "Validated discriminators contradict this particular session-to-rule relationship.",
+        "unknown": "The adapter mapping, session discriminator, record meaning, or provenance is unresolved."
+      },
+      "evidenceRequirements": [
+        "Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.",
+        "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
+      ],
+      "metadata": {
+        "displayId": "S3",
+        "domain": "Email",
+        "layerId": "vendor",
+        "layerVersion": "1.0.0",
+        "archetype": "correlate"
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:company:question-4",
+      "prompt": "Was forwarding rule r-7 approved under MAIL-04?",
+      "proposition": "Was forwarding rule r-7 approved under MAIL-04? Bound subject: urn:tensor:example:soc-signin:rule-r7; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "parameters": {
+        "subject": {
+          "type": "URI",
+          "required": true,
+          "bindsTo": "subject:subject"
+        },
+        "window": {
+          "type": "timeContext",
+          "required": true,
+          "bindsTo": "timeContext"
+        }
+      },
+      "applicabilityCriteria": "Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.",
+      "assessmentCriteria": {
+        "yes": "An authentic approval entry for r-7 satisfies the effective MAIL-04 requirements.",
+        "no": "MAIL-04 applies and a complete authoritative approval search establishes that the required approval is absent.",
+        "unknown": "Policy applicability, effective version, register authority, or search coverage is unresolved."
+      },
+      "evidenceRequirements": [
+        "Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.",
+        "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
+      ],
+      "metadata": {
+        "displayId": "S4",
+        "domain": "Email",
+        "layerId": "company",
+        "layerVersion": "1.0.0",
+        "archetype": "classify"
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:public:question-5",
+      "prompt": "Is actual external delivery through r-7 established?",
+      "proposition": "Is actual external delivery through r-7 established? Bound subject: urn:tensor:example:soc-signin:rule-r7; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "parameters": {
+        "subject": {
+          "type": "URI",
+          "required": true,
+          "bindsTo": "subject:subject"
+        },
+        "window": {
+          "type": "timeContext",
+          "required": true,
+          "bindsTo": "timeContext"
+        }
+      },
+      "applicabilityCriteria": "Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.",
+      "assessmentCriteria": {
+        "yes": "Independent transport evidence links an actual delivered message to r-7 and its external destination.",
+        "no": "Complete comparable transport coverage contradicts the particular delivery proposition.",
+        "unknown": "A configured rule or mailbox audit alone does not establish delivery; transport coverage is missing."
+      },
+      "evidenceRequirements": [
+        "Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.",
+        "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
+      ],
+      "metadata": {
+        "displayId": "S5",
+        "domain": "Email",
+        "layerId": "public",
+        "layerVersion": "1.0.0",
+        "archetype": "correlate"
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:company:question-6",
+      "prompt": "Does the recorded scoped response satisfy MAIL-04’s approval conditions?",
+      "proposition": "Does the recorded scoped response satisfy MAIL-04’s approval conditions? Bound subject: urn:tensor:example:soc-signin:rule-r7; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "parameters": {
+        "subject": {
+          "type": "URI",
+          "required": true,
+          "bindsTo": "subject:subject"
+        },
+        "window": {
+          "type": "timeContext",
+          "required": true,
+          "bindsTo": "timeContext"
+        }
+      },
+      "applicabilityCriteria": "Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.",
+      "assessmentCriteria": {
+        "yes": "The recorded response and claimed role satisfy the explicit policy conditions for this scope.",
+        "no": "A material response scope or role condition contradicts the effective policy.",
+        "unknown": "The policy, claimed role, or response scope cannot be resolved."
+      },
+      "evidenceRequirements": [
+        "Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.",
+        "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
+      ],
+      "metadata": {
+        "displayId": "S6",
+        "domain": "Email",
+        "layerId": "company",
+        "layerVersion": "1.0.0",
+        "archetype": "classify"
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:public:question-7",
+      "prompt": "Does the handoff retain the supported findings, unknowns, evidence references, and response scope?",
+      "proposition": "Does the handoff retain the supported findings, unknowns, evidence references, and response scope? Bound subject: urn:tensor:example:soc-signin:rule-r7; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "parameters": {
+        "subject": {
+          "type": "URI",
+          "required": true,
+          "bindsTo": "subject:subject"
+        },
+        "window": {
+          "type": "timeContext",
+          "required": true,
+          "bindsTo": "timeContext"
+        }
+      },
+      "applicabilityCriteria": "Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.",
+      "assessmentCriteria": {
+        "yes": "The handoff contains the named evidence, separate assessments, response scope, and unresolved questions.",
+        "no": "A required finding, evidence reference, or material limitation is demonstrably absent.",
+        "unknown": "The retained record cannot establish whether the required handoff content is present."
+      },
+      "evidenceRequirements": [
+        "Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.",
+        "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
+      ],
+      "metadata": {
+        "displayId": "S7",
+        "domain": "Email",
+        "layerId": "public",
+        "layerVersion": "1.0.0",
+        "archetype": "terminal"
+      }
+    }
+  ],
+  "transitions": [
+    {
+      "id": "urn:tensor:example:soc-signin:route-1-yes",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:public:question-1",
+      "targetQuestionId": "urn:tensor:example:soc-signin:public:question-2",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:route-1-no",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:public:question-1",
+      "targetQuestionId": "urn:tensor:example:soc-signin:public:question-2",
+      "guardOutcome": "no",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:route-1-unknown",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:public:question-1",
+      "targetQuestionId": "urn:tensor:example:soc-signin:public:question-2",
+      "guardOutcome": "unknown",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:route-2-yes",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:public:question-2",
+      "targetQuestionId": "urn:tensor:example:soc-signin:vendor:question-3",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:route-2-no",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:public:question-2",
+      "targetQuestionId": "urn:tensor:example:soc-signin:vendor:question-3",
+      "guardOutcome": "no",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:route-2-unknown",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:public:question-2",
+      "targetQuestionId": "urn:tensor:example:soc-signin:vendor:question-3",
+      "guardOutcome": "unknown",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:route-3-yes",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:vendor:question-3",
+      "targetQuestionId": "urn:tensor:example:soc-signin:company:question-4",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:route-3-no",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:vendor:question-3",
+      "targetQuestionId": "urn:tensor:example:soc-signin:company:question-4",
+      "guardOutcome": "no",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:route-3-unknown",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:vendor:question-3",
+      "targetQuestionId": "urn:tensor:example:soc-signin:company:question-4",
+      "guardOutcome": "unknown",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:route-4-yes",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:company:question-4",
+      "targetQuestionId": "urn:tensor:example:soc-signin:public:question-5",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:route-4-no",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:company:question-4",
+      "targetQuestionId": "urn:tensor:example:soc-signin:public:question-5",
+      "guardOutcome": "no",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:route-4-unknown",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:company:question-4",
+      "targetQuestionId": "urn:tensor:example:soc-signin:public:question-5",
+      "guardOutcome": "unknown",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:route-5-yes",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:public:question-5",
+      "targetQuestionId": "urn:tensor:example:soc-signin:company:question-6",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:route-5-no",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:public:question-5",
+      "targetQuestionId": "urn:tensor:example:soc-signin:company:question-6",
+      "guardOutcome": "no",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:route-5-unknown",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:public:question-5",
+      "targetQuestionId": "urn:tensor:example:soc-signin:company:question-6",
+      "guardOutcome": "unknown",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:route-6-yes",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:company:question-6",
+      "targetQuestionId": "urn:tensor:example:soc-signin:public:question-7",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:route-6-no",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:company:question-6",
+      "targetQuestionId": "urn:tensor:example:soc-signin:public:question-7",
+      "guardOutcome": "no",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:route-6-unknown",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:company:question-6",
+      "targetQuestionId": "urn:tensor:example:soc-signin:public:question-7",
+      "guardOutcome": "unknown",
+      "metadata": {
+        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+      }
+    }
+  ],
+  "entryQuestionIds": [
+    "urn:tensor:example:soc-signin:public:question-1"
+  ],
+  "dependencies": [],
+  "metadata": {
+    "illustrative": true,
+    "layers": [
+      {
+        "id": "public",
+        "label": "Public investigation questions",
+        "owner": "TENSOR Standards Consortium",
+        "version": "1.0.0"
+      },
+      {
+        "id": "vendor",
+        "label": "Example vendor telemetry graph",
+        "owner": "Fictional telemetry vendor",
+        "version": "1.0.0"
+      },
+      {
+        "id": "company",
+        "label": "Example company policy graph",
+        "owner": "Fictional company",
+        "version": "1.0.0"
+      }
+    ],
+    "composition": "Case-specific questions composed in one pinned artifact. These are additional example definitions, not routes added to the public working or published graph."
+  }
+}

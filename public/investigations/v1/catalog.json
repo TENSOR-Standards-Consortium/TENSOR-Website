@@ -1,0 +1,49 @@
+{
+  "version": "1.0.0",
+  "bindingVersion": "0.1.0-draft.1",
+  "illustrative": true,
+  "scenarios": [
+    {
+      "id": "soc-signin",
+      "title": "Suspicious sign-in and mailbox forwarding",
+      "description": "The five-minute SOC case: an unfamiliar sign-in, unresolved controller, a forwarding rule, and a scoped response.",
+      "domains": [
+        "Identity",
+        "Email"
+      ],
+      "frames": 7,
+      "questions": 7,
+      "bundle": "soc-signin.bundle.json",
+      "definition": "soc-signin.definition.json"
+    },
+    {
+      "id": "workload-cloud-egress",
+      "title": "Workload identity, cloud read, and network egress",
+      "description": "A workload token, an object read, and an outbound connection are tested separately before a company response.",
+      "domains": [
+        "Identity",
+        "Cloud",
+        "Network"
+      ],
+      "frames": 7,
+      "questions": 7,
+      "bundle": "workload-cloud-egress.bundle.json",
+      "definition": "workload-cloud-egress.definition.json"
+    },
+    {
+      "id": "attachment-host-tool",
+      "title": "Email attachment, host execution, and an application tool",
+      "description": "An attachment is traced across mail, file, endpoint, and application records, with a later evidence-driven revision.",
+      "domains": [
+        "Email",
+        "File",
+        "Host",
+        "Application"
+      ],
+      "frames": 10,
+      "questions": 9,
+      "bundle": "attachment-host-tool.bundle.json",
+      "definition": "attachment-host-tool.definition.json"
+    }
+  ]
+}

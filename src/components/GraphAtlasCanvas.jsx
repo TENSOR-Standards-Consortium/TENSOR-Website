@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { DOMAINS, STAGES } from '../lib/graphAtlas.mjs';
 
-export default function GraphAtlasCanvas({ graph, layout, selectedId, view, onSelect, onWhole, onFocus, shell, trace }) {
+export default function GraphAtlasCanvas({ graph, layout, selectedId, view, onSelect, onWhole, onFocus, shell, trace, cardLabels = false, showAtlasLabels = true, fitPadding = 80, accessibleLabel = 'Complete directed question graph. Use Questions and route links for keyboard and screen-reader exploration.' }) {
   const host = useRef(null), cy = useRef(null), selected = useRef(onSelect);
   const desired = useRef({ selectedId, view, trace }), previousView = useRef(view);
   selected.current = onSelect; desired.current = { selectedId, view, trace };
@@ -18,8 +18,8 @@ export default function GraphAtlasCanvas({ graph, layout, selectedId, view, onSe
     const zoom = Math.min((instance.width() - 76) / (layout.width + 80), (instance.height() - 76) / (layout.height + 50));
     const viewport = { zoom, pan: { x: (instance.width() - layout.width * zoom) / 2, y: (instance.height() - layout.height * zoom) / 2 + 20 } };
     instance.stop();
-    if (reduced()) { if (target) instance.fit(target, 80); else instance.viewport(viewport); }
-    else instance.animate(target ? { fit: { eles: target, padding: 80 } } : viewport, { duration: 360, easing: 'ease-in-out-cubic' });
+    if (reduced()) { if (target) instance.fit(target, fitPadding); else instance.viewport(viewport); }
+    else instance.animate(target ? { fit: { eles: target, padding: fitPadding } } : viewport, { duration: 360, easing: 'ease-in-out-cubic' });
   };
   useEffect(() => {
     let disposed = false, observer, frame;
@@ -29,15 +29,15 @@ export default function GraphAtlasCanvas({ graph, layout, selectedId, view, onSe
       const css = getComputedStyle(host.current);
       const color = value => value.startsWith('var(') ? css.getPropertyValue(value.slice(4, -1)).trim() : value;
       const instance = cytoscape({ container: host.current, elements: [
-        ...layout.nodes.map((n) => ({ data: { id: n.id, title: `${n.id} · ${n.label.replace(`${n.category}: `, '')}`, color: color(n.color) }, position: n.position })),
+        ...layout.nodes.map((n) => ({ data: { id: n.id, displayLabel:n.displayLabel||n.id, title: `${n.id} · ${n.label.replace(`${n.category}: `, '')}`, color: color(n.color) }, position: n.position })),
         ...graph.edges.map((e, i) => ({ data: { id: `atlas-edge-${i}`, source: e.source, target: e.target, outcome: e.decision } })),
       ], layout: { name: 'preset', fit: false }, minZoom: .025, maxZoom: 3.5, wheelSensitivity: .18, boxSelectionEnabled: false, autoungrabify: true,
       style: [
-        { selector: 'node', style: { width: 55, height: 28, shape: 'round-rectangle', 'background-color': color('var(--bg-input)'), 'background-opacity': 1, 'border-width': 1.5, 'border-color': 'data(color)', label: 'data(id)', color: color('var(--text-primary)'), 'font-family': 'JetBrains Mono, monospace', 'font-size': 17, 'font-weight': 500, 'text-valign': 'center', 'text-halign': 'center', 'text-outline-color': color('var(--bg-input)'), 'text-outline-width': 2 } },
+        { selector: 'node', style: { width: cardLabels?220:55, height:cardLabels?86:28, shape: 'round-rectangle', 'background-color': color('var(--bg-input)'), 'background-opacity': 1, 'border-width': 1.5, 'border-color': 'data(color)', label: cardLabels?'data(displayLabel)':'data(id)', color: color('var(--text-primary)'), 'font-family': 'JetBrains Mono, monospace', 'font-size':cardLabels?15:17, 'text-wrap':'wrap', 'font-weight': 500, 'text-valign': 'center', 'text-halign': 'center', 'text-outline-color': color('var(--bg-input)'), 'text-outline-width': 2 } },
         { selector: 'edge', style: { width: 1.1, opacity: .2, 'line-color': color('var(--graph-route)'), 'target-arrow-color': color('var(--graph-route)'), 'target-arrow-shape': 'triangle', 'arrow-scale': .7, 'curve-style': 'bezier' } },
         { selector: 'edge[outcome = "unknown"]', style: { 'line-style': 'dashed' } },
         { selector: '.neighbor', style: { 'border-width': 2.5, 'background-color': color('var(--bg-card-hover)'), 'z-index': 8 } },
-        { selector: 'node.selected', style: { 'border-color': color('var(--accent-primary)'), 'border-width': 4, width: 74, height: 39, 'background-color': color('var(--accent-selection)'), 'z-index': 10 } },
+        { selector: 'node.selected', style: { 'border-color': color('var(--accent-primary)'), 'border-width': 4, width:cardLabels?230:74, height:cardLabels?92:39, 'background-color': color('var(--accent-selection)'), 'z-index': 10 } },
         { selector: 'edge.connected', style: { width: 3.5, opacity: 1, label: 'data(outcome)', 'font-size': 14, color: color('var(--text-primary)'), 'text-background-color': color('var(--bg-app)'), 'text-background-opacity': 1, 'text-background-padding': 4, 'z-index': 9, 'text-rotation': 'autorotate' } },
         { selector: '.connected[outcome = "yes"]', style: { 'line-color': color('var(--accent-success)'), 'target-arrow-color': color('var(--accent-success)') } },
         { selector: '.connected[outcome = "no"]', style: { 'line-color': color('var(--accent-danger)'), 'target-arrow-color': color('var(--accent-danger)') } },
@@ -77,7 +77,7 @@ export default function GraphAtlasCanvas({ graph, layout, selectedId, view, onSe
       observer = new ResizeObserver(() => {
         if (disposed) return;
         instance.resize();
-        if (desired.current.trace?.visibleIds) instance.fit(instance.elements(':visible'),80);
+        if (desired.current.trace?.visibleIds) instance.fit(instance.elements(':visible'),fitPadding);
         else if (desired.current.view === 'all') {
           const z = Math.min((instance.width() - 76) / (layout.width + 80), (instance.height() - 76) / (layout.height + 50));
           instance.viewport({ zoom: z, pan: { x: (instance.width() - layout.width * z) / 2, y: (instance.height() - layout.height * z) / 2 + 20 } });
@@ -127,8 +127,8 @@ export default function GraphAtlasCanvas({ graph, layout, selectedId, view, onSe
   const pan = (x, y) => { cy.current?.stop(); cy.current?.panBy({ x, y }); };
   const mini = { x: -40, y: -10, width: layout.width + 80, height: layout.height + 20 };
   return <div className="atlas-map-wrap">
-    <div className="atlas-stage" ref={host} tabIndex={0} onKeyDown={(event) => { const moves = { ArrowLeft: [140, 0], ArrowRight: [-140, 0], ArrowUp: [0, 140], ArrowDown: [0, -140] }; if (moves[event.key]) { event.preventDefault(); pan(...moves[event.key]); } }} role="img" aria-label="Complete directed question graph. Use Questions and route links for keyboard and screen-reader exploration." data-graph-ready={String(ready)} data-node-count={graph.nodes.length} data-edge-count={graph.edges.length} data-view={view} />
-    {!trace?.visibleIds && <svg className="atlas-map-labels" aria-hidden="true" width="100%" height="100%">
+    <div className="atlas-stage" ref={host} tabIndex={0} onKeyDown={(event) => { const moves = { ArrowLeft: [140, 0], ArrowRight: [-140, 0], ArrowUp: [0, 140], ArrowDown: [0, -140] }; if (moves[event.key]) { event.preventDefault(); pan(...moves[event.key]); } }} role="img" aria-label={accessibleLabel} data-graph-ready={String(ready)} data-node-count={graph.nodes.length} data-edge-count={graph.edges.length} data-view={view} />
+    {showAtlasLabels && !trace?.visibleIds && <svg className="atlas-map-labels" aria-hidden="true" width="100%" height="100%">
       <g transform={`translate(${camera.pan.x} ${camera.pan.y}) scale(${camera.zoom})`}>
         {layout.orientation === 'portrait' ? <>
           {DOMAINS.map((domain, i) => <text key={domain} style={{ fontSize: `${9 / camera.zoom}px`, letterSpacing: 0 }} x={300 + i * layout.domainWidth} y="45" fill={layout.nodes.find(n => n.category === domain)?.color}>{['ID', 'HOST', 'NET', 'CLD', 'MAIL', 'APP', 'FILE'][i]}</text>)}
