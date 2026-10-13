@@ -27,6 +27,7 @@ try {
   for(const [i,frame] of frames.entries()){
    await at(i);const assessment=source.record.entries.find(e=>e.id===frame.assessmentId),instance=source.record.entries.find(e=>e.id===assessment.targetInstanceId),question=definition.questions.find(q=>q.id===instance.questionId);
    assert.equal(await page.locator('.case-current h3').textContent(),question.prompt);
+   assert.doesNotMatch(await page.locator('.case-workspace').innerText(), /\bS\d+\b|urn:tensor:|\b(?:s-42|r-7|job-17|tx-71|obj-9|h-17|req-42)\b/, 'Ordinary case UI uses properties, not opaque aliases');
    assert.equal(await page.locator('.case-assessment .tensor-badge').textContent(),assessment.outcome);
    assert.match(await page.locator('.case-current .section-kicker').textContent(),new RegExp(question.metadata.layerId));
    assert.equal(await page.locator('.case-step-navigation [aria-current=step]').count(),1);
@@ -63,6 +64,15 @@ try {
   assert.match(await page.locator('#il-validation-title').textContent(),/checks passed/i);
   await page.getByRole('button',{name:'Next case step',exact:true}).click();await at(3);
   await page.getByRole('button',{name:'Inspect this assessment and its inputs',exact:true}).click();assert.equal(await page.locator('.il-entry').count(),1);
+  assert.doesNotMatch(await page.locator('.il-entry').innerText(), /urn:tensor:|\b(?:s-42|r-7|job-17|tx-71|obj-9|h-17|req-42)\b/);
+  const inspectedAssessment=source.record.entries.find(e=>e.id===frames[3].assessmentId);
+  const inspectedInstance=source.record.entries.find(e=>e.id===inspectedAssessment.targetInstanceId);
+  const inspectedQuestion=definition.questions.find(q=>q.id===inspectedInstance.questionId);
+  const reference=page.locator('.il-entry .il-reference').first();
+  assert.equal(await reference.textContent(),inspectedQuestion.prompt);
+  await reference.click();assert.equal(await page.locator('.il-entry h3').textContent(),inspectedQuestion.prompt);
+  await page.locator('.il-entry-id summary').click();assert.match(await page.locator('.il-entry-id').innerText(),/urn:tensor:/);
+  await page.locator('.il-entry-id summary').click();
   await page.getByRole('button',{name:'Case walkthrough',exact:true}).click();await ready();await at(3);
   assert.equal(await page.getByRole('link',{name:'Open this step in the graph',exact:false}).getAttribute('href'),`/investigations/${sample.id}/?step=3`);
   const downloadPromise=page.waitForEvent('download');await page.getByRole('button',{name:'Download bundle ↓',exact:true}).click();const download=await downloadPromise;const filename=output+`/${sample.id}.bundle.json`;await download.saveAs(filename);

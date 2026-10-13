@@ -1,3 +1,4 @@
+import { subjectLabel, timeLabel, typeLabel, valueLabel } from '../lib/displayLabels.mjs';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { BINDING_VERSION, parseBundle, validateBundle } from '../vendor/tensor-core/index.mjs';
 import {
@@ -21,15 +22,15 @@ function JsonDetails({ value, label = 'Inspect complete JSON' }) {
 
 function Field({ label, value }) {
   if (value === undefined || value === null || value === '') return null;
-  return <div><dt>{label}</dt><dd>{asText(value)}</dd></div>;
+  return <div><dt>{label}</dt><dd>{valueLabel(value)}</dd></div>;
 }
 
-function EntryReference({ id, entriesById, onInspect, label }) {
+function EntryReference({ id, entriesById, questions, onInspect, label }) {
   if (!id) return null;
   const entry = typeof id === 'string' ? entriesById.get(id) : undefined;
   return entry
-    ? <button type="button" className="il-reference" onClick={() => onInspect(id)} title={id}>{label || entryTitle(entry)}</button>
-    : <span className="il-missing-reference">{label ? `${label}: ` : ''}{asText(id)} <small>({entriesById.has(id) ? 'ambiguous ID' : 'not included'})</small></span>;
+    ? <button type="button" className="il-reference" onClick={() => onInspect(id)}>{label || entryTitle(entry, { questions, entriesById })}</button>
+    : <span className="il-missing-reference">{label ? `${label}: ` : ''}Referenced entry <small>({entriesById.has(id) ? 'ambiguous identity' : 'not included'})</small></span>;
 }
 
 function ReferenceList({ ids, ...props }) {
@@ -39,15 +40,15 @@ function ReferenceList({ ids, ...props }) {
 }
 
 function EntryCard({ entry, questions, entriesById, onInspect }) {
-  const refs = { entriesById, onInspect };
+  const refs = { entriesById, questions, onInspect };
   const question = entry.type === 'QuestionInstance' ? questions.get(questionKey(entry.definitionRef, entry.questionId)) : null;
   return <article className="tensor-panel il-entry">
-    <div className="il-entry-top"><span className="il-eyebrow">{asText(entry.type)}</span><Status value={entry.outcome || entry.stage || entry.availability || entry.status}>{asText(entry.outcome || entry.stage || entry.availability || entry.status || 'recorded')}</Status></div>
-    <h3>{question?.prompt ? asText(question.prompt) : entryTitle(entry)}</h3>
+    <div className="il-entry-top"><span className="il-eyebrow">{typeLabel(entry.type)}</span><Status value={entry.outcome || entry.stage || entry.availability || entry.status}>{asText(entry.outcome || entry.stage || entry.availability || entry.status || 'recorded')}</Status></div>
+    <h3>{question?.prompt ? asText(question.prompt) : entryTitle(entry, { questions, entriesById })}</h3>
     <p className="il-attribution">{attributionLabel(entry, entriesById)}<span aria-hidden="true"> · </span><time>{asText(entry.recordedAt || 'Recorded time unspecified')}</time></p>
     {entry.type === 'QuestionInstance' && <>
       {!question && <p className="il-caption">The pinned question is unavailable or ambiguous. Details are in the validation report and complete instance JSON.</p>}
-      <dl className="il-fields"><Field label="Subject" value={entry.subjectBindings} /><Field label="Time context" value={entry.timeContext} /><Field label="Definition version" value={entry.definitionRef?.version} /><Field label="Domain" value={question?.metadata?.domain} /><Field label="Graph layer" value={question?.metadata?.layerId} /><Field label="Layer version" value={question?.metadata?.layerVersion} /><Field label="Origin" value={entry.origin?.rationale || entry.origin?.kind} /></dl>
+      <dl className="il-fields"><Field label="Subject" value={subjectLabel(entry)} /><Field label="Time context" value={timeLabel(entry.timeContext)} /><Field label="Definition version" value={entry.definitionRef?.version} /><Field label="Domain" value={question?.metadata?.domain} /><Field label="Graph layer" value={question?.metadata?.layerId} /><Field label="Layer version" value={question?.metadata?.layerVersion} /><Field label="Origin" value={entry.origin?.rationale || entry.origin?.kind} /></dl>
       {question && <details className="il-criteria"><summary>Question criteria and parameter bindings</summary><p>{asText(question.proposition)}</p><dl className="il-fields"><Field label="Yes" value={question.assessmentCriteria?.yes} /><Field label="No" value={question.assessmentCriteria?.no} /><Field label="Unknown" value={question.assessmentCriteria?.unknown} /><Field label="Applicability" value={question.applicabilityCriteria} /><Field label="Bindings" value={entry.parameterBindings} /></dl></details>}
     </>}
     {entry.type === 'EvidenceReference' && <dl className="il-fields"><Field label="Source" value={entry.source} /><Field label="Access limitation" value={entry.locatorAbsentReason} /><Field label="Restrictions" value={entry.accessRestrictions} /><Field label="Locator (not opened)" value={entry.locator} /><Field label="Integrity" value={entry.integrity} /></dl>}
@@ -64,7 +65,7 @@ function EntryCard({ entry, questions, entriesById, onInspect }) {
       {entry.targetInstanceId && <><p className="il-field-label">Question instance</p><EntryReference id={entry.targetInstanceId} {...refs} /></>}
       {entry.selectedAssessmentId && <><p className="il-field-label">Selected assessment</p><EntryReference id={entry.selectedAssessmentId} {...refs} /></>}
       <ReferenceList ids={entry.selectedInputIds} {...refs} />
-      {Array.isArray(entry.selections) && <><p className="il-field-label">Explicit transition selections</p><ul className="il-reference-list">{entry.selections.map((selection, i) => <li key={i}><code>{asText(selection?.transitionId)}</code><span aria-hidden="true"> → </span><EntryReference id={selection?.targetInstanceId} {...refs} /></li>)}</ul></>}
+      {Array.isArray(entry.selections) && <><p className="il-field-label">Explicit transition selections</p><ul className="il-reference-list">{entry.selections.map((selection, i) => <li key={i}><span>Continue to </span><EntryReference id={selection?.targetInstanceId} {...refs} /></li>)}</ul></>}
       {Array.isArray(entry.reviewedEntryIds) && <><p className="il-field-label">Reviews these historical entries</p><ReferenceList ids={entry.reviewedEntryIds} {...refs} /></>}
       <ReferenceList ids={entry.policyStatus?.policyRefIds} {...refs} /><ReferenceList ids={entry.authorityStatus?.authorityRefIds} {...refs} />
     </>}
@@ -74,7 +75,7 @@ function EntryCard({ entry, questions, entriesById, onInspect }) {
     {entry.type === 'AuthorityAssertion' && <><dl className="il-fields"><Field label="Scope" value={entry.scope} /><Field label="Claimed validity" value={entry.validityStatus} /><Field label="Receiver verification" value={entry.receiverLocalVerification} /></dl><p className="il-field-label">Claimed issuer and grantee</p><ReferenceList ids={[entry.issuerId, entry.granteeId].filter(Boolean)} {...refs} /><p className="il-field-label">Asserted basis</p><ReferenceList ids={entry.basisReferences} {...refs} /><p className="il-caption">This is a recorded authority claim; local permission checks remain separate.</p></>}
     {entry.type === 'Hypothesis' && <EntryReference id={entry.relatedInstanceId} {...refs} />}
     {entry.supersedes && <div className="il-revision"><p className="il-field-label">Supersedes a retained entry</p><EntryReference id={entry.supersedes.entryId} {...refs} /><p>{asText(entry.supersedes.reason)}</p></div>}
-    <p className="il-entry-id"><span>ID</span><code>{asText(entry.id)}</code></p>
+    <details className="il-entry-id"><summary>Exact identifiers</summary><p>Entry ID <code>{asText(entry.id)}</code></p>{entry.questionId && <p>Question ID <code>{asText(entry.questionId)}</code></p>}</details>
     <JsonDetails value={entry} />
   </article>;
 }
@@ -206,17 +207,17 @@ export default function InvestigationLab() {
           {section === 'walkthrough' ? <CaseInvestigation bundle={bundle} initialStep={caseStep} onStep={setCaseStep} publicCaseId={source.caseId} labMode onInspect={inspectEntry}/> : section === 'graph' ? <InvestigationGraph bundle={bundle} questions={questions} onInspect={inspectEntry} /> : section === 'overview' ? <>
             <div className="il-content-heading"><p className="il-eyebrow">Investigation context</p><h2>Scope and handoff</h2></div>
             <div className="il-overview-metrics"><div><strong>{entries.length}</strong><span>inspectable entries</span></div><div><strong>{groups.QuestionInstance?.length || 0}</strong><span>question instances</span></div><div><strong>{groups.Actor?.length || 0}</strong><span>actor entries</span></div></div>
-            <article className="tensor-panel il-overview-card"><h3>Record boundary</h3><dl className="il-fields"><Field label="Purpose" value={bundle.record?.scope?.purpose} /><Field label="Subjects" value={bundle.record?.scope?.subjectBoundary} /><Field label="Exchange scope" value={bundle.record?.completeness?.exchangeScope} /><Field label="Completeness meaning" value={bundle.record?.completeness?.meaning} /><Field label="Investigation ID" value={bundle.record?.investigationId} /><Field label="Snapshot ID" value={bundle.record?.snapshotId} /><Field label="Recorded at" value={bundle.record?.recordedAt} /><Field label="Producer" value={bundle.record?.producer} /></dl><JsonDetails value={bundle.record?.scope} label="Complete scope" /></article>
+            <article className="tensor-panel il-overview-card"><h3>Record boundary</h3><dl className="il-fields"><Field label="Purpose" value={bundle.record?.scope?.purpose} /><Field label="Subjects" value={[...new Set((groups.QuestionInstance || []).map(subjectLabel))]} /><Field label="Exchange scope" value={bundle.record?.completeness?.exchangeScope} /><Field label="Completeness meaning" value={bundle.record?.completeness?.meaning} /><Field label="Recorded at" value={bundle.record?.recordedAt} /><Field label="Producer" value={bundle.record?.producer} /></dl><JsonDetails value={{ investigationId: bundle.record?.investigationId, snapshotId: bundle.record?.snapshotId, scope: bundle.record?.scope }} label="Exact identities and complete scope" /></article>
             <article className="tensor-panel il-overview-card"><h3>Exact definition artifacts</h3><p>Each attached definition retains its original content string. The validator checks the record’s digest references against those bytes.</p>{Array.isArray(bundle.definitions) && bundle.definitions.map((definition, index) => <details className="il-definition" key={index}><summary>{asText(definition?.path)}</summary><pre>{asText(definition?.content)}</pre></details>)}</article>
             <article className="tensor-panel il-overview-card"><h3>Limits and outstanding review</h3><p>Missing source evidence can remain explicit in a complete Core exchange. A structurally valid record can still contain unknown assessments or unresolved decisions.</p><dl className="il-fields"><Field label="Omissions" value={bundle.record?.omissions} /><Field label="Transformation losses" value={bundle.record?.losses} /></dl>{report?.unresolvedReviews && <JsonDetails value={report.unresolvedReviews} label="Recorded review dependencies" />}</article>
             <JsonDetails value={bundle} label="Inspect complete bundle, including opaque metadata" />
           </> : <>
             <div className="il-content-heading"><p className="il-eyebrow">{section === 'history' ? 'Preserved record order' : 'Inspectable assertions'}</p><h2>{SECTIONS.find((item) => item.id === section)?.label}</h2></div>
             {section === 'history' && <p className="il-caption">Shown in file order. Timestamps describe recorded time and do not establish causality. Supersession links retain the earlier entry.</p>}
-            <label className="il-search-label" htmlFor="il-entry-search">Find text or an entry ID</label><input id="il-entry-search" className="il-search" type="search" value={query} onChange={(event) => { setQuery(event.target.value); setSelectedEntryId(''); setPage(0); }} />
-            <p className="il-results">{visible.length} {visible.length === 1 ? 'entry' : 'entries'}{query ? ' matching the search' : ''}</p>
+            <label className="il-search-label" htmlFor="il-entry-search">Find text or an entry ID</label><input id="il-entry-search" className="il-search" type="search" value={selectedEntryId ? '' : query} onChange={(event) => { setQuery(event.target.value); setSelectedEntryId(''); setPage(0); }} />
+            <p className="il-results">{visible.length} {visible.length === 1 ? 'entry' : 'entries'}{selectedEntryId ? ' selected' : query ? ' matching the search' : ''}</p>
             {visible.length === 0 && <p className="il-empty">No matching entries in this section.</p>}
-            {section === 'history' ? <ol className="il-history" start={page * PAGE_SIZE + 1}>{visible.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE).map((entry, index) => <li key={index}><div><span className="il-eyebrow">{asText(entry.type)}</span><time>{asText(entry.recordedAt)}</time></div><EntryReference id={entry.id} {...{ entriesById, onInspect: inspectEntry }} /><p>{attributionLabel(entry, entriesById)}</p>{entry.supersedes && <p className="il-caption">Supersedes <code>{asText(entry.supersedes.entryId)}</code></p>}</li>)}</ol> : visible.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE).map((entry, index) => <EntryCard key={index} entry={entry} questions={questions} entriesById={entriesById} onInspect={inspectEntry} />)}
+            {section === 'history' ? <ol className="il-history" start={page * PAGE_SIZE + 1}>{visible.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE).map((entry, index) => <li key={index}><div><span className="il-eyebrow">{typeLabel(entry.type)}</span><time>{asText(entry.recordedAt)}</time></div><EntryReference id={entry.id} {...{ entriesById, questions, onInspect: inspectEntry }} /><p>{attributionLabel(entry, entriesById)}</p>{entry.supersedes && <p className="il-caption">Earlier entry retained · <EntryReference id={entry.supersedes.entryId} {...{ entriesById, questions, onInspect: inspectEntry }} /></p>}</li>)}</ol> : visible.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE).map((entry, index) => <EntryCard key={index} entry={entry} questions={questions} entriesById={entriesById} onInspect={inspectEntry} />)}
             {visible.length > PAGE_SIZE && <div className="il-pagination"><button type="button" className="btn btn-secondary" disabled={page === 0} onClick={() => setPage((value) => value - 1)}>Previous entries</button><span>Page {page + 1} of {Math.ceil(visible.length / PAGE_SIZE)}</span><button type="button" className="btn btn-secondary" disabled={(page + 1) * PAGE_SIZE >= visible.length} onClick={() => setPage((value) => value + 1)}>Next entries</button></div>}
           </>}
         </section>

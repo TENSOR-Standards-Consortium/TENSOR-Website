@@ -2,7 +2,7 @@
 
 Three fictional cases use the unchanged Core `0.1.0-draft.1` binding. They span all seven investigation domains. They are additional example definitions and records, not revisions of the working graph, published releases, frozen review package, or schema.
 
-- `soc-signin`: Morgan, session s-42, forwarding rule r-7, company approval, unresolved delivery, scoped response, and handoff. This is the interactive counterpart of the website's five-minute introduction.
+- `soc-signin`: Morgan’s sign-in session, external forwarding rule, company approval, unresolved delivery, scoped response, and handoff. This is the interactive counterpart of the website's five-minute introduction.
 - `workload-cloud-egress`: workload identity, cloud object read, independent network observations, ticket scope, unknown content delivery, and a bounded response.
 - `attachment-host-tool`: mailbox delivery, independent artifact-byte comparison, process execution, application request, retained unknown-to-supported content revision, separate unknown delivery, and scoped containment approval.
 
@@ -13,3 +13,5 @@ The three layers are public example investigation questions, a fictional vendor'
 Optional `record.metadata.walkthrough` supplies presentation order and exact assessment/decision entry references. It adds no Core requirement. Consumers can ignore it and still inspect the complete record. The website derives routes from actual definition transitions and recorded Decision selections, not adjacency between frames. The attachment case selects two leads under the original unknown content assessment, then retains a later yes revision with its own evidence. The historical unknown selections are preserved rather than relabeled as yes. All bundles explicitly use historical presentation; a current-view claim needs separately selected review decisions.
 
 Run `node examples/investigations/v1/build.mjs` to regenerate, or add `--check` to verify deterministic bytes. `manifest.json` pins the emitted definitions, bundles, and catalog. `npm run check` includes this verification and positive/negative record tests.
+
+Example version 1.2.0 uses descriptive subject properties in the prose and optional `QuestionInstance.metadata.subjectLabels` keyed by each exact bound URI. These labels are presentation hints, not identity or evidence. Stable entry, question, subject and route IDs are unchanged; the updated definition bytes have new digests. The Core schemas and published graph releases are unchanged.

@@ -1,6 +1,6 @@
 {
   "id": "urn:tensor:example:attachment-host-tool:composed-definition",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "publicationStatus": "draft",
   "title": "Email attachment, host execution, and an application tool",
   "contractRef": {
@@ -11,8 +11,8 @@
   "questions": [
     {
       "id": "urn:tensor:example:attachment-host-tool:public:question-1",
-      "prompt": "Was message m-31 delivered to the named mailbox?",
-      "proposition": "Was message m-31 delivered to the named mailbox? Bound subject: urn:tensor:example:attachment-host-tool:message-m31; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "prompt": "Was the invoice email delivered to the named mailbox?",
+      "proposition": "Was the invoice email delivered to the named mailbox? Bound subject: urn:tensor:example:attachment-host-tool:message-m31; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
       "parameters": {
         "subject": {
           "type": "URI",
@@ -36,17 +36,18 @@
         "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
       ],
       "metadata": {
+        "title": "Establish the message",
         "displayId": "S1",
         "domain": "Email",
         "layerId": "public",
-        "layerVersion": "1.1.0",
+        "layerVersion": "1.2.0",
         "archetype": "detect"
       }
     },
     {
       "id": "urn:tensor:example:attachment-host-tool:vendor:question-2",
-      "prompt": "Do retained file f-31’s bytes match the attachment in m-31?",
-      "proposition": "Do retained file f-31’s bytes match the attachment in m-31? Bound subject: urn:tensor:example:attachment-host-tool:file-f31; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "prompt": "Do the retained attachment’s bytes match the attachment in the invoice email?",
+      "proposition": "Do the retained attachment’s bytes match the attachment in the invoice email? Bound subject: urn:tensor:example:attachment-host-tool:file-f31; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
       "parameters": {
         "subject": {
           "type": "URI",
@@ -70,17 +71,18 @@
         "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
       ],
       "metadata": {
+        "title": "Identify the attachment bytes",
         "displayId": "S2",
         "domain": "File",
         "layerId": "vendor",
-        "layerVersion": "1.1.0",
+        "layerVersion": "1.2.0",
         "archetype": "correlate"
       }
     },
     {
       "id": "urn:tensor:example:attachment-host-tool:vendor:question-3",
-      "prompt": "Did process p-204 execute the retained f-31 artifact on h-17?",
-      "proposition": "Did process p-204 execute the retained f-31 artifact on h-17? Bound subject: urn:tensor:example:attachment-host-tool:process-p204; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "prompt": "Did the attachment’s process instance execute the retained attachment on the finance workstation?",
+      "proposition": "Did the attachment’s process instance execute the retained attachment on the finance workstation? Bound subject: urn:tensor:example:attachment-host-tool:process-p204; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
       "parameters": {
         "subject": {
           "type": "URI",
@@ -95,7 +97,7 @@
       },
       "applicabilityCriteria": "Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.",
       "assessmentCriteria": {
-        "yes": "Validated process-instance and artifact discriminators establish execution of these bytes on h-17.",
+        "yes": "Validated process-instance and artifact discriminators establish execution of these bytes on the finance workstation.",
         "no": "Validated process or digest discrimination contradicts that particular execution claim.",
         "unknown": "A process name, filesystem presence, or incomplete execution telemetry cannot resolve the claim."
       },
@@ -104,17 +106,18 @@
         "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
       ],
       "metadata": {
+        "title": "Bind execution to the file",
         "displayId": "S3",
         "domain": "Host",
         "layerId": "vendor",
-        "layerVersion": "1.1.0",
+        "layerVersion": "1.2.0",
         "archetype": "correlate"
       }
     },
     {
       "id": "urn:tensor:example:attachment-host-tool:vendor:question-4",
-      "prompt": "Did p-204 originate application tool request req-42?",
-      "proposition": "Did p-204 originate application tool request req-42? Bound subject: urn:tensor:example:attachment-host-tool:request-req42; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "prompt": "Did the attachment’s process instance originate the report-upload request?",
+      "proposition": "Did the attachment’s process instance originate the report-upload request? Bound subject: urn:tensor:example:attachment-host-tool:request-req42; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
       "parameters": {
         "subject": {
           "type": "URI",
@@ -138,17 +141,18 @@
         "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
       ],
       "metadata": {
+        "title": "Test the application pivot",
         "displayId": "S4",
         "domain": "Application",
         "layerId": "vendor",
-        "layerVersion": "1.1.0",
+        "layerVersion": "1.2.0",
         "archetype": "correlate"
       }
     },
     {
       "id": "urn:tensor:example:attachment-host-tool:public:question-5",
-      "prompt": "Did req-42 request an external upload of the restricted report?",
-      "proposition": "Did req-42 request an external upload of the restricted report? Bound subject: urn:tensor:example:attachment-host-tool:request-req42; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "prompt": "Did the report-upload request specify an external upload of the restricted report?",
+      "proposition": "Did the report-upload request specify an external upload of the restricted report? Bound subject: urn:tensor:example:attachment-host-tool:request-req42; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
       "parameters": {
         "subject": {
           "type": "URI",
@@ -172,10 +176,11 @@
         "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
       ],
       "metadata": {
+        "title": "Assess the requested content",
         "displayId": "S5",
         "domain": "Application",
         "layerId": "public",
-        "layerVersion": "1.1.0",
+        "layerVersion": "1.2.0",
         "archetype": "correlate"
       }
     },
@@ -206,10 +211,11 @@
         "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
       ],
       "metadata": {
+        "title": "Apply the organization’s approval test",
         "displayId": "S6",
         "domain": "Application",
         "layerId": "company",
-        "layerVersion": "1.1.0",
+        "layerVersion": "1.2.0",
         "archetype": "classify"
       }
     },
@@ -240,17 +246,18 @@
         "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
       ],
       "metadata": {
+        "title": "Keep delivery unresolved",
         "displayId": "S7",
         "domain": "Application",
         "layerId": "public",
-        "layerVersion": "1.1.0",
+        "layerVersion": "1.2.0",
         "archetype": "correlate"
       }
     },
     {
       "id": "urn:tensor:example:attachment-host-tool:company:question-8",
-      "prompt": "Does the proposed h-17 isolation and req-42 pause satisfy IR-07’s approval conditions?",
-      "proposition": "Does the proposed h-17 isolation and req-42 pause satisfy IR-07’s approval conditions? Bound subject: urn:tensor:example:attachment-host-tool:host-h17; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "prompt": "Does the proposed isolation of the finance workstation and pause of the report-upload request satisfy IR-07’s approval conditions?",
+      "proposition": "Does the proposed isolation of the finance workstation and pause of the report-upload request satisfy IR-07’s approval conditions? Bound subject: urn:tensor:example:attachment-host-tool:host-h17; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
       "parameters": {
         "subject": {
           "type": "URI",
@@ -274,10 +281,11 @@
         "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
       ],
       "metadata": {
+        "title": "Approve scoped containment",
         "displayId": "S8",
         "domain": "Host",
         "layerId": "company",
-        "layerVersion": "1.1.0",
+        "layerVersion": "1.2.0",
         "archetype": "classify"
       }
     },
@@ -308,10 +316,11 @@
         "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
       ],
       "metadata": {
+        "title": "Hand off the retained revision",
         "displayId": "S9",
         "domain": "Application",
         "layerId": "public",
-        "layerVersion": "1.1.0",
+        "layerVersion": "1.2.0",
         "archetype": "terminal"
       }
     }
@@ -323,7 +332,7 @@
       "targetQuestionId": "urn:tensor:example:attachment-host-tool:vendor:question-2",
       "guardOutcome": "yes",
       "metadata": {
-        "meaning": "The yes source assessment permits opening this separate question: Do retained file f-31’s bytes match the attachment in m-31? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "meaning": "The yes source assessment permits opening this separate question: Do the retained attachment’s bytes match the attachment in the invoice email? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
         "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     },
@@ -343,7 +352,7 @@
       "targetQuestionId": "urn:tensor:example:attachment-host-tool:vendor:question-2",
       "guardOutcome": "unknown",
       "metadata": {
-        "meaning": "The unknown source assessment permits opening this separate question: Do retained file f-31’s bytes match the attachment in m-31? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "meaning": "The unknown source assessment permits opening this separate question: Do the retained attachment’s bytes match the attachment in the invoice email? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
         "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     },
@@ -363,7 +372,7 @@
       "targetQuestionId": "urn:tensor:example:attachment-host-tool:vendor:question-3",
       "guardOutcome": "yes",
       "metadata": {
-        "meaning": "The yes source assessment permits opening this separate question: Did process p-204 execute the retained f-31 artifact on h-17? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "meaning": "The yes source assessment permits opening this separate question: Did the attachment’s process instance execute the retained attachment on the finance workstation? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
         "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     },
@@ -383,7 +392,7 @@
       "targetQuestionId": "urn:tensor:example:attachment-host-tool:vendor:question-3",
       "guardOutcome": "unknown",
       "metadata": {
-        "meaning": "The unknown source assessment permits opening this separate question: Did process p-204 execute the retained f-31 artifact on h-17? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "meaning": "The unknown source assessment permits opening this separate question: Did the attachment’s process instance execute the retained attachment on the finance workstation? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
         "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     },
@@ -403,7 +412,7 @@
       "targetQuestionId": "urn:tensor:example:attachment-host-tool:vendor:question-4",
       "guardOutcome": "yes",
       "metadata": {
-        "meaning": "The yes source assessment permits opening this separate question: Did p-204 originate application tool request req-42? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "meaning": "The yes source assessment permits opening this separate question: Did the attachment’s process instance originate the report-upload request? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
         "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     },
@@ -413,7 +422,7 @@
       "targetQuestionId": "urn:tensor:example:attachment-host-tool:company:question-8",
       "guardOutcome": "yes",
       "metadata": {
-        "meaning": "The yes source assessment permits opening this separate question: Does the proposed h-17 isolation and req-42 pause satisfy IR-07’s approval conditions? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "meaning": "The yes source assessment permits opening this separate question: Does the proposed isolation of the finance workstation and pause of the report-upload request satisfy IR-07’s approval conditions? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
         "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     },
@@ -433,7 +442,7 @@
       "targetQuestionId": "urn:tensor:example:attachment-host-tool:vendor:question-4",
       "guardOutcome": "unknown",
       "metadata": {
-        "meaning": "The unknown source assessment permits opening this separate question: Did p-204 originate application tool request req-42? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "meaning": "The unknown source assessment permits opening this separate question: Did the attachment’s process instance originate the report-upload request? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
         "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     },
@@ -453,7 +462,7 @@
       "targetQuestionId": "urn:tensor:example:attachment-host-tool:public:question-5",
       "guardOutcome": "yes",
       "metadata": {
-        "meaning": "The yes source assessment permits opening this separate question: Did req-42 request an external upload of the restricted report? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "meaning": "The yes source assessment permits opening this separate question: Did the report-upload request specify an external upload of the restricted report? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
         "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     },
@@ -473,7 +482,7 @@
       "targetQuestionId": "urn:tensor:example:attachment-host-tool:public:question-5",
       "guardOutcome": "unknown",
       "metadata": {
-        "meaning": "The unknown source assessment permits opening this separate question: Did req-42 request an external upload of the restricted report? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "meaning": "The unknown source assessment permits opening this separate question: Did the report-upload request specify an external upload of the restricted report? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
         "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     },
@@ -639,19 +648,19 @@
         "id": "public",
         "label": "Public investigation questions",
         "owner": "TENSOR Standards Consortium",
-        "version": "1.1.0"
+        "version": "1.2.0"
       },
       {
         "id": "vendor",
         "label": "Example vendor telemetry graph",
         "owner": "Fictional telemetry vendor",
-        "version": "1.1.0"
+        "version": "1.2.0"
       },
       {
         "id": "company",
         "label": "Example company policy graph",
         "owner": "Fictional company",
-        "version": "1.1.0"
+        "version": "1.2.0"
       }
     ],
     "composition": "Case-specific questions composed in one pinned artifact. These are additional example definitions, not routes added to the public working or published graph."

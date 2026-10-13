@@ -3,7 +3,7 @@
   "manifestVersion": 1,
   "bindingVersion": "0.1.0-draft.1",
   "sourceRepository": "https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework",
-  "sourceCommit": "b31ec492ab3e587de9bfc7f3b76e28d8ada56733",
+  "sourceCommit": "e6ced17aeaa1cf1d8be31ba1fbd24bf96d0890e0",
   "sourceDirty": false,
   "foundingSource": "framework-repository",
   "files": [
@@ -316,56 +316,56 @@
     {
       "source": "examples/investigations/v1/README.md",
       "target": "public/investigations/v1/README.md",
-      "sha256": "cac26564271fbddbe90bade621abce251199d5d229bd8500066071262b2cfe73",
-      "bytes": 3091
+      "sha256": "22b77c076c247ce190ab157af8ce1a0dc33756927ac907e360bc61260c05ae05",
+      "bytes": 3492
     },
     {
       "source": "examples/investigations/v1/attachment-host-tool.bundle.json",
       "target": "public/investigations/v1/attachment-host-tool.bundle.json",
-      "sha256": "1ad1286f3f615e837642d5f695bd7354111335f063e14632ffa403110610e489",
-      "bytes": 107389
+      "sha256": "c431fca46ec276ed804ad3a0c36e67bd69755a365b9cf00f26aa9d952cf91f35",
+      "bytes": 110501
     },
     {
       "source": "examples/investigations/v1/attachment-host-tool.definition.json",
       "target": "public/investigations/v1/attachment-host-tool.definition.json",
-      "sha256": "a48522540f0f2933c5144e2ec41c992ee3364774b9792ef7da77ba9012c98200",
-      "bytes": 39449
+      "sha256": "054a7030e97938bd87eecd9c1998f93acb08e537c5febeda8765123a60ae0415",
+      "bytes": 40445
     },
     {
       "source": "examples/investigations/v1/catalog.json",
       "target": "public/investigations/v1/catalog.json",
-      "sha256": "ff54db4de1ebed082d2d98fd2b224b59eefccbeafec2d819a2eb0d2cac70fd3f",
+      "sha256": "ff017fe9f9d380bf27ddcfe7dd3e05fa517000bfa99224d639fac1dafccf9267",
       "bytes": 1547
     },
     {
       "source": "examples/investigations/v1/manifest.json",
       "target": "public/investigations/v1/manifest.json",
-      "sha256": "777867ac236c18c2f0347b7ffed1969bde7d66ae7ab59035c8d2c2025c0d6ebe",
+      "sha256": "9996aa3b0611da49b9263c75316f86d2bc22d0c0378fde5194541e4d8f37677b",
       "bytes": 1038
     },
     {
       "source": "examples/investigations/v1/soc-signin.bundle.json",
       "target": "public/investigations/v1/soc-signin.bundle.json",
-      "sha256": "e915ab8dd853d9a8a71e31456f988dff63fd50aba3869779d98b9832e086e65b",
-      "bytes": 79273
+      "sha256": "2e7a2141b68b0d7a987178090d884c600e652deb480de5a16260e464273bbd8d",
+      "bytes": 81491
     },
     {
       "source": "examples/investigations/v1/soc-signin.definition.json",
       "target": "public/investigations/v1/soc-signin.definition.json",
-      "sha256": "cccf2b1c44c35fbf58d5716810f095ac2093e55988c2e8cd56352ecedfedfe11",
-      "bytes": 31263
+      "sha256": "41d1b13e4530b5bbc50284fde898b97a4f692f0dfef19f93e1eaa6d96d74854a",
+      "bytes": 31954
     },
     {
       "source": "examples/investigations/v1/workload-cloud-egress.bundle.json",
       "target": "public/investigations/v1/workload-cloud-egress.bundle.json",
-      "sha256": "295867cf930055b688f0dec2f00bd7f26382580f68aec02e5a6edc4c4ce6d7ba",
-      "bytes": 79753
+      "sha256": "9b6c7afb726ecccf042f323fc003c29ca93df6c0c7fed9ed0628ec357b0afdb1",
+      "bytes": 82719
     },
     {
       "source": "examples/investigations/v1/workload-cloud-egress.definition.json",
       "target": "public/investigations/v1/workload-cloud-egress.definition.json",
-      "sha256": "8affd8c94b2be655ab3bca3ff47b80b31dca04672102a7d80cbfd370c78f3c5f",
-      "bytes": 29702
+      "sha256": "9eb50dc9c9a225f1da80006c6fe4b40c20fb1a2242d562c12c765b6d7a441ea2",
+      "bytes": 30946
     },
     {
       "source": "releases/core/graphs/v0.20260206e/tensor.core.graph.json",

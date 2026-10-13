@@ -1,3 +1,4 @@
+import { questionLabel } from './displayLabels.mjs';
 import { parseJSON } from '../vendor/tensor-core/json.mjs';
 import { indexEntries, getEntries, MAX_BUNDLE_BYTES } from './investigationLab.mjs';
 import { DOMAINS, STAGES, DOMAIN_COLORS } from './graphAtlas.mjs';
@@ -36,8 +37,9 @@ export function caseModel(bundle) {
   const layers=definitions[0].metadata?.layers;
   if(!Array.isArray(layers)||layers.length!==3||!layers.every(l=>l&&label(l.label)&&label(l.owner)&&label(l.version))||!['public','vendor','company'].every(id=>layers.some(l=>l.id===id))) throw new Error('Case layer ownership is unavailable.');
   for(const node of nodes) {
-    const title=frames.find(f=>f.node.id===node.id)?.title||node.id;
-    node.displayLabel=`${node.id} · ${node.category} · ${node.layerId}\n${title.replace(/(.{1,25})(\s|$)/g,'$1\n').trim()}`;
+    const title=label(node.question.metadata?.title)?node.question.metadata.title:questionLabel(node);
+    node.title=title;
+    node.displayLabel=`${node.category} · ${node.layerId}\n${title.replace(/(.{1,25})(\s|$)/g,'$1\n').trim()}`;
   }
   const layoutEdgeIds=entries.filter(e=>e.type==='Decision').flatMap(e=>(e.selections||[]).map(s=>s.transitionId));
   return { ...walkthrough, domains:[...new Set(nodes.map(n=>n.category))], entries, byId, instances, frames, layers, graph:{version:definitions[0].version,nodes,edges,layoutEdgeIds,entryNodeIds:definitions[0].entryQuestionIds.map(id=>questionNode.get(id).id)} };

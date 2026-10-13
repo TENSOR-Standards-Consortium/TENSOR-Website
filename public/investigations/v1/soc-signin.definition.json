@@ -1,6 +1,6 @@
 {
   "id": "urn:tensor:example:soc-signin:composed-definition",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "publicationStatus": "draft",
   "title": "Suspicious sign-in and mailbox forwarding",
   "contractRef": {
@@ -27,7 +27,7 @@
       },
       "applicabilityCriteria": "Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.",
       "assessmentCriteria": {
-        "yes": "A validated successful-sign-in record matches Morgan, s-42, and the bound interval.",
+        "yes": "A validated successful-sign-in record matches Morgan, the sign-in session, and the bound interval.",
         "no": "Complete, validated sign-in coverage contradicts the named successful-sign-in proposition.",
         "unknown": "Record identity, provenance, meaning, or interval coverage is missing or conflicting."
       },
@@ -36,17 +36,18 @@
         "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
       ],
       "metadata": {
+        "title": "Establish the sign-in",
         "displayId": "S1",
         "domain": "Identity",
         "layerId": "public",
-        "layerVersion": "1.1.0",
+        "layerVersion": "1.2.0",
         "archetype": "detect"
       }
     },
     {
       "id": "urn:tensor:example:soc-signin:public:question-2",
-      "prompt": "Is the person controlling session s-42 established?",
-      "proposition": "Is the person controlling session s-42 established? Bound subject: urn:tensor:example:soc-signin:session-s42; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "prompt": "Is the person controlling Morgan’s sign-in session established?",
+      "proposition": "Is the person controlling Morgan’s sign-in session established? Bound subject: urn:tensor:example:soc-signin:session-s42; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
       "parameters": {
         "subject": {
           "type": "URI",
@@ -61,7 +62,7 @@
       },
       "applicabilityCriteria": "Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.",
       "assessmentCriteria": {
-        "yes": "Independent, authenticated discriminators establish the named person controlling s-42.",
+        "yes": "Independent, authenticated discriminators establish the named person controlling the sign-in session.",
         "no": "Discriminating evidence contradicts the specifically named person-to-session binding.",
         "unknown": "MFA or a client label alone cannot identify the controller; discriminators are missing or conflicting."
       },
@@ -70,17 +71,18 @@
         "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
       ],
       "metadata": {
+        "title": "Keep the controller unresolved",
         "displayId": "S2",
         "domain": "Identity",
         "layerId": "public",
-        "layerVersion": "1.1.0",
+        "layerVersion": "1.2.0",
         "archetype": "correlate"
       }
     },
     {
       "id": "urn:tensor:example:soc-signin:vendor:question-3",
-      "prompt": "Did session s-42 create external forwarding rule r-7?",
-      "proposition": "Did session s-42 create external forwarding rule r-7? Bound subject: urn:tensor:example:soc-signin:rule-r7; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "prompt": "Did Morgan’s sign-in session create the external forwarding rule?",
+      "proposition": "Did Morgan’s sign-in session create the external forwarding rule? Bound subject: urn:tensor:example:soc-signin:rule-r7; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
       "parameters": {
         "subject": {
           "type": "URI",
@@ -95,7 +97,7 @@
       },
       "applicabilityCriteria": "Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.",
       "assessmentCriteria": {
-        "yes": "Validated mailbox and identity records link r-7 creation to s-42 using the documented session discriminator.",
+        "yes": "Validated mailbox and identity records link the forwarding rule creation to the sign-in session using the documented session discriminator.",
         "no": "Validated discriminators contradict this particular session-to-rule relationship.",
         "unknown": "The adapter mapping, session discriminator, record meaning, or provenance is unresolved."
       },
@@ -104,17 +106,18 @@
         "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
       ],
       "metadata": {
+        "title": "Link the mailbox change",
         "displayId": "S3",
         "domain": "Email",
         "layerId": "vendor",
-        "layerVersion": "1.1.0",
+        "layerVersion": "1.2.0",
         "archetype": "correlate"
       }
     },
     {
       "id": "urn:tensor:example:soc-signin:company:question-4",
-      "prompt": "Was forwarding rule r-7 approved under MAIL-04?",
-      "proposition": "Was forwarding rule r-7 approved under MAIL-04? Bound subject: urn:tensor:example:soc-signin:rule-r7; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "prompt": "Was the external forwarding rule approved under MAIL-04?",
+      "proposition": "Was the external forwarding rule approved under MAIL-04? Bound subject: urn:tensor:example:soc-signin:rule-r7; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
       "parameters": {
         "subject": {
           "type": "URI",
@@ -129,7 +132,7 @@
       },
       "applicabilityCriteria": "Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.",
       "assessmentCriteria": {
-        "yes": "An authentic approval entry for r-7 satisfies the effective MAIL-04 requirements.",
+        "yes": "An authentic approval entry for the forwarding rule satisfies the effective MAIL-04 requirements.",
         "no": "MAIL-04 applies and a complete authoritative approval search establishes that the required approval is absent.",
         "unknown": "Policy applicability, effective version, register authority, or search coverage is unresolved."
       },
@@ -138,17 +141,18 @@
         "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
       ],
       "metadata": {
+        "title": "Check company approval",
         "displayId": "S4",
         "domain": "Email",
         "layerId": "company",
-        "layerVersion": "1.1.0",
+        "layerVersion": "1.2.0",
         "archetype": "classify"
       }
     },
     {
       "id": "urn:tensor:example:soc-signin:public:question-5",
-      "prompt": "Is actual external delivery through r-7 established?",
-      "proposition": "Is actual external delivery through r-7 established? Bound subject: urn:tensor:example:soc-signin:rule-r7; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "prompt": "Is actual external delivery through the forwarding rule established?",
+      "proposition": "Is actual external delivery through the forwarding rule established? Bound subject: urn:tensor:example:soc-signin:rule-r7; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
       "parameters": {
         "subject": {
           "type": "URI",
@@ -163,7 +167,7 @@
       },
       "applicabilityCriteria": "Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.",
       "assessmentCriteria": {
-        "yes": "Independent transport evidence links an actual delivered message to r-7 and its external destination.",
+        "yes": "Independent transport evidence links an actual delivered message to the forwarding rule and its external destination.",
         "no": "Complete comparable transport coverage contradicts the particular delivery proposition.",
         "unknown": "A configured rule or mailbox audit alone does not establish delivery; transport coverage is missing."
       },
@@ -172,10 +176,11 @@
         "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
       ],
       "metadata": {
+        "title": "Retain the delivery gap",
         "displayId": "S5",
         "domain": "Email",
         "layerId": "public",
-        "layerVersion": "1.1.0",
+        "layerVersion": "1.2.0",
         "archetype": "correlate"
       }
     },
@@ -206,10 +211,11 @@
         "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
       ],
       "metadata": {
+        "title": "Record the scoped response",
         "displayId": "S6",
         "domain": "Email",
         "layerId": "company",
-        "layerVersion": "1.1.0",
+        "layerVersion": "1.2.0",
         "archetype": "classify"
       }
     },
@@ -240,10 +246,11 @@
         "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
       ],
       "metadata": {
+        "title": "Hand off the bounded findings",
         "displayId": "S7",
         "domain": "Email",
         "layerId": "public",
-        "layerVersion": "1.1.0",
+        "layerVersion": "1.2.0",
         "archetype": "terminal"
       }
     }
@@ -255,7 +262,7 @@
       "targetQuestionId": "urn:tensor:example:soc-signin:public:question-2",
       "guardOutcome": "yes",
       "metadata": {
-        "meaning": "The yes source assessment permits opening this separate question: Is the person controlling session s-42 established? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "meaning": "The yes source assessment permits opening this separate question: Is the person controlling Morgan’s sign-in session established? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
         "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     },
@@ -265,7 +272,7 @@
       "targetQuestionId": "urn:tensor:example:soc-signin:vendor:question-3",
       "guardOutcome": "yes",
       "metadata": {
-        "meaning": "The yes source assessment permits opening this separate question: Did session s-42 create external forwarding rule r-7? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "meaning": "The yes source assessment permits opening this separate question: Did Morgan’s sign-in session create the external forwarding rule? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
         "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     },
@@ -285,7 +292,7 @@
       "targetQuestionId": "urn:tensor:example:soc-signin:public:question-2",
       "guardOutcome": "unknown",
       "metadata": {
-        "meaning": "The unknown source assessment permits opening this separate question: Is the person controlling session s-42 established? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "meaning": "The unknown source assessment permits opening this separate question: Is the person controlling Morgan’s sign-in session established? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
         "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     },
@@ -305,7 +312,7 @@
       "targetQuestionId": "urn:tensor:example:soc-signin:vendor:question-3",
       "guardOutcome": "yes",
       "metadata": {
-        "meaning": "The yes source assessment permits opening this separate question: Did session s-42 create external forwarding rule r-7? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "meaning": "The yes source assessment permits opening this separate question: Did Morgan’s sign-in session create the external forwarding rule? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
         "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     },
@@ -315,7 +322,7 @@
       "targetQuestionId": "urn:tensor:example:soc-signin:vendor:question-3",
       "guardOutcome": "no",
       "metadata": {
-        "meaning": "The no source assessment permits opening this separate question: Did session s-42 create external forwarding rule r-7? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "meaning": "The no source assessment permits opening this separate question: Did Morgan’s sign-in session create the external forwarding rule? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
         "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     },
@@ -325,7 +332,7 @@
       "targetQuestionId": "urn:tensor:example:soc-signin:vendor:question-3",
       "guardOutcome": "unknown",
       "metadata": {
-        "meaning": "The unknown source assessment permits opening this separate question: Did session s-42 create external forwarding rule r-7? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "meaning": "The unknown source assessment permits opening this separate question: Did Morgan’s sign-in session create the external forwarding rule? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
         "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     },
@@ -345,7 +352,7 @@
       "targetQuestionId": "urn:tensor:example:soc-signin:company:question-4",
       "guardOutcome": "yes",
       "metadata": {
-        "meaning": "The yes source assessment permits opening this separate question: Was forwarding rule r-7 approved under MAIL-04? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "meaning": "The yes source assessment permits opening this separate question: Was the external forwarding rule approved under MAIL-04? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
         "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     },
@@ -355,7 +362,7 @@
       "targetQuestionId": "urn:tensor:example:soc-signin:public:question-5",
       "guardOutcome": "yes",
       "metadata": {
-        "meaning": "The yes source assessment permits opening this separate question: Is actual external delivery through r-7 established? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "meaning": "The yes source assessment permits opening this separate question: Is actual external delivery through the forwarding rule established? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
         "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     },
@@ -375,7 +382,7 @@
       "targetQuestionId": "urn:tensor:example:soc-signin:public:question-2",
       "guardOutcome": "unknown",
       "metadata": {
-        "meaning": "The unknown source assessment permits opening this separate question: Is the person controlling session s-42 established? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "meaning": "The unknown source assessment permits opening this separate question: Is the person controlling Morgan’s sign-in session established? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
         "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     },
@@ -395,7 +402,7 @@
       "targetQuestionId": "urn:tensor:example:soc-signin:public:question-5",
       "guardOutcome": "yes",
       "metadata": {
-        "meaning": "The yes source assessment permits opening this separate question: Is actual external delivery through r-7 established? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "meaning": "The yes source assessment permits opening this separate question: Is actual external delivery through the forwarding rule established? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
         "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     },
@@ -415,7 +422,7 @@
       "targetQuestionId": "urn:tensor:example:soc-signin:public:question-5",
       "guardOutcome": "no",
       "metadata": {
-        "meaning": "The no source assessment permits opening this separate question: Is actual external delivery through r-7 established? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "meaning": "The no source assessment permits opening this separate question: Is actual external delivery through the forwarding rule established? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
         "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     },
@@ -435,7 +442,7 @@
       "targetQuestionId": "urn:tensor:example:soc-signin:public:question-5",
       "guardOutcome": "unknown",
       "metadata": {
-        "meaning": "The unknown source assessment permits opening this separate question: Is actual external delivery through r-7 established? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "meaning": "The unknown source assessment permits opening this separate question: Is actual external delivery through the forwarding rule established? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
         "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     },
@@ -521,19 +528,19 @@
         "id": "public",
         "label": "Public investigation questions",
         "owner": "TENSOR Standards Consortium",
-        "version": "1.1.0"
+        "version": "1.2.0"
       },
       {
         "id": "vendor",
         "label": "Example vendor telemetry graph",
         "owner": "Fictional telemetry vendor",
-        "version": "1.1.0"
+        "version": "1.2.0"
       },
       {
         "id": "company",
         "label": "Example company policy graph",
         "owner": "Fictional company",
-        "version": "1.1.0"
+        "version": "1.2.0"
       }
     ],
     "composition": "Case-specific questions composed in one pinned artifact. These are additional example definitions, not routes added to the public working or published graph."
