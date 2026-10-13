@@ -1,14 +1,14 @@
 .site-header { position: sticky; top: 0; z-index: 100; background: color-mix(in srgb, var(--bg-app) 94%, transparent); backdrop-filter: blur(18px); border-bottom: 1px solid var(--line-soft); }
 .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 1rem; min-height: 78px; }
 .header-logo a { display: inline-flex; align-items: center; gap: .65rem; text-decoration: none; color: var(--text-primary); }
-.header-logo img { width: 1.8rem; height: 1.8rem; }
+.header-logo img { width: 1.8rem; height: 1.8rem; filter: grayscale(1) brightness(1.8); }
 .header-logo span { font-size: .95rem; font-weight: 700; letter-spacing: .14em; }
 .header-nav ul { display: flex; align-items: center; gap: .4rem; list-style: none; }
 .header-nav a { display: inline-flex; align-items: center; min-height: 44px; padding: .5rem .8rem; color: var(--text-secondary); font-size: .83rem; text-decoration: none; border-radius: var(--radius-sm); }
 .header-nav a:hover { color: var(--text-primary); background: var(--bg-card); }
 .header-nav a.is-active { color: var(--accent-primary); background: var(--accent-soft); }
 .page-title-bar { padding-block: clamp(2.5rem, 5vw, 4.5rem) var(--space-5); }
-.page-title { max-width: 26ch; font-size: var(--type-title); font-weight: 500; line-height: 1.08; margin-top: .8rem; letter-spacing: -.055em; }
+.page-title { font-family: var(--font-display); max-width: 26ch; font-size: var(--type-title); font-weight: 500; line-height: 1.08; margin-top: .8rem; letter-spacing: -.035em; }
 .page-title-bar p:not(.page-eyebrow) { color: var(--text-secondary); max-width: 72ch; margin-top: 1.2rem; }
 .page-title-bar .cta-group { font-size: .85rem; }
 .page-title-bar .container { padding-bottom: var(--space-5); border-bottom: 1px solid var(--line-soft); }
@@ -47,3 +47,11 @@
  .document-nav p { display: none; }
  .document-nav a { white-space: nowrap; }
 }
+
+.header-brand-note { margin-left: 1.1rem; padding-left: 1.1rem; border-left: 1px solid var(--line-soft); color: var(--text-secondary); font: .65rem/1.4 var(--font-body); max-width: 18ch; }
+.header-logo { display: flex; align-items: center; }
+.ambient-motion-toggle { color: var(--text-secondary); background: transparent; border: 0; font-size: .72rem; text-decoration: underline; text-underline-offset: .25em; padding-block: .6rem; min-height: 44px; }
+.ambient-motion-toggle:disabled { color: var(--text-muted); text-decoration: none; cursor: default; }
+@media (max-width: 700px) { .header-brand-note { font-size: .6rem; max-width: none; } }
+
+@media (min-width: 701px) and (max-width: 1000px) { .header-brand-note { display: none; } }

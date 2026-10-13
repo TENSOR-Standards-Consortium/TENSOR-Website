@@ -8,7 +8,7 @@ export function auditStyleOwnership(source, filename) {
   const errors = [];
   if (!filename.endsWith('/tokens.css') && /#[\da-f]{3,8}\b|\brgba?\(/i.test(css)) errors.push('Colors must use semantic tokens from tokens.css');
   if (!filename.endsWith('/tokens.css') && /:root\s*\{/.test(css)) errors.push('Root tokens belong in tokens.css');
-  if (!filename.endsWith('/global.css') && /(?:^|\})\s*body(?:\s|:|\{|\.)/m.test(css)) errors.push('Page and workspace styles cannot replace the global body theme');
+  if (!filename.endsWith('/global.css') && /(?:^|\})\s*body(?:\s|:|\{|\.|\[)/m.test(css)) errors.push('Page and workspace styles cannot replace the global body theme');
   if (!filename.endsWith('/shell.css') && /(?:^|\})\s*\.(?:site-header|header-inner|footer-bar|page-title-bar)\b/m.test(css)) errors.push('Shell styling belongs in shell.css');
   return errors;
 }

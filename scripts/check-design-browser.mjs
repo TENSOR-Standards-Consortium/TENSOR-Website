@@ -26,10 +26,11 @@ try {
   const capture = new Set(['/', '/core/', '/docs/', '/review/', '/graphs/profiles/', '/investigation-lab/']);
   const results = [];
   let commonTheme;
-  for (const width of [1440, 390]) {
+  for (const width of [1440, 768, 390, 320]) {
     await page.setViewportSize({ width, height: width === 1440 ? 1000 : 844 });
     for (const route of routes) {
       await page.goto(base + route);
+      await page.evaluate(() => document.fonts.ready);
       await page.waitForTimeout(150);
       for (const landmark of ['header', 'main', 'footer', 'h1']) assert.equal(await page.locator(landmark).count(), 1, `${route}: ${landmark}`);
       const visual = await page.evaluate(() => {

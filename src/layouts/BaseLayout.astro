@@ -2,8 +2,12 @@
 import PageIntro from '../components/PageIntro.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import CircuitFrame from '../components/CircuitFrame.astro';
 import '../styles/global.css';
 import tokens from '../styles/tokens.css?raw';
+import clientInitializer from '../../public/assets/js/app-init.js?raw';
+import { createHash } from 'node:crypto';
+const clientInitializerVersion = createHash('sha256').update(clientInitializer).digest('hex').slice(0, 16);
 const themeColor = tokens.match(/--bg-app:\s*(#[0-9a-fA-F]{6})/)[1];
 
 type JsonLdObject = Record<string, unknown>;
@@ -74,7 +78,7 @@ const configuredReleaseAllowedHosts = import.meta.env.RELEASE_ALLOWED_HOSTS
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
     {jsonLdEntries.map((entry) => (
@@ -87,6 +91,7 @@ const configuredReleaseAllowedHosts = import.meta.env.RELEASE_ALLOWED_HOSTS
     data-release-allowed-hosts={configuredReleaseAllowedHosts || undefined}
     data-private-workspace={Astro.url.pathname.startsWith('/investigation-lab') || Astro.url.pathname.startsWith('/studio') ? 'true' : undefined}
   >
+    <CircuitFrame />
     <a class="skip-link" href="#main-content">Skip to content</a>
     <div class="app-shell">
       <Header />
@@ -103,6 +108,6 @@ const configuredReleaseAllowedHosts = import.meta.env.RELEASE_ALLOWED_HOSTS
     </div>
     <!-- Astro inserts the built CSP at the end of head. Load the shared
          initializer after that policy so every executable script is covered. -->
-    <script is:inline src="/assets/js/app-init.js" defer></script>
+    <script is:inline src={`/assets/js/app-init.js?v=${clientInitializerVersion}`} defer></script>
   </body>
 </html>

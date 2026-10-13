@@ -1,6 +1,7 @@
 @import './tokens.css';
 @import './components.css';
 @import './shell.css';
+@import './atmosphere.css';
 @import './documents.css';
 @import './metrics.css';
 @import './reference-tools.css';
@@ -8,7 +9,7 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { color-scheme: dark; scroll-padding-top: 6rem; }
-body { min-height: 100vh; font-family: var(--font-body); color: var(--text-primary); background: var(--bg-app); line-height: 1.65; }
+body { min-height: 100vh; font-family: var(--font-body); color: var(--text-primary); background: linear-gradient(180deg, var(--bg-wash), var(--bg-app) 580px); line-height: 1.65; position: relative; isolation: isolate; }
 main { flex: 1 0 auto; min-width: 0; }
 a { color: var(--accent-secondary); text-underline-offset: .22em; text-decoration-thickness: 1px; }
 a:hover { color: var(--text-primary); }
@@ -20,7 +21,7 @@ button, input, select, textarea { font: inherit; }
 button { cursor: pointer; }
 code, pre { font-family: var(--font-mono); }
 .container { width: min(var(--page-width), calc(100% - var(--page-gutter) * 2)); margin-inline: auto; }
-.app-shell { min-height: 100vh; display: flex; flex-direction: column; }
+.app-shell { position: relative; z-index: 1; min-height: 100vh; display: flex; flex-direction: column; }
 .cta-group { display: flex; flex-wrap: wrap; gap: .65rem 1rem; align-items: center; margin-top: 1.4rem; }
 .section-kicker, .hero-kicker, .page-eyebrow { font: 500 var(--type-label)/1.6 var(--font-mono); text-transform: uppercase; letter-spacing: .14em; color: var(--accent-primary); }
 .is-hidden { display: none !important; }

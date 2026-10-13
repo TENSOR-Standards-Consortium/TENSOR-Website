@@ -1,5 +1,7 @@
 # Whole-site design review, October 12, 2026
 
+Historical record: the steward subsequently rejected this navy visual direction. The shared architecture was retained and revised in `design-review-graphite-2026-10-12.md`. Earlier agent acceptance is not user approval.
+
 ## Brief and authority
 
 The steward rejected separate colors/templates and requested one central set of components and a common design language. Preserve the complete graph, optional cinematic 3D nebula, investigation timelines, private Lab workflows and all published artifacts. No invitations. Baseline website main: `35f2a7b03ef187b98c5a2dd8c4c171a82981f0ea`; baseline validation passed 76 tests and the 626-page build gate. Work used a clean managed checkout; unrelated changes in the original checkout were preserved.
