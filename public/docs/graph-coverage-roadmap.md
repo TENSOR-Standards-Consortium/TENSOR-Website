@@ -29,3 +29,9 @@ The returned IDs do not provide every cyber event profile. The current domain bi
 ## Acceptance for a disposition
 
 Pin original identity, version, digest and routes; name the target definition; state retained and changed meaning and applicability limits; give explicit yes/no/unknown evidence and route rationale; attach scenario results; distinguish author analysis from independent sign-off; and retain disagreement or deferred scope as a public gap.
+
+## Event-profile coverage added after the seven-domain challenge
+
+Sixteen [public event profiles](../drafts/core/event-profiles/README.md), version `0.1.0-draft.1`, now provide explicit subject bindings and profile-qualified definitions for the event contexts previously recorded as gaps. All seven domains are represented, with 144 declared route scenarios and counterexample tests. The working graph and its narrower base evidence criteria remain byte-for-byte unchanged; the dated per-ID ledger is still the unprofiled baseline. The profiles are additive interpretation dependencies, not a retroactive equivalence claim or Core schema change.
+
+Next review focuses on those profile propositions, their real-evidence applicability and faithful independently implemented exchange. New event families, universal coverage, institutional approval and authorization remain unproved. No invitations have been sent.

@@ -17,7 +17,9 @@ const LEGACY_SHA256 = 'dfc3f1a965c01b6f7ade253e426e69abcbad688fab20d9d00065d71c7
 const REVIEW = 'review/2026-10-11.1';
 const WORKING = ['tensor.core.graph.json', 'entry-evidence-criteria.json', 'source/entry_nodes.json', 'coverage-inventory.json',
   'reviews/2026-10-12-restoration/README.md', 'reviews/2026-10-12-restoration/analysis.json',
-  'reviews/2026-10-12-independent-review/README.md', 'reviews/2026-10-12-independent-review/review.json'];
+  'reviews/2026-10-12-independent-review/README.md', 'reviews/2026-10-12-independent-review/review.json',
+  'event-profiles/README.md', 'event-profiles/catalog.json', 'event-profiles/definitions.json',
+  'event-profiles/scenarios.json', 'event-profiles/validation.json'];
 const WORKING_TARGET = 'public/graphs/working';
 const REVIEW_DOCS = ['stewardship.md', 'review-process.md', 'graph-coverage-roadmap.md', 'legacy-migration.md'];
 const MANIFEST = `${PUBLIC_CORE}/provenance.json`;

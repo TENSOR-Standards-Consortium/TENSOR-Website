@@ -1,0 +1,544 @@
+{
+  "format": "tensor-public-event-profiles",
+  "version": "0.1.0-draft.1",
+  "status": "author-tested-public-draft-external-review-pending",
+  "graphVersion": "0.20261012b",
+  "schemaVersion": "0.20260206e",
+  "interpretation": "Additive, explicitly profile-qualified question definitions above the unchanged graph. Base question meanings and schema are not replaced. Required profile dependencies must survive exchange; an unsupported profile is unresolved, not silently flattened.",
+  "profiles": {
+    "identity-credential-state": {
+      "domain": "Identity",
+      "title": "Credential state",
+      "bindings": [
+        "principalId",
+        "credentialId"
+      ],
+      "eventKind": "credential-state",
+      "proposition": "the observed state of the named principal credential",
+      "requiredFacts": [
+        "event.kind",
+        "credential.status"
+      ],
+      "facets": [
+        "authentication pathways",
+        "privileged access events",
+        "artifact provenance"
+      ],
+      "observationMode": "observation",
+      "limitations": [
+        "Credential state does not establish ownership, use, authorization or human intent.",
+        "Normalized observations and provenance assessments are supplied claims; these examples do not authenticate real incident evidence."
+      ],
+      "evidenceRequirements": [
+        "Exact declared subjects, profile identity/version and [start,end) interval",
+        "Assessed event-kind and required discriminator facts, each with method and evidence references",
+        "Accepted provenance and interpretation basis for downstream assessment",
+        "Separately bound falsifiable hypothesis, alternatives and evidence-backed scope",
+        "Separate relation, technical-source and metric answers, including unknowns",
+        "Profile-qualified retained question identities and complete context; no investigation closure"
+      ]
+    },
+    "identity-workload-binding": {
+      "domain": "Identity",
+      "title": "Workload identity binding",
+      "bindings": [
+        "principalId",
+        "workloadId"
+      ],
+      "eventKind": "workload-binding",
+      "proposition": "the observed binding between a named workload and principal",
+      "requiredFacts": [
+        "event.kind",
+        "binding.status"
+      ],
+      "facets": [
+        "workload identity context",
+        "authentication pathways",
+        "control-plane actions"
+      ],
+      "observationMode": "observation",
+      "limitations": [
+        "A workload/principal binding does not establish who controlled the workload or permission to act.",
+        "Normalized observations and provenance assessments are supplied claims; these examples do not authenticate real incident evidence."
+      ],
+      "evidenceRequirements": [
+        "Exact declared subjects, profile identity/version and [start,end) interval",
+        "Assessed event-kind and required discriminator facts, each with method and evidence references",
+        "Accepted provenance and interpretation basis for downstream assessment",
+        "Separately bound falsifiable hypothesis, alternatives and evidence-backed scope",
+        "Separate relation, technical-source and metric answers, including unknowns",
+        "Profile-qualified retained question identities and complete context; no investigation closure"
+      ]
+    },
+    "host-state": {
+      "domain": "Host",
+      "title": "Host state",
+      "bindings": [
+        "hostId",
+        "stateKey"
+      ],
+      "eventKind": "host-state",
+      "proposition": "the observed named host state",
+      "requiredFacts": [
+        "event.kind",
+        "state.value"
+      ],
+      "facets": [
+        "endpoint state changes",
+        "artifact provenance",
+        "control-plane actions"
+      ],
+      "observationMode": "observation",
+      "limitations": [
+        "A state observation establishes its observation time only. A change or historical absence needs separate baseline and collection evidence.",
+        "Normalized observations and provenance assessments are supplied claims; these examples do not authenticate real incident evidence."
+      ],
+      "evidenceRequirements": [
+        "Exact declared subjects, profile identity/version and [start,end) interval",
+        "Assessed event-kind and required discriminator facts, each with method and evidence references",
+        "Accepted provenance and interpretation basis for downstream assessment",
+        "Separately bound falsifiable hypothesis, alternatives and evidence-backed scope",
+        "Separate relation, technical-source and metric answers, including unknowns",
+        "Profile-qualified retained question identities and complete context; no investigation closure"
+      ]
+    },
+    "network-configuration": {
+      "domain": "Network",
+      "title": "Network configuration",
+      "bindings": [
+        "deviceId",
+        "configurationId"
+      ],
+      "eventKind": "network-configuration",
+      "proposition": "the observed configuration of a named network device",
+      "requiredFacts": [
+        "event.kind",
+        "configuration.value"
+      ],
+      "facets": [
+        "control-plane actions",
+        "endpoint state changes",
+        "network pivots"
+      ],
+      "observationMode": "observation",
+      "limitations": [
+        "Configuration does not establish that any packet traversed the device or that a historical configuration was identical.",
+        "Normalized observations and provenance assessments are supplied claims; these examples do not authenticate real incident evidence."
+      ],
+      "evidenceRequirements": [
+        "Exact declared subjects, profile identity/version and [start,end) interval",
+        "Assessed event-kind and required discriminator facts, each with method and evidence references",
+        "Accepted provenance and interpretation basis for downstream assessment",
+        "Separately bound falsifiable hypothesis, alternatives and evidence-backed scope",
+        "Separate relation, technical-source and metric answers, including unknowns",
+        "Profile-qualified retained question identities and complete context; no investigation closure"
+      ]
+    },
+    "network-sensor-coverage": {
+      "domain": "Network",
+      "title": "Sensor collection state",
+      "bindings": [
+        "sensorId",
+        "collectionId"
+      ],
+      "eventKind": "sensor-collection-state",
+      "proposition": "the observed state of a named network collection stream",
+      "requiredFacts": [
+        "event.kind",
+        "collection.status"
+      ],
+      "facets": [
+        "transport metadata",
+        "endpoint state changes",
+        "artifact provenance"
+      ],
+      "observationMode": "observation",
+      "limitations": [
+        "A health record does not prove comprehensive logging. Exclusion still requires a separately evidenced full-interval coverage assessment.",
+        "Normalized observations and provenance assessments are supplied claims; these examples do not authenticate real incident evidence."
+      ],
+      "evidenceRequirements": [
+        "Exact declared subjects, profile identity/version and [start,end) interval",
+        "Assessed event-kind and required discriminator facts, each with method and evidence references",
+        "Accepted provenance and interpretation basis for downstream assessment",
+        "Separately bound falsifiable hypothesis, alternatives and evidence-backed scope",
+        "Separate relation, technical-source and metric answers, including unknowns",
+        "Profile-qualified retained question identities and complete context; no investigation closure"
+      ]
+    },
+    "cloud-data-access": {
+      "domain": "Cloud",
+      "title": "Cloud data access",
+      "bindings": [
+        "tenantId",
+        "resourceId",
+        "operationId"
+      ],
+      "eventKind": "cloud-data-access",
+      "proposition": "the named data-plane access operation on a cloud resource",
+      "requiredFacts": [
+        "event.kind",
+        "access.outcome"
+      ],
+      "facets": [
+        "data access traces",
+        "api invocation patterns",
+        "privileged access events"
+      ],
+      "observationMode": "event",
+      "limitations": [
+        "Control-plane permissions or attempted access do not prove that content was returned; outcome needs its own assessed fact.",
+        "Normalized observations and provenance assessments are supplied claims; these examples do not authenticate real incident evidence."
+      ],
+      "evidenceRequirements": [
+        "Exact declared subjects, profile identity/version and [start,end) interval",
+        "Assessed event-kind and required discriminator facts, each with method and evidence references",
+        "Accepted provenance and interpretation basis for downstream assessment",
+        "Separately bound falsifiable hypothesis, alternatives and evidence-backed scope",
+        "Separate relation, technical-source and metric answers, including unknowns",
+        "Profile-qualified retained question identities and complete context; no investigation closure"
+      ]
+    },
+    "cloud-resource-state": {
+      "domain": "Cloud",
+      "title": "Cloud resource state",
+      "bindings": [
+        "tenantId",
+        "resourceId",
+        "stateKey"
+      ],
+      "eventKind": "cloud-resource-state",
+      "proposition": "the observed named cloud resource state",
+      "requiredFacts": [
+        "event.kind",
+        "state.value"
+      ],
+      "facets": [
+        "control-plane actions",
+        "endpoint state changes",
+        "artifact provenance"
+      ],
+      "observationMode": "observation",
+      "limitations": [
+        "A resource snapshot does not prove who changed it, when it changed or whether anyone accessed data.",
+        "Normalized observations and provenance assessments are supplied claims; these examples do not authenticate real incident evidence."
+      ],
+      "evidenceRequirements": [
+        "Exact declared subjects, profile identity/version and [start,end) interval",
+        "Assessed event-kind and required discriminator facts, each with method and evidence references",
+        "Accepted provenance and interpretation basis for downstream assessment",
+        "Separately bound falsifiable hypothesis, alternatives and evidence-backed scope",
+        "Separate relation, technical-source and metric answers, including unknowns",
+        "Profile-qualified retained question identities and complete context; no investigation closure"
+      ]
+    },
+    "email-mailbox-rule": {
+      "domain": "Email",
+      "title": "Mailbox rule change",
+      "bindings": [
+        "mailboxId",
+        "ruleId"
+      ],
+      "eventKind": "mailbox-rule-change",
+      "proposition": "the named mailbox rule operation",
+      "requiredFacts": [
+        "event.kind",
+        "rule.operation",
+        "rule.outcome"
+      ],
+      "facets": [
+        "control-plane actions",
+        "message delivery paths",
+        "data access traces"
+      ],
+      "observationMode": "event",
+      "limitations": [
+        "A rule operation does not prove that any message was forwarded. Message delivery requires separately bound evidence.",
+        "Normalized observations and provenance assessments are supplied claims; these examples do not authenticate real incident evidence."
+      ],
+      "evidenceRequirements": [
+        "Exact declared subjects, profile identity/version and [start,end) interval",
+        "Assessed event-kind and required discriminator facts, each with method and evidence references",
+        "Accepted provenance and interpretation basis for downstream assessment",
+        "Separately bound falsifiable hypothesis, alternatives and evidence-backed scope",
+        "Separate relation, technical-source and metric answers, including unknowns",
+        "Profile-qualified retained question identities and complete context; no investigation closure"
+      ]
+    },
+    "email-mailbox-access": {
+      "domain": "Email",
+      "title": "Mailbox access",
+      "bindings": [
+        "mailboxId",
+        "principalId",
+        "operationId"
+      ],
+      "eventKind": "mailbox-access",
+      "proposition": "the named mailbox access operation",
+      "requiredFacts": [
+        "event.kind",
+        "access.outcome"
+      ],
+      "facets": [
+        "privileged access events",
+        "session anomalies",
+        "authentication pathways"
+      ],
+      "observationMode": "event",
+      "limitations": [
+        "Mailbox access does not prove message reading, exfiltration, human identity or authorization.",
+        "Normalized observations and provenance assessments are supplied claims; these examples do not authenticate real incident evidence."
+      ],
+      "evidenceRequirements": [
+        "Exact declared subjects, profile identity/version and [start,end) interval",
+        "Assessed event-kind and required discriminator facts, each with method and evidence references",
+        "Accepted provenance and interpretation basis for downstream assessment",
+        "Separately bound falsifiable hypothesis, alternatives and evidence-backed scope",
+        "Separate relation, technical-source and metric answers, including unknowns",
+        "Profile-qualified retained question identities and complete context; no investigation closure"
+      ]
+    },
+    "email-collaboration-artifact": {
+      "domain": "Email",
+      "title": "Collaboration artifact",
+      "bindings": [
+        "workspaceId",
+        "artifactId",
+        "operationId"
+      ],
+      "eventKind": "collaboration-artifact",
+      "proposition": "the named collaboration artifact operation",
+      "requiredFacts": [
+        "event.kind",
+        "artifact.operation"
+      ],
+      "facets": [
+        "collaboration artifacts",
+        "content lineage",
+        "data access traces"
+      ],
+      "observationMode": "event",
+      "limitations": [
+        "This domain profile covers messaging-adjacent collaboration evidence. Sharing permission does not establish recipient access or realized loss.",
+        "Normalized observations and provenance assessments are supplied claims; these examples do not authenticate real incident evidence."
+      ],
+      "evidenceRequirements": [
+        "Exact declared subjects, profile identity/version and [start,end) interval",
+        "Assessed event-kind and required discriminator facts, each with method and evidence references",
+        "Accepted provenance and interpretation basis for downstream assessment",
+        "Separately bound falsifiable hypothesis, alternatives and evidence-backed scope",
+        "Separate relation, technical-source and metric answers, including unknowns",
+        "Profile-qualified retained question identities and complete context; no investigation closure"
+      ]
+    },
+    "application-state": {
+      "domain": "Application",
+      "title": "Application background state",
+      "bindings": [
+        "applicationId",
+        "stateKey"
+      ],
+      "eventKind": "application-state",
+      "proposition": "the observed named application state",
+      "requiredFacts": [
+        "event.kind",
+        "state.value"
+      ],
+      "facets": [
+        "endpoint state changes",
+        "control-plane actions",
+        "artifact provenance"
+      ],
+      "observationMode": "observation",
+      "limitations": [
+        "Background state does not prove a request, execution, prior state or causal actor.",
+        "Normalized observations and provenance assessments are supplied claims; these examples do not authenticate real incident evidence."
+      ],
+      "evidenceRequirements": [
+        "Exact declared subjects, profile identity/version and [start,end) interval",
+        "Assessed event-kind and required discriminator facts, each with method and evidence references",
+        "Accepted provenance and interpretation basis for downstream assessment",
+        "Separately bound falsifiable hypothesis, alternatives and evidence-backed scope",
+        "Separate relation, technical-source and metric answers, including unknowns",
+        "Profile-qualified retained question identities and complete context; no investigation closure"
+      ]
+    },
+    "application-session": {
+      "domain": "Application",
+      "title": "Application session",
+      "bindings": [
+        "applicationId",
+        "sessionId"
+      ],
+      "eventKind": "application-session",
+      "proposition": "the observed named application session state",
+      "requiredFacts": [
+        "event.kind",
+        "session.status"
+      ],
+      "facets": [
+        "session anomalies",
+        "authentication pathways",
+        "privileged access events"
+      ],
+      "observationMode": "observation",
+      "limitations": [
+        "Session state does not prove requests, their effects or the human behind a session.",
+        "Normalized observations and provenance assessments are supplied claims; these examples do not authenticate real incident evidence."
+      ],
+      "evidenceRequirements": [
+        "Exact declared subjects, profile identity/version and [start,end) interval",
+        "Assessed event-kind and required discriminator facts, each with method and evidence references",
+        "Accepted provenance and interpretation basis for downstream assessment",
+        "Separately bound falsifiable hypothesis, alternatives and evidence-backed scope",
+        "Separate relation, technical-source and metric answers, including unknowns",
+        "Profile-qualified retained question identities and complete context; no investigation closure"
+      ]
+    },
+    "application-agent-action": {
+      "domain": "Application",
+      "title": "Autonomous agent action",
+      "bindings": [
+        "applicationId",
+        "agentId",
+        "actionId"
+      ],
+      "eventKind": "agent-action",
+      "proposition": "the named autonomous agent action",
+      "requiredFacts": [
+        "event.kind",
+        "action.outcome"
+      ],
+      "facets": [
+        "api invocation patterns",
+        "execution lineage",
+        "workload identity context"
+      ],
+      "observationMode": "event",
+      "limitations": [
+        "A requested or queued action does not prove execution. A completed technical action does not grant authority or establish intent.",
+        "Normalized observations and provenance assessments are supplied claims; these examples do not authenticate real incident evidence."
+      ],
+      "evidenceRequirements": [
+        "Exact declared subjects, profile identity/version and [start,end) interval",
+        "Assessed event-kind and required discriminator facts, each with method and evidence references",
+        "Accepted provenance and interpretation basis for downstream assessment",
+        "Separately bound falsifiable hypothesis, alternatives and evidence-backed scope",
+        "Separate relation, technical-source and metric answers, including unknowns",
+        "Profile-qualified retained question identities and complete context; no investigation closure"
+      ]
+    },
+    "file-deletion": {
+      "domain": "File",
+      "title": "File deletion",
+      "bindings": [
+        "fileId",
+        "systemId"
+      ],
+      "eventKind": "file-deletion",
+      "proposition": "the named file deletion operation on a system",
+      "requiredFacts": [
+        "event.kind",
+        "deletion.outcome"
+      ],
+      "facets": [
+        "content lineage",
+        "endpoint state changes",
+        "artifact provenance"
+      ],
+      "observationMode": "event",
+      "limitations": [
+        "An unlink record does not prove secure erasure or absence of other copies. A missing current file does not establish a deletion event.",
+        "Normalized observations and provenance assessments are supplied claims; these examples do not authenticate real incident evidence."
+      ],
+      "evidenceRequirements": [
+        "Exact declared subjects, profile identity/version and [start,end) interval",
+        "Assessed event-kind and required discriminator facts, each with method and evidence references",
+        "Accepted provenance and interpretation basis for downstream assessment",
+        "Separately bound falsifiable hypothesis, alternatives and evidence-backed scope",
+        "Separate relation, technical-source and metric answers, including unknowns",
+        "Profile-qualified retained question identities and complete context; no investigation closure"
+      ]
+    },
+    "file-historical-lineage": {
+      "domain": "File",
+      "title": "File historical lineage",
+      "bindings": [
+        "fileId",
+        "systemId",
+        "revisionId"
+      ],
+      "eventKind": "file-lineage",
+      "proposition": "the observed historical parent relation of a named file revision",
+      "requiredFacts": [
+        "event.kind",
+        "lineage.parentRevisionId"
+      ],
+      "facets": [
+        "content lineage",
+        "artifact provenance",
+        "collaboration artifacts"
+      ],
+      "observationMode": "historical-lineage",
+      "limitations": [
+        "A manifest relation is an assessed lineage claim, not proof of identical bytes, authorship or historical content. Self-parent links are unresolved.",
+        "Normalized observations and provenance assessments are supplied claims; these examples do not authenticate real incident evidence."
+      ],
+      "evidenceRequirements": [
+        "Exact declared subjects, profile identity/version and [start,end) interval",
+        "Assessed event-kind and required discriminator facts, each with method and evidence references",
+        "Accepted provenance and interpretation basis for downstream assessment",
+        "Separately bound falsifiable hypothesis, alternatives and evidence-backed scope",
+        "Separate relation, technical-source and metric answers, including unknowns",
+        "Profile-qualified retained question identities and complete context; no investigation closure"
+      ]
+    },
+    "file-unavailable-content": {
+      "domain": "File",
+      "title": "File metadata with unavailable content",
+      "bindings": [
+        "fileId",
+        "systemId"
+      ],
+      "eventKind": "file-metadata",
+      "proposition": "the observed metadata and content-availability state of a named file",
+      "requiredFacts": [
+        "event.kind",
+        "content.availability"
+      ],
+      "facets": [
+        "artifact provenance",
+        "content lineage",
+        "endpoint state changes"
+      ],
+      "observationMode": "observation",
+      "limitations": [
+        "Unavailable, withheld, missing or encrypted content cannot support payload/content facts or content-derived hypotheses. Metadata can still be assessed.",
+        "Normalized observations and provenance assessments are supplied claims; these examples do not authenticate real incident evidence."
+      ],
+      "evidenceRequirements": [
+        "Exact declared subjects, profile identity/version and [start,end) interval",
+        "Assessed event-kind and required discriminator facts, each with method and evidence references",
+        "Accepted provenance and interpretation basis for downstream assessment",
+        "Separately bound falsifiable hypothesis, alternatives and evidence-backed scope",
+        "Separate relation, technical-source and metric answers, including unknowns",
+        "Profile-qualified retained question identities and complete context; no investigation closure"
+      ],
+      "contentAvailabilityFact": "content.availability"
+    }
+  },
+  "graphSha256": "1a32d33c3ffbc6068b64a19c102ec4a85ca2914b206d96eb78cafd4173e169d0",
+  "criteriaSha256": "3a5d0701960d34d26503777e0021b7cb84b71367651ce7bbaceaf1ede576f5c6",
+  "baselineCommit": "78a275b127d2f24933c3ec16d9a2b0b1c38fb0af",
+  "inputPins": {
+    "scripts/event_profiles.py": "6944db66a690cfb9a32f32f8c25857b8a7437284d7fb037e8752abf5811979d9",
+    "scripts/build_event_profiles.py": "6d298871a30c892681dfc4fc3b0e2f09618741dd93b8ec1eaac8a851fe2e34e3",
+    "drafts/core/event-profiles/catalog.source.json": "27920e19e511a3be860b5b3abcf906ef1a037d800ab5e030de6189f144604bac",
+    "drafts/core/event-profiles/scenarios.source.json": "7f19b4384dba0911b4d77f7a6074aa217913ba84a2fb0148da5fac5739f5321d",
+    "drafts/core/tensor.core.graph.json": "1a32d33c3ffbc6068b64a19c102ec4a85ca2914b206d96eb78cafd4173e169d0",
+    "drafts/core/entry-evidence-criteria.json": "3a5d0701960d34d26503777e0021b7cb84b71367651ce7bbaceaf1ede576f5c6",
+    "scripts/evaluate_event_profiles.py": "1bc8e65d2ec1ef03f46e522dd12f67a15cd8a5977a901aaf7a3f251fa9bd2df2",
+    "scripts/evaluate_entry_scenarios.py": "e994d230b9f06d1c51c0243cd49b1b251878b2a3a95abc33b5e033bceb5b458c",
+    "tests/legacy/test_event_profiles.py": "d16729785ce9b64a249b99ea405892bdcc30427e86bf263f6d9b822a9061b2d3"
+  }
+}
