@@ -10,14 +10,65 @@ await mkdir(output,{recursive:true});
 const browser=await chromium.launch({headless:true,args:['--enable-unsafe-swiftshader']});
 const page=await browser.newPage({viewport:{width:1440,height:1000},acceptDownloads:true});
 const errors=[];page.on('pageerror',e=>errors.push(e.message));
+const introductionConsole=[];page.on('console',message=>{if(page.url().startsWith(base+'/start/')&&['error','warning'].includes(message.type()))introductionConsole.push({type:message.type(),text:message.text()});});
 const checks={base};
 const data=n=>n.data || n;
-async function capture(options){await page.locator('footer').scrollIntoViewIfNeeded();await page.locator('footer .brand-symbol').evaluate(image=>image.decode());await page.evaluate(()=>scrollTo(0,0));return page.screenshot(options);}
+async function capture(options){await page.locator('footer').scrollIntoViewIfNeeded();await page.locator('footer .brand-symbol').evaluate(async image=>{image.loading='eager';await image.decode();});await page.evaluate(()=>scrollTo(0,0));return page.screenshot(options);}
 try {
+ await page.goto(base+'/');
+ await page.locator('.hero-text').getByRole('link',{name:'Start here · TENSOR in five minutes',exact:false}).click();
+ await page.waitForURL(base+'/start/');
+ assert.match(await page.title(),/TENSOR in five minutes/);
+ assert.equal(await page.getByRole('heading',{name:'TENSOR in five minutes',exact:true}).count(),1);
+ assert.equal(await page.locator('astro-error-overlay, vite-error-overlay').count(),0);
+ assert.equal(await page.getByRole('banner').getByRole('link',{name:'Start here',exact:true}).getAttribute('aria-current'),'page');
+ assert.equal(await page.locator('.case-timeline > li').count(),5);
+ assert.equal(await page.locator('.case-timeline details').count(),0,'introduction does not hide the investigation behind disclosures');
+ await page.getByRole('link',{name:'Follow the SOC investigation',exact:false}).click();
+ await page.waitForURL(base+'/start/#soc-investigation');
+ assert.ok((await page.locator('#soc-investigation').boundingBox()).y<1000);
+ for(const [name,url] of [
+  ['Follow an investigation','/graphs/?investigation=identity-session&step=0'],
+  ['Inspect a human–agent handoff','/investigation-lab/'],
+  ['Add vendor and company layers','/extensions/'],
+  ['Implement the shared record','/implement/'],
+ ]) {
+  const href=await page.getByRole('link',{name,exact:false}).getAttribute('href');
+  assert.equal(href,url);
+ }
+ await capture({path:output+'/start-desktop.png',fullPage:true});
+ const introWords=(await page.locator('main').innerText()).split(/\s+/).length;
+ assert.ok(introWords<=1250,'five-minute introduction stays within a bounded reading length');
+ await page.getByRole('link',{name:'Follow an investigation',exact:false}).click();
+ await page.waitForURL(base+'/graphs/?investigation=identity-session&step=0');
+ await page.locator('[data-graph-ready=true]').waitFor();
+ assert.match(await page.locator('.atlas-follow-bar strong').textContent(),/session beyond its expected boundary/i);
+ await page.getByRole('button',{name:'Next step',exact:true}).click();
+ await page.waitForURL(url=>url.pathname==='/graphs/'&&url.searchParams.get('investigation')==='identity-session'&&url.searchParams.get('step')==='1');
+ checks.firstTimeJourney={steps:5,words:introWords,graphExample:'identity-session',result:'passed'};
+ await page.getByRole('banner').getByRole('link',{name:'Start here',exact:true}).click();
+ for(const width of [390,320]) {
+  await page.setViewportSize({width,height:844});
+  await page.evaluate(()=>document.fonts.ready);
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+  await capture({path:output+`/start-${width}.png`,fullPage:true});
+ }
+ const readingContext=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:844}});
+ const readingPage=await readingContext.newPage();await readingPage.goto(base+'/start/');
+ assert.equal(await readingPage.locator('.case-timeline > li').count(),5);
+ assert.equal(await readingPage.getByRole('link',{name:'Implement the shared record',exact:false}).isVisible(),true);
+ await readingContext.close();
+ checks.introductionWithoutJavaScript='passed';
+ await page.setViewportSize({width:1440,height:1000});
+ await page.goto(base+'/start/');
+ await page.screenshot({path:output+'/start-first-screen.png'});
+ await page.getByRole('link',{name:'Follow the SOC investigation',exact:false}).click();
+ await page.screenshot({path:output+'/soc-case-first-screen.png'});
+ assert.deepEqual(introductionConsole,[]);checks.introductionConsole=introductionConsole;
  await page.goto(base+'/');
  await page.getByRole('banner').getByRole('link',{name:'Resources',exact:true}).click();
  await page.waitForURL(base+'/docs/');
- assert.equal(await page.locator('main .tensor-resource-card').count(),18);
+ assert.equal(await page.locator('main .tensor-resource-card').count(),19);
  for(const link of await page.locator('main .tensor-resource-card').all()) assert.equal(await link.isVisible(),true);
  await capture({path:output+'/resources.png',fullPage:true});
  await page.getByRole('banner').getByRole('link',{name:'Vendors & organizations',exact:true}).click();
@@ -70,7 +121,7 @@ try {
  for(const width of [320,360,390,700,701,768,850,851,1024,1050,1051,1250,1251,1440]){
   await page.setViewportSize({width,height:width===1440?1000:844});await page.goto(base+'/');await page.evaluate(()=>document.fonts.ready);
   const measured=await page.evaluate(()=>({width:innerWidth,pageWidth:document.documentElement.scrollWidth,links:[...document.querySelectorAll('.header-nav a')].map(a=>{const r=a.getBoundingClientRect();return{text:a.textContent.trim(),left:r.left,right:r.right};})}));
-  assert.equal(measured.links.length,6);assert.ok(measured.pageWidth<=width);assert.ok(measured.links.every(l=>l.left>=0&&l.right<=width));nav.push(measured);
+  assert.equal(measured.links.length,7);assert.ok(measured.pageWidth<=width);assert.ok(measured.links.every(l=>l.left>=0&&l.right<=width));nav.push(measured);
   if([320,390,1440].includes(width))await capture({path:output+`/home-${width}.png`,fullPage:true});
  }
  checks.navigationBreakpoints=nav;
@@ -87,5 +138,5 @@ try {
  await failure.close();
  assert.deepEqual(errors,[]);checks.pageErrors=errors;
  await writeFile(output+'/results.json',JSON.stringify(checks,null,2));
- console.log(JSON.stringify({base,layering:'passed',layerPackRoundTrip:'passed',recordRoundTrip:'passed',resources:18,navigationWidths:nav.length,errors,output}));
+ console.log(JSON.stringify({base,layering:'passed',layerPackRoundTrip:'passed',recordRoundTrip:'passed',resources:19,navigationWidths:nav.length,errors,output}));
 }finally{await browser.close();await rm(temporary,{recursive:true,force:true});}

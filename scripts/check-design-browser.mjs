@@ -16,14 +16,14 @@ try {
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   const routes = [
-    '/', '/core/', '/docs/', '/about/', '/ai-reliability/', '/conformance/',
+    '/', '/start/', '/core/', '/docs/', '/about/', '/ai-reliability/', '/conformance/',
     '/contribute/', '/extensions/', '/governance/', '/implement/', '/review/',
     '/schemas/', '/standards/', '/questions/', '/questions/0.20260206e/Q1/',
     '/graphs/', '/graphs/coverage/', '/graphs/profiles/',
     '/graphs/profiles/application-agent-action/', '/investigation-lab/',
     '/metrics/', '/studio/', '/offline/', '/404.html',
   ];
-  const capture = new Set(['/', '/core/', '/docs/', '/review/', '/graphs/profiles/', '/investigation-lab/']);
+  const capture = new Set(['/', '/start/', '/core/', '/docs/', '/review/', '/graphs/profiles/', '/investigation-lab/']);
   const results = [];
   let commonTheme;
   for (const width of [1440, 768, 390, 320]) {

@@ -1,0 +1,176 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageIntro from '../../components/PageIntro.astro';
+import Button from '../../components/Button.astro';
+import Surface from '../../components/Surface.astro';
+import ResourceCard from '../../components/ResourceCard.astro';
+import { absoluteUrl, seo } from '../../data/seo';
+
+const meta = seo.start;
+const siteUrl = Astro.site?.toString() || 'https://tensor-standards.pages.dev/';
+const jsonLd = {
+  '@context': 'https://schema.org', '@type': 'TechArticle',
+  headline: meta.title, description: meta.description,
+  url: absoluteUrl(siteUrl, meta.canonicalPath),
+};
+const steps = [
+  {
+    id: 'establish-event', actor: 'Human analyst', title: 'Establish what happened',
+    question: 'Was a successful sign-in recorded for Morgan’s account?', outcome: 'Yes', tone: 'yes',
+    evidence: 'E1 · The identity provider’s audit export records a successful sign-in for Morgan and session s-42 at 08:42 UTC. Its collection receipt, time conversion, and event meaning have been checked.',
+    explanation: 'The analyst binds the question to Morgan, s-42, and 08:35–09:00 UTC. The alert starts the investigation; the checked audit record supports this answer.',
+    retained: 'A sign-in occurred. The location alone does not establish compromise.',
+  },
+  {
+    id: 'retain-uncertainty', actor: 'Agent, reviewed by the analyst', title: 'Keep uncertainty visible',
+    question: 'Is the person controlling s-42 established?', outcome: 'Unknown', tone: 'unknown',
+    evidence: 'E2 · MFA succeeded, but the device record is missing. The unfamiliar location could reflect travel, a VPN, or misuse. No retained evidence distinguishes the person controlling the session.',
+    explanation: 'An agent assembles the evidence references and records this assessment under its own identity. The analyst reviews its reasoning. Neither treats successful MFA as proof of who was present.',
+    retained: 'The source remains unresolved. Unknown means more evidence is needed.',
+  },
+  {
+    id: 'vendor-check', actor: 'Vendor layer · product-specific check', title: 'Connect the product evidence',
+    question: 'Did session s-42 create an external forwarding rule?', outcome: 'Yes', tone: 'yes',
+    evidence: 'E3 · A checked mailbox audit record identifies rule r-7, an external destination, and the same session s-42 at 08:47 UTC. The vendor’s documented session mapping connects the two audit sources.',
+    explanation: 'The vendor graph supplies the product fields, query, and mapping needed for this check. A human or an agent can use it. The assessment cites that check’s version and the underlying records.',
+    retained: 'This rule is linked to this session. Other sessions and mailboxes remain unexamined.',
+  },
+  {
+    id: 'company-policy', actor: 'Company layer · local policy', title: 'Apply the company’s rule',
+    question: 'Was forwarding rule r-7 approved under company policy?', outcome: 'No', tone: 'no',
+    evidence: 'E4 · Policy MAIL-04 requires a recorded approval for external forwarding. A complete search of the authoritative approval register for r-7 finds none; the policy owner confirms the requirement applies.',
+    explanation: 'The company graph adds its approval test, responsible owner, and escalation route. The absence of an approval supports “no” here because the required register and search coverage are established. With incomplete coverage, the answer would stay unknown.',
+    retained: 'The rule is unapproved under this policy. That does not establish malicious intent.',
+  },
+  {
+    id: 'handoff', actor: 'Authorized human responder', title: 'Record the decision and hand off',
+    question: 'What response is justified, and who may authorize it?', outcome: 'Decision', tone: null,
+    evidence: 'E5 · The response policy assigns session revocation and rule removal to the on-duty responder. The responder approves those scoped actions and requests a separate check for actual forwarded messages.',
+    explanation: 'The record retains the chosen assessments, rationale, policy version, and claimed authority. Execution and its result require separate evidence. The next shift receives the same evidence references and open questions.',
+    retained: 'Unapproved forwarding is supported. The person responsible, actual delivery, and wider scope remain unresolved.',
+  },
+];
+---
+
+<BaseLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd} hidePageTitle>
+  <PageIntro title="TENSOR in five minutes" eyebrow="Start here / One investigation">
+    <p>A shared way to ask questions, assess evidence, and carry an investigation forward—whether the work is done by a person or an agent.</p>
+    <div class="cta-group"><Button variant="primary" href="#soc-investigation">Follow the SOC investigation <span aria-hidden="true">↓</span></Button><a href="#how-it-fits">How the layers fit together</a></div>
+  </PageIntro>
+
+  <div class="container introduction">
+    <section class="intro-section" aria-labelledby="purpose-title">
+      <p class="section-kicker">The purpose</p>
+      <div class="intro-copy">
+        <h2 id="purpose-title">A shared map.<br />A record of the reasoning.</h2>
+        <p>An alert identifies something to examine. TENSOR provides investigation questions and routes between them, plus a common way to record the evidence, answers, decisions, and revisions.</p>
+        <p>The aim is a handoff that carries the reasoning: what was examined, what the evidence supports, and what remains unknown. It can support an existing SOC workflow, a vendor product, or an agent-assisted investigation.</p>
+        <p>ATT&amp;CK describes adversary behavior; D3FEND describes defensive techniques. TENSOR focuses on the investigation’s questions and record. <a href="/standards/">Standards relationships</a> explains the proposed connections.</p>
+      </div>
+    </section>
+
+    <section class="case-section" id="soc-investigation" aria-labelledby="case-title">
+      <Surface class="case-brief">
+        <p class="section-kicker">SOC case / Suspicious sign-in</p>
+        <h2 id="case-title">One alert. Several questions.</h2>
+        <p>At 08:42 UTC, the SOC receives an unfamiliar-location alert for Morgan’s work account. The investigation later finds an external mailbox forwarding rule.</p>
+        <p class="case-note">Illustrative case with fictional evidence. This page explains the investigation; queries and response actions are not executed.</p>
+        <dl class="case-context"><div><dt>Subject</dt><dd>Morgan · session s-42</dd></div><div><dt>Initial interval</dt><dd>08:35–09:00 UTC</dd></div><div><dt>Team</dt><dd>Analyst + assisting agent</dd></div></dl>
+      </Surface>
+
+      <ol class="case-timeline" aria-label="Suspicious sign-in investigation">
+        {steps.map((step, index) => <li id={step.id}>
+          <span class="step-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+          <article class="case-step" aria-labelledby={`${step.id}-title`}>
+            <p class="section-kicker">{step.actor}</p>
+            <h3 id={`${step.id}-title`}>{step.title}</h3>
+            <div class="case-question"><p>{step.question}</p><span class:list={['tensor-badge', step.tone && `tone-${step.tone}`]}>{step.outcome}</span></div>
+            <p class="case-evidence">{step.evidence}</p>
+            <p>{step.explanation}</p>
+            <p class="case-retained"><strong>What carries forward</strong>{step.retained}</p>
+          </article>
+        </li>)}
+      </ol>
+      <p class="case-summary">Yes, no, and unknown answer specific questions. A “no” about approval does not make the whole incident benign; an “unknown” about identity does not erase the evidence of the forwarding rule.</p>
+    </section>
+
+    <section class="intro-section" id="how-it-fits" aria-labelledby="layers-title">
+      <p class="section-kicker">One foundation / Specialized knowledge</p>
+      <div class="intro-copy"><h2 id="layers-title">The layers fit together.</h2><p>A graph is a map of questions and possible next steps. The public graph supplies shared investigation knowledge. Vendors and companies add specialized graphs above it.</p></div>
+      <div class="intro-layers">
+        <Surface class="intro-actors"><h3>Humans and agents</h3><p>Work across the layers. Each assessment identifies its author; decisions retain their stated authority.</p></Surface>
+        <div class="specialized-layers">
+          <Surface><p class="section-kicker">Vendor graph</p><h3>How a product answers a question</h3><p>In this case: identity and mailbox queries, field meanings, and session mapping.</p></Surface>
+          <Surface><p class="section-kicker">Company graph</p><h3>What the organization requires</h3><p>In this case: forwarding approval, escalation, and who can authorize a response.</p></Surface>
+        </div>
+        <Surface><p class="section-kicker">Public investigation graph</p><h3>Shared questions and evidence criteria</h3><p>Establish the event, test explanations, bound the scope, and retain unresolved questions.</p></Surface>
+        <Surface class="core-foundation"><p class="section-kicker">TENSOR Core</p><h3>The common investigation record</h3><p>Connects questions, evidence references, attributed assessments, decisions, and revisions. A bundle packages a record with its exact definitions for exchange.</p></Surface>
+      </div>
+      <p class="layer-boundary">Public definitions keep their identity. Additional vendor checks and company policies have their own owners and versions; a policy answer stays distinct from a technical finding. The <a href="/extensions/">layering guide</a> includes runnable examples and current format support.</p>
+    </section>
+
+    <section class="intro-section intro-next" aria-labelledby="next-title">
+      <p class="section-kicker">The next step</p>
+      <div class="intro-copy"><h2 id="next-title">Try the part that fits the work.</h2><p>The introduction above is a reading example. The reference tools below provide interactive cases, downloadable records, and layer files.</p></div>
+      <div class="intro-resources">
+        <ResourceCard href={'/graphs/?investigation=identity-session&step=0'} title="Follow an investigation"><p>For analysts: step through a separate identity token-exchange example in the graph, with evidence and unknowns visible.</p><small>Graph atlas / Step-by-step</small></ResourceCard>
+        <ResourceCard href="/investigation-lab/" title="Inspect a human–agent handoff"><p>For SOC teams: select the identity case in the Lab, inspect its assessment history, and export its investigation bundle.</p><small>Investigation Lab / Identity case</small></ResourceCard>
+        <ResourceCard href="/extensions/" title="Add vendor and company layers"><p>For vendors and organizations: combine the cloud example layers, then inspect their separate ownership and questions.</p><small>Layering guide / Working example</small></ResourceCard>
+        <ResourceCard href="/implement/" title="Implement the shared record"><p>For developers: run the reference validator and use the Core contract and schemas to assess integration work.</p><small>Implementation guide / Browser and CLI</small></ResourceCard>
+      </div>
+      <p class="intro-status">Current status: Core 0.1.0-draft.1 is an unratified implementation candidate. The tools demonstrate reference behavior; independent interoperability remains to be established. <a href="/review/">Technical review package</a>.</p>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .introduction { max-width: 1060px; padding-bottom: var(--space-7); }
+  .intro-section { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 3fr); column-gap: var(--space-6); padding-block: var(--space-6); border-bottom: 1px solid var(--line-soft); }
+  .intro-section > .section-kicker { padding-top: .35rem; }
+  .intro-copy { max-width: var(--reading-width); }
+  .intro-copy h2, .case-brief h2 { font: 500 clamp(1.8rem, 3.7vw, 3rem)/1.15 var(--font-display); letter-spacing: var(--tracking-display); }
+  .intro-copy p { margin-top: var(--space-3); color: var(--text-secondary); }
+  .case-section { padding-block: var(--space-6); }
+  .case-brief { padding: clamp(1.25rem, 4vw, 2.5rem); }
+  .case-brief h2 { margin-block: var(--space-3); }
+  .case-brief > p { max-width: var(--reading-width); }
+  .case-note { font-size: .8rem; color: var(--text-muted); margin-top: var(--space-3); }
+  .case-context { display: flex; flex-wrap: wrap; gap: var(--space-4) var(--space-6); border-top: 1px solid var(--line-soft); padding-top: var(--space-4); margin-top: var(--space-4); }
+  .case-context dt { font: .65rem var(--font-mono); text-transform: uppercase; color: var(--text-muted); }
+  .case-context dd { margin-top: var(--space-1); font-size: .85rem; }
+  .case-timeline { list-style: none; margin-top: var(--space-5); }
+  .case-timeline > li { position: relative; padding-left: clamp(2.5rem, 7vw, 5rem); padding-bottom: var(--space-6); }
+  .case-timeline > li::before { content: ''; position: absolute; left: 1rem; top: 2rem; bottom: 0; border-left: 1px solid var(--line-soft); }
+  .case-timeline > li:last-child::before { border-left-style: dashed; }
+  .step-number { position: absolute; left: 0; top: 0; width: 2rem; height: 2rem; display: grid; place-items: center; color: var(--accent-primary); font: .75rem var(--font-mono); border: 1px solid var(--line-strong); border-radius: var(--radius-sm); background: var(--bg-app); }
+  .case-step { max-width: var(--reading-width); }
+  .case-step h3 { font: 500 clamp(1.35rem, 2.5vw, 1.8rem) var(--font-display); margin-block: var(--space-2) var(--space-4); }
+  .case-question { display: flex; align-items: flex-start; gap: var(--space-3); justify-content: space-between; }
+  .case-question p { color: var(--text-primary); font-weight: 500; }
+  .case-question .tensor-badge { flex-shrink: 0; margin-top: .25rem; }
+  .case-step > p { margin-top: var(--space-3); color: var(--text-secondary); }
+  .case-step .case-evidence { padding: var(--space-3); background: var(--bg-card); border: 1px solid var(--line-soft); border-radius: var(--radius-sm); font-size: .9rem; }
+  .case-retained { border-left: 2px solid var(--accent-primary); padding-left: var(--space-3); font-size: .9rem; }
+  .case-retained strong { display: block; color: var(--accent-primary); font-size: .75rem; margin-bottom: var(--space-1); }
+  .case-summary { max-width: var(--reading-width); margin-left: clamp(2.5rem, 7vw, 5rem); padding-top: var(--space-4); border-top: 1px solid var(--line-soft); }
+  .intro-layers { grid-column: 2; display: grid; gap: var(--space-2); margin-top: var(--space-5); }
+  .intro-layers :global(.tensor-panel) { padding: var(--space-4); }
+  .intro-layers :global(.intro-actors) { background: var(--bg-input); }
+  .intro-layers :global(.core-foundation) { border-color: var(--accent-primary); }
+  .intro-layers h3 { font-size: 1rem; font-weight: 500; margin-top: var(--space-1); }
+  .intro-layers p:not(.section-kicker) { color: var(--text-secondary); margin-top: var(--space-2); font-size: .9rem; }
+  .specialized-layers { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-2); }
+  .layer-boundary, .intro-status { grid-column: 2; max-width: var(--reading-width); margin-top: var(--space-4); color: var(--text-secondary); font-size: .85rem; }
+  .intro-next { border: 0; }
+  .intro-resources { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); margin-top: var(--space-5); }
+  .intro-status { color: var(--text-muted); }
+  :is(.intro-section, .case-section, .case-timeline > li) { scroll-margin-top: 3rem; }
+  @media (max-width: 700px) {
+    .intro-section { grid-template-columns: minmax(0, 1fr); gap: var(--space-3); }
+    .intro-layers, .layer-boundary, .intro-status { grid-column: 1; }
+    .intro-resources, .specialized-layers { grid-template-columns: minmax(0, 1fr); }
+    .case-question { flex-direction: column; gap: var(--space-1); }
+    .case-question .tensor-badge { margin-top: 0; }
+    .case-timeline > li { padding-bottom: var(--space-5); }
+  }
+</style>
