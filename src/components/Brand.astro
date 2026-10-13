@@ -1,0 +1,22 @@
+---
+interface Props {
+  variant?: 'header' | 'footer';
+}
+
+const { variant = 'header' } = Astro.props;
+const isFooter = variant === 'footer';
+const imageSize = isFooter ? 160 : 48;
+---
+
+<a class={`brand-lockup brand-lockup--${variant}`} href="/" aria-label="TENSOR home">
+  <img
+    class="brand-symbol"
+    src={isFooter ? '/icons/icon-512.png' : '/icons/icon-192.png'}
+    width={imageSize}
+    height={imageSize}
+    alt=""
+    loading={isFooter ? 'lazy' : 'eager'}
+    decoding="async"
+  />
+  <span class="brand-wordmark">TENSOR</span>
+</a>
