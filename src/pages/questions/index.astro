@@ -29,7 +29,7 @@ const description = `Browse and cite the ${legacyQuestions.length} questions in 
           <ul class="question-list">
             {legacyQuestions.filter((question) => question.category === category).map((question) => (
               <li data-question data-search={`${question.id} ${question.label} ${question.text} ${question.category} ${question.archetype}`.toLowerCase()} data-category={question.category}>
-                <a href={questionPath(question.id)}><span class="question-id">{question.id}</span><span>{question.text}</span></a>
+                <a href={questionPath(question.id)}><span>{question.text}</span></a>
                 <p class="question-meta">{question.archetype}{legacyGraph.entryNodeIds.includes(question.id) ? ' · Declared entry point' : ''}</p>
               </li>
             ))}
@@ -82,7 +82,7 @@ const description = `Browse and cite the ${legacyQuestions.length} questions in 
   .question-list a { display: flex; align-items: baseline; gap: 1rem; text-decoration: none; }
   .question-list a:hover { text-decoration: underline; }
   .question-id { min-width: 3.2rem; font-family: var(--font-mono); font-size: .9rem; }
-  .question-meta { margin: .35rem 0 0 4.2rem; color: var(--text-muted); font-size: .85rem; }
+  .question-meta { margin: .35rem 0 0; color: var(--text-muted); font-size: .85rem; }
   .question-category h2 { scroll-margin-top: 8rem; }
   @media (max-width: 600px) { #question-filters:not([hidden]) { grid-template-columns: 1fr; } }
 </style>

@@ -1,3 +1,4 @@
+import { questionLabel, subjectLabel, compactQuestionLabel } from './displayLabels.mjs';
 import { getEntries, indexEntries, questionKey } from './investigationLab.mjs';
 
 export function definitionView(graph, selectedId, whole = false) {
@@ -12,7 +13,7 @@ export function definitionView(graph, selectedId, whole = false) {
   }
   return {
     selected,
-    nodes: nodes.filter((node) => visible.has(node.id)).map((node) => ({ id: node.id, label: `${node.id}\n${node.label}`, entryId: node.id })),
+    nodes: nodes.filter((node) => visible.has(node.id)).map((node) => ({ id: node.id, label: questionLabel(node), entryId: node.id })),
     edges: edges.filter((edge) => visible.has(edge.source) && visible.has(edge.target)).map((edge, index) => ({ id: `route-${index}`, source: edge.source, target: edge.target, label: edge.decision, outcome: edge.decision })),
   };
 }
@@ -37,7 +38,7 @@ export function recordedView(bundle, questions = new Map(), through = Infinity) 
     const assessments = byInstance.get(entry.id) || [];
     const question = questions.get(questionKey(entry.definitionRef, entry.questionId));
     return { id: ids.get(entry.id), entryId: entry.id, entry, assessments, question,
-      label: `${i + 1}. ${String(question?.prompt || 'Question definition unavailable').slice(0, 120)}\n${assessments.length} assessment${assessments.length === 1 ? '' : 's'}` };
+      label: `${i + 1}. ${compactQuestionLabel(question, 60)}\n${subjectLabel(entry).slice(0, 42)}\n${assessments.length} assessment${assessments.length === 1 ? '' : 's'}` };
   });
   const edges = [];
   for (const decision of entries.filter((entry) => entry.type === 'Decision' && index.get(entry.id) === entry)) {

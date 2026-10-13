@@ -1,3 +1,4 @@
+import { questionLabel } from '../lib/displayLabels.mjs';
 import { useEffect, useRef } from 'react';
 import { checkLegacyGraphStructure, mergeLegacyGraphWithLayers } from '../lib/legacyGraph.mjs';
 import { resolveApiOrigins } from '../lib/runtimeApi';
@@ -764,7 +765,7 @@ export default function GraphExplorer() {
           continue;
         }
 
-        const relatedLabel = relatedNode.data('label') || relatedId;
+        const relatedLabel = questionLabel(relatedNode.data());
         const relatedText = relatedNode.data('text') || '';
 
         const item = document.createElement('li');
@@ -815,7 +816,7 @@ export default function GraphExplorer() {
 
       selectors.detailId.textContent = node.id();
       selectors.detailCategory.textContent = node.data('category') || 'Uncategorized';
-      selectors.detailLabel.textContent = node.data('label') || node.id();
+      selectors.detailLabel.textContent = questionLabel(node.data());
       selectors.detailText.textContent = node.data('text') || '';
 
       buildDetailList(selectors.detailOutgoing, node.outgoers('edge').toArray(), 'out');
@@ -972,7 +973,7 @@ export default function GraphExplorer() {
       const nodes = graph.nodes.map((node) => {
         const nodeData = getNodeData(node);
         const category = nodeData.category || 'Uncategorized';
-        const label = nodeData.label || nodeData.id;
+        const label = questionLabel(nodeData);
 
         return {
           data: {
@@ -2024,7 +2025,7 @@ export default function GraphExplorer() {
             Select a node in the graph to inspect metadata and outgoing/incoming branches.
           </div>
           <div id="detail-node" className="is-hidden">
-            <p className="detail-kv"><span>ID</span><strong id="detail-id"></strong></p>
+            <details><summary>Exact question identity</summary><p className="detail-kv"><span>ID</span><strong id="detail-id"></strong></p></details>
             <p className="detail-kv"><span>Category</span><strong id="detail-category"></strong></p>
             <p className="detail-kv"><span>Label</span><strong id="detail-label"></strong></p>
             <p className="detail-kv detail-text" id="detail-text"></p>

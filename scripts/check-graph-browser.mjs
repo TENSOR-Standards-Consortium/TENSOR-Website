@@ -14,11 +14,11 @@ assert.equal(await p.locator('.atlas-stage').evaluate(el=>el._cyreg.cy.nodes().l
 for(const roles of Object.values(criteria.domains)) {
  const source=roles.correlation;
  await p.evaluate(id=>{history.replaceState(null,'','?graph=working&node='+id);dispatchEvent(new PopStateEvent('popstate'));},source);
- await p.waitForFunction(id=>document.querySelector('.atlas-inspector .section-kicker')?.textContent.startsWith(id+' /'),source);
+ await p.waitForFunction(id=>document.querySelector('.atlas-inspector')?.dataset.questionId===id,source);
  const outgoing=graph.edges.filter(e=>e.source===source),i=outgoing.findIndex(e=>e.extensions?.['tensor:investigativeLead']?.kind==='cross-domain-lead'&&e.decision==='yes');
  const row=p.locator('.atlas-routes li').nth(i);await row.locator('summary').click();
  const bounds=await row.locator('button').boundingBox();assert.ok(bounds.width>=100&&bounds.height>=44,'Expanded context cannot squeeze the route action');
- await row.locator('button').click();await p.waitForFunction(id=>document.querySelector('.atlas-inspector .section-kicker')?.textContent.startsWith(id+' /'),outgoing[i].target);
+ await row.locator('button').click();await p.waitForFunction(id=>document.querySelector('.atlas-inspector')?.dataset.questionId===id,outgoing[i].target);
 }
 console.log('Expanded cross-domain route controls passed in all seven domains');
 // Full catalog sweep uses the atlas; both renderers share these inspector handlers.
@@ -27,17 +27,18 @@ console.log('Expanded cross-domain route controls passed in all seven domains');
 let selections=0,routes=0;
 for(const n of graph.nodes) {
  await p.evaluate(id=>{history.replaceState(null,'','?graph=working&node='+id);dispatchEvent(new PopStateEvent('popstate'));},n.id);
- await p.waitForFunction(id=>document.querySelector('.atlas-inspector .section-kicker')?.textContent.startsWith(id+' /'),n.id);
+ await p.waitForFunction(id=>document.querySelector('.atlas-inspector')?.dataset.questionId===id,n.id);
  assert.equal(await p.locator('.atlas-inspector h2').textContent(),n.text);selections++;
  const outgoing=graph.edges.filter(e=>e.source===n.id);
  assert.equal(await p.locator('.atlas-routes li').count(),outgoing.length);
  for(let i=0;i<outgoing.length;i++) {
   const e=outgoing[i];
-  assert.equal(await p.locator('.atlas-routes li').nth(i).locator('code').textContent(),e.target);
+  assert.equal(await p.locator('.atlas-routes li').nth(i).locator('button').getAttribute('data-route-target'),e.target);
+  assert.ok((await p.locator('.atlas-routes li').nth(i).locator('button').textContent()).includes(graph.nodes.find(n=>n.id===e.target).text));
   await p.locator('.atlas-routes li').nth(i).locator('button').evaluate(el=>el.click());
-  await p.waitForFunction(id=>document.querySelector('.atlas-inspector .section-kicker')?.textContent.startsWith(id+' /'),e.target);routes++;
+  await p.waitForFunction(id=>document.querySelector('.atlas-inspector')?.dataset.questionId===id,e.target);routes++;
   // Restore source through the supported public history route before next choice.
-  if(i<outgoing.length-1) {await p.evaluate(id=>{history.replaceState(null,'','?graph=working&node='+id);dispatchEvent(new PopStateEvent('popstate'));},n.id);await p.waitForFunction(id=>document.querySelector('.atlas-inspector .section-kicker')?.textContent.startsWith(id+' /'),n.id);}
+  if(i<outgoing.length-1) {await p.evaluate(id=>{history.replaceState(null,'','?graph=working&node='+id);dispatchEvent(new PopStateEvent('popstate'));},n.id);await p.waitForFunction(id=>document.querySelector('.atlas-inspector')?.dataset.questionId===id,n.id);}
  }
  if(selections%100===0) console.log(`${selections} selected, ${routes} routes followed`);
 }

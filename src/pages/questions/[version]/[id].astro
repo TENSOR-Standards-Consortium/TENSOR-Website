@@ -12,7 +12,7 @@ const incoming = legacyGraph.edges.filter((edge) => edge.target === question.id)
 const isEntry = legacyGraph.entryNodeIds.includes(question.id);
 const previous = legacyQuestions[index - 1];
 const next = legacyQuestions[index + 1];
-const title = `${question.id} · ${question.label}`;
+const title = question.label;
 const citationUrl = new URL(questionPath(question.id), Astro.site || 'https://tensor-standards.pages.dev/').toString();
 ---
 
@@ -22,7 +22,7 @@ const citationUrl = new URL(questionPath(question.id), Astro.site || 'https://te
     <p class="section-kicker">Preserved graph release · {LEGACY_VERSION}</p>
     <h2>{question.text}</h2>
     <dl class="question-facts">
-      <div><dt>Question ID</dt><dd>{question.id}</dd></div>
+
       <div><dt>Category</dt><dd>{question.category}</dd></div>
       <div><dt>Archetype</dt><dd>{question.archetype}</dd></div>
       <div><dt>Declared entry point</dt><dd>{isEntry ? 'Yes' : 'No'}</dd></div>
@@ -31,11 +31,11 @@ const citationUrl = new URL(questionPath(question.id), Astro.site || 'https://te
 
     <h2>Published outgoing routes</h2>
     {outgoing.length > 0 ? <ul class="route-list">{outgoing.map((edge) => (
-      <li><strong>{edge.decision}</strong><div><a href={questionPath(edge.target)}>{edge.target} · {questionById.get(edge.target)?.text}</a><p class="edge-id">Route ID: <code>{edge.id}</code></p></div></li>
+      <li><strong>{edge.decision}</strong><div><a href={questionPath(edge.target)}>{questionById.get(edge.target)?.text}</a><details class="edge-id"><summary>Exact route identity</summary><code>{edge.id}</code></details></div></li>
     ))}</ul> : <p>This question has no outgoing routes in the published release. Investigation status is recorded separately.</p>}
     <p>Route labels describe the published graph's yes, no, and unknown branches.</p>
 
-    {incoming.length > 0 && <details><summary>Incoming routes ({incoming.length})</summary><ul>{incoming.map((edge) => <li><a href={questionPath(edge.source)}>{edge.source}</a> on <strong>{edge.decision}</strong> <span class="edge-id">({edge.id})</span></li>)}</ul></details>}
+    {incoming.length > 0 && <details><summary>Incoming routes ({incoming.length})</summary><ul>{incoming.map((edge) => <li><a href={questionPath(edge.source)}>{questionById.get(edge.source)?.text}</a> on <strong>{edge.decision}</strong> <span class="edge-id">({edge.id})</span></li>)}</ul></details>}
 
     <h2>Citation</h2>
     <p>A version-specific citation identifies the question, graph release, and exact source digest.</p>
@@ -45,10 +45,10 @@ const citationUrl = new URL(questionPath(question.id), Astro.site || 'https://te
 
     <h2>Core definition status</h2>
     <p>The published graph format is separate from Core {"0.1.0-draft.1"}. A Core definition includes explicit parameters and criteria, versioned identity, and an exact artifact pin. <a href="/core/">The Core contract</a> defines these requirements.</p>
-    <nav class="adjacent-questions" aria-label="Adjacent question identifiers">
-      {previous && <a href={questionPath(previous.id)}>← {previous.id}</a>}
+    <nav class="adjacent-questions" aria-label="Adjacent questions">
+      {previous && <a href={questionPath(previous.id)}>← {previous.label}</a>}
       <a href="/questions/">All questions</a>
-      {next && <a href={questionPath(next.id)}>{next.id} →</a>}
+      {next && <a href={questionPath(next.id)}>{next.label} →</a>}
     </nav>
   </ContentCard>
 </DocumentLayout>

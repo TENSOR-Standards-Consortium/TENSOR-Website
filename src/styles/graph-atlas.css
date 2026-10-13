@@ -182,8 +182,8 @@
 .three-label { position: absolute; transform: translate(-50%, -50%); white-space: nowrap; font-family: var(--font-mono); text-shadow: 0 1px 4px var(--text-inverse); }
 .three-label-domain { font-size: .6rem; letter-spacing: .1em; transform: translate(-100%,-50%); }
 .three-label-stage { font-size: .5rem; color: var(--text-secondary); letter-spacing: .06em; }
-.three-label-node { color: var(--accent-secondary); font-size: .5rem; margin-top: 13px; padding: .1rem .2rem; background: color-mix(in srgb, var(--bg-app) 79%, transparent); border-radius: var(--radius-sm); }
-.three-label-node.is-active { font-size: .65rem; color: var(--accent-primary); }
+.three-label-node { width: 180px; white-space: normal; line-height: 1.35; text-align: center; overflow-wrap: anywhere; color: var(--accent-secondary); font-size: .65rem; margin-top: 13px; padding: .1rem .2rem; background: color-mix(in srgb, var(--bg-app) 79%, transparent); border-radius: var(--radius-sm); }
+.three-label-node.is-active { font-size: .75rem; color: var(--accent-primary); }
 .three-fallback { position: absolute; inset: 30% 10% auto; background: var(--bg-card-hover); border: 1px solid var(--line-strong); padding: 1.5rem; text-align: center; }
 .three-fallback .btn { margin-top: 1rem; }
 .three-tooltip { position: absolute; left: 1.2rem; bottom: 105px; max-width: calc(100% - 2.4rem); font-size: .75rem; color: var(--text-primary); background: var(--bg-card-hover); border: 1px solid var(--text-muted); padding: .7rem 1rem; pointer-events: none; }
@@ -287,3 +287,5 @@
 .atlas-lead-context { grid-column: 2; min-width: 0; overflow-wrap: anywhere; font-size: .75rem; color: var(--text-muted); }
 .atlas-lead-context summary { cursor: pointer; min-height: 44px; color: var(--accent-secondary); }
 .atlas-lead-context p { margin-block: var(--space-2); }
+
+@media (max-width: 600px) { .case-map .atlas-orientation { top: auto; bottom: 5.5rem; } }

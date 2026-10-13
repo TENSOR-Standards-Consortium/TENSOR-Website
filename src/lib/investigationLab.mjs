@@ -1,3 +1,5 @@
+import { propertyLabel, questionKey } from './displayLabels.mjs';
+export { entryTitle, questionKey } from './displayLabels.mjs';
 import { parseJSON } from '../vendor/tensor-core/json.mjs';
 import { serializeBundle, sha256 } from '../vendor/tensor-core/index.mjs';
 import catalog from '../../public/investigations/v1/catalog.json' with { type: 'json' };
@@ -75,19 +77,8 @@ export function indexEntries(entries) {
 
 export function attributionLabel(entry, entriesById) {
   const actor = entriesById.get(entry.attribution?.actorId);
-  if (actor?.type === 'Actor') return asText(actor.label || actor.id);
+  if (actor?.type === 'Actor') return propertyLabel(actor, 'Unnamed actor');
   return asText(entry.attribution?.unknownReason || 'Attribution unresolved');
-}
-
-export function entryTitle(entry) {
-  for (const field of ['label', 'statement', 'operationDescription', 'description', 'rationale', 'policyIdentity', 'permittedOperation']) {
-    if (typeof entry?.[field] === 'string' && entry[field].trim()) return entry[field];
-  }
-  return asText(entry?.type || 'Unrecognized entry');
-}
-
-export function questionKey(pin, questionId) {
-  return JSON.stringify([pin?.artifact, pin?.id, pin?.version, pin?.sha256, questionId]);
 }
 
 export async function getDefinitionQuestions(bundle) {

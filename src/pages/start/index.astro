@@ -17,7 +17,7 @@ const jsonLd = {
 };
 const model = caseModel(socBundle);
 const chapters = [
-  { frames: [0], title: 'Establish what happened', explanation: 'The analyst binds the question to Morgan’s account, s-42, and 08:35–09:00 UTC. The alert starts the investigation; the checked audit record supports this answer.' },
+  { frames: [0], title: 'Establish what happened', explanation: 'The analyst binds the question to Morgan’s account, its sign-in session, and 08:35–09:00 UTC. The alert starts the investigation; the checked audit record supports this answer.' },
   { frames: [1], title: 'Keep uncertainty visible', explanation: 'An assisting agent records its assessment under its own identity. The analyst can inspect the same inputs and reasoning; successful MFA does not establish the person present.' },
   { frames: [2], title: 'Connect the product evidence', explanation: 'The vendor graph supplies product fields and a documented session mapping. A human or an agent can use the check, with its version and evidence references retained.' },
   { frames: [3], title: 'Apply the company’s rule', explanation: 'The company graph adds its approval test, owner, and response scope. A complete authoritative approval search supports this negative answer; incomplete coverage would leave it unknown.' },
@@ -60,7 +60,7 @@ const steps = chapters.map(chapter => {
         <h2 id="case-title">One alert. Several questions.</h2>
         <p>At 08:42 UTC, the SOC receives an unfamiliar-location alert for Morgan’s work account. The investigation later finds an external mailbox forwarding rule.</p>
         <p class="case-note">Illustrative case with fictional evidence. This page explains the investigation; queries and response actions are not executed.</p>
-        <dl class="case-context"><div><dt>Subject</dt><dd>Morgan · session s-42</dd></div><div><dt>Initial interval</dt><dd>08:35–09:00 UTC</dd></div><div><dt>Team</dt><dd>Analyst + assisting agent</dd></div></dl>
+        <dl class="case-context"><div><dt>Subject</dt><dd>Morgan’s sign-in session</dd></div><div><dt>Initial interval</dt><dd>08:35–09:00 UTC</dd></div><div><dt>Team</dt><dd>Analyst + assisting agent</dd></div></dl>
       </Surface>
 
       <ol class="case-timeline" aria-label="Suspicious sign-in investigation">

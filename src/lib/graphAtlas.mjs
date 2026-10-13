@@ -10,19 +10,19 @@ export function atlasLayout(graph, orientation = 'wide') {
     groups.get(key).push(node);
   }
   const columns = graph.nodes.length > 300 ? 5 : 3;
-  const stageWidth = graph.nodes.length > 300 ? 390 : 250;
+  const stageWidth = graph.nodes.length > 300 ? 780 : 480;
   const maxRows = Math.max(1, ...[...groups.values()].map((items) => Math.ceil(items.length / columns)));
-  const laneHeight = Math.max(120, maxRows * 38 + 44);
+  const laneHeight = Math.max(120, maxRows * 58 + 44);
   const narrow = orientation === 'portrait';
   const portraitColumns = graph.nodes.length > 300 ? 3 : 2;
-  const domainWidth = graph.nodes.length > 300 ? 240 : 140, stageHeight = Math.max(160, Math.max(...[...groups.values()].map(items => Math.ceil(items.length / portraitColumns))) * 38 + 65);
+  const domainWidth = graph.nodes.length > 300 ? 470 : 310, stageHeight = Math.max(160, Math.max(...[...groups.values()].map(items => Math.ceil(items.length / portraitColumns))) * 58 + 65);
   const width = narrow ? DOMAINS.length * domainWidth + 280 : STAGES.length * stageWidth + 220;
   const height = narrow ? STAGES.length * stageHeight + 100 : DOMAINS.length * laneHeight + 90;
   const nodes = graph.nodes.map((node) => {
     const group = groups.get(`${node.category}:${node.archetype}`).slice().sort((a, b) => Number(a.id.slice(1)) - Number(b.id.slice(1)));
     const i = group.findIndex((item) => item.id === node.id);
     const domain = DOMAINS.indexOf(node.category), stage = STAGES.indexOf(node.archetype);
-    return { ...node, color: DOMAIN_COLORS[domain] || 'var(--domain-uncategorized)', position: narrow ? { x: 300 + Math.max(0, domain) * domainWidth + (i % portraitColumns) * 65, y: 120 + Math.max(0, stage) * stageHeight + Math.floor(i / portraitColumns) * 38 } : { x: 230 + Math.max(0, stage) * stageWidth + (i % columns) * 70, y: 92 + Math.max(0, domain) * laneHeight + Math.floor(i / columns) * 38 } };
+    return { ...node, color: DOMAIN_COLORS[domain] || 'var(--domain-uncategorized)', position: narrow ? { x: 300 + Math.max(0, domain) * domainWidth + (i % portraitColumns) * 145, y: 120 + Math.max(0, stage) * stageHeight + Math.floor(i / portraitColumns) * 58 } : { x: 230 + Math.max(0, stage) * stageWidth + (i % columns) * 145, y: 92 + Math.max(0, domain) * laneHeight + Math.floor(i / columns) * 58 } };
   });
   return { nodes, width, height, laneHeight, stageWidth, orientation, domainWidth, stageHeight };
 }

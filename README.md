@@ -112,3 +112,9 @@ The optional Worker deployment configuration is `worker.wrangler.toml`. Its exis
 ## Institutional technical review
 
 `/review/` is the reviewer entry point for frozen review `2026-10-11.1`. Its ZIP includes the source at Framework commit `c82cd1c540b2ca6fbf5ba7ee3e38edcd2e1e6f8f`, all 175 source pins, verifier, validation baseline and guides. Website provenance separately identifies the committed Framework source used for synchronization. Current stewardship and finding procedures are generated from Framework docs. Public questions and Studio still use the preserved published graph; the evidence-route draft is available in the frozen source rather than silently replacing that release. No invitations are sent by building or deploying this site.
+
+### Investigation display labels
+
+`src/lib/displayLabels.mjs` owns human-facing labels for graph, case and Lab views. Use question prompts, explicit titles and subject properties for navigation; keep canonical IDs as keys, references, search terms and export values. Compact labels may shorten text but cannot supply new findings.
+
+Editable examples provide optional `QuestionInstance.metadata.subjectLabels` keyed by the exact bound subject URI, plus question `metadata.title` for compact graph labels. These are presentation hints, not evidence or identity authority. Missing names remain explicit; never infer a name from an opaque URI suffix. Exact identities and original JSON remain available in technical details, and imported bundles must round-trip unchanged.

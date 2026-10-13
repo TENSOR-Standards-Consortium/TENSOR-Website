@@ -1,3 +1,4 @@
+import { compactQuestionLabel, questionLabel } from '../lib/displayLabels.mjs';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { nebulaLayout } from '../lib/graphNebula.mjs';
 
@@ -126,18 +127,18 @@ export default function GraphThreeCanvas({ graph, view, selectedId, trace, onSel
         const important = new Set([selected, hoveredId, ...(traceNow?.visitedIds || []), ...(traceNow?.nextIds || []), ...graph.edges.filter(e=>e.source === selected).map(e=>e.target)]);
         const activeDomain=spatial.nodes[byId.get(selected)]?.category;
         const projected = visibleIds ? [] : anchors.filter(a => a.kind === 'domain' || (!traceNow && width > 650 && a.domain === activeDomain && camera.position.distanceTo(a.point) < 1800));
-        positions.forEach((p,i) => { const id = spatial.nodes[i].id; if((!visibleIds || visibleIds.has(id)) && (important.has(id) || camera.position.distanceTo(p)<550)) projected.push({ text:id, point:p, kind:'node', active:id===(traceNow?.currentId||selected) }); });
+        positions.forEach((p,i) => { const id = spatial.nodes[i].id; if((!visibleIds || visibleIds.has(id)) && (important.has(id) || camera.position.distanceTo(p)<550)) projected.push({ text:compactQuestionLabel(spatial.nodes[i]), nodeId:id, point:p, kind:'node', active:id===(traceNow?.currentId||selected) }); });
         let projectedLabels = projected.map(label => { const p=label.point.clone().project(camera); return {...label,point:undefined,x:(p.x*.5+.5)*width,y:(-.5*p.y+.5)*height,inFrame:p.z<1 && p.z>-1 && Math.abs(p.x)<.97 && Math.abs(p.y)<.87}; }).filter(l=>l.inFrame);
-        // In the whole-graph guide overview, retain every node but suppress
-        // colliding passive IDs. Current, hover and next choices take priority.
-        if (traceNow && !visibleIds) {
-          const next=new Set(traceNow.nextIds), placed=[];
-          const priority=l=>l.active||l.text===hoveredId?0:next.has(l.text)?1:2;
+        // Retain every node while suppressing overlapping descriptive labels.
+        // Current, hovered and next questions take priority.
+        {
+          const next=new Set(traceNow?.nextIds || []), placed=[];
+          const priority=l=>l.active||l.nodeId===hoveredId?0:next.has(l.nodeId)?1:2;
           projectedLabels.sort((a,b)=>priority(a)-priority(b));
           projectedLabels=projectedLabels.filter(label=>{
             if(label.kind!=='node') return true;
-            const overlaps=placed.some(p=>Math.abs(p.x-label.x)<40&&Math.abs(p.y-label.y)<18);
-            if(overlaps && !label.active && label.text!==hoveredId) return false;
+            const overlaps=placed.some(p=>Math.abs(p.x-label.x)<190&&Math.abs(p.y-label.y)<44);
+            if(overlaps && !label.active && label.nodeId!==hoveredId) return false;
             placed.push(label); return true;
           });
         }
@@ -183,7 +184,7 @@ export default function GraphThreeCanvas({ graph, view, selectedId, trace, onSel
       let down = null;
       const pointerDown = e => { down={x:e.clientX,y:e.clientY}; };
       const pointerUp = e => { if(down && Math.hypot(e.clientX-down.x,e.clientY-down.y)<6) { const hit=pick(e); if(hit) live.current.onSelect(spatial.nodes[hit.instanceId].id); } down=null; };
-      const pointerMove = e => { if(e.buttons) return; const hit=pick(e); hoveredId=hit ? spatial.nodes[hit.instanceId].id : null; const n=hit ? spatial.nodes[hit.instanceId] : null; setHover(n ? `${n.id} · ${n.category} / ${n.archetype} · ${n.label}` : null); renderer.domElement.style.cursor=hit?'pointer':'grab'; requestRender(); };
+      const pointerMove = e => { if(e.buttons) return; const hit=pick(e); hoveredId=hit ? spatial.nodes[hit.instanceId].id : null; const n=hit ? spatial.nodes[hit.instanceId] : null; setHover(n ? `${n.category} / ${n.archetype} · ${questionLabel(n)}` : null); renderer.domElement.style.cursor=hit?'pointer':'grab'; requestRender(); };
       const pointerLeave = () => { hoveredId=null; setHover(null); requestRender(); };
       const lost = e => { e.preventDefault(); if(!disposed) { setReady(false); setError('The 3D graphics context was lost. Return to the atlas to continue.'); } };
       renderer.domElement.addEventListener('pointerdown',pointerDown); renderer.domElement.addEventListener('pointerup',pointerUp); renderer.domElement.addEventListener('pointermove',pointerMove); renderer.domElement.addEventListener('pointerleave',pointerLeave); renderer.domElement.addEventListener('webglcontextlost',lost);
