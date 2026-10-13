@@ -1,4 +1,5 @@
 export const navigation = [
+  { title: 'Start here', url: '/start/' },
   { title: 'Core', url: '/core/' },
   { title: 'Graph', url: '/graphs/' },
   { title: 'Investigation Lab', url: '/investigation-lab/' },
@@ -8,6 +9,9 @@ export const navigation = [
 ];
 
 export const resourceGroups = [
+  { title: 'Start here', resources: [
+    { title: 'TENSOR in five minutes', url: '/start/', description: 'One SOC investigation, the shared model, and how human, agent, vendor, and company roles fit together.' },
+  ] },
   { title: 'Specification', resources: [
     { title: 'TENSOR Core', url: '/core/', description: 'Investigation model, contract, binding, and reference cases.' },
     { title: 'JSON Schemas', url: '/schemas/', description: 'Versioned schemas for bundles, definitions, records, and published graphs.' },
@@ -37,6 +41,7 @@ export const resourceGroups = [
 ];
 
 export const footerNavigation = [
+  { title: 'Start here', url: '/start/' },
   { title: 'About', url: '/about/' },
   { title: 'Resources', url: '/docs/' },
   { title: 'Implement', url: '/implement/' },

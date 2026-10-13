@@ -13,6 +13,12 @@ export const seo = {
     canonicalPath: '/',
     ogType: 'website',
   },
+  start: {
+    title: 'TENSOR in five minutes | TENSOR',
+    description: 'A suspicious sign-in investigation explains TENSOR: shared questions, evidence, human and agent assessments, vendor checks, company policy, and a reviewable handoff.',
+    canonicalPath: '/start/',
+    ogType: 'article',
+  },
   review: {
     title: 'Technical review | TENSOR',
     description: 'Pinned Core source, artifact manifest, reference cases, evaluation baseline, and technical finding forms.',
