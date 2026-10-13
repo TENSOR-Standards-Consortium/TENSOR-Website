@@ -1,5 +1,6 @@
 // Presentation only. Labels never replace identity, resolve references, or assert evidence.
 const opaque = /^(?:urn:\S+|[a-z]+[-_]?\d+)$/i;
+const named = value => typeof value === 'string' && value.trim() && !/^urn:/i.test(value.trim()) ? value.trim() : '';
 const readable = value => typeof value === 'string' && value.trim() && !opaque.test(value.trim()) ? value.trim() : '';
 export function typeLabel(value) {
   return typeof value === 'string' ? value.replace(/([a-z])([A-Z])/g, '$1 $2') : 'Entry';
@@ -7,8 +8,8 @@ export function typeLabel(value) {
 export function propertyLabel(value, fallback = 'Name not supplied') {
   if (typeof value === 'string') return readable(value) || fallback;
   if (value && typeof value === 'object' && !Array.isArray(value)) {
-    for (const key of ['label', 'name', 'title', 'hostname', 'fileName', 'path', 'description']) {
-      if (readable(value[key])) return value[key].trim();
+    for (const key of ['label', 'name', 'title', 'hostname', 'fqdn', 'fileName', 'path', 'email', 'username', 'ipAddress', 'address', 'description']) {
+      if (named(value[key])) return value[key].trim();
     }
   }
   return fallback;
@@ -36,7 +37,7 @@ export function subjectLabel(entry) {
   const labels = entry?.metadata?.subjectLabels;
   return Object.entries(bindings).slice(0, 8).map(([key, value]) => {
     // Only an explicit property mapped to this exact bound identity can name it.
-    const declared = typeof value === 'string' && labels && Object.hasOwn(labels, value) ? readable(labels[value]) : '';
+    const declared = typeof value === 'string' && labels && Object.hasOwn(labels, value) ? named(labels[value]) : '';
     const unnamed = 'Referenced subject · name not supplied';
     const isReference = typeof value === 'string' && /^[a-z][a-z0-9+.-]*:/i.test(value);
     return `${typeLabel(key)}: ${declared || (isReference ? unnamed : propertyLabel(value, unnamed))}`;

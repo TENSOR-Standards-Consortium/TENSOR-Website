@@ -12,6 +12,8 @@ test('missing properties never become inferred names from opaque IDs', () => {
   assert.equal(questionLabel({ id: 'X644', text: 'Was the invoice attachment opened?' }), 'Was the invoice attachment opened?');
   assert.doesNotMatch(valueLabel({ subject: 'urn:example:host:x-644' }), /x-644/);
   assert.equal(propertyLabel({ label: '<script>literal text</script>' }), '<script>literal text</script>', 'React renders labels as text');
+  assert.equal(propertyLabel({ id: 'x-644', hostname: 'ws-17' }), 'ws-17', 'A declared hostname remains a real property even when it resembles an ID');
+  assert.equal(propertyLabel({ ipAddress: '192.0.2.17' }), '192.0.2.17');
   assert.equal(propertyLabel({ path: '/reports/quarterly.pdf' }), '/reports/quarterly.pdf');
   assert.equal(valueLabel('https://evidence.example/reports/receipt'), 'https://evidence.example/reports/receipt');
   assert.ok(compactQuestionLabel({ text: 'A '.repeat(100) }).length <= 46);
