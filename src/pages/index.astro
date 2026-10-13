@@ -1,8 +1,9 @@
 ---
 import Button from '../components/Button.astro';
 import '../styles/home.css';
-import EvidenceMap from '../components/EvidenceMap.astro';
-import ContentCard from '../components/ContentCard.astro';
+import KnowledgeField from '../components/KnowledgeField.astro';
+import graph from '../../public/graphs/working/tensor.core.graph.json';
+import catalog from '../../public/graphs/working/event-profiles/catalog.json';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { absoluteUrl, seo } from '../data/seo';
 
@@ -21,125 +22,83 @@ const jsonLd = {
   <section class="section-hero">
     <div class="hero-content container">
       <div class="hero-text">
-        <p class="hero-kicker">TENSOR / Public Core candidate</p>
-        <h1 class="hero-title">A public standard for cyber investigations.</h1>
-        <p class="hero-definition">Questions, evidence, and decisions that humans and agents can carry between tools.</p>
-        <p class="hero-tagline">TENSOR defines a common investigative layer. Public profiles, vendor tools, and business policies build on it while keeping uncertainty, attribution, and history intact.</p>
+        <p class="hero-kicker">Cyber investigation / Standard candidate</p>
+        <h1 class="hero-title">A common language for <span>investigation.</span></h1>
+        <p class="hero-definition"><strong>For humans. For agents. Across tools.</strong><br />Connect questions, evidence, and decisions in a record the next investigator can understand.</p>
         <div class="cta-group">
-          <Button variant="primary" href="/core/" data-telemetry-event="cta-open-core" data-telemetry-location="home-hero">Read the Core contract</Button>
-          <Button variant="secondary" href="/investigation-lab/" data-telemetry-event="cta-open-investigation-lab" data-telemetry-location="home-hero">Try an investigation</Button>
+          <Button variant="primary" href="/graphs/?renderer=3d" data-telemetry-event="cta-open-graph" data-telemetry-location="home-hero">Explore the graph <span aria-hidden="true">↗</span></Button>
+          <Button variant="secondary" href="/core/" data-telemetry-event="cta-open-core" data-telemetry-location="home-hero">Core contract <span aria-hidden="true">↗</span></Button>
         </div>
-        <p class="candidate-status"><span class="status-dot" aria-hidden="true"></span> <a href="/review/">Technical review 2026-10-11.1</a> · Core 0.1.0-draft.1 candidate</p>
+        <p class="candidate-status">OPEN FOR TECHNICAL REVIEW<br /><a href="/review/">Core 0.1.0-draft.1 · Review 2026-10-11.1</a></p>
       </div>
-      <EvidenceMap />
+      <KnowledgeField />
     </div>
   </section>
 
-  <section class="container investigation-example" aria-labelledby="example-title">
-    <div class="example-intro">
-      <p class="section-kicker">See what travels with the case</p>
-      <h2 id="example-title">Did the agent send restricted information?</h2>
-      <p>A recorded tool call starts the investigation. It does not answer every question. Keep the original assessment, the new evidence, and the resulting decision together.</p>
-      <a href="/investigation-lab/">Inspect the synthetic AI-system case →</a>
+  <div class="home-register container" aria-label="Working investigation knowledge">
+    <p class="register-label">Shared knowledge<br />An open foundation</p>
+    <a href="/graphs/"><strong>{graph.nodes.length}</strong><span>Working questions</span></a>
+    <a href="/graphs/"><strong>{String(new Set(graph.nodes.map(node => node.category)).size).padStart(2, '0')}</strong><span>Investigation domains</span></a>
+    <a href="/graphs/profiles/"><strong>{Object.keys(catalog.profiles).length}</strong><span>Event profiles</span></a>
+  </div>
+
+  <section class="home-section container" aria-labelledby="example-title">
+    <div class="section-heading">
+      <p class="section-kicker">01 / From evidence to understanding</p>
+      <div><h2 id="example-title">An investigation is more than its conclusion.</h2><p>Keep the question, the uncertainty, and the reasoning that brought you here. Then let someone else continue the work.</p></div>
     </div>
-    <ol class="example-trace">
-      <li><span class="trace-type">Question instance</span><p>A specific agent, outbound call, time window, and policy context.</p></li>
-      <li><span class="trace-type">Initial assessment · unknown</span><p>The call is visible; the transmitted content is not yet established.</p></li>
-      <li><span class="trace-type">New evidence and revision</span><p>A receipt changes the assessment. The earlier entry and its inputs remain.</p></li>
-      <li><span class="trace-type">Explicit decision</span><p>Record the selected assessment, rationale, policy, and claimed authority. A decision is distinct from execution.</p></li>
-    </ol>
-  </section>
-
-  <section class="section-features container" aria-label="What Core preserves">
-    <article class="feature-card">
-      <h2>Questions with context</h2>
-      <p>Separate a reusable definition from a question about a particular subject and time. Pin the meaning used in each investigation.</p>
-    </article>
-    <article class="feature-card">
-      <h2>Unknowns and disagreement</h2>
-      <p>Distinguish missing evidence from a negative finding. Preserve competing assessments and make selected decisions explicit.</p>
-    </article>
-    <article class="feature-card">
-      <h2>A history you can hand off</h2>
-      <p>Keep evidence references, attribution, original inputs, and revisions together. Declare omissions and unsupported meaning during exchange.</p>
-    </article>
-  </section>
-
-  <ContentCard as="section" aria-labelledby="layers-title">
-    <p><a href="/graphs/">Explore the working graph and evidence criteria</a> · <a href="/investigation-lab/">Follow a recorded investigation path</a></p>
-    <p class="section-kicker">Public meaning. Room to build.</p>
-    <h2 id="layers-title">The shared layer beneath tools and policy</h2>
-    <div class="layer-stack" role="img" aria-label="Human and agent investigators use vendor tools and business policy above public TENSOR profiles and Core. Core connects pinned definitions with portable records.">
-      <div class="layer-actors">Human investigators <span aria-hidden="true">+</span> Agent investigators</div>
-      <div class="layer-pair"><div><strong>Vendor layer</strong><span>Tools, integrations, storage, execution</span></div><div><strong>Business layer</strong><span>Policy, authority, thresholds, retention</span></div></div>
-      <div class="layer-public"><strong>Public TENSOR profiles</strong><span>Domain questions, vocabulary, evidence requirements</span></div>
-      <div class="layer-core"><strong>TENSOR Core</strong><span>Shared investigative meaning · Pinned definitions + portable records</span></div>
+    <div class="investigation-example">
+      <div class="example-intro">
+        <span class="case-number">INVESTIGATION / AGENT ACTION</span>
+        <h3>Did the agent send restricted information?</h3>
+        <p>A recorded tool call starts the investigation. It does not answer every question. Follow how new evidence changes an assessment without erasing its history.</p>
+        <a class="text-link" href="/investigation-lab/">Follow the example case <span aria-hidden="true">→</span></a>
+      </div>
+      <ol class="example-trace">
+        <li><span class="trace-type">Frame the question</span><p>A specific agent, outbound call, time window, and policy context.</p></li>
+        <li><span class="trace-type">Preserve the unknown</span><p>The call is visible; the transmitted content is not yet established.</p></li>
+        <li><span class="trace-type">Revise with evidence</span><p>A receipt changes the assessment. The earlier entry and its inputs remain.</p></li>
+        <li><span class="trace-type">Make the decision explicit</span><p>Record the selected assessment, rationale, policy, and claimed authority. A decision is distinct from execution.</p></li>
+      </ol>
     </div>
-    <p>No vendor or business layer may silently change the meaning of Core. Actor type grants no authority. Imported records do not authorize actions or access to evidence.</p>
-    <p><a href="/about/">Read the mission and boundaries</a> · <a href="/extensions/">Build profiles and extensions</a></p>
-  </ContentCard>
-
-  <section class="container path-grid">
-    <ContentCard as="article" contained={false}>
-      <p class="section-kicker">For practitioners</p>
-      <h2>Start with a real investigative need</h2>
-      <p>Explore an AI-system incident or a conventional identity case. Both are synthetic, and both use the same candidate contract for human and agent participation.</p>
-      <p>AI security teams are the first adoption community. TENSOR's scope remains all cyber investigations.</p>
-      <a href="/investigation-lab/">Open Investigation Lab →</a>
-    </ContentCard>
-    <ContentCard as="article" contained={false}>
-      <p class="section-kicker">For implementers</p>
-      <h2>Validate, exchange, report the gaps</h2>
-      <p>Use versioned schemas, a documented binding, and a reference CLI. Build a reader or exporter and test which meaning survives the handoff.</p>
-      <p>Reference checks establish a bounded baseline. Independent exchange and external review are the next evidence gates.</p>
-      <a href="/implement/">Follow the implementation guide →</a>
-    </ContentCard>
+    <div class="section-features" aria-label="What Core preserves">
+      <article class="feature-card"><span>01</span><h3>Questions with context</h3><p>Separate a reusable definition from a question about a particular subject and time. Pin the meaning used in each investigation.</p></article>
+      <article class="feature-card"><span>02</span><h3>Unknowns and disagreement</h3><p>Distinguish missing evidence from a negative finding. Preserve competing assessments and make selected decisions explicit.</p></article>
+      <article class="feature-card"><span>03</span><h3>A history you can hand off</h3><p>Keep evidence references, attribution, original inputs, and revisions together. Declare omissions and unsupported meaning during exchange.</p></article>
+    </div>
   </section>
 
-  <ContentCard as="section">
-    <p class="section-kicker">Built from the existing foundation</p>
-    <h2>The investigation questions stay</h2>
-    <p>The legacy release contains 588 questions and 1,554 transitions. Its original artifacts remain available while the questions undergo semantic review for the new definition-and-record model.</p>
-    <p><a href="/questions/">Browse the question catalog</a> · <a href="/graphs/">Explore working and published graphs</a> · <a href="/studio/">Open legacy Graph Studio</a></p>
-  </ContentCard>
+  <section class="home-section home-architecture" aria-labelledby="layers-title">
+    <div class="container architecture-grid">
+      <div class="architecture-copy">
+        <p class="section-kicker">02 / Designed to be shared</p>
+        <h2 id="layers-title">A public foundation.<br />Room to build.</h2>
+        <p>TENSOR defines the investigative meaning beneath vendor tools and business policy. Humans and agents use the same Core.</p>
+        <p>No overlay may silently change that meaning. Actor type grants no authority, and imported records do not authorize actions or access to evidence.</p>
+        <a class="text-link" href="/extensions/">Build profiles and extensions <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="layer-stack" role="img" aria-label="Human and agent investigators use vendor tools and business policy above public TENSOR profiles and Core. Core connects pinned definitions with portable records.">
+        <div class="layer-actors"><span>Human investigators</span><b>+</b><span>Agent investigators</span></div>
+        <div class="layer-pair"><div><strong>Vendor layer</strong><small>Tools, integrations,<br />storage, execution</small></div><div><strong>Business layer</strong><small>Policy, authority,<br />thresholds, retention</small></div></div>
+        <div class="layer-public"><strong>Public TENSOR profiles</strong><small>Domain questions, vocabulary, evidence requirements</small></div>
+        <div class="layer-core"><strong>TENSOR Core</strong><small>Shared investigative meaning<br />Pinned definitions + portable records</small></div>
+      </div>
+    </div>
+  </section>
 
-  <ContentCard as="section">
-    <p class="section-kicker">Help shape a public standard</p>
-    <h2>Useful alongside the standards you already use</h2>
-    <p>TENSOR's proposed boundaries reference ATT&amp;CK, D3FEND, ATLAS, CASE/UCO, STIX, Attack Flow, CACAO, and OCSF. Mappings need versioned definitions and exchange evidence; they are not implied by a logo or a shared field name.</p>
-    <p>The founding charter, governance proposal, and 38 Core requirements are open for review. This candidate is not a ratified standard or an institutional endorsement.</p>
-    <div class="cta-group"><Button variant="secondary" href="/standards/">Explore the standards crosswalk</Button><Button variant="secondary" href="/contribute/">Contribute a case or review</Button></div>
-  </ContentCard>
+  <section class="home-section container" aria-labelledby="start-title">
+    <div class="section-heading"><p class="section-kicker">03 / Make it useful</p><div><h2 id="start-title">Find your way in.</h2><p>AI security teams are the first adoption community. The scope is all cyber investigations.</p></div></div>
+    <div class="home-entry-list">
+      <a class="home-entry" href="/investigation-lab/"><span>01</span><h3>Work an investigation</h3><p>Inspect an agent-action or identity case. These authored examples use the same candidate contract for human and agent participation.</p><span aria-hidden="true">↗</span></a>
+      <a class="home-entry" href="/implement/"><span>02</span><h3>Build an implementation</h3><p>Use versioned schemas, a documented binding, and a reference CLI. Test which meaning survives the handoff.</p><span aria-hidden="true">↗</span></a>
+      <a class="home-entry" href="/graphs/"><span>03</span><h3>Explore the knowledge</h3><p>Navigate every working question and its evidence criteria. The original 588-question release remains separately preserved.</p><span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
+
+  <section class="home-review">
+    <div class="container">
+      <div><p class="section-kicker">04 / A standard in the making</p><h2>Built in the open.<br />Made stronger by scrutiny.</h2></div>
+      <div><p>The founding charter, governance proposal, and 38 Core requirements are open for review. TENSOR is designed to work alongside ATT&amp;CK, D3FEND, ATLAS, CASE/UCO, STIX, Attack Flow, CACAO, and OCSF. Mappings require versioned definitions and exchange evidence.</p><div class="cta-group"><Button variant="primary" href="/review/">Review the candidate <span aria-hidden="true">↗</span></Button><a class="text-link" href="/standards/">Standards crosswalk <span aria-hidden="true">→</span></a></div><p class="review-status">A public implementation candidate.<br />Not a ratified standard or institutional endorsement.</p></div>
+    </div>
+  </section>
 </BaseLayout>
-
-<style>
-  .candidate-status { margin-top: 1.15rem; font-size: 0.83rem; color: var(--text-secondary); }
-  .status-dot { display: inline-block; width: 0.45rem; height: 0.45rem; margin-right: 0.4rem; background: var(--accent-primary); border-radius: 50%; vertical-align: middle; }
-  .investigation-example { display: grid; grid-template-columns: 0.95fr 1.05fr; gap: 3rem; padding: 2rem 2.2rem; margin-bottom: 2rem; background: var(--bg-card); border: 1px solid var(--line-soft); border-left: 3px solid var(--accent-primary); }
-  .example-intro h2 { font-size: clamp(1.45rem, 2.6vw, 2rem); line-height: 1.3; margin: 0.7rem 0 1rem; }
-  .example-intro p { color: var(--text-secondary); margin-bottom: 1rem; }
-  .example-trace { list-style: none; padding: 0; counter-reset: trace; }
-  .example-trace li { position: relative; padding: 0 0 1.2rem 2.4rem; border-left: 1px solid var(--line-soft); }
-  .example-trace li:last-child { padding-bottom: 0; border-left-color: transparent; }
-  .example-trace li::before { counter-increment: trace; content: counter(trace); position: absolute; left: -0.8rem; top: 0; width: 1.6rem; height: 1.6rem; border: 1px solid var(--line-soft); border-radius: 50%; background: var(--bg-card); font: 0.75rem/1.5rem var(--font-mono); text-align: center; color: var(--accent-primary); }
-  .trace-type { font: 600 0.8rem/1.4 var(--font-mono); color: var(--accent-primary); }
-  .example-trace p { color: var(--text-secondary); font-size: 0.93rem; margin-top: 0.2rem; }
-  .feature-card h2 { font-size: 1.2rem; margin-bottom: 0.5rem; }
-  .layer-stack { margin: 1.5rem 0; display: grid; gap: 0.7rem; }
-  .layer-actors { text-align: center; padding: 0.4rem; font-weight: 600; }
-  .layer-actors > span { color: var(--accent-primary); padding: 0 1rem; }
-  .layer-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
-  .layer-pair > div, .layer-public, .layer-core { padding: 1rem 1.3rem; border: 1px solid var(--line-soft); background: var(--bg-input); }
-  .layer-stack strong, .layer-stack span { display: block; }
-  .layer-actors > span { display: inline; }
-  .layer-stack span { color: var(--text-secondary); font-size: 0.9rem; }
-  .layer-core { border-color: var(--accent-primary); border-left-width: 3px; }
-  .layer-core strong { color: var(--accent-primary); }
-  @media (max-width: 760px) {
-    .investigation-example { grid-template-columns: 1fr; gap: 1.6rem; padding: 1.5rem; }
-    .example-trace { margin-left: 0.8rem; }
-    .layer-pair { grid-template-columns: 1fr; }
-    .layer-actors { font-size: 0.9rem; }
-    .layer-actors > span { padding: 0 0.4rem; }
-  }
-</style>

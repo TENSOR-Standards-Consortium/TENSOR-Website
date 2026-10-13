@@ -2,12 +2,14 @@
 .document-content > .prose-card { background: transparent; border: 0; border-radius: 0; padding: 0 0 var(--space-5); box-shadow: none; }
 .prose-card > :is(p, ul, ol, blockquote) { max-width: var(--reading-width); }
 .prose-card h2 {
-  font-family: var(--font-heading);
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: var(--tracking-heading);
   color: var(--text-main);
-  font-size: clamp(1.2rem, 2.1vw, 1.5rem);
-  margin-top: 2.6rem;
+  font-size: clamp(1.35rem, 2.2vw, 1.8rem);
+  margin-top: 3rem;
   margin-bottom: 0.6rem;
-  padding-top: 1.6rem;
+  padding-top: 2rem;
   border-top: 1px solid var(--line-soft);
 }
 
@@ -193,3 +195,11 @@
 @media (max-width: 700px) { .resource-grid { grid-template-columns: 1fr; } }
 
 .prose-card > .layers { max-width: none; }
+
+.document-content { padding-bottom: 5rem; }
+.prose-card p { line-height: 1.8; }
+.prose-card pre { padding: 1.15rem 1.3rem; border-left: 2px solid var(--accent-primary); }
+.prose-card table th { background: var(--bg-card); font-size: .75rem; letter-spacing: .035em; padding: .85rem; }
+.prose-card table td { padding: .8rem .85rem; }
+.prose-card table th, .prose-card table td { border-color: var(--line-soft); }
+.signal-card, .citation-list li { padding: 1rem; }

@@ -96,9 +96,9 @@
 }
 
 .status-pill.is-warn {
-  border-color: color-mix(in srgb, var(--accent-primary) 56%, transparent);
-  background: color-mix(in srgb, var(--accent-primary) 13%, transparent);
-  color: var(--accent-primary);
+  border-color: color-mix(in srgb, var(--accent-warning) 56%, transparent);
+  background: color-mix(in srgb, var(--accent-warning) 13%, transparent);
+  color: var(--accent-warning);
 }
 
 .status-pill.is-bad {
@@ -381,7 +381,7 @@
 }
 
 .metrics-gate-fail {
-  border-left: 2px solid var(--accent-primary);
+  border-left: 2px solid var(--accent-danger);
 }
 
 .metrics-gate-summary-item {
@@ -499,7 +499,7 @@
 
 .layer-action-btn.is-danger {
   border-color: color-mix(in srgb, var(--accent-danger) 55%, transparent);
-  color: var(--accent-primary);
+  color: var(--accent-danger);
 }
 
 .layer-meta {
