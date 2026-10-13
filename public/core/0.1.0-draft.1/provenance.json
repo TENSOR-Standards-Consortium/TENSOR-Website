@@ -3,7 +3,7 @@
   "manifestVersion": 1,
   "bindingVersion": "0.1.0-draft.1",
   "sourceRepository": "https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework",
-  "sourceCommit": "986841b8d977a80a532a297f36b2aad49afe2cba",
+  "sourceCommit": "b31ec492ab3e587de9bfc7f3b76e28d8ada56733",
   "sourceDirty": false,
   "foundingSource": "framework-repository",
   "files": [
@@ -226,14 +226,14 @@
     {
       "source": "drafts/core/coverage-inventory.json",
       "target": "public/graphs/working/coverage-inventory.json",
-      "sha256": "5b19076c5abc7be0b8cef79c1b2380a6932c3153cb903c63e6d720e4f2c39940",
+      "sha256": "ef3921b17a11ffadf81442398f2f0e3689c8d292af843725a1acf208a0e48508",
       "bytes": 1059209
     },
     {
       "source": "drafts/core/entry-evidence-criteria.json",
       "target": "public/graphs/working/entry-evidence-criteria.json",
-      "sha256": "3a5d0701960d34d26503777e0021b7cb84b71367651ce7bbaceaf1ede576f5c6",
-      "bytes": 526179
+      "sha256": "e57de29a7b0edc64139d6ef5f1f9ff0447785f5cba14c388bfb954f6cb216cf6",
+      "bytes": 526556
     },
     {
       "source": "drafts/core/event-profiles/README.md",
@@ -244,25 +244,25 @@
     {
       "source": "drafts/core/event-profiles/catalog.json",
       "target": "public/graphs/working/event-profiles/catalog.json",
-      "sha256": "78ba233e3e0bc90f81532276cab24c68940a12bed647faf4acf300978043b6a6",
+      "sha256": "dfef3f2948c26dbce78e0774eb77f4243de2ee412197da15ff03ee8c07bb3de8",
       "bytes": 24804
     },
     {
       "source": "drafts/core/event-profiles/definitions.json",
       "target": "public/graphs/working/event-profiles/definitions.json",
-      "sha256": "ec2af6603af8580a782f756e7daeb735a488ca5fa23406cd49947f41dcb2cf0d",
+      "sha256": "b7d7d2dc7ceeafe539635f4c2fdfbec426347066f8868d1aa3b2f3df98cd202c",
       "bytes": 375139
     },
     {
       "source": "drafts/core/event-profiles/scenarios.json",
       "target": "public/graphs/working/event-profiles/scenarios.json",
-      "sha256": "501f1c0f6258e723075f2794f6982eed2af171edecea69494b6168242e508444",
+      "sha256": "abf735c206f0d0cab1c0af57ea5013aa2f6a3b80574590ae51bec7fef9aa4436",
       "bytes": 1039401
     },
     {
       "source": "drafts/core/event-profiles/validation.json",
       "target": "public/graphs/working/event-profiles/validation.json",
-      "sha256": "ac01304e3ec5749e4068385e7cc01a9df7cda5bbda50540fa9627391bbd890ae",
+      "sha256": "bfdae9f85a75be0d2b8892994387a9bae728f951eb696e9d6784b02e69422d05",
       "bytes": 247107
     },
     {
@@ -290,70 +290,82 @@
       "bytes": 1492464
     },
     {
+      "source": "drafts/core/reviews/2026-10-13-routing/README.md",
+      "target": "public/graphs/working/reviews/2026-10-13-routing/README.md",
+      "sha256": "bb0618d31c2f84f605285206c569a17e3b2ec821cbd2016ac831a97febe189df",
+      "bytes": 4510
+    },
+    {
+      "source": "drafts/core/reviews/2026-10-13-routing/review.json",
+      "target": "public/graphs/working/reviews/2026-10-13-routing/review.json",
+      "sha256": "7649f9b0e145c4c92e0f5775987d98c97fff7cec12f55967d8e40fb74174d87c",
+      "bytes": 1419
+    },
+    {
       "source": "drafts/core/source/entry_nodes.json",
       "target": "public/graphs/working/source/entry_nodes.json",
-      "sha256": "5019322b22db69aa31f88d322f5a45a4b5560afcc0a506a71f205c386b490155",
+      "sha256": "3b32bfab27f5f499a69be4c64b2cd532296b7eaa88faa07c10bf2391c24dbb03",
       "bytes": 4301
     },
     {
       "source": "drafts/core/tensor.core.graph.json",
       "target": "public/graphs/working/tensor.core.graph.json",
-      "sha256": "1a32d33c3ffbc6068b64a19c102ec4a85ca2914b206d96eb78cafd4173e169d0",
-      "bytes": 1089833
+      "sha256": "4943feee2af28d414fcfd98194e63d196bee529ce8f85117aed4932d977e4d5e",
+      "bytes": 1618282
     },
     {
       "source": "examples/investigations/v1/README.md",
       "target": "public/investigations/v1/README.md",
-      "sha256": "bb3229e3a9e2e7f7c3d22d235a01b45877057d82f7aed9e4c6f0b3c540fbf567",
-      "bytes": 2696
+      "sha256": "cac26564271fbddbe90bade621abce251199d5d229bd8500066071262b2cfe73",
+      "bytes": 3091
     },
     {
       "source": "examples/investigations/v1/attachment-host-tool.bundle.json",
       "target": "public/investigations/v1/attachment-host-tool.bundle.json",
-      "sha256": "20f77f65b206a02f51d02a7176dd5a1ef582a93cf9e726a7ba588f76b540d668",
-      "bytes": 91256
+      "sha256": "1ad1286f3f615e837642d5f695bd7354111335f063e14632ffa403110610e489",
+      "bytes": 107389
     },
     {
       "source": "examples/investigations/v1/attachment-host-tool.definition.json",
       "target": "public/investigations/v1/attachment-host-tool.definition.json",
-      "sha256": "242c00a2691bb3bf26e7bbaa823600b21aa0b99bf80ae8061305bcdc868f07bb",
-      "bytes": 28169
+      "sha256": "a48522540f0f2933c5144e2ec41c992ee3364774b9792ef7da77ba9012c98200",
+      "bytes": 39449
     },
     {
       "source": "examples/investigations/v1/catalog.json",
       "target": "public/investigations/v1/catalog.json",
-      "sha256": "ad22a6ddc633814288e6b5895739fe8dc05a9fd3b6f5473ef586d8220c6bfcb6",
+      "sha256": "ff54db4de1ebed082d2d98fd2b224b59eefccbeafec2d819a2eb0d2cac70fd3f",
       "bytes": 1547
     },
     {
       "source": "examples/investigations/v1/manifest.json",
       "target": "public/investigations/v1/manifest.json",
-      "sha256": "8728d4178a12099bb690ab3b3128668dc6108b18698fcd351fed51f4977a825f",
+      "sha256": "777867ac236c18c2f0347b7ffed1969bde7d66ae7ab59035c8d2c2025c0d6ebe",
       "bytes": 1038
     },
     {
       "source": "examples/investigations/v1/soc-signin.bundle.json",
       "target": "public/investigations/v1/soc-signin.bundle.json",
-      "sha256": "84b2218484c81c47abeb7803800fe3ed110e7d9fa51c46a832f106a3049b5338",
-      "bytes": 67256
+      "sha256": "e915ab8dd853d9a8a71e31456f988dff63fd50aba3869779d98b9832e086e65b",
+      "bytes": 79273
     },
     {
       "source": "examples/investigations/v1/soc-signin.definition.json",
       "target": "public/investigations/v1/soc-signin.definition.json",
-      "sha256": "f09b6ead7a0f8aa4dff237a7c9919fd41f09071081b2bf8ed48665c35a6b0574",
-      "bytes": 21169
+      "sha256": "cccf2b1c44c35fbf58d5716810f095ac2093e55988c2e8cd56352ecedfedfe11",
+      "bytes": 31263
     },
     {
       "source": "examples/investigations/v1/workload-cloud-egress.bundle.json",
       "target": "public/investigations/v1/workload-cloud-egress.bundle.json",
-      "sha256": "09ab06f3cbda7dce0b48400b6bd0a1c4bf01e803b7c3099d3c0b446dbacf564f",
-      "bytes": 69438
+      "sha256": "295867cf930055b688f0dec2f00bd7f26382580f68aec02e5a6edc4c4ce6d7ba",
+      "bytes": 79753
     },
     {
       "source": "examples/investigations/v1/workload-cloud-egress.definition.json",
       "target": "public/investigations/v1/workload-cloud-egress.definition.json",
-      "sha256": "00db9d7f22cac27934153f7b136c91923dde890dcf6e7b0470bb44e31f418107",
-      "bytes": 21652
+      "sha256": "8affd8c94b2be655ab3bca3ff47b80b31dca04672102a7d80cbfd370c78f3c5f",
+      "bytes": 29702
     },
     {
       "source": "releases/core/graphs/v0.20260206e/tensor.core.graph.json",

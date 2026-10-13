@@ -34,7 +34,7 @@ test('all published routes resolve to real selectable nodes, including no and un
     for (const n of graph.nodes) {
       const outgoing=graph.edges.filter(e=>e.source===n.id);
       if(n.archetype==='terminal') assert.equal(outgoing.length,0);
-      else assert.deepEqual(outgoing.map(e=>e.decision).sort(),['no','unknown','yes'],n.id);
+      else assert.deepEqual([...new Set(outgoing.map(e=>e.decision))].sort(),['no','unknown','yes'],n.id);
     }
   }
 });

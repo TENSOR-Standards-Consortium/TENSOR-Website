@@ -40,10 +40,10 @@
   ],
   "working": {
     "path": "drafts/core/tensor.core.graph.json",
-    "version": "0.20261012b",
-    "sha256": "1a32d33c3ffbc6068b64a19c102ec4a85ca2914b206d96eb78cafd4173e169d0",
+    "version": "0.20261013a",
+    "sha256": "4943feee2af28d414fcfd98194e63d196bee529ce8f85117aed4932d977e4d5e",
     "questions": 609,
-    "routes": 1554
+    "routes": 1953
   },
   "summary": {
     "sameIdRewritten": 588,

@@ -3,6 +3,7 @@
 .case-heading h2 { font: 500 clamp(1.3rem,2.6vw,2rem) var(--font-display); margin-top: var(--space-2); }
 .case-heading p:not(.section-kicker), .case-heading a { color: var(--text-secondary); font-size: .8rem; }
 .case-heading a { min-height: 44px; display: inline-flex; align-items: center; }
+.case-domains-mobile { display: none; }
 .case-controls { display: flex; align-items: center; flex-wrap: wrap; gap: var(--space-2); padding: var(--space-3) var(--space-4); }
 .case-view-options { display: contents; }
 .case-view-toggle { display: none; }
@@ -53,10 +54,12 @@
 .case-empty { min-height: 350px; display: grid; place-content: center; gap: var(--space-3); padding: var(--space-4); }
 @media (max-width: 1000px) { .case-body { grid-template-columns: minmax(0,1fr); } .case-current { max-height: none; border-left: 0; border-top: 1px solid var(--line-soft); } .case-map .atlas-map-wrap { height: 440px; } }
 @media (max-width: 600px) {
+  .case-domains-wide { display: none; }
+  .case-domains-mobile { display: inline; }
   .case-heading { padding: var(--space-2); gap: var(--space-2); }
   .case-heading .section-kicker { font-size: .55rem; letter-spacing: .08em; }
   .case-heading h2 { font-size: 1.1rem; line-height: 1.2; margin-top:var(--space-1); }
-  .case-controls { padding: var(--space-2) var(--space-1); gap: var(--space-1); }
+  .case-controls { padding: var(--space-1); gap: var(--space-1); }
   .case-controls button { font-size: .7rem; }
   .case-playback .btn { min-width:44px; }
   .case-playback > span { margin-inline:.15rem; font-size:.7rem; white-space:nowrap; }
@@ -65,10 +68,26 @@
   .case-controls[data-open=true] .case-view-options { display: flex; flex-wrap: wrap; gap: var(--space-1); width: 100%; }
   .case-layers { padding: var(--space-1) var(--space-2); gap: var(--space-1) var(--space-2); }
   .case-layers legend, .case-layers small { display: none; }
-  .case-mobile-current { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1) var(--space-2); padding: var(--space-2); border-bottom: 1px solid var(--line-soft); }
+  .case-mobile-current { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1) var(--space-2); padding: var(--space-1) var(--space-2); border-bottom: 1px solid var(--line-soft); }
   .case-mobile-current p { width: 100%; color: var(--text-muted); font: .65rem var(--font-mono); }
   .case-mobile-current strong { font-size: .85rem; font-weight: 500; }
   .case-map .atlas-map-wrap { height: 350px; }
   .case-step-navigation ol { grid-template-columns: minmax(0,1fr); }
   .case-step-navigation button { min-height: 72px; }
 }
+.case-leads { padding: var(--space-3) var(--space-4); border-block: 1px solid var(--line-soft); background: var(--bg-card); }
+.case-leads > div { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: baseline; }
+.case-leads strong { color: var(--text-primary); }
+.case-leads span, .case-leads p { color: var(--text-muted); font-size: .75rem; }
+.case-leads ul { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); list-style: none; margin-top: var(--space-2); }
+.case-leads li { max-width: 32rem; font-size: .75rem; }
+.case-workspace .il-reference, .case-lead-count { background: transparent; border: 0; color: var(--accent-secondary); font: inherit; text-align: left; cursor: pointer; padding: 0; min-height: 44px; }
+.case-workspace .il-reference:hover, .case-lead-count:hover { color: var(--accent-primary); }
+.case-workspace .il-reference:focus-visible, .case-lead-count:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 2px; }
+.case-leads[data-open=false] ul, .case-leads ul:empty { display: none; }
+.case-next-options button { display: grid; gap: .2rem; text-align: left; }
+.case-next-options button small { font: .6rem var(--font-mono); color: var(--text-muted); }
+.case-next-options [data-route-status="recorded"] { border-color: var(--accent-primary); }
+.case-next-options > p { font-size: .75rem; color: var(--text-muted); }
+.case-alternatives { display: flex; align-items: center; gap: var(--space-2); font-size: .75rem; }
+@media (max-width: 600px) { .case-leads { padding: var(--space-1) var(--space-2); } .case-leads > div { flex-wrap: nowrap; gap: var(--space-2); } .case-lead-count { font-size: .8rem; white-space: nowrap; } .case-leads span { font-size: .65rem; } .case-leads > p { display: none; } .case-leads ul { max-height: 120px; overflow: auto; } .case-heading .section-kicker { display: none; } .case-heading { padding: var(--space-1) var(--space-2); } }

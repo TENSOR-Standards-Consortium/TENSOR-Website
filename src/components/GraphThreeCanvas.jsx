@@ -92,8 +92,10 @@ export default function GraphThreeCanvas({ graph, view, selectedId, trace, onSel
         if (halo.visible) halo.position.copy(positions[activeIndex]);
         clearRoutes();
         const buckets = new Map();
+        const visibleRoutes=currentTrace?.visibleEdgeIds?new Set(currentTrace.visibleEdgeIds):null;
         graph.edges.forEach(e => {
           if (visibleIds && (!visibleIds.has(e.source) || !visibleIds.has(e.target))) return;
+          if (visibleRoutes&&!visibleRoutes.has(e.id))return;
           const traversed = currentTrace?.selectedEdges.some(s => s.source === e.source && s.target === e.target && s.decision === e.decision);
           const connected = e.source === (currentTrace?.currentId || current) || (!currentTrace && e.target === current);
           const key = `${traversed ? 'path' : connected ? 'next' : 'context'}:${e.decision}:${spatial.nodes[byId.get(e.source)].category === spatial.nodes[byId.get(e.target)].category ? 'local' : 'bridge'}`;

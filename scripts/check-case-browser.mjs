@@ -30,6 +30,12 @@ try {
    assert.equal(await page.locator('.case-assessment .tensor-badge').textContent(),assessment.outcome);
    assert.match(await page.locator('.case-current .section-kicker').textContent(),new RegExp(question.metadata.layerId));
    assert.equal(await page.locator('.case-step-navigation [aria-current=step]').count(),1);
+   const retained=source.record.entries.slice(0,frame.through),assessed=new Set(retained.filter(e=>e.type==='Assessment').map(e=>e.targetInstanceId));
+   const pending=new Set(retained.filter(e=>e.type==='Decision').flatMap(e=>(e.selections||[]).map(s=>s.targetInstanceId)).filter(id=>!assessed.has(id)));
+   assert.match(await page.locator('.case-leads strong').textContent(),new RegExp(`^${pending.size} open leads?$`));
+   assert.equal(await page.locator('.case-leads li').count(),pending.size);
+   if(question.metadata.archetype!=='terminal')assert.ok(await page.locator('.case-next-options button').count()>0);
+   const guardTexts=await page.locator('.case-next-options button > span').allTextContents();assert.ok(guardTexts.every(t=>t.startsWith(assessment.outcome+' →')));
    if(i<frames.length-1)await page.getByRole('button',{name:'Next case step',exact:true}).click();
   }
   assert.equal(await page.getByRole('button',{name:'Next case step',exact:true}).isDisabled(),true);
@@ -40,8 +46,9 @@ try {
   await page.getByRole('checkbox',{name:'Company',exact:true}).uncheck();assert.equal(await mini.count(),definition.questions.filter(q=>q.metadata.layerId==='public').length);
   await page.getByRole('checkbox',{name:'Public',exact:true}).uncheck();assert.equal(await page.getByText('No question layers are visible.',{exact:true}).isVisible(),true);
   await page.getByRole('button',{name:'Show all layers',exact:true}).click();await ready();
-  await page.getByRole('button',{name:'Path + next options',exact:true}).click();await page.getByRole('button',{name:'Toggle overview map',exact:true}).click();assert.equal(await mini.count(),2);
-  await page.getByRole('button',{name:'unknown → S2',exact:true}).focus();await page.keyboard.press('Enter');
+  await page.getByRole('button',{name:'Path + open leads',exact:true}).click();await page.getByRole('button',{name:'Toggle overview map',exact:true}).click();const firstAssessment=source.record.entries.find(e=>e.id===frames[0].assessmentId),firstInstance=source.record.entries.find(e=>e.id===firstAssessment.targetInstanceId);
+  const firstOptions=new Set(definition.transitions.filter(t=>t.sourceQuestionId===firstInstance.questionId&&t.guardOutcome===firstAssessment.outcome).map(t=>t.targetQuestionId));assert.equal(await mini.count(),firstOptions.size+1);
+  await page.locator('.case-next-options button[data-route-status=recorded]').first().focus();await page.keyboard.press('Enter');
   assert.equal(await page.locator('.case-workspace').getAttribute('data-case-step'),'0');assert.match(await page.locator('.case-current').textContent(),/No assessment for this question is visible/);
   await page.getByRole('button',{name:'Next case step',exact:true}).click();await at(1);
   await page.getByRole('button',{name:'All case questions',exact:true}).click();

@@ -284,3 +284,6 @@
     border-radius: 0;
   }
 }
+.atlas-lead-context { grid-column: 2; font-size: .75rem; color: var(--text-muted); }
+.atlas-lead-context summary { cursor: pointer; min-height: 36px; color: var(--accent-secondary); }
+.atlas-lead-context p { margin-block: var(--space-2); }

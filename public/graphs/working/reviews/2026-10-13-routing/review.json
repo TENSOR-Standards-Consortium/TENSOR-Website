@@ -1,0 +1,29 @@
+{
+  "format": "tensor-investigative-routing-review",
+  "profile": "tensor-investigative-routing/1",
+  "graphVersion": "0.20261013a",
+  "graphSha256": "4943feee2af28d414fcfd98194e63d196bee529ce8f85117aed4932d977e4d5e",
+  "priorGraphSha256": "1a32d33c3ffbc6068b64a19c102ec4a85ca2914b206d96eb78cafd4173e169d0",
+  "scope": "Author-side repair and scenario validation; external review and investigative effectiveness remain unproved.",
+  "summary": {
+    "questions": 609,
+    "routes": 1953,
+    "multipleRouteSources": 79,
+    "crossDomainRoutes": 378,
+    "retainedContinuationRoutes": 1554,
+    "sameDestinationContinuations": "Historical optional assessments retain their own answers on a common follow-up. They are not a rule for other routes."
+  },
+  "inputs": [
+    {
+      "path": "drafts/core/entry-evidence-criteria.json",
+      "sha256": "e57de29a7b0edc64139d6ef5f1f9ff0447785f5cba14c388bfb954f6cb216cf6"
+    }
+  ],
+  "decisions": [
+    "Multiple targets per answer are legal; no automatic all-route traversal.",
+    "Cross-domain targets open a new bound event assessment; no target answer is inherited.",
+    "Question IDs and stage labels do not define chronology or evidence prerequisites.",
+    "Cycles are legal definitions. Revisit with a fresh instance; bound playback and selections prevent automatic recursion.",
+    "No numeric route quota or fan-in proxy determines investigative correctness."
+  ]
+}
