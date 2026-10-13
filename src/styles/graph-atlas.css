@@ -73,7 +73,7 @@
 .atlas-inspector details button { background: transparent; border: 0; color: var(--accent-secondary); min-height: 42px; text-align: left; font-size: .8rem; }
 .atlas-inspector a { font-size: .8rem; }
 .atlas-inspector .atlas-routes { list-style: none; padding: 0; }
-.atlas-routes li { display: flex; align-items: center; gap: .65rem; padding: .5rem 0; border-bottom: 1px solid var(--line-soft); }
+.atlas-routes li { display: grid; grid-template-columns: auto minmax(0,1fr); align-items: center; gap: .65rem; padding: .5rem 0; border-bottom: 1px solid var(--line-soft); }
 .atlas-routes button { flex: 1; text-align: left; font-size: .73rem; border: 0; background: transparent; color: var(--text-primary); min-height: 44px; }
 .atlas-routes code { color: var(--accent-primary); }
 .atlas-routes button span { float: right; color: var(--accent-primary); }
@@ -284,6 +284,6 @@
     border-radius: 0;
   }
 }
-.atlas-lead-context { grid-column: 2; font-size: .75rem; color: var(--text-muted); }
-.atlas-lead-context summary { cursor: pointer; min-height: 36px; color: var(--accent-secondary); }
+.atlas-lead-context { grid-column: 2; min-width: 0; overflow-wrap: anywhere; font-size: .75rem; color: var(--text-muted); }
+.atlas-lead-context summary { cursor: pointer; min-height: 44px; color: var(--accent-secondary); }
 .atlas-lead-context p { margin-block: var(--space-2); }
