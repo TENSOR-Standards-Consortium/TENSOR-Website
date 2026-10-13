@@ -1,6 +1,6 @@
 {
   "id": "urn:tensor:example:soc-signin:composed-definition",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "publicationStatus": "draft",
   "title": "Suspicious sign-in and mailbox forwarding",
   "contractRef": {
@@ -39,7 +39,7 @@
         "displayId": "S1",
         "domain": "Identity",
         "layerId": "public",
-        "layerVersion": "1.0.0",
+        "layerVersion": "1.1.0",
         "archetype": "detect"
       }
     },
@@ -73,7 +73,7 @@
         "displayId": "S2",
         "domain": "Identity",
         "layerId": "public",
-        "layerVersion": "1.0.0",
+        "layerVersion": "1.1.0",
         "archetype": "correlate"
       }
     },
@@ -107,7 +107,7 @@
         "displayId": "S3",
         "domain": "Email",
         "layerId": "vendor",
-        "layerVersion": "1.0.0",
+        "layerVersion": "1.1.0",
         "archetype": "correlate"
       }
     },
@@ -141,7 +141,7 @@
         "displayId": "S4",
         "domain": "Email",
         "layerId": "company",
-        "layerVersion": "1.0.0",
+        "layerVersion": "1.1.0",
         "archetype": "classify"
       }
     },
@@ -175,7 +175,7 @@
         "displayId": "S5",
         "domain": "Email",
         "layerId": "public",
-        "layerVersion": "1.0.0",
+        "layerVersion": "1.1.0",
         "archetype": "correlate"
       }
     },
@@ -209,7 +209,7 @@
         "displayId": "S6",
         "domain": "Email",
         "layerId": "company",
-        "layerVersion": "1.0.0",
+        "layerVersion": "1.1.0",
         "archetype": "classify"
       }
     },
@@ -243,172 +243,270 @@
         "displayId": "S7",
         "domain": "Email",
         "layerId": "public",
-        "layerVersion": "1.0.0",
+        "layerVersion": "1.1.0",
         "archetype": "terminal"
       }
     }
   ],
   "transitions": [
     {
-      "id": "urn:tensor:example:soc-signin:route-1-yes",
+      "id": "urn:tensor:example:soc-signin:route-1-2-yes",
       "sourceQuestionId": "urn:tensor:example:soc-signin:public:question-1",
       "targetQuestionId": "urn:tensor:example:soc-signin:public:question-2",
       "guardOutcome": "yes",
       "metadata": {
-        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+        "meaning": "The yes source assessment permits opening this separate question: Is the person controlling session s-42 established? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     },
     {
-      "id": "urn:tensor:example:soc-signin:route-1-no",
+      "id": "urn:tensor:example:soc-signin:route-1-3-yes",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:public:question-1",
+      "targetQuestionId": "urn:tensor:example:soc-signin:vendor:question-3",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "The yes source assessment permits opening this separate question: Did session s-42 create external forwarding rule r-7? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:route-1-7-no",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:public:question-1",
+      "targetQuestionId": "urn:tensor:example:soc-signin:public:question-7",
+      "guardOutcome": "no",
+      "metadata": {
+        "meaning": "The no source assessment permits opening this separate question: Does the handoff retain the supported findings, unknowns, evidence references, and response scope? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:route-1-2-unknown",
       "sourceQuestionId": "urn:tensor:example:soc-signin:public:question-1",
       "targetQuestionId": "urn:tensor:example:soc-signin:public:question-2",
-      "guardOutcome": "no",
+      "guardOutcome": "unknown",
       "metadata": {
-        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+        "meaning": "The unknown source assessment permits opening this separate question: Is the person controlling session s-42 established? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     },
     {
-      "id": "urn:tensor:example:soc-signin:route-1-unknown",
+      "id": "urn:tensor:example:soc-signin:route-1-7-unknown",
       "sourceQuestionId": "urn:tensor:example:soc-signin:public:question-1",
+      "targetQuestionId": "urn:tensor:example:soc-signin:public:question-7",
+      "guardOutcome": "unknown",
+      "metadata": {
+        "meaning": "The unknown source assessment permits opening this separate question: Does the handoff retain the supported findings, unknowns, evidence references, and response scope? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:route-2-3-yes",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:public:question-2",
+      "targetQuestionId": "urn:tensor:example:soc-signin:vendor:question-3",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "The yes source assessment permits opening this separate question: Did session s-42 create external forwarding rule r-7? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:route-2-3-no",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:public:question-2",
+      "targetQuestionId": "urn:tensor:example:soc-signin:vendor:question-3",
+      "guardOutcome": "no",
+      "metadata": {
+        "meaning": "The no source assessment permits opening this separate question: Did session s-42 create external forwarding rule r-7? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:route-2-3-unknown",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:public:question-2",
+      "targetQuestionId": "urn:tensor:example:soc-signin:vendor:question-3",
+      "guardOutcome": "unknown",
+      "metadata": {
+        "meaning": "The unknown source assessment permits opening this separate question: Did session s-42 create external forwarding rule r-7? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:route-2-7-unknown",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:public:question-2",
+      "targetQuestionId": "urn:tensor:example:soc-signin:public:question-7",
+      "guardOutcome": "unknown",
+      "metadata": {
+        "meaning": "The unknown source assessment permits opening this separate question: Does the handoff retain the supported findings, unknowns, evidence references, and response scope? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:route-3-4-yes",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:vendor:question-3",
+      "targetQuestionId": "urn:tensor:example:soc-signin:company:question-4",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "The yes source assessment permits opening this separate question: Was forwarding rule r-7 approved under MAIL-04? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:route-3-5-yes",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:vendor:question-3",
+      "targetQuestionId": "urn:tensor:example:soc-signin:public:question-5",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "The yes source assessment permits opening this separate question: Is actual external delivery through r-7 established? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:route-3-7-no",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:vendor:question-3",
+      "targetQuestionId": "urn:tensor:example:soc-signin:public:question-7",
+      "guardOutcome": "no",
+      "metadata": {
+        "meaning": "The no source assessment permits opening this separate question: Does the handoff retain the supported findings, unknowns, evidence references, and response scope? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:route-3-2-unknown",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:vendor:question-3",
       "targetQuestionId": "urn:tensor:example:soc-signin:public:question-2",
       "guardOutcome": "unknown",
       "metadata": {
-        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+        "meaning": "The unknown source assessment permits opening this separate question: Is the person controlling session s-42 established? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     },
     {
-      "id": "urn:tensor:example:soc-signin:route-2-yes",
-      "sourceQuestionId": "urn:tensor:example:soc-signin:public:question-2",
-      "targetQuestionId": "urn:tensor:example:soc-signin:vendor:question-3",
-      "guardOutcome": "yes",
-      "metadata": {
-        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
-      }
-    },
-    {
-      "id": "urn:tensor:example:soc-signin:route-2-no",
-      "sourceQuestionId": "urn:tensor:example:soc-signin:public:question-2",
-      "targetQuestionId": "urn:tensor:example:soc-signin:vendor:question-3",
-      "guardOutcome": "no",
-      "metadata": {
-        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
-      }
-    },
-    {
-      "id": "urn:tensor:example:soc-signin:route-2-unknown",
-      "sourceQuestionId": "urn:tensor:example:soc-signin:public:question-2",
-      "targetQuestionId": "urn:tensor:example:soc-signin:vendor:question-3",
+      "id": "urn:tensor:example:soc-signin:route-3-7-unknown",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:vendor:question-3",
+      "targetQuestionId": "urn:tensor:example:soc-signin:public:question-7",
       "guardOutcome": "unknown",
       "metadata": {
-        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+        "meaning": "The unknown source assessment permits opening this separate question: Does the handoff retain the supported findings, unknowns, evidence references, and response scope? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     },
     {
-      "id": "urn:tensor:example:soc-signin:route-3-yes",
-      "sourceQuestionId": "urn:tensor:example:soc-signin:vendor:question-3",
-      "targetQuestionId": "urn:tensor:example:soc-signin:company:question-4",
-      "guardOutcome": "yes",
-      "metadata": {
-        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
-      }
-    },
-    {
-      "id": "urn:tensor:example:soc-signin:route-3-no",
-      "sourceQuestionId": "urn:tensor:example:soc-signin:vendor:question-3",
-      "targetQuestionId": "urn:tensor:example:soc-signin:company:question-4",
-      "guardOutcome": "no",
-      "metadata": {
-        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
-      }
-    },
-    {
-      "id": "urn:tensor:example:soc-signin:route-3-unknown",
-      "sourceQuestionId": "urn:tensor:example:soc-signin:vendor:question-3",
-      "targetQuestionId": "urn:tensor:example:soc-signin:company:question-4",
-      "guardOutcome": "unknown",
-      "metadata": {
-        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
-      }
-    },
-    {
-      "id": "urn:tensor:example:soc-signin:route-4-yes",
+      "id": "urn:tensor:example:soc-signin:route-4-5-yes",
       "sourceQuestionId": "urn:tensor:example:soc-signin:company:question-4",
       "targetQuestionId": "urn:tensor:example:soc-signin:public:question-5",
       "guardOutcome": "yes",
       "metadata": {
-        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+        "meaning": "The yes source assessment permits opening this separate question: Is actual external delivery through r-7 established? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     },
     {
-      "id": "urn:tensor:example:soc-signin:route-4-no",
+      "id": "urn:tensor:example:soc-signin:route-4-7-yes",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:company:question-4",
+      "targetQuestionId": "urn:tensor:example:soc-signin:public:question-7",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "The yes source assessment permits opening this separate question: Does the handoff retain the supported findings, unknowns, evidence references, and response scope? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:route-4-5-no",
       "sourceQuestionId": "urn:tensor:example:soc-signin:company:question-4",
       "targetQuestionId": "urn:tensor:example:soc-signin:public:question-5",
       "guardOutcome": "no",
       "metadata": {
-        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+        "meaning": "The no source assessment permits opening this separate question: Is actual external delivery through r-7 established? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     },
     {
-      "id": "urn:tensor:example:soc-signin:route-4-unknown",
+      "id": "urn:tensor:example:soc-signin:route-4-6-no",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:company:question-4",
+      "targetQuestionId": "urn:tensor:example:soc-signin:company:question-6",
+      "guardOutcome": "no",
+      "metadata": {
+        "meaning": "The no source assessment permits opening this separate question: Does the recorded scoped response satisfy MAIL-04’s approval conditions? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:route-4-5-unknown",
       "sourceQuestionId": "urn:tensor:example:soc-signin:company:question-4",
       "targetQuestionId": "urn:tensor:example:soc-signin:public:question-5",
       "guardOutcome": "unknown",
       "metadata": {
-        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+        "meaning": "The unknown source assessment permits opening this separate question: Is actual external delivery through r-7 established? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     },
     {
-      "id": "urn:tensor:example:soc-signin:route-5-yes",
-      "sourceQuestionId": "urn:tensor:example:soc-signin:public:question-5",
-      "targetQuestionId": "urn:tensor:example:soc-signin:company:question-6",
-      "guardOutcome": "yes",
-      "metadata": {
-        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
-      }
-    },
-    {
-      "id": "urn:tensor:example:soc-signin:route-5-no",
-      "sourceQuestionId": "urn:tensor:example:soc-signin:public:question-5",
-      "targetQuestionId": "urn:tensor:example:soc-signin:company:question-6",
-      "guardOutcome": "no",
-      "metadata": {
-        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
-      }
-    },
-    {
-      "id": "urn:tensor:example:soc-signin:route-5-unknown",
-      "sourceQuestionId": "urn:tensor:example:soc-signin:public:question-5",
-      "targetQuestionId": "urn:tensor:example:soc-signin:company:question-6",
-      "guardOutcome": "unknown",
-      "metadata": {
-        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
-      }
-    },
-    {
-      "id": "urn:tensor:example:soc-signin:route-6-yes",
-      "sourceQuestionId": "urn:tensor:example:soc-signin:company:question-6",
-      "targetQuestionId": "urn:tensor:example:soc-signin:public:question-7",
-      "guardOutcome": "yes",
-      "metadata": {
-        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
-      }
-    },
-    {
-      "id": "urn:tensor:example:soc-signin:route-6-no",
-      "sourceQuestionId": "urn:tensor:example:soc-signin:company:question-6",
-      "targetQuestionId": "urn:tensor:example:soc-signin:public:question-7",
-      "guardOutcome": "no",
-      "metadata": {
-        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
-      }
-    },
-    {
-      "id": "urn:tensor:example:soc-signin:route-6-unknown",
-      "sourceQuestionId": "urn:tensor:example:soc-signin:company:question-6",
+      "id": "urn:tensor:example:soc-signin:route-4-7-unknown",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:company:question-4",
       "targetQuestionId": "urn:tensor:example:soc-signin:public:question-7",
       "guardOutcome": "unknown",
       "metadata": {
-        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+        "meaning": "The unknown source assessment permits opening this separate question: Does the handoff retain the supported findings, unknowns, evidence references, and response scope? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:route-5-7-yes",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:public:question-5",
+      "targetQuestionId": "urn:tensor:example:soc-signin:public:question-7",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "The yes source assessment permits opening this separate question: Does the handoff retain the supported findings, unknowns, evidence references, and response scope? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:route-5-7-no",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:public:question-5",
+      "targetQuestionId": "urn:tensor:example:soc-signin:public:question-7",
+      "guardOutcome": "no",
+      "metadata": {
+        "meaning": "The no source assessment permits opening this separate question: Does the handoff retain the supported findings, unknowns, evidence references, and response scope? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:route-5-7-unknown",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:public:question-5",
+      "targetQuestionId": "urn:tensor:example:soc-signin:public:question-7",
+      "guardOutcome": "unknown",
+      "metadata": {
+        "meaning": "The unknown source assessment permits opening this separate question: Does the handoff retain the supported findings, unknowns, evidence references, and response scope? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:route-6-7-yes",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:company:question-6",
+      "targetQuestionId": "urn:tensor:example:soc-signin:public:question-7",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "The yes source assessment permits opening this separate question: Does the handoff retain the supported findings, unknowns, evidence references, and response scope? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:route-6-7-no",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:company:question-6",
+      "targetQuestionId": "urn:tensor:example:soc-signin:public:question-7",
+      "guardOutcome": "no",
+      "metadata": {
+        "meaning": "The no source assessment permits opening this separate question: Does the handoff retain the supported findings, unknowns, evidence references, and response scope? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:soc-signin:route-6-7-unknown",
+      "sourceQuestionId": "urn:tensor:example:soc-signin:company:question-6",
+      "targetQuestionId": "urn:tensor:example:soc-signin:public:question-7",
+      "guardOutcome": "unknown",
+      "metadata": {
+        "meaning": "The unknown source assessment permits opening this separate question: Does the handoff retain the supported findings, unknowns, evidence references, and response scope? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     }
   ],
@@ -423,19 +521,19 @@
         "id": "public",
         "label": "Public investigation questions",
         "owner": "TENSOR Standards Consortium",
-        "version": "1.0.0"
+        "version": "1.1.0"
       },
       {
         "id": "vendor",
         "label": "Example vendor telemetry graph",
         "owner": "Fictional telemetry vendor",
-        "version": "1.0.0"
+        "version": "1.1.0"
       },
       {
         "id": "company",
         "label": "Example company policy graph",
         "owner": "Fictional company",
-        "version": "1.0.0"
+        "version": "1.1.0"
       }
     ],
     "composition": "Case-specific questions composed in one pinned artifact. These are additional example definitions, not routes added to the public working or published graph."

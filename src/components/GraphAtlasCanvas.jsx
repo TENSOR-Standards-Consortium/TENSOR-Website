@@ -30,7 +30,7 @@ export default function GraphAtlasCanvas({ graph, layout, selectedId, view, onSe
       const color = value => value.startsWith('var(') ? css.getPropertyValue(value.slice(4, -1)).trim() : value;
       const instance = cytoscape({ container: host.current, elements: [
         ...layout.nodes.map((n) => ({ data: { id: n.id, displayLabel:n.displayLabel||n.id, title: `${n.id} · ${n.label.replace(`${n.category}: `, '')}`, color: color(n.color) }, position: n.position })),
-        ...graph.edges.map((e, i) => ({ data: { id: `atlas-edge-${i}`, source: e.source, target: e.target, outcome: e.decision } })),
+        ...graph.edges.map((e, i) => ({ data: { id: `atlas-edge-${i}`, routeId:e.id, source: e.source, target: e.target, outcome: e.decision } })),
       ], layout: { name: 'preset', fit: false }, minZoom: .025, maxZoom: 3.5, wheelSensitivity: .18, boxSelectionEnabled: false, autoungrabify: true,
       style: [
         { selector: 'node', style: { width: cardLabels?220:55, height:cardLabels?86:28, shape: 'round-rectangle', 'background-color': color('var(--bg-input)'), 'background-opacity': 1, 'border-width': 1.5, 'border-color': 'data(color)', label: cardLabels?'data(displayLabel)':'data(id)', color: color('var(--text-primary)'), 'font-family': 'JetBrains Mono, monospace', 'font-size':cardLabels?15:17, 'text-wrap':'wrap', 'font-weight': 500, 'text-valign': 'center', 'text-halign': 'center', 'text-outline-color': color('var(--bg-input)'), 'text-outline-width': 2 } },
@@ -110,6 +110,7 @@ export default function GraphAtlasCanvas({ graph, layout, selectedId, view, onSe
         const visible = new Set(trace.visibleIds);
         instance.nodes().filter(n => !visible.has(n.id())).style('display', 'none');
         instance.edges().filter(e => !visible.has(e.source().id()) || !visible.has(e.target().id())).style('display', 'none');
+        if(trace.visibleEdgeIds) {const routes=new Set(trace.visibleEdgeIds);instance.edges().filter(e=>!routes.has(e.data('routeId'))).style('display','none');}
         fit(instance.elements(':visible'));
       } else if (previousView.current === 'path') fit();
     }

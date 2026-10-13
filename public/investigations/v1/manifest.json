@@ -1,33 +1,33 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "files": [
     {
       "path": "soc-signin.definition.json",
-      "sha256": "f09b6ead7a0f8aa4dff237a7c9919fd41f09071081b2bf8ed48665c35a6b0574"
+      "sha256": "cccf2b1c44c35fbf58d5716810f095ac2093e55988c2e8cd56352ecedfedfe11"
     },
     {
       "path": "soc-signin.bundle.json",
-      "sha256": "84b2218484c81c47abeb7803800fe3ed110e7d9fa51c46a832f106a3049b5338"
+      "sha256": "e915ab8dd853d9a8a71e31456f988dff63fd50aba3869779d98b9832e086e65b"
     },
     {
       "path": "workload-cloud-egress.definition.json",
-      "sha256": "00db9d7f22cac27934153f7b136c91923dde890dcf6e7b0470bb44e31f418107"
+      "sha256": "8affd8c94b2be655ab3bca3ff47b80b31dca04672102a7d80cbfd370c78f3c5f"
     },
     {
       "path": "workload-cloud-egress.bundle.json",
-      "sha256": "09ab06f3cbda7dce0b48400b6bd0a1c4bf01e803b7c3099d3c0b446dbacf564f"
+      "sha256": "295867cf930055b688f0dec2f00bd7f26382580f68aec02e5a6edc4c4ce6d7ba"
     },
     {
       "path": "attachment-host-tool.definition.json",
-      "sha256": "242c00a2691bb3bf26e7bbaa823600b21aa0b99bf80ae8061305bcdc868f07bb"
+      "sha256": "a48522540f0f2933c5144e2ec41c992ee3364774b9792ef7da77ba9012c98200"
     },
     {
       "path": "attachment-host-tool.bundle.json",
-      "sha256": "20f77f65b206a02f51d02a7176dd5a1ef582a93cf9e726a7ba588f76b540d668"
+      "sha256": "1ad1286f3f615e837642d5f695bd7354111335f063e14632ffa403110610e489"
     },
     {
       "path": "catalog.json",
-      "sha256": "ad22a6ddc633814288e6b5895739fe8dc05a9fd3b6f5473ef586d8220c6bfcb6"
+      "sha256": "ff54db4de1ebed082d2d98fd2b224b59eefccbeafec2d819a2eb0d2cac70fd3f"
     }
   ]
 }

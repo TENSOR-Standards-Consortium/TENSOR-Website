@@ -2,7 +2,7 @@
   "format": "tensor-public-event-profiles",
   "version": "0.1.0-draft.1",
   "status": "author-tested-public-draft-external-review-pending",
-  "graphVersion": "0.20261012b",
+  "graphVersion": "0.20261013a",
   "schemaVersion": "0.20260206e",
   "interpretation": "Additive, explicitly profile-qualified question definitions above the unchanged graph. Base question meanings and schema are not replaced. Required profile dependencies must survive exchange; an unsupported profile is unresolved, not silently flattened.",
   "profiles": {
@@ -527,18 +527,18 @@
       "contentAvailabilityFact": "content.availability"
     }
   },
-  "graphSha256": "1a32d33c3ffbc6068b64a19c102ec4a85ca2914b206d96eb78cafd4173e169d0",
-  "criteriaSha256": "3a5d0701960d34d26503777e0021b7cb84b71367651ce7bbaceaf1ede576f5c6",
+  "graphSha256": "4943feee2af28d414fcfd98194e63d196bee529ce8f85117aed4932d977e4d5e",
+  "criteriaSha256": "e57de29a7b0edc64139d6ef5f1f9ff0447785f5cba14c388bfb954f6cb216cf6",
   "baselineCommit": "78a275b127d2f24933c3ec16d9a2b0b1c38fb0af",
   "inputPins": {
-    "scripts/event_profiles.py": "6944db66a690cfb9a32f32f8c25857b8a7437284d7fb037e8752abf5811979d9",
-    "scripts/build_event_profiles.py": "6d298871a30c892681dfc4fc3b0e2f09618741dd93b8ec1eaac8a851fe2e34e3",
+    "scripts/event_profiles.py": "cc60a1e5475b2e5c501dc09afff193801b8631c89895d90acc41d036cabd31a9",
+    "scripts/build_event_profiles.py": "b62798e91bde84ad24434038555d5b855416d4049de69e97805e04c23a552d66",
     "drafts/core/event-profiles/catalog.source.json": "27920e19e511a3be860b5b3abcf906ef1a037d800ab5e030de6189f144604bac",
     "drafts/core/event-profiles/scenarios.source.json": "7f19b4384dba0911b4d77f7a6074aa217913ba84a2fb0148da5fac5739f5321d",
-    "drafts/core/tensor.core.graph.json": "1a32d33c3ffbc6068b64a19c102ec4a85ca2914b206d96eb78cafd4173e169d0",
-    "drafts/core/entry-evidence-criteria.json": "3a5d0701960d34d26503777e0021b7cb84b71367651ce7bbaceaf1ede576f5c6",
+    "drafts/core/tensor.core.graph.json": "4943feee2af28d414fcfd98194e63d196bee529ce8f85117aed4932d977e4d5e",
+    "drafts/core/entry-evidence-criteria.json": "e57de29a7b0edc64139d6ef5f1f9ff0447785f5cba14c388bfb954f6cb216cf6",
     "scripts/evaluate_event_profiles.py": "1bc8e65d2ec1ef03f46e522dd12f67a15cd8a5977a901aaf7a3f251fa9bd2df2",
-    "scripts/evaluate_entry_scenarios.py": "e994d230b9f06d1c51c0243cd49b1b251878b2a3a95abc33b5e033bceb5b458c",
-    "tests/legacy/test_event_profiles.py": "d16729785ce9b64a249b99ea405892bdcc30427e86bf263f6d9b822a9061b2d3"
+    "scripts/evaluate_entry_scenarios.py": "3260ff3e01a4ffd10eeec874170ec63cc37725a2da77f3df8b15cbd2555158b9",
+    "tests/legacy/test_event_profiles.py": "75e225cd81c3fdb7baf41f7d5c0e286dfcfd3b9822a4c177ef9fd496ae5eddf0"
   }
 }

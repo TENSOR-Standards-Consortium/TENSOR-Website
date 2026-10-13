@@ -1,5 +1,5 @@
 {
-  "graphVersion": "0.20261012b",
+  "graphVersion": "0.20261013a",
   "schemaVersion": "0.20260206e",
   "scope": "All active draft routes: bound event matching, validation, one declared technical hypothesis, scope, explicit relationships, technical source attribution, observed metric effects and qualified endings. No case closure, action authorization, actor intent, complete population discovery or independent authenticity verification is established.",
   "bindingRules": [
@@ -16671,7 +16671,7 @@
       ]
     }
   },
-  "graphSha256": "1a32d33c3ffbc6068b64a19c102ec4a85ca2914b206d96eb78cafd4173e169d0",
+  "graphSha256": "4943feee2af28d414fcfd98194e63d196bee529ce8f85117aed4932d977e4d5e",
   "restoration": {
     "profile": "tensor-restored-evidence/2",
     "baseNodeIds": [
@@ -17655,5 +17655,11 @@
       "Application": "A named application/request context; background configuration, session-only and autonomous state changes without a request need an additional public event profile.",
       "File": "A named file/system presence context; deletion, historical lineage and unavailable-content propositions need an additional public event profile. Same file on another system is a distinct declared context."
     }
+  },
+  "routingProfile": {
+    "id": "tensor-investigative-routing/1",
+    "document": "reviews/2026-10-13-routing/README.md",
+    "priorGraphSha256": "1a32d33c3ffbc6068b64a19c102ec4a85ca2914b206d96eb78cafd4173e169d0",
+    "semantics": "One outcome can enable several routes; decisions explicitly select zero, one or multiple leads. Eligibility never asserts a target answer."
   }
 }

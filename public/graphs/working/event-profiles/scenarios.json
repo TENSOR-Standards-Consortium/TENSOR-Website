@@ -1,8 +1,8 @@
 {
   "format": "tensor-event-profile-scenarios",
   "version": "0.1.0-draft.1",
-  "graphVersion": "0.20261012b",
-  "graphSha256": "1a32d33c3ffbc6068b64a19c102ec4a85ca2914b206d96eb78cafd4173e169d0",
+  "graphVersion": "0.20261013a",
+  "graphSha256": "4943feee2af28d414fcfd98194e63d196bee529ce8f85117aed4932d977e4d5e",
   "cases": [
     {
       "id": "identity-credential-state-supported",
@@ -16275,7 +16275,7 @@
       "retention": {
         "eventProfile": "identity-credential-state",
         "profileVersion": "0.1.0-draft.1",
-        "graphVersion": "0.20261012b",
+        "graphVersion": "0.20261013a",
         "subjects": {
           "principalId": "principal-payroll",
           "credentialId": "credential-key-07"
@@ -17118,7 +17118,7 @@
       "retention": {
         "eventProfile": "identity-workload-binding",
         "profileVersion": "0.1.0-draft.1",
-        "graphVersion": "0.20261012b",
+        "graphVersion": "0.20261013a",
         "subjects": {
           "principalId": "principal-deploy",
           "workloadId": "workload-build-19"
@@ -17961,7 +17961,7 @@
       "retention": {
         "eventProfile": "host-state",
         "profileVersion": "0.1.0-draft.1",
-        "graphVersion": "0.20261012b",
+        "graphVersion": "0.20261013a",
         "subjects": {
           "hostId": "host-build-04",
           "stateKey": "endpoint-sensor-enabled"
@@ -18804,7 +18804,7 @@
       "retention": {
         "eventProfile": "network-configuration",
         "profileVersion": "0.1.0-draft.1",
-        "graphVersion": "0.20261012b",
+        "graphVersion": "0.20261013a",
         "subjects": {
           "deviceId": "firewall-west",
           "configurationId": "rule-egress-42"
@@ -19647,7 +19647,7 @@
       "retention": {
         "eventProfile": "network-sensor-coverage",
         "profileVersion": "0.1.0-draft.1",
-        "graphVersion": "0.20261012b",
+        "graphVersion": "0.20261013a",
         "subjects": {
           "sensorId": "sensor-west",
           "collectionId": "capture-20261012"
@@ -20502,7 +20502,7 @@
       "retention": {
         "eventProfile": "cloud-data-access",
         "profileVersion": "0.1.0-draft.1",
-        "graphVersion": "0.20261012b",
+        "graphVersion": "0.20261013a",
         "subjects": {
           "tenantId": "tenant-research",
           "resourceId": "bucket-payroll/object-7",
@@ -21366,7 +21366,7 @@
       "retention": {
         "eventProfile": "cloud-resource-state",
         "profileVersion": "0.1.0-draft.1",
-        "graphVersion": "0.20261012b",
+        "graphVersion": "0.20261013a",
         "subjects": {
           "tenantId": "tenant-research",
           "resourceId": "bucket-payroll",
@@ -22243,7 +22243,7 @@
       "retention": {
         "eventProfile": "email-mailbox-rule",
         "profileVersion": "0.1.0-draft.1",
-        "graphVersion": "0.20261012b",
+        "graphVersion": "0.20261013a",
         "subjects": {
           "mailboxId": "mailbox-finance",
           "ruleId": "rule-forward-09"
@@ -23098,7 +23098,7 @@
       "retention": {
         "eventProfile": "email-mailbox-access",
         "profileVersion": "0.1.0-draft.1",
-        "graphVersion": "0.20261012b",
+        "graphVersion": "0.20261013a",
         "subjects": {
           "mailboxId": "mailbox-finance",
           "principalId": "principal-delegate",
@@ -23962,7 +23962,7 @@
       "retention": {
         "eventProfile": "email-collaboration-artifact",
         "profileVersion": "0.1.0-draft.1",
-        "graphVersion": "0.20261012b",
+        "graphVersion": "0.20261013a",
         "subjects": {
           "workspaceId": "workspace-finance",
           "artifactId": "document-payroll",
@@ -24814,7 +24814,7 @@
       "retention": {
         "eventProfile": "application-state",
         "profileVersion": "0.1.0-draft.1",
-        "graphVersion": "0.20261012b",
+        "graphVersion": "0.20261013a",
         "subjects": {
           "applicationId": "application-reporting",
           "stateKey": "export-mode"
@@ -25657,7 +25657,7 @@
       "retention": {
         "eventProfile": "application-session",
         "profileVersion": "0.1.0-draft.1",
-        "graphVersion": "0.20261012b",
+        "graphVersion": "0.20261013a",
         "subjects": {
           "applicationId": "application-reporting",
           "sessionId": "session-revoked-11"
@@ -26512,7 +26512,7 @@
       "retention": {
         "eventProfile": "application-agent-action",
         "profileVersion": "0.1.0-draft.1",
-        "graphVersion": "0.20261012b",
+        "graphVersion": "0.20261013a",
         "subjects": {
           "applicationId": "application-agent-runner",
           "agentId": "agent-exporter",
@@ -27364,7 +27364,7 @@
       "retention": {
         "eventProfile": "file-deletion",
         "profileVersion": "0.1.0-draft.1",
-        "graphVersion": "0.20261012b",
+        "graphVersion": "0.20261013a",
         "subjects": {
           "fileId": "file-payroll-export",
           "systemId": "system-staging-3"
@@ -28219,7 +28219,7 @@
       "retention": {
         "eventProfile": "file-historical-lineage",
         "profileVersion": "0.1.0-draft.1",
-        "graphVersion": "0.20261012b",
+        "graphVersion": "0.20261013a",
         "subjects": {
           "fileId": "file-payroll-export",
           "systemId": "system-version-store",
@@ -29071,7 +29071,7 @@
       "retention": {
         "eventProfile": "file-unavailable-content",
         "profileVersion": "0.1.0-draft.1",
-        "graphVersion": "0.20261012b",
+        "graphVersion": "0.20261013a",
         "subjects": {
           "fileId": "file-payroll-export",
           "systemId": "system-evidence-store"

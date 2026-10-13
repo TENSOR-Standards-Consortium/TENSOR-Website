@@ -1,6 +1,6 @@
 # Historical initial-restoration verification
 
-This receipt describes the initial restoration below. The current working revision is `0.20261012b`; see the [seven-domain challenge review](https://tensor-standards.pages.dev/graphs/working/reviews/2026-10-12-independent-review/README.md) and the current public provenance manifest for its source. The later review replaced unrelated topic routes, tightened evidence handling and recorded additional public event-profile gaps.
+This receipt describes the initial restoration below. The current routing revision is `0.20261013a`; see the [routing repair](https://tensor-standards.pages.dev/graphs/working/reviews/2026-10-13-routing/README.md). The earlier working revision was `0.20261012b`; see the [seven-domain challenge review](https://tensor-standards.pages.dev/graphs/working/reviews/2026-10-12-independent-review/README.md) and the current public provenance manifest for its source. The later review replaced unrelated topic routes, tightened evidence handling and recorded additional public event-profile gaps.
 
 ## Initial restoration receipt
 

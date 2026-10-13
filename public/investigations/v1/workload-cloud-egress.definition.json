@@ -1,6 +1,6 @@
 {
   "id": "urn:tensor:example:workload-cloud-egress:composed-definition",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "publicationStatus": "draft",
   "title": "Workload identity, cloud read, and network egress",
   "contractRef": {
@@ -39,7 +39,7 @@
         "displayId": "S1",
         "domain": "Identity",
         "layerId": "public",
-        "layerVersion": "1.0.0",
+        "layerVersion": "1.1.0",
         "archetype": "detect"
       }
     },
@@ -73,7 +73,7 @@
         "displayId": "S2",
         "domain": "Cloud",
         "layerId": "public",
-        "layerVersion": "1.0.0",
+        "layerVersion": "1.1.0",
         "archetype": "correlate"
       }
     },
@@ -107,7 +107,7 @@
         "displayId": "S3",
         "domain": "Network",
         "layerId": "vendor",
-        "layerVersion": "1.0.0",
+        "layerVersion": "1.1.0",
         "archetype": "correlate"
       }
     },
@@ -141,7 +141,7 @@
         "displayId": "S4",
         "domain": "Cloud",
         "layerId": "company",
-        "layerVersion": "1.0.0",
+        "layerVersion": "1.1.0",
         "archetype": "classify"
       }
     },
@@ -175,7 +175,7 @@
         "displayId": "S5",
         "domain": "Network",
         "layerId": "public",
-        "layerVersion": "1.0.0",
+        "layerVersion": "1.1.0",
         "archetype": "correlate"
       }
     },
@@ -209,7 +209,7 @@
         "displayId": "S6",
         "domain": "Cloud",
         "layerId": "company",
-        "layerVersion": "1.0.0",
+        "layerVersion": "1.1.0",
         "archetype": "classify"
       }
     },
@@ -243,172 +243,240 @@
         "displayId": "S7",
         "domain": "Network",
         "layerId": "public",
-        "layerVersion": "1.0.0",
+        "layerVersion": "1.1.0",
         "archetype": "terminal"
       }
     }
   ],
   "transitions": [
     {
-      "id": "urn:tensor:example:workload-cloud-egress:route-1-yes",
+      "id": "urn:tensor:example:workload-cloud-egress:route-1-2-yes",
       "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-1",
       "targetQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-2",
       "guardOutcome": "yes",
       "metadata": {
-        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+        "meaning": "The yes source assessment permits opening this separate question: Was object obj-9 read using tx-71? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     },
     {
-      "id": "urn:tensor:example:workload-cloud-egress:route-1-no",
+      "id": "urn:tensor:example:workload-cloud-egress:route-1-3-yes",
+      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-1",
+      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:vendor:question-3",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "The yes source assessment permits opening this separate question: Did the job-17 runtime originate outbound flow f-8? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:route-1-7-no",
+      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-1",
+      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-7",
+      "guardOutcome": "no",
+      "metadata": {
+        "meaning": "The no source assessment permits opening this separate question: Does the handoff keep identity, object-read, flow, ticket, and delivery findings distinct? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:route-1-2-unknown",
       "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-1",
       "targetQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-2",
-      "guardOutcome": "no",
+      "guardOutcome": "unknown",
       "metadata": {
-        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+        "meaning": "The unknown source assessment permits opening this separate question: Was object obj-9 read using tx-71? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     },
     {
-      "id": "urn:tensor:example:workload-cloud-egress:route-1-unknown",
+      "id": "urn:tensor:example:workload-cloud-egress:route-1-7-unknown",
       "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-1",
-      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-2",
+      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-7",
       "guardOutcome": "unknown",
       "metadata": {
-        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+        "meaning": "The unknown source assessment permits opening this separate question: Does the handoff keep identity, object-read, flow, ticket, and delivery findings distinct? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     },
     {
-      "id": "urn:tensor:example:workload-cloud-egress:route-2-yes",
+      "id": "urn:tensor:example:workload-cloud-egress:route-2-4-yes",
       "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-2",
-      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:vendor:question-3",
-      "guardOutcome": "yes",
-      "metadata": {
-        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
-      }
-    },
-    {
-      "id": "urn:tensor:example:workload-cloud-egress:route-2-no",
-      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-2",
-      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:vendor:question-3",
-      "guardOutcome": "no",
-      "metadata": {
-        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
-      }
-    },
-    {
-      "id": "urn:tensor:example:workload-cloud-egress:route-2-unknown",
-      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-2",
-      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:vendor:question-3",
-      "guardOutcome": "unknown",
-      "metadata": {
-        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
-      }
-    },
-    {
-      "id": "urn:tensor:example:workload-cloud-egress:route-3-yes",
-      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:vendor:question-3",
       "targetQuestionId": "urn:tensor:example:workload-cloud-egress:company:question-4",
       "guardOutcome": "yes",
       "metadata": {
-        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+        "meaning": "The yes source assessment permits opening this separate question: Did the approved ticket cover job-17 reading obj-9? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     },
     {
-      "id": "urn:tensor:example:workload-cloud-egress:route-3-no",
-      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:vendor:question-3",
-      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:company:question-4",
+      "id": "urn:tensor:example:workload-cloud-egress:route-2-7-no",
+      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-2",
+      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-7",
       "guardOutcome": "no",
       "metadata": {
-        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+        "meaning": "The no source assessment permits opening this separate question: Does the handoff keep identity, object-read, flow, ticket, and delivery findings distinct? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     },
     {
-      "id": "urn:tensor:example:workload-cloud-egress:route-3-unknown",
-      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:vendor:question-3",
+      "id": "urn:tensor:example:workload-cloud-egress:route-2-4-unknown",
+      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-2",
       "targetQuestionId": "urn:tensor:example:workload-cloud-egress:company:question-4",
       "guardOutcome": "unknown",
       "metadata": {
-        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+        "meaning": "The unknown source assessment permits opening this separate question: Did the approved ticket cover job-17 reading obj-9? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     },
     {
-      "id": "urn:tensor:example:workload-cloud-egress:route-4-yes",
+      "id": "urn:tensor:example:workload-cloud-egress:route-2-7-unknown",
+      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-2",
+      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-7",
+      "guardOutcome": "unknown",
+      "metadata": {
+        "meaning": "The unknown source assessment permits opening this separate question: Does the handoff keep identity, object-read, flow, ticket, and delivery findings distinct? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:route-3-5-yes",
+      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:vendor:question-3",
+      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-5",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "The yes source assessment permits opening this separate question: Is delivery of obj-9’s content through f-8 established? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:route-3-5-no",
+      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:vendor:question-3",
+      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-5",
+      "guardOutcome": "no",
+      "metadata": {
+        "meaning": "The no source assessment permits opening this separate question: Is delivery of obj-9’s content through f-8 established? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:route-3-5-unknown",
+      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:vendor:question-3",
+      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-5",
+      "guardOutcome": "unknown",
+      "metadata": {
+        "meaning": "The unknown source assessment permits opening this separate question: Is delivery of obj-9’s content through f-8 established? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:route-4-5-yes",
       "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:company:question-4",
       "targetQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-5",
       "guardOutcome": "yes",
       "metadata": {
-        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+        "meaning": "The yes source assessment permits opening this separate question: Is delivery of obj-9’s content through f-8 established? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     },
     {
-      "id": "urn:tensor:example:workload-cloud-egress:route-4-no",
+      "id": "urn:tensor:example:workload-cloud-egress:route-4-5-no",
       "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:company:question-4",
       "targetQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-5",
       "guardOutcome": "no",
       "metadata": {
-        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+        "meaning": "The no source assessment permits opening this separate question: Is delivery of obj-9’s content through f-8 established? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     },
     {
-      "id": "urn:tensor:example:workload-cloud-egress:route-4-unknown",
+      "id": "urn:tensor:example:workload-cloud-egress:route-4-6-no",
+      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:company:question-4",
+      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:company:question-6",
+      "guardOutcome": "no",
+      "metadata": {
+        "meaning": "The no source assessment permits opening this separate question: Does the proposed job-17 suspension meet CLOUD-12’s scoped approval conditions? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:route-4-5-unknown",
       "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:company:question-4",
       "targetQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-5",
       "guardOutcome": "unknown",
       "metadata": {
-        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+        "meaning": "The unknown source assessment permits opening this separate question: Is delivery of obj-9’s content through f-8 established? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     },
     {
-      "id": "urn:tensor:example:workload-cloud-egress:route-5-yes",
-      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-5",
-      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:company:question-6",
-      "guardOutcome": "yes",
-      "metadata": {
-        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
-      }
-    },
-    {
-      "id": "urn:tensor:example:workload-cloud-egress:route-5-no",
-      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-5",
-      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:company:question-6",
-      "guardOutcome": "no",
-      "metadata": {
-        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
-      }
-    },
-    {
-      "id": "urn:tensor:example:workload-cloud-egress:route-5-unknown",
-      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-5",
-      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:company:question-6",
-      "guardOutcome": "unknown",
-      "metadata": {
-        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
-      }
-    },
-    {
-      "id": "urn:tensor:example:workload-cloud-egress:route-6-yes",
-      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:company:question-6",
-      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-7",
-      "guardOutcome": "yes",
-      "metadata": {
-        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
-      }
-    },
-    {
-      "id": "urn:tensor:example:workload-cloud-egress:route-6-no",
-      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:company:question-6",
-      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-7",
-      "guardOutcome": "no",
-      "metadata": {
-        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
-      }
-    },
-    {
-      "id": "urn:tensor:example:workload-cloud-egress:route-6-unknown",
-      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:company:question-6",
+      "id": "urn:tensor:example:workload-cloud-egress:route-4-7-unknown",
+      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:company:question-4",
       "targetQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-7",
       "guardOutcome": "unknown",
       "metadata": {
-        "meaning": "Continue the next independently assessed proposition while retaining this outcome; no target answer, causality, or response permission is implied."
+        "meaning": "The unknown source assessment permits opening this separate question: Does the handoff keep identity, object-read, flow, ticket, and delivery findings distinct? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:route-5-7-yes",
+      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-5",
+      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-7",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "The yes source assessment permits opening this separate question: Does the handoff keep identity, object-read, flow, ticket, and delivery findings distinct? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:route-5-7-no",
+      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-5",
+      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-7",
+      "guardOutcome": "no",
+      "metadata": {
+        "meaning": "The no source assessment permits opening this separate question: Does the handoff keep identity, object-read, flow, ticket, and delivery findings distinct? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:route-5-7-unknown",
+      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-5",
+      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-7",
+      "guardOutcome": "unknown",
+      "metadata": {
+        "meaning": "The unknown source assessment permits opening this separate question: Does the handoff keep identity, object-read, flow, ticket, and delivery findings distinct? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:route-6-7-yes",
+      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:company:question-6",
+      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-7",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "The yes source assessment permits opening this separate question: Does the handoff keep identity, object-read, flow, ticket, and delivery findings distinct? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:route-6-7-no",
+      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:company:question-6",
+      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-7",
+      "guardOutcome": "no",
+      "metadata": {
+        "meaning": "The no source assessment permits opening this separate question: Does the handoff keep identity, object-read, flow, ticket, and delivery findings distinct? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:workload-cloud-egress:route-6-7-unknown",
+      "sourceQuestionId": "urn:tensor:example:workload-cloud-egress:company:question-6",
+      "targetQuestionId": "urn:tensor:example:workload-cloud-egress:public:question-7",
+      "guardOutcome": "unknown",
+      "metadata": {
+        "meaning": "The unknown source assessment permits opening this separate question: Does the handoff keep identity, object-read, flow, ticket, and delivery findings distinct? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
       }
     }
   ],
@@ -423,19 +491,19 @@
         "id": "public",
         "label": "Public investigation questions",
         "owner": "TENSOR Standards Consortium",
-        "version": "1.0.0"
+        "version": "1.1.0"
       },
       {
         "id": "vendor",
         "label": "Example vendor telemetry graph",
         "owner": "Fictional telemetry vendor",
-        "version": "1.0.0"
+        "version": "1.1.0"
       },
       {
         "id": "company",
         "label": "Example company policy graph",
         "owner": "Fictional company",
-        "version": "1.0.0"
+        "version": "1.1.0"
       }
     ],
     "composition": "Case-specific questions composed in one pinned artifact. These are additional example definitions, not routes added to the public working or published graph."

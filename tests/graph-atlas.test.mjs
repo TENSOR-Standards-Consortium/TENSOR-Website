@@ -41,16 +41,18 @@ test('coverage ledger is pinned to both graph artifacts and records all original
   assert.equal(ledger.newQuestionIds.length, 21);
   assert.ok(ledger.originalQuestions.every(r => r.semanticReview === 'author-reviewed-agent-audit-external-review-pending' && r.disposition && r.scenarioRefs.length && r.applicabilityLimitations.length && r.agentReviewRef));
   const analysis = await read('graphs/working/reviews/2026-10-12-restoration/analysis.json');
-  assert.equal(analysis.graphSha256, ledger.working.sha256);
+  const routing=await read('graphs/working/reviews/2026-10-13-routing/review.json');
+  assert.equal(routing.graphSha256,ledger.working.sha256);
+  assert.equal(analysis.graphSha256,routing.priorGraphSha256);
   assert.equal(analysis.summary.independentlyApprovedDispositions, 0);
   assert.equal(analysis.summary.distinctSourcePrompts, 479);
   const review = await read('graphs/working/reviews/2026-10-12-independent-review/review.json');
-  assert.equal(review.graphSha256, ledger.working.sha256);
+  assert.equal(review.graphSha256,routing.priorGraphSha256);
   assert.equal(review.summary.externalApprovedDispositions, 0);
   assert.equal(review.summary.remainingUnrelatedFixedFacetEdges, 0);
   assert.equal(review.summary.questions, graphs.working.nodes.length);
-  assert.equal(review.summary.routes, graphs.working.edges.length);
-  assert.equal(review.inputs.find(f => f.path === 'drafts/core/entry-evidence-criteria.json').sha256,
+  assert.equal(review.summary.routes,routing.summary.retainedContinuationRoutes);
+  assert.equal(routing.inputs.find(f => f.path === 'drafts/core/entry-evidence-criteria.json').sha256,
     createHash('sha256').update(await bytes('graphs/working/entry-evidence-criteria.json')).digest('hex'));
   const targets = new Map(graphs.working.nodes.map(n => [n.id, n]));
   for (const row of analysis.questions) {
