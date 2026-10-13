@@ -7,6 +7,7 @@ test('design gate catches independent page skins while permitting task layouts',
   assert.ok(auditStyleOwnership('.page { background: #111827; }', 'src/pages/page.astro').some(error => error.includes('Colors')));
   assert.ok(auditStyleOwnership('body:has(.workspace) { background: var(--bg-input); }', 'src/styles/workspace.css').some(error => error.includes('body theme')));
   assert.ok(auditStyleOwnership('.site-header { width: 96vw; }', 'src/pages/page.astro').some(error => error.includes('Shell')));
+  assert.ok(auditStyleOwnership('body[data-theme=custom] { background: var(--bg-input); }', 'src/styles/workspace.css').some(error => error.includes('body theme')));
   assert.ok(auditStyleOwnership(':root { --bg-app: white; }', 'src/styles/workspace.css').some(error => error.includes('Root')));
 });
 

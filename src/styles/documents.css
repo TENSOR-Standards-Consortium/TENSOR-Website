@@ -1,6 +1,6 @@
 .prose-card { padding: clamp(1.3rem, 3vw, 2.5rem); margin-bottom: var(--space-5); overflow-wrap: anywhere; }
 .document-content > .prose-card { background: transparent; border: 0; border-radius: 0; padding: 0 0 var(--space-5); box-shadow: none; }
-.prose-card > :is(p, ul, ol, blockquote) { max-width: 80ch; }
+.prose-card > :is(p, ul, ol, blockquote) { max-width: var(--reading-width); }
 .prose-card h2 {
   font-family: var(--font-heading);
   color: var(--text-main);
@@ -191,3 +191,5 @@
 .layers strong, .layers span { display: block; }
 .layers span { color: var(--text-secondary); margin-top: .25rem; }
 @media (max-width: 700px) { .resource-grid { grid-template-columns: 1fr; } }
+
+.prose-card > .layers { max-width: none; }

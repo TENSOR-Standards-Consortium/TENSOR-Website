@@ -200,10 +200,33 @@
     });
   }
 
+  function bindAmbientMotion() {
+    // Page-local presentation state. No storage, telemetry or private inputs.
+    if (!document.querySelector || !window.matchMedia) return;
+    const toggle = document.querySelector('[data-ambient-motion-toggle]');
+    const frame = document.querySelector('.circuit-frame');
+    if (!toggle || !frame) return;
+    const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let userPaused = false;
+    function syncMotion() {
+      const reduced = preference.matches;
+      frame.dataset.ambientMotion = !reduced && !userPaused && document.visibilityState !== 'hidden' ? 'running' : 'paused';
+      toggle.hidden = false;
+      toggle.disabled = reduced;
+      toggle.setAttribute('aria-pressed', String(reduced || userPaused));
+      toggle.textContent = reduced ? 'Background motion off' : userPaused ? 'Resume background motion' : 'Pause background motion';
+    }
+    toggle.addEventListener('click', function toggleMotion() { userPaused = !userPaused; syncMotion(); });
+    preference.addEventListener('change', syncMotion);
+    document.addEventListener('visibilitychange', syncMotion);
+    syncMotion();
+  }
+
   window.__tensorTelemetry = {
     send: sendTelemetry,
   };
 
+  bindAmbientMotion();
   registerServiceWorker();
   bindGlobalErrorEvents();
   bindWebVitals();

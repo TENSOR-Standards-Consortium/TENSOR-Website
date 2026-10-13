@@ -1,0 +1,14 @@
+---
+// Decorative framing only. These traces are not investigation nodes or routes.
+const traces = [
+  'M24 80V210H54V342H32V594H72V846H42V1000',
+  'M1416 80V178H1384V310H1408V556H1368V784H1400V1000',
+  'M24 102H76V126H182V104H264M1416 112H1350V146H1280',
+];
+---
+<div class="circuit-frame" aria-hidden="true">
+ <svg viewBox="0 0 1440 1000" preserveAspectRatio="none" focusable="false">
+  <g class="circuit-traces">{traces.map(d => <path d={d} vector-effect="non-scaling-stroke" />)}</g>
+  <g class="circuit-lights">{traces.map(d => <path class="circuit-pulse" d={d} pathLength="1200" vector-effect="non-scaling-stroke" />)}</g>
+ </svg>
+</div>
