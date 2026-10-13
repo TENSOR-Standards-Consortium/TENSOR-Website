@@ -3,6 +3,8 @@ import PageIntro from '../components/PageIntro.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
+import tokens from '../styles/tokens.css?raw';
+const themeColor = tokens.match(/--bg-app:\s*(#[0-9a-fA-F]{6})/)[1];
 
 type JsonLdObject = Record<string, unknown>;
 
@@ -64,7 +66,7 @@ const configuredReleaseAllowedHosts = import.meta.env.RELEASE_ALLOWED_HOSTS
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
     {noindex ? <meta name="robots" content="noindex, nofollow" /> : null}
-    <meta name="theme-color" content="#20252c" />
+    <meta name="theme-color" content={themeColor} />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <link rel="manifest" href="/manifest.webmanifest" />
@@ -85,14 +87,15 @@ const configuredReleaseAllowedHosts = import.meta.env.RELEASE_ALLOWED_HOSTS
     data-release-allowed-hosts={configuredReleaseAllowedHosts || undefined}
     data-private-workspace={Astro.url.pathname.startsWith('/investigation-lab') || Astro.url.pathname.startsWith('/studio') ? 'true' : undefined}
   >
+    <a class="skip-link" href="#main-content">Skip to content</a>
     <div class="app-shell">
       <Header />
 
       {!hidePageTitle && (
-        <PageIntro title={title} />
+        <PageIntro title={title.split(' | ')[0]} />
       )}
 
-      <main>
+      <main id="main-content">
         <slot />
       </main>
 

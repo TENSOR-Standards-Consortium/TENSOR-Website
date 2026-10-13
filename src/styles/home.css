@@ -1,0 +1,20 @@
+.section-hero { padding-block: clamp(3rem, 7vw, 6rem) var(--space-6); }
+.hero-content { display: grid; grid-template-columns: 1.1fr 1fr; align-items: center; gap: clamp(2rem, 5vw, 5rem); }
+.hero-title { font-size: clamp(2.6rem, 4.8vw, 4.6rem); font-weight: 500; line-height: 1.04; letter-spacing: -.06em; margin-top: 1.15rem; }
+.hero-definition { color: var(--text-primary); font-size: clamp(1.05rem, 1.6vw, 1.25rem); line-height: 1.5; margin-top: 1.5rem; max-width: 43ch; }
+.hero-tagline { color: var(--text-secondary); margin-top: 1rem; font-size: .94rem; max-width: 59ch; }
+.evidence-map { position: relative; margin: 0; min-width: 0; }
+.evidence-map svg { display: block; width: 100%; height: auto; }
+.map-center { fill: var(--accent-primary); font: 500 19px var(--font-mono); }
+.map-label { fill: var(--text-primary); font: 500 10px var(--font-mono); letter-spacing: 1.5px; }
+.map-note { fill: var(--text-muted); font: 9px var(--font-mono); }
+.evidence-map figcaption { padding-top: 1rem; border-top: 1px solid var(--line-soft); font: .65rem var(--font-mono); color: var(--text-muted); }
+.evidence-map figcaption span { color: var(--accent-primary); }
+.section-features { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: var(--space-5); margin-block: var(--space-6); }
+.feature-card { padding: 1.5rem 0; border-top: 1px solid var(--line-soft); }
+.feature-card h2 { font-size: 1.15rem; font-weight: 500; }
+.feature-card p { margin-top: .7rem; color: var(--text-secondary); font-size: .92rem; }
+.section-hero .hero-text { animation: tensor-reveal var(--duration-reveal) var(--ease-out); }
+.section-hero .evidence-map { animation: tensor-reveal 540ms var(--ease-out); }
+@keyframes tensor-reveal { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@media(max-width:850px) { .hero-content { grid-template-columns: 1fr; gap: 2rem; } .evidence-map { width: min(560px,100%); margin-inline: auto; } .section-features { grid-template-columns: 1fr; gap: .5rem; } }

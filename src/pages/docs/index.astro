@@ -1,6 +1,7 @@
 ---
+import Button from '../../components/Button.astro';
 import ContentCard from '../../components/ContentCard.astro';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import DocumentLayout from '../../layouts/DocumentLayout.astro';
 import { absoluteUrl, seo } from '../../data/seo';
 
 const meta = seo.docs;
@@ -14,12 +15,12 @@ const jsonLd = {
 };
 ---
 
-<BaseLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
+<DocumentLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
   <ContentCard>
     <p class="section-kicker">Documentation</p>
     <h2>Start with an investigation you can inspect</h2>
     <p>Open a synthetic case in the Investigation Lab, inspect the definition and its record, then export the bundle. The same candidate contract applies to a human investigating an agent and an agent assisting with a conventional identity incident.</p>
-    <p class="cta-group"><a class="btn btn-primary" href="/investigation-lab/">Open Investigation Lab</a><a class="btn btn-secondary" href="/implement/">Run the validator locally</a></p>
+    <p class="cta-group"><Button variant="primary" href="/investigation-lab/">Open Investigation Lab</Button><Button variant="secondary" href="/implement/">Run the validator locally</Button></p>
 
     <h2>Build with Core</h2>
     <p>Start with the <a href="/review/">frozen technical review package</a>. The candidate and preserved legacy releases are on the default branch, with separate identities. Use the pinned review snapshot when reporting findings.</p>
@@ -50,4 +51,4 @@ const jsonLd = {
     <h2>Work with earlier TENSOR content</h2>
     <p>The <a href="/graphs/">working graph</a> exposes draft questions, routes, and evidence criteria. Investigation Lab’s <strong>Recorded path</strong> shows explicit case transitions and retained assessments. The <a href="/questions/">question catalog</a> and <a href="/studio/">legacy Graph Studio</a> preserve the earlier graph model. Its schemas and version numbers are separate from this candidate. A legacy graph is not a complete Core investigation record.</p>
   </ContentCard>
-</BaseLayout>
+</DocumentLayout>

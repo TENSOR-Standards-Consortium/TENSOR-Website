@@ -1,6 +1,6 @@
 ---
 import ContentCard from '../../components/ContentCard.astro';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import DocumentLayout from '../../layouts/DocumentLayout.astro';
 import { absoluteUrl, seo } from '../../data/seo';
 
 const meta = seo.conformance;
@@ -14,7 +14,7 @@ const jsonLd = {
 };
 ---
 
-<BaseLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
+<DocumentLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
   <ContentCard>
     <p class="section-kicker">Evidence before a compatibility claim</p>
     <h2>Reference validation is the first step</h2>
@@ -56,4 +56,4 @@ npm test`}</code></pre>
     <h2>Earlier fixtures</h2>
     <p>The previous website's graph-only starter fixtures belong to the legacy model. Use <a href="/core/">the candidate release page</a> for new work; do not combine the two contracts under one conformance claim.</p>
   </ContentCard>
-</BaseLayout>
+</DocumentLayout>

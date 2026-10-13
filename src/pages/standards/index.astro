@@ -1,6 +1,6 @@
 ---
 import ContentCard from '../../components/ContentCard.astro';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import DocumentLayout from '../../layouts/DocumentLayout.astro';
 import { absoluteUrl, seo } from '../../data/seo';
 
 const meta = seo.standards;
@@ -14,7 +14,7 @@ const jsonLd = {
 };
 ---
 
-<BaseLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
+<DocumentLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
   <ContentCard>
     <p class="section-kicker">Reuse, then prove the relationship</p>
     <h2>An investigative layer alongside existing standards</h2>
@@ -52,4 +52,4 @@ const jsonLd = {
     </ul>
     <p><a href="/core/">Inspect Core</a> · <a href="/conformance/">Review validation scope</a> · <a href="/contribute/">Propose a mapping</a></p>
   </ContentCard>
-</BaseLayout>
+</DocumentLayout>

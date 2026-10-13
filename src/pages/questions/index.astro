@@ -1,12 +1,12 @@
 ---
 import ContentCard from '../../components/ContentCard.astro';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import DocumentLayout from '../../layouts/DocumentLayout.astro';
 import { legacyGraph, legacyQuestions, legacyCategories, questionPath, LEGACY_VERSION, LEGACY_DOWNLOAD, LEGACY_SHA256, LEGACY_SOURCE } from '../../data/legacy-questions';
 const title = 'Question library';
 const description = `Browse and cite the ${legacyQuestions.length} questions in TENSOR's preserved graph release ${LEGACY_VERSION}.`;
 ---
 
-<BaseLayout title={title} description={description} canonicalPath="/questions/">
+<DocumentLayout title={title} description={description} canonicalPath="/questions/">
   <ContentCard>
     <p class="section-kicker">Preserved graph release · {LEGACY_VERSION}</p>
     <h2>Inspect and cite the questions already published</h2>
@@ -38,7 +38,7 @@ const description = `Browse and cite the ${legacyQuestions.length} questions in 
       ))}
     </div>
   </ContentCard>
-</BaseLayout>
+</DocumentLayout>
 
 <script>
   const form = document.querySelector<HTMLFormElement>('#question-filters');
@@ -74,8 +74,7 @@ const description = `Browse and cite the ${legacyQuestions.length} questions in 
   .digest { overflow-wrap: anywhere; }
   #question-filters:not([hidden]) { display: grid; grid-template-columns: minmax(0, 2fr) minmax(10rem, 1fr); gap: 1rem; margin: 2rem 0 1rem; }
   label { display: block; font-weight: 600; margin-bottom: .4rem; }
-  input, select { width: 100%; min-height: 2.75rem; padding: .6rem; color: var(--text-primary); background: var(--bg-input); border: 1px solid var(--line-soft); border-radius: var(--radius-md); font: inherit; }
-  input:focus-visible, select:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 3px; }
+  input, select { width: 100%; }
   .category-links { display: flex; flex-wrap: wrap; gap: .65rem 1.2rem; margin: 1.2rem 0; }
   .question-list { list-style: none; padding-left: 0; }
   .question-list li { padding: 1rem 0; border-bottom: 1px solid var(--line-soft); }

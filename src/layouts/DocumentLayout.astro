@@ -1,0 +1,13 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+import SectionNavigation from '../components/SectionNavigation.astro';
+const { title, displayTitle = title.split(' | ')[0], ...props } = Astro.props;
+---
+<BaseLayout {...props} title={title} hidePageTitle>
+  <PageIntro title={displayTitle} eyebrow="TENSOR / Public investigation standard" />
+  <div class="container document-layout">
+    <SectionNavigation />
+    <div class="document-content"><slot /></div>
+  </div>
+</BaseLayout>

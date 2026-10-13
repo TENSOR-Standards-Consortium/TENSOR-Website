@@ -1,0 +1,13 @@
+---
+const groups = [
+  { label: 'The standard', links: [['Core contract', '/core/'], ['Implement', '/implement/'], ['Validation', '/conformance/'], ['Profiles & extensions', '/extensions/'], ['Standards crosswalk', '/standards/']] },
+  { label: 'Participate', links: [['Documentation', '/docs/'], ['Technical review', '/review/'], ['Governance', '/governance/'], ['Contribute', '/contribute/'], ['About TENSOR', '/about/']] },
+];
+const pathname = Astro.url.pathname;
+---
+<div class="document-navigation">
+<p class="document-nav-hint">Standard resources <span aria-hidden="true">Scroll for more →</span></p>
+<nav class="document-nav" aria-label="Standard resources">
+  {groups.map(group => <div class="nav-group"><p>{group.label}</p><ul>{group.links.map(([label, href]) => <li><a href={href} aria-current={pathname === href ? 'page' : undefined}>{label}</a></li>)}</ul></div>)}
+</nav>
+</div>

@@ -473,7 +473,20 @@ export default function MetricsDashboard() {
 
     setPngExporting(true);
     try {
-      const serialized = new XMLSerializer().serializeToString(svgElement);
+      // A standalone SVG image has no access to the page stylesheet or tokens.
+      // Freeze the rendered paint on a clone so exports match the shared theme.
+      const exportBackground = getComputedStyle(svgElement).getPropertyValue('--bg-app').trim();
+      const exportSvg = svgElement.cloneNode(true);
+      const sourceNodes = [svgElement, ...svgElement.querySelectorAll('*')];
+      const exportNodes = [exportSvg, ...exportSvg.querySelectorAll('*')];
+      const paintProperties = ['fill', 'fill-opacity', 'stroke', 'stroke-width', 'stroke-opacity', 'stroke-dasharray', 'stroke-linecap', 'stroke-linejoin', 'opacity'];
+      sourceNodes.forEach((sourceNode, index) => {
+        const paint = getComputedStyle(sourceNode);
+        for (const property of paintProperties) exportNodes[index].style.setProperty(property, paint.getPropertyValue(property));
+      });
+      exportSvg.setAttribute('width', String(CHART_WIDTH));
+      exportSvg.setAttribute('height', String(CHART_HEIGHT));
+      const serialized = new XMLSerializer().serializeToString(exportSvg);
       const svgBlob = new Blob([serialized], { type: 'image/svg+xml;charset=utf-8' });
       const svgUrl = URL.createObjectURL(svgBlob);
 
@@ -496,7 +509,7 @@ export default function MetricsDashboard() {
         throw new Error('Canvas context unavailable');
       }
 
-      context.fillStyle = '#111315';
+      context.fillStyle = exportBackground;
       context.fillRect(0, 0, canvas.width, canvas.height);
       context.drawImage(image, 0, 0, canvas.width, canvas.height);
 

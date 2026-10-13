@@ -22,7 +22,7 @@ export function atlasLayout(graph, orientation = 'wide') {
     const group = groups.get(`${node.category}:${node.archetype}`).slice().sort((a, b) => Number(a.id.slice(1)) - Number(b.id.slice(1)));
     const i = group.findIndex((item) => item.id === node.id);
     const domain = DOMAINS.indexOf(node.category), stage = STAGES.indexOf(node.archetype);
-    return { ...node, color: DOMAIN_COLORS[domain] || '#aab8ca', position: narrow ? { x: 300 + Math.max(0, domain) * domainWidth + (i % portraitColumns) * 65, y: 120 + Math.max(0, stage) * stageHeight + Math.floor(i / portraitColumns) * 38 } : { x: 230 + Math.max(0, stage) * stageWidth + (i % columns) * 70, y: 92 + Math.max(0, domain) * laneHeight + Math.floor(i / columns) * 38 } };
+    return { ...node, color: DOMAIN_COLORS[domain] || 'var(--domain-uncategorized)', position: narrow ? { x: 300 + Math.max(0, domain) * domainWidth + (i % portraitColumns) * 65, y: 120 + Math.max(0, stage) * stageHeight + Math.floor(i / portraitColumns) * 38 } : { x: 230 + Math.max(0, stage) * stageWidth + (i % columns) * 70, y: 92 + Math.max(0, domain) * laneHeight + Math.floor(i / columns) * 38 } };
   });
   return { nodes, width, height, laneHeight, stageWidth, orientation, domainWidth, stageHeight };
 }

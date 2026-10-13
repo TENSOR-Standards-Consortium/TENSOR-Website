@@ -1,6 +1,6 @@
 ---
 import ContentCard from '../../components/ContentCard.astro';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import DocumentLayout from '../../layouts/DocumentLayout.astro';
 import { absoluteUrl, seo } from '../../data/seo';
 
 const meta = seo.governance;
@@ -14,7 +14,7 @@ const jsonLd = {
 };
 ---
 
-<BaseLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
+<DocumentLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
   <ContentCard>
     <p class="section-kicker">Proposed public stewardship</p>
     <h2>A public standard needs accountable decisions</h2>
@@ -53,4 +53,4 @@ const jsonLd = {
     <p>Disclose affiliations and conflicts. Keep funding conditions visible. Record dissent and appeals. Use synthetic or authorized de-identified cases. Existing licenses remain applicable to existing materials; contribution, patent, and stewardship policies need explicit review before adoption.</p>
     <p><a href="/contribute/">Contribute a review or implementation</a> · <a href="/founding/05-review-plan.md">Review the evidence gates</a></p>
   </ContentCard>
-</BaseLayout>
+</DocumentLayout>

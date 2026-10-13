@@ -22,18 +22,19 @@ export default function GraphThreeCanvas({ graph, view, selectedId, trace, onSel
     Promise.all([import('three'), import('three/addons/controls/OrbitControls.js')]).then(([THREE, { OrbitControls }]) => {
       if (disposed || !host.current) return;
       const element = host.current;
+      const css = getComputedStyle(element);
+      const token = name => css.getPropertyValue(name).trim();
       const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: 'low-power' });
       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
-      renderer.setClearColor('#0c141e'); renderer.outputColorSpace = THREE.SRGBColorSpace;
+      renderer.setClearColor(token('--bg-canvas')); renderer.outputColorSpace = THREE.SRGBColorSpace;
       element.appendChild(renderer.domElement);
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(42, 1, 1, 10000);
       const controls = new OrbitControls(camera, renderer.domElement);
       controls.enableDamping = false; controls.minDistance = 80; controls.maxDistance = 4300;
       controls.maxPolarAngle = Math.PI * .94; controls.enablePan = true;
-      scene.add(new THREE.HemisphereLight(0xe7f5ff, 0x29445e, 2.8));
-      const light = new THREE.DirectionalLight(0xffffff, 3); light.position.set(400, 700, 900); scene.add(light);
-      const css = getComputedStyle(element);
+      scene.add(new THREE.HemisphereLight(token('--light-sky'), token('--light-ground'), 2.8));
+      const light = new THREE.DirectionalLight(token('--light-white'), 3); light.position.set(400, 700, 900); scene.add(light);
       const nodeColors = spatial.nodes.map(n => new THREE.Color(css.getPropertyValue(n.color.slice(4,-1)).trim()));
       const positions = spatial.nodes.map(n => new THREE.Vector3(n.position.x, n.position.y, n.position.z));
       const byId = new Map(spatial.nodes.map((n,i) => [n.id, i]));
@@ -63,9 +64,9 @@ export default function GraphThreeCanvas({ graph, view, selectedId, trace, onSel
         return { text:c.domain.toUpperCase(), detail:c.topic, domain:c.domain, point:new THREE.Vector3(c.position.x+radial.x,c.position.y+radial.y,c.position.z), kind:'domain',color:c.color };
       });
       spatial.anchors.forEach(a => anchors.push({text:a.stage.toUpperCase(),domain:a.domain,stage:a.stage,point:new THREE.Vector3(a.position.x,a.position.y+35,a.position.z),kind:'stage'}));
-      const halo = new THREE.Mesh(new THREE.TorusGeometry(14,.9,8,48),new THREE.MeshBasicMaterial({color:'#ffd083'})); scene.add(halo);
+      const halo = new THREE.Mesh(new THREE.TorusGeometry(14,.9,8,48),new THREE.MeshBasicMaterial({color:token('--accent-primary')})); scene.add(halo);
       let frame = 0, hoveredId = null, visibleIds = null, width = 1, height = 1;
-      const bg = new THREE.Color('#0c141e');
+      const bg = new THREE.Color(token('--bg-canvas'));
       function clearRoutes() { while(routes.children.length) { const item = routes.children[0]; routes.remove(item); item.geometry.dispose(); item.material.dispose(); } }
       function update() {
         const { trace: currentTrace, selectedId: current } = live.current;
@@ -77,7 +78,7 @@ export default function GraphThreeCanvas({ graph, view, selectedId, trace, onSel
           const id = spatial.nodes[i].id, active = id === current || id === currentTrace?.currentId;
           const important = active || visited.has(id) || next.has(id) || (!currentTrace && neighbors.has(id));
           dummy.position.copy(p); dummy.scale.setScalar(visibleIds && !visibleIds.has(id) ? 0 : active ? 12 : important ? 8 : 6); dummy.quaternion.identity(); dummy.updateMatrix(); nodes.setMatrixAt(i, dummy.matrix);
-          const color = active || visited.has(id) ? new THREE.Color('#ffd083') : nodeColors[i].clone();
+          const color = active || visited.has(id) ? new THREE.Color(token('--accent-primary')) : nodeColors[i].clone();
           if ((currentTrace || current) && !important) color.lerp(bg, .55);
           nodes.setColorAt(i, color);
           glowGeometry.attributes.color.setXYZ(i,...color.toArray());
@@ -106,7 +107,7 @@ export default function GraphThreeCanvas({ graph, view, selectedId, trace, onSel
         });
         for(const [key,bucket] of buckets) {
           const [kind,outcome,scope] = key.split(':');
-          const color = kind === 'path' ? '#ffd083' : kind === 'next' ? ({yes:'#6ee7b7',no:'#ffb3b3',unknown:'#efcd84'}[outcome]) : '#6488a4';
+          const color = kind === 'path' ? token('--accent-primary') : kind === 'next' ? ({yes:token('--accent-success'),no:token('--accent-danger'),unknown:token('--accent-warning')}[outcome]) : token('--graph-route-muted');
           const opacity = kind === 'context' ? currentTrace || current ? .07 : scope === 'bridge' ? .045 : .25 : 1;
           routes.add(new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(bucket.points), new THREE.LineBasicMaterial({ color, transparent: true, opacity })));
           const arrows = new THREE.InstancedMesh(new THREE.ConeGeometry(1,3,5), new THREE.MeshBasicMaterial({ color, transparent: true, opacity }), bucket.arrows.length);

@@ -33,18 +33,18 @@ export default function GraphAtlasCanvas({ graph, layout, selectedId, view, onSe
         ...graph.edges.map((e, i) => ({ data: { id: `atlas-edge-${i}`, source: e.source, target: e.target, outcome: e.decision } })),
       ], layout: { name: 'preset', fit: false }, minZoom: .025, maxZoom: 3.5, wheelSensitivity: .18, boxSelectionEnabled: false, autoungrabify: true,
       style: [
-        { selector: 'node', style: { width: 55, height: 28, shape: 'round-rectangle', 'background-color': '#101c29', 'background-opacity': 1, 'border-width': 1.5, 'border-color': 'data(color)', label: 'data(id)', color: '#edf4ff', 'font-family': 'JetBrains Mono, monospace', 'font-size': 17, 'font-weight': 500, 'text-valign': 'center', 'text-halign': 'center', 'text-outline-color': '#101c29', 'text-outline-width': 2 } },
-        { selector: 'edge', style: { width: 1.1, opacity: .2, 'line-color': '#8dacc8', 'target-arrow-color': '#8dacc8', 'target-arrow-shape': 'triangle', 'arrow-scale': .7, 'curve-style': 'bezier' } },
+        { selector: 'node', style: { width: 55, height: 28, shape: 'round-rectangle', 'background-color': color('var(--bg-input)'), 'background-opacity': 1, 'border-width': 1.5, 'border-color': 'data(color)', label: 'data(id)', color: color('var(--text-primary)'), 'font-family': 'JetBrains Mono, monospace', 'font-size': 17, 'font-weight': 500, 'text-valign': 'center', 'text-halign': 'center', 'text-outline-color': color('var(--bg-input)'), 'text-outline-width': 2 } },
+        { selector: 'edge', style: { width: 1.1, opacity: .2, 'line-color': color('var(--graph-route)'), 'target-arrow-color': color('var(--graph-route)'), 'target-arrow-shape': 'triangle', 'arrow-scale': .7, 'curve-style': 'bezier' } },
         { selector: 'edge[outcome = "unknown"]', style: { 'line-style': 'dashed' } },
-        { selector: '.neighbor', style: { 'border-width': 2.5, 'background-color': '#26374a', 'z-index': 8 } },
-        { selector: 'node.selected', style: { 'border-color': '#ffd083', 'border-width': 4, width: 74, height: 39, 'background-color': '#64401d', 'z-index': 10 } },
-        { selector: 'edge.connected', style: { width: 3.5, opacity: 1, label: 'data(outcome)', 'font-size': 14, color: '#eff6ff', 'text-background-color': '#101722', 'text-background-opacity': 1, 'text-background-padding': 4, 'z-index': 9, 'text-rotation': 'autorotate' } },
-        { selector: '.connected[outcome = "yes"]', style: { 'line-color': '#6ee7b7', 'target-arrow-color': '#6ee7b7' } },
-        { selector: '.connected[outcome = "no"]', style: { 'line-color': '#ffb3b3', 'target-arrow-color': '#ffb3b3' } },
-        { selector: '.connected[outcome = "unknown"]', style: { 'line-color': '#efcd84', 'target-arrow-color': '#efcd84' } },
-        { selector: 'node.visited', style: { 'border-width': 3, 'border-color': '#ffd083', 'background-color': '#49371e', 'z-index': 8 } },
-        { selector: 'node.available', style: { 'border-style': 'dashed', 'border-width': 2.5, 'background-color': '#26374a', 'z-index': 8 } },
-        { selector: 'edge.traversed', style: { width: 5, opacity: 1, 'line-color': '#ffd083', 'target-arrow-color': '#ffd083', label: 'data(outcome)', color: '#ffe4ac', 'font-size': 16, 'text-background-color': '#101722', 'text-background-opacity': 1, 'text-background-padding': 4, 'z-index': 11 } },
+        { selector: '.neighbor', style: { 'border-width': 2.5, 'background-color': color('var(--bg-card-hover)'), 'z-index': 8 } },
+        { selector: 'node.selected', style: { 'border-color': color('var(--accent-primary)'), 'border-width': 4, width: 74, height: 39, 'background-color': color('var(--accent-selection)'), 'z-index': 10 } },
+        { selector: 'edge.connected', style: { width: 3.5, opacity: 1, label: 'data(outcome)', 'font-size': 14, color: color('var(--text-primary)'), 'text-background-color': color('var(--bg-app)'), 'text-background-opacity': 1, 'text-background-padding': 4, 'z-index': 9, 'text-rotation': 'autorotate' } },
+        { selector: '.connected[outcome = "yes"]', style: { 'line-color': color('var(--accent-success)'), 'target-arrow-color': color('var(--accent-success)') } },
+        { selector: '.connected[outcome = "no"]', style: { 'line-color': color('var(--accent-danger)'), 'target-arrow-color': color('var(--accent-danger)') } },
+        { selector: '.connected[outcome = "unknown"]', style: { 'line-color': color('var(--accent-warning)'), 'target-arrow-color': color('var(--accent-warning)') } },
+        { selector: 'node.visited', style: { 'border-width': 3, 'border-color': color('var(--accent-primary)'), 'background-color': color('var(--accent-selection)'), 'z-index': 8 } },
+        { selector: 'node.available', style: { 'border-style': 'dashed', 'border-width': 2.5, 'background-color': color('var(--bg-card-hover)'), 'z-index': 8 } },
+        { selector: 'edge.traversed', style: { width: 5, opacity: 1, 'line-color': color('var(--accent-primary)'), 'target-arrow-color': color('var(--accent-primary)'), label: 'data(outcome)', color: color('var(--accent-primary)'), 'font-size': 16, 'text-background-color': color('var(--bg-app)'), 'text-background-opacity': 1, 'text-background-padding': 4, 'z-index': 11 } },
 
       ] });
       cy.current = instance;
@@ -152,7 +152,7 @@ export default function GraphAtlasCanvas({ graph, layout, selectedId, view, onSe
       <button className="atlas-overview-toggle" aria-expanded={overview} aria-label="Toggle overview map" onClick={() => setOverview(!overview)}>Overview <span>{Math.round(camera.zoom * 100)}% {overview ? '−' : '+'}</span></button>
       {overview && <>
       <svg className="atlas-minimap" viewBox={`${mini.x} ${mini.y} ${mini.width} ${mini.height}`} role="img" aria-label="Map overview and current viewport">
-        {layout.nodes.filter(n=>!trace?.visibleIds || trace.visibleIds.includes(n.id)).map((n) => <rect key={n.id} x={n.position.x - 14} y={n.position.y - 9} width="28" height="18" fill={n.id === selectedId ? '#ffcf83' : n.color} opacity={n.id === selectedId ? 1 : .7} />)}
+        {layout.nodes.filter(n=>!trace?.visibleIds || trace.visibleIds.includes(n.id)).map((n) => <rect key={n.id} x={n.position.x - 14} y={n.position.y - 9} width="28" height="18" fill={n.id === selectedId ? 'var(--accent-primary)' : n.color} opacity={n.id === selectedId ? 1 : .7} />)}
         <rect className="atlas-viewport" x={-camera.pan.x / camera.zoom} y={-camera.pan.y / camera.zoom} width={camera.width / camera.zoom} height={camera.height / camera.zoom} />
       </svg>
       <div className="atlas-pan" role="group" aria-label="Pan map"><button aria-label="Pan left" onClick={() => pan(140, 0)}>←</button><button aria-label="Pan up" onClick={() => pan(0, 140)}>↑</button><button aria-label="Pan down" onClick={() => pan(0, -140)}>↓</button><button aria-label="Pan right" onClick={() => pan(-140, 0)}>→</button></div></>}

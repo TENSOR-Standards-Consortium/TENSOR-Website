@@ -1,4 +1,7 @@
 ---
+import Button from '../components/Button.astro';
+import '../styles/home.css';
+import EvidenceMap from '../components/EvidenceMap.astro';
 import ContentCard from '../components/ContentCard.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { absoluteUrl, seo } from '../data/seo';
@@ -16,23 +19,19 @@ const jsonLd = {
 
 <BaseLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} hidePageTitle={true} jsonLd={jsonLd}>
   <section class="section-hero">
-    <div class="hero-glow hero-glow-a" aria-hidden="true"></div>
-    <div class="hero-glow hero-glow-b" aria-hidden="true"></div>
     <div class="hero-content container">
-      <div class="hero-logo">
-        <img src="/assets/img/logo-tensor-framework.png" alt="TENSOR Framework" />
-      </div>
       <div class="hero-text">
         <p class="hero-kicker">A public standard for cyber investigations</p>
         <h1 class="hero-title">One investigation.<br />Shared understanding.</h1>
         <p class="hero-definition">Questions, evidence, and decisions that humans and agents can carry between tools.</p>
         <p class="hero-tagline">TENSOR defines a common investigative layer. Public profiles, vendor tools, and business policies build on it while keeping uncertainty, attribution, and history intact.</p>
         <div class="cta-group">
-          <a class="btn btn-primary" href="/investigation-lab/" data-telemetry-event="cta-open-investigation-lab" data-telemetry-location="home-hero">Try an investigation</a>
-          <a class="btn btn-secondary" href="/core/" data-telemetry-event="cta-open-core" data-telemetry-location="home-hero">Read the Core contract</a>
+          <Button variant="primary" href="/investigation-lab/" data-telemetry-event="cta-open-investigation-lab" data-telemetry-location="home-hero">Try an investigation</Button>
+          <Button variant="secondary" href="/core/" data-telemetry-event="cta-open-core" data-telemetry-location="home-hero">Read the Core contract</Button>
         </div>
         <p class="candidate-status"><span class="status-dot" aria-hidden="true"></span> <a href="/review/">Technical review 2026-10-11.1</a> · Core 0.1.0-draft.1 candidate</p>
       </div>
+      <EvidenceMap />
     </div>
   </section>
 
@@ -109,7 +108,7 @@ const jsonLd = {
     <h2>Useful alongside the standards you already use</h2>
     <p>TENSOR's proposed boundaries reference ATT&amp;CK, D3FEND, ATLAS, CASE/UCO, STIX, Attack Flow, CACAO, and OCSF. Mappings need versioned definitions and exchange evidence; they are not implied by a logo or a shared field name.</p>
     <p>The founding charter, governance proposal, and 38 Core requirements are open for review. This candidate is not a ratified standard or an institutional endorsement.</p>
-    <div class="cta-group"><a class="btn btn-secondary" href="/standards/">Explore the standards crosswalk</a><a class="btn btn-secondary" href="/contribute/">Contribute a case or review</a></div>
+    <div class="cta-group"><Button variant="secondary" href="/standards/">Explore the standards crosswalk</Button><Button variant="secondary" href="/contribute/">Contribute a case or review</Button></div>
   </ContentCard>
 </BaseLayout>
 

@@ -1,6 +1,6 @@
 ---
 import ContentCard from '../../components/ContentCard.astro';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import DocumentLayout from '../../layouts/DocumentLayout.astro';
 import { absoluteUrl, seo } from '../../data/seo';
 
 const meta = seo.about;
@@ -14,7 +14,7 @@ const jsonLd = {
 };
 ---
 
-<BaseLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
+<DocumentLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
   <ContentCard>
     <p class="section-kicker">One public investigative layer</p>
     <h2>Shared meaning for every cyber investigation</h2>
@@ -41,4 +41,4 @@ const jsonLd = {
     <p><strong>Core 0.1.0-draft.1 is an implementation candidate.</strong> It is not ratified, independently certified, or institutionally endorsed. The founding package proposes public stewardship; named appointments and a stable release remain open work.</p>
     <p><a href="/founding/00-charter.md">Read the founding charter</a> · <a href="/core/">Inspect the Core candidate</a> · <a href="/governance/">Review proposed governance</a></p>
   </ContentCard>
-</BaseLayout>
+</DocumentLayout>

@@ -8,3 +8,10 @@ export function Badge({ value, children }) {
 export function Panel({ as: Tag = 'section', className = '', children, ...props }) {
   return <Tag className={`tensor-panel ${className}`} {...props}>{children}</Tag>;
 }
+
+export function WorkspaceHeading({ title, eyebrow, children, className = '' }) {
+  return <div className={`workspace-heading ${className}`}>
+    <div><p className="section-kicker">{eyebrow}</p><h1 className="workspace-title">{title}<span aria-hidden="true">.</span></h1></div>
+    {children}
+  </div>;
+}

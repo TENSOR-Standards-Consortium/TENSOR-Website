@@ -946,9 +946,7 @@ export default function GraphExplorer() {
         button.className = 'chip';
         button.textContent = category;
         button.dataset.category = category;
-        button.style.borderColor = CATEGORY_COLORS[category]
-          ? `${CATEGORY_COLORS[category]}8f`
-          : 'rgba(173, 211, 255, 0.35)';
+        button.style.borderColor = CATEGORY_COLORS[category] || token('--line-strong');
 
         if (state.activeCategories.has(category)) {
           button.classList.add('is-active');

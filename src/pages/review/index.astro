@@ -1,6 +1,7 @@
 ---
+import Button from '../../components/Button.astro';
 import ContentCard from '../../components/ContentCard.astro';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import DocumentLayout from '../../layouts/DocumentLayout.astro';
 import { seo } from '../../data/seo';
 import snapshot from '../../../public/review/2026-10-11.1/manifest.json';
 const meta = seo.review;
@@ -8,14 +9,14 @@ const files = `/review/${snapshot.reviewId}`;
 const source = `${snapshot.sourceRepository}/tree/${snapshot.sourceCommit}`;
 ---
 
-<BaseLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType}>
+<DocumentLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType}>
   <ContentCard class="review-package">
     <p class="section-kicker">Technical review · {snapshot.reviewId}</p>
     <h2>Can someone else understand and continue the investigation?</h2>
     <p>TENSOR proposes a public investigative layer for all cyber investigations, usable by humans and agents. It carries the question, context, evidence basis, uncertainty, attribution and decision history between people and tools. Vendor products and business policy build above that shared meaning.</p>
     <p><strong>This is a frozen technical candidate.</strong> It is not a stable Core release, certification or institutional endorsement. No invitations or formal review window have been initiated through this package.</p>
     <p><strong>Later working draft:</strong> all 588 original IDs now appear alongside 21 repair questions in the 609-question draft, with per-ID author analysis and revised evidence criteria. It is separate from this frozen snapshot. Independent semantic approval and equivalent coverage remain unproven; read the <a href="/graphs/coverage/">analysis and coverage ledger</a>.</p>
-    <div class="cta-group"><a class="btn btn-primary" href={`${files}/review-package.zip`} download>Download review package · ZIP</a><a class="btn btn-secondary" href="/investigation-lab/">Walk through an example</a></div>
+    <div class="cta-group"><Button variant="primary" href={`${files}/review-package.zip`} download>Download review package · ZIP</Button><Button variant="secondary" href="/investigation-lab/">Walk through an example</Button></div>
     <p><a href={`${files}/README.md`}>Review brief</a> · <a href={`${files}/manifest.json`}>File hashes and source identity</a> · <a href={`${files}/validation.json`}>Observed validation and limits</a></p>
 
     <h2>One snapshot, distinct parts</h2>
@@ -66,10 +67,10 @@ python3 scripts/evaluate_entry_scenarios.py`}</code></pre>
 
     <h2>Return findings to the public record</h2>
     <p>John Schieferle Uhlenbrock is the accepted bootstrap steward, convenor, Core editor and conformance maintainer under the TENSOR Standards Consortium project identity. These roles currently concentrate in one founder. The broader governance proposal remains unadopted; conflict disclosure and infrastructure continuity confirmations remain pending.</p>
-    <div class="cta-group"><a class="btn btn-primary" href="https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework/issues/new?template=implementation-report.yml">Prepare a technical finding</a><a class="btn btn-secondary" href="/governance/">Read stewardship and review handling</a></div>
+    <div class="cta-group"><Button variant="primary" href="https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework/issues/new?template=implementation-report.yml">Prepare a technical finding</Button><Button variant="secondary" href="/governance/">Read stewardship and review handling</Button></div>
     <p>For sensitive reports, use <a href="https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework/security/advisories/new">private vulnerability reporting</a>. Public findings must contain no confidential case material. <a href="/docs/review-process.md">The finding process</a> preserves objections, responses and dissent; publication or issue closure is not independent approval.</p>
   </ContentCard>
-</BaseLayout>
+</DocumentLayout>
 
 <style>
   .review-package { overflow-wrap: anywhere; }

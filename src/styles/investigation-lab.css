@@ -11,7 +11,7 @@
 .tensor-investigation-lab button:disabled { cursor: wait; opacity: .6; }
 .tensor-investigation-lab :is(button, input, textarea, summary, a):focus-visible { outline: 3px solid var(--il-accent); outline-offset: 4px; }
 .tensor-investigation-lab p, .tensor-investigation-lab dd, .tensor-investigation-lab code, .tensor-investigation-lab button { overflow-wrap: anywhere; }
-.il-start { padding: clamp(1.2rem, 3vw, 2rem); background-image: radial-gradient(ellipse at 100% 0, rgba(245, 158, 11, .07), transparent 58%); }
+.il-start { padding: clamp(1.2rem, 3vw, 2rem); background-image: radial-gradient(ellipse at 100% 0, color-mix(in srgb, var(--accent-primary) 7%, transparent), transparent 58%); }
 .il-start-heading, .il-validation-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
 .il-eyebrow { font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--il-accent); }
 .il-start h2 { font-size: clamp(1.6rem, 3vw, 2rem); margin-top: .25rem; }
