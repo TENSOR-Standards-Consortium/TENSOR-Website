@@ -1,5 +1,6 @@
 ---
 import { navigation } from '../lib/navigation';
+import Brand from './Brand.astro';
 
 const pathname = Astro.url.pathname;
 ---
@@ -7,10 +8,7 @@ const pathname = Astro.url.pathname;
 <header class="site-header">
   <div class="header-inner container">
     <div class="header-logo">
-      <a href="/" aria-label="TENSOR home">
-        <img class="brand-symbol" src="/icons/icon-192.png" width="48" height="48" alt="" />
-        <span>TENSOR</span>
-      </a>
+      <Brand />
       <p class="header-brand-note">Standards Consortium</p>
     </div>
 

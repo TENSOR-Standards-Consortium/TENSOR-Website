@@ -12,6 +12,7 @@ TENSOR uses deep mineral surfaces, silver Manrope display headings, Inter body/c
 | `src/styles/components.css` | Buttons, focus, panels, badges, resource cards, grouped controls, document inputs and workspace headings |
 | `src/styles/atmosphere.css` / `CircuitFrame.astro` | Sparse decorative perimeter traces, separate from investigation geometry |
 | `src/styles/shell.css` | Header, footer, page introductions, responsive contextual navigation and document framing |
+| `Brand.astro` | Original logo and TENSOR wordmark shared by the header and footer, with compact and signature sizing |
 | `BaseLayout.astro` | Document metadata, security/privacy settings, shared header/footer and global foundation |
 | `DocumentLayout.astro` | Reading-page composition with PageIntro and SectionNavigation; metadata title stays separate from the visible title |
 | `PageIntro.astro` / `WorkspaceHeading` in `WorkspaceUI.jsx` | Common heading hierarchy, with appropriate workspace density |
@@ -55,4 +56,4 @@ Ordinary reading text uses `--reading-width` (640 pixels at the default root siz
 
 The opening combines a real graph field with a clear candidate identity and routes to exploration and the Core contract. An authored investigation example follows, then preserved reasoning principles, the Core/overlay architecture, practitioner/implementer/knowledge entry rows and the review invitation page link. Section scale and alternating compositions replace a stack of equivalent cards. Existing public destinations remain in the shared navigation and contextual content. No outbound invitations are sent.
 
-The original hexagonal, three-node TENSOR mark is the shared header identity. Use the existing compact `/icons/icon-192.png` asset; preserve its geometry and original bytes. A CSS color treatment in `shell.css` brings it into the mint palette without redrawing the mark. Logo shape changes require an explicit request. Original full-size and installed-app assets remain available unchanged.
+The original hexagonal, three-node TENSOR mark and wordmark form the shared identity. `Brand.astro` owns the header and footer lockups; use its variants instead of inventing text-only signatures or replacing the mark with an arrow. The header uses the existing compact `/icons/icon-192.png`; the larger footer uses `/icons/icon-512.png`, loaded lazily. Both share one color treatment in `shell.css`. The browser-tab and installed-app icons use the same original geometry. Preserve the image bytes and geometry; logo shape changes require an explicit request. Original full-size assets remain available unchanged.
