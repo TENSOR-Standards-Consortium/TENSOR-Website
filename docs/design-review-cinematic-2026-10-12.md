@@ -10,7 +10,7 @@ Baseline: `40d129d7b3a573545441c041978313a1ad548a3a`. Original dirty checkout is
 
 Reopened the original Art Director quality-reference image and both rejected TENSOR renders. The artistic reference supplies integrated atmosphere, image/type hierarchy and varied section rhythm; it does not dictate a mountain image or another product's identity. Considered a bright standards publication, a chrome/glass object campaign, and an investigation observatory. Selected the observatory because the actual question graph can carry TENSOR's identity while leading directly to useful work.
 
-Deep mineral surfaces, silver Manrope display typography, Inter reading text, compact monospaced metadata and mint actions. Fine registration lines, small deliberate corner radii, generous editorial spacing and denser operational controls share central tokens. Domain/outcome colors retain their existing semantic roles. Header mark is a native vector branching T; typography and graphics stay live.
+Deep mineral surfaces, silver Manrope display typography, Inter reading text, compact monospaced metadata and mint actions. Fine registration lines, small deliberate corner radii, generous editorial spacing and denser operational controls share central tokens. Domain/outcome colors retain their existing semantic roles. The initial header used a native vector branching T; the identity correction below restores the original mark.
 
 `KnowledgeField.astro` projects all working definitions and declared routes using the existing deterministic nebula layout. It is built as SVG from the pinned graph, with depth-dependent point sizes, restrained blooms, fine arcs and moving highlights on existing routes. This is a definition illustration linked to the operational atlas, not an incident or evidence of a finding. A precise native graphic fits this asset; no generated raster, invented incident, institution logo or stock image is used. Original graph bytes and layout algorithm are unchanged. The lower homepage presents an authored example, Core layers, and distinct entry paths instead of repeating similarly weighted cards.
 
@@ -34,3 +34,9 @@ Local validation at the implementation revision:
 - Shared text/action contrast samples meet 4.5:1. This is not a complete accessibility certification.
 
 Schema, graph definitions/criteria, preserved releases, frozen review artifacts and the Framework checkout remain unchanged. No invitations are sent. Production verification is recorded on the pull request after deployment; local builds do not establish hosted behavior. Test counts do not establish user taste, universal coverage or institutional endorsement.
+
+## Logo correction after steward feedback
+
+The steward liked the direction but asked to keep the original logo shape, with color changes allowed. This scoped follow-up to `5690a1eeb69fd24f3d68a72edbed5aa0f346a7ef` restores the existing hexagonal, three-node icon in the shared header. CSS applies a mint color treatment; no image pixels or logo geometry are edited. Desktop and mobile sizing keep the hexagon legible. The rest of the design remains as shipped.
+
+Project feedback candidate `622b20f4-131d-4d20-b183-6822ed760077` is recorded in the existing external Art Director ledger. Plugin rules are unchanged. Focused verification checks Home, Core, Graph and Investigation Lab headers at 1440, 390 and 320 pixels, including the loaded original asset, navigation bounds and the home link. Fresh validation and hosted readback results are recorded on the correction pull request.

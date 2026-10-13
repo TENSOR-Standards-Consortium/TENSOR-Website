@@ -3,7 +3,8 @@
 .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 88px; padding-block: 1.2rem; }
 .header-logo { display: flex; align-items: center; }
 .header-logo a { display: inline-flex; align-items: center; gap: .8rem; text-decoration: none; color: var(--text-primary); }
-.header-logo .brand-symbol { width: 30px; height: 30px; fill: var(--bg-app); stroke: var(--accent-primary); stroke-width: 1.4; }
+/* Preserve the original hexagonal mark; tint only its presentation. */
+.header-logo .brand-symbol { width: 48px; height: 48px; flex-shrink: 0; object-fit: contain; filter: grayscale(.25) hue-rotate(-32deg) saturate(.45) brightness(1.55); mix-blend-mode: screen; }
 .header-logo span { font-family: var(--font-display); font-size: 1.15rem; font-weight: 800; letter-spacing: .09em; }
 .header-brand-note { margin-left: 1.1rem; padding-left: 1.1rem; border-left: 1px solid var(--line-soft); color: var(--text-muted); font: .62rem/1.5 var(--font-body); letter-spacing: .02em; max-width: 15ch; }
 .header-nav ul { display: flex; align-items: center; gap: .4rem; list-style: none; }
@@ -65,7 +66,7 @@
  .header-inner { flex-wrap: wrap; gap: .3rem; min-height: 0; padding-block: 1rem .6rem; }
  .header-brand-note { max-width: none; font-size: .56rem; }
  .header-logo span { font-size: 1rem; }
- .header-logo .brand-symbol { width: 25px; height: 25px; }
+ .header-logo .brand-symbol { width: 40px; height: 40px; }
  .header-nav { width: 100%; margin-top: .45rem; }
  .header-nav ul { flex-wrap: wrap; justify-content: space-between; gap: 0; }
  .header-nav a { font-size: .7rem; padding: .5rem .3rem; }
