@@ -1,6 +1,6 @@
 ---
 import ContentCard from '../../components/ContentCard.astro';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import DocumentLayout from '../../layouts/DocumentLayout.astro';
 import { absoluteUrl, seo } from '../../data/seo';
 
 const meta = seo.aiReliability;
@@ -14,7 +14,7 @@ const jsonLd = {
 };
 ---
 
-<BaseLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
+<DocumentLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
   <ContentCard>
     <p class="section-kicker">The same investigative contract</p>
     <h2>Humans and agents can exchange an investigation</h2>
@@ -42,4 +42,4 @@ const jsonLd = {
     <p>The <a href="/investigation-lab/">Investigation Lab</a> includes an AI-system investigation and a conventional identity investigation involving an agent. Both are synthetic and use the same candidate binding.</p>
     <p><a href="/core/">Core contract and examples</a> · <a href="/standards/">ATLAS, CASE/UCO, and other standards</a> · <a href="/conformance/">What validation can establish</a></p>
   </ContentCard>
-</BaseLayout>
+</DocumentLayout>

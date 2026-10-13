@@ -1,0 +1,5 @@
+---
+interface Props { href: string; title: string; class?: string }
+const { href, title, class: className } = Astro.props;
+---
+<a href={href} class:list={['tensor-resource-card', className]}><strong>{title}<span aria-hidden="true">↗</span></strong><slot /></a>

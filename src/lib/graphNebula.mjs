@@ -65,5 +65,5 @@ export function nebulaLayout(graph) {
       p.x += p.vx * cooling; p.y += p.vy * cooling; p.z += p.vz * cooling;
     }
   }
-  return { nodes: state.map(p => ({ ...p.n, color: DOMAIN_COLORS[DOMAINS.indexOf(p.n.category)] || '#aab8ca', position: { x: p.x, y: p.y, z: p.z } })), clusters, anchors };
+  return { nodes: state.map(p => ({ ...p.n, color: DOMAIN_COLORS[DOMAINS.indexOf(p.n.category)] || 'var(--domain-uncategorized)', position: { x: p.x, y: p.y, z: p.z } })), clusters, anchors };
 }

@@ -1,6 +1,6 @@
 ---
 import ContentCard from '../../../components/ContentCard.astro';
-import BaseLayout from '../../../layouts/BaseLayout.astro';
+import DocumentLayout from '../../../layouts/DocumentLayout.astro';
 import { legacyGraph, legacyQuestions, questionById, questionPath, LEGACY_VERSION, LEGACY_SHA256, LEGACY_DOWNLOAD, LEGACY_SOURCE } from '../../../data/legacy-questions';
 
 export function getStaticPaths() {
@@ -16,7 +16,7 @@ const title = `${question.id} · ${question.label}`;
 const citationUrl = new URL(questionPath(question.id), Astro.site || 'https://tensor-standards.pages.dev/').toString();
 ---
 
-<BaseLayout title={title} description={question.text} canonicalPath={questionPath(question.id)}>
+<DocumentLayout title={title} description={question.text} canonicalPath={questionPath(question.id)}>
   <ContentCard as="article">
     <p><a href="/questions/">← Question library</a> · <a href={`/graphs/?graph=published&node=${encodeURIComponent(question.id)}`}>View this node in the published graph</a></p>
     <p class="section-kicker">Preserved graph release · {LEGACY_VERSION}</p>
@@ -51,7 +51,7 @@ const citationUrl = new URL(questionPath(question.id), Astro.site || 'https://te
       {next && <a href={questionPath(next.id)}>{next.id} →</a>}
     </nav>
   </ContentCard>
-</BaseLayout>
+</DocumentLayout>
 
 <style>
   .question-facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; border-block: 1px solid var(--line-soft); padding: 1rem 0; margin: 1.5rem 0; }

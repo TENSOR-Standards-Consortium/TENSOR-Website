@@ -1,6 +1,7 @@
 ---
+import Button from '../../components/Button.astro';
 import ContentCard from '../../components/ContentCard.astro';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import DocumentLayout from '../../layouts/DocumentLayout.astro';
 import { absoluteUrl, seo } from '../../data/seo';
 
 const meta = seo.contribute;
@@ -14,12 +15,12 @@ const jsonLd = {
 };
 ---
 
-<BaseLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
+<DocumentLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
   <ContentCard>
     <p class="section-kicker">Help make investigations portable</p>
     <h2>Bring a case, an implementation, or a careful review</h2>
     <p>The next stage is proving that shared investigative meaning survives exchange. Contributions are most useful when they expose an ambiguity, demonstrate a real investigation need, or test a boundary between Core and another standard.</p>
-    <div class="cta-group"><a class="btn btn-primary" href="https://github.com/tensor-standards-consortium/TENSOR-Framework/issues/new">Open a framework issue</a><a class="btn btn-secondary" href="https://github.com/tensor-standards-consortium/TENSOR-Framework/pulls">Review proposals and code</a></div>
+    <div class="cta-group"><Button variant="primary" href="https://github.com/tensor-standards-consortium/TENSOR-Framework/issues/new">Open a framework issue</Button><Button variant="secondary" href="https://github.com/tensor-standards-consortium/TENSOR-Framework/pulls">Review proposals and code</Button></div>
 
     <p>For a bounded first task, use the <a href="/review/">frozen technical review package and walkthrough</a>. It identifies exact artifacts, evidence limits and the finding process.</p>
 
@@ -46,4 +47,4 @@ const jsonLd = {
     <p>Repository review can improve this implementation candidate. Formal stewardship and independent review follow the <a href="/governance/">governance proposal</a> once adopted. A merged contribution is not a certification, partnership, or governance appointment.</p>
     <p><a href="/founding/05-review-plan.md">Review and adoption plan</a> · <a href="/core/">Candidate artifacts</a> · <a href="/questions/">Legacy questions awaiting semantic review</a></p>
   </ContentCard>
-</BaseLayout>
+</DocumentLayout>

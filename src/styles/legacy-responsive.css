@@ -1,0 +1,92 @@
+@media (max-width: 1300px) {
+  .studio-grid {
+    grid-template-columns: minmax(240px, 280px) minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 1040px) {
+
+  .signal-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .metrics-kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .metrics-row-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .metrics-dashboard-kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .metrics-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .path-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .compact-metrics-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1140px) {
+  .studio-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'controls'
+      'canvas'
+      'details';
+  }
+
+  .controls-panel {
+    position: static;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .studio-canvas {
+    min-height: 560px;
+  }
+
+  .graph-canvas {
+    min-height: 540px;
+  }
+}
+
+
+
+@media (max-width: 700px) {
+
+  .metrics-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .metrics-dashboard-kpis {
+    grid-template-columns: 1fr;
+  }
+
+  .metrics-dashboard-controls {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .metrics-dashboard-controls select {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .metrics-dashboard-export-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .compact-metrics-grid {
+    grid-template-columns: 1fr;
+  }
+}

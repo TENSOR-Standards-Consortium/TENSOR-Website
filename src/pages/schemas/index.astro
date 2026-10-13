@@ -1,6 +1,6 @@
 ---
 import ContentCard from '../../components/ContentCard.astro';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import DocumentLayout from '../../layouts/DocumentLayout.astro';
 import { absoluteUrl, seo } from '../../data/seo';
 
 const meta = seo.schemas;
@@ -14,7 +14,7 @@ const jsonLd = {
 };
 ---
 
-<BaseLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
+<DocumentLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
   <ContentCard>
     <p class="section-kicker">Two contracts, separately versioned</p>
     <h2>Core candidate schemas</h2>
@@ -35,4 +35,4 @@ const jsonLd = {
     <p>Pin an explicit version and content digest. A mutable “latest” location is a discovery convenience, not a reproducible pin.</p>
     <p><a href="/graphs/">Legacy graph releases</a> · <a href="/implement/">Implement the new candidate</a></p>
   </ContentCard>
-</BaseLayout>
+</DocumentLayout>

@@ -1,19 +1,20 @@
 ---
+import Button from '../../components/Button.astro';
 import ContentCard from '../../components/ContentCard.astro';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import DocumentLayout from '../../layouts/DocumentLayout.astro';
 const version = '0.1.0-draft.1';
 const artifactPath = `/core/${version}`;
 const title = 'TENSOR Core';
 const description = 'A candidate shared contract for portable cyber investigations, usable by humans and agents.';
 ---
 
-<BaseLayout title={title} description={description} canonicalPath="/core/">
+<DocumentLayout title={title} description={description} canonicalPath="/core/">
   <ContentCard>
     <p class="section-kicker">Public implementation candidate · {version}</p>
     <h2>Carry the investigation, including its reasoning</h2>
     <p>TENSOR Core proposes a shared contract for cyber investigations. A portable record connects questions, evidence references, observations, hypotheses, assessments, decisions, and recorded actions. Humans and agents use the same meanings and attribution rules.</p>
     <p>This candidate adds an investigation record to TENSOR's question-graph foundation. The <a href="/questions/">existing question release</a> remains preserved and separately versioned. Core {version} is available for implementation and review; it is not a ratified standard.</p>
-    <p><a class="btn btn-primary" href="/investigation-lab/">Try Investigation Lab</a> <a class="btn btn-secondary" href="/implement/">Implement the candidate</a></p>
+    <p><Button variant="primary" href="/investigation-lab/">Try Investigation Lab</Button> <Button variant="secondary" href="/implement/">Implement the candidate</Button></p>
 
     <p>The working question graph has not yet demonstrated equivalent coverage of the 588-question release. See the <a href="/graphs/coverage/">question-by-question coverage ledger and migration roadmap</a> for its explicit gaps.</p>
 
@@ -64,13 +65,4 @@ const description = 'A candidate shared contract for portable cyber investigatio
     <p>The next evidence is an exchange between separately developed implementations, useful investigator feedback, and public resolution of open design questions. The <a href="/founding/04-reference-cases-and-conformance.md">acceptance scenarios</a>, <a href="/founding/05-review-plan.md">review plan</a>, and <a href="/founding/06-change-and-decision-register.md">decision register</a> make that work reviewable.</p>
     <p><a href="/contribute/">Contribute a case, review, or implementation report</a> · <a href="/standards/">How TENSOR relates to existing standards</a></p>
   </ContentCard>
-</BaseLayout>
-
-<style>
-  .layers { list-style: none; padding-left: 0; display: grid; gap: .65rem; }
-  .layers li { border: 1px solid var(--line-soft); border-left: 4px solid var(--accent-secondary); padding: 1rem; background: var(--bg-surface-muted); }
-  .layers strong, .layers span { display: block; }
-  .layers span { color: var(--text-secondary); margin-top: .25rem; }
-  .resource-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
-  @media (max-width: 700px) { .resource-grid { grid-template-columns: 1fr; gap: 0; } }
-</style>
+</DocumentLayout>

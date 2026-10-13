@@ -1,0 +1,5 @@
+---
+interface Props { as?: 'div' | 'section' | 'article'; class?: string; [key: string]: unknown }
+const { as: Tag = 'section', class: className, ...attributes } = Astro.props;
+---
+<Tag class:list={['tensor-panel', className]} {...attributes}><slot /></Tag>

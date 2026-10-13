@@ -1,6 +1,6 @@
 ---
 import ContentCard from '../../components/ContentCard.astro';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import DocumentLayout from '../../layouts/DocumentLayout.astro';
 import { absoluteUrl, seo } from '../../data/seo';
 
 const meta = seo.implement;
@@ -14,7 +14,7 @@ const jsonLd = {
 };
 ---
 
-<BaseLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
+<DocumentLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType} jsonLd={jsonLd}>
   <ContentCard>
     <p class="section-kicker">Implementation candidate · 0.1.0-draft.1</p>
     <h2>Validate a portable investigation</h2>
@@ -51,4 +51,4 @@ node core/v0.1.0-draft.1/cli.mjs core/v0.1.0-draft.1/examples/case-a.bundle.json
     <p>Try moving an investigation between separately developed implementations. Compare question context, evidence links, assessments, transition selections, revisions, and unsupported semantics. Publish a synthetic fixture and a scoped report through the <a href="/contribute/">contribution workflow</a>.</p>
     <p><a href="/conformance/">Validation coverage and reporting</a> · <a href="/standards/">Reuse of existing standards</a> · <a href="/extensions/">Extension boundaries</a></p>
   </ContentCard>
-</BaseLayout>
+</DocumentLayout>

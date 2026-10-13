@@ -1,4 +1,5 @@
 ---
+import Surface from './Surface.astro';
 interface Props {
   as?: 'div' | 'section' | 'article';
   contained?: boolean;
@@ -7,4 +8,4 @@ interface Props {
 }
 const { as: Tag = 'div', contained = true, class: className, ...attributes } = Astro.props;
 ---
-<Tag class:list={['prose-card', { container: contained }, className]} {...attributes}><slot /></Tag>
+<Surface as={Tag} class:list={['prose-card', { container: contained }, className]} {...attributes}><slot /></Surface>

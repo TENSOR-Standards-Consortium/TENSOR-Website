@@ -4,7 +4,7 @@ import GraphThreeCanvas from './GraphThreeCanvas.jsx';
 import InvestigationTimeline from './InvestigationTimeline.jsx';
 import { profileGraph, profileCriteria } from '../lib/profileInvestigations.mjs';
 import { GUIDES, GUIDE_GRAPH_VERSION, guideState, readGuideState } from '../lib/guidedInvestigations.mjs';
-import { Badge } from './WorkspaceUI.jsx';
+import { WorkspaceHeading, Badge } from './WorkspaceUI.jsx';
 import { atlasLayout, DOMAINS, DOMAIN_COLORS, readAtlasState, writeAtlasState } from '../lib/graphAtlas.mjs';
 import '../styles/graph-atlas.css';
 
@@ -68,17 +68,16 @@ export default function WorkingGraph({ graph: working, published, criteria: base
   const found = graph.nodes.filter((n) => `${n.id} ${n.label} ${n.text} ${n.category}`.toLowerCase().includes(query.trim().toLowerCase()));
   const file = source.files.find((f) => f.target === (isWorking ? 'public/graphs/working/tensor.core.graph.json' : 'public/legacy/0.20260206e/tensor.core.graph.json'));
   return <div className="atlas" aria-busy={!ready} ref={shell}>
-    <div className="atlas-heading">
-      <div><p className="section-kicker">TENSOR / INVESTIGATION KNOWLEDGE</p><h1>The investigation atlas<span>.</span></h1></div>
-      <div className="atlas-mode-tabs" role="group" aria-label="Workspace mode"><button aria-pressed={!guide} onClick={() => { setPlaying(false); change({guideId:null,node:null,view:'all'}); }}>Explore</button><button aria-pressed={!!guide} onClick={() => chooseGuide(state.guideId || guides[0].id)}>Follow an investigation</button></div>
-    </div>
+    <WorkspaceHeading className="atlas-heading" title="The investigation atlas" eyebrow="TENSOR / Investigation knowledge">
+      <div className="segmented-control atlas-mode-tabs" role="group" aria-label="Workspace mode"><button aria-pressed={!guide} onClick={() => { setPlaying(false); change({guideId:null,node:null,view:'all'}); }}>Explore</button><button aria-pressed={!!guide} onClick={() => chooseGuide(state.guideId || guides[0].id)}>Follow an investigation</button></div>
+    </WorkspaceHeading>
     <div className="atlas-toolbar">
       <div className="atlas-source-tabs" role="group" aria-label="Graph version">
         <button aria-pressed={isWorking} onClick={() => { setPlaying(false); change({ dataset: 'working', guideId:null, node: null, view: 'all' }); setQuery(''); }}><span>Working draft</span><strong>{working.nodes.length}</strong></button>
         <button aria-pressed={!isWorking} onClick={() => { setPlaying(false); change({ dataset: 'published', guideId:null, node: null, view: 'all' }); setQuery(''); }}><span>Published graph</span><strong>{published.nodes.length}</strong></button>
       </div>
       <div className="atlas-version"><span>{isWorking ? 'UNRATIFIED' : 'PRESERVED RELEASE'}</span><code>{graph.version}</code></div>
-      <div className="atlas-render-tabs" role="group" aria-label="Graph presentation"><button aria-pressed={state.renderer === 'atlas'} onClick={() => change({renderer:'atlas'})}>Atlas</button><button aria-pressed={state.renderer === '3d'} onClick={() => change({renderer:'3d'})}>3D nebula</button></div>
+      <div className="segmented-control atlas-render-tabs" role="group" aria-label="Graph presentation"><button aria-pressed={state.renderer === 'atlas'} onClick={() => change({renderer:'atlas'})}>Atlas</button><button aria-pressed={state.renderer === '3d'} onClick={() => change({renderer:'3d'})}>3D nebula</button></div>
       <button ref={findButton} className="btn btn-secondary atlas-find" aria-expanded={outline} aria-controls="atlas-questions" onClick={() => setOutline(!outline)}>⌕ Questions <span>{graph.nodes.length}</span></button>
     </div>
     {scoped && <div className="atlas-profile-context"><strong>Event profile · {scoped.profile.title}</strong><span>{scoped.version} · Distinct scoped definitions; graph topology unchanged.</span><a href="/graphs/profiles/">Change event profile ↗</a></div>}

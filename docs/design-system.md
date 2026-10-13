@@ -1,29 +1,47 @@
-# Shared website design
+# TENSOR website design system
 
-Every route uses `BaseLayout.astro`, which owns the document, privacy setting, header, footer, global styles, and `PageIntro.astro` title. The home page has a dedicated hero; interactive workspace introductions use PageIntro's workspace composition.
+This is the current implementation contract for the TENSOR website. The whole-site cleanup was requested by the project steward on October 12, 2026. The visual direction received bounded independent agent review; that is separate from user acceptance or institutional approval.
 
-`styles/tokens.css` owns the TENSOR palette, typography, semantic outcome colors, radii, and panel shadow. `styles/components.css` owns buttons, keyboard focus, badges, and panel surfaces. Document pages use `ContentCard.astro`; React workspaces use `WorkspaceUI.jsx` for Panel and Badge. Investigation Lab and graph workspaces use the same button classes and panel surface. Workspace CSS owns density, layout, scrolling, and domain-specific interaction rather than a second theme.
+## One foundation, three compositions
 
-The working graph at `/graphs/` uses a complete deterministic domain/stage atlas by default and a complete text alternative. The 609-question draft is the default; the preserved 588-question published catalog remains a distinct identity. Legacy Studio remains at `/studio/`; published question links pin both graph version and node ID.
+TENSOR uses midnight-blue surfaces, warm amber actions and selection, cool links, Inter typography and monospaced contextual labels. Semantic yes/no/unknown and labeled domain colors remain distinct. Reading pages, interactive workspaces and the homepage share this identity, rather than defining separate palettes.
 
-Investigation Lab's Recorded path uses the same `GraphCanvas.jsx`. Nodes represent individual QuestionInstance entries. Only explicit Decision.selections produce edges; each edge labels its selected assessment outcome. Missing or ambiguous endpoints are disclosed rather than invented. Repeated question definitions remain separate instances. The replay exposes prefixes in original file order, which does not assert causal or event-time ordering. Earlier assessments remain inspectable after a revision. The complete import and export are unchanged by visualization.
+| Owner | Responsibility |
+| --- | --- |
+| `src/styles/tokens.css` | Colors, typography, widths, spacing, radii, lighting, motion timing and compatibility aliases |
+| `src/styles/components.css` | Buttons, focus, panels, badges, resource cards, grouped controls, document inputs and workspace headings |
+| `src/styles/shell.css` | Header, footer, page introductions, responsive contextual navigation and document framing |
+| `BaseLayout.astro` | Document metadata, security/privacy settings, shared header/footer and global foundation |
+| `DocumentLayout.astro` | Reading-page composition with PageIntro and SectionNavigation; metadata title stays separate from the visible title |
+| `PageIntro.astro` / `WorkspaceHeading` in `WorkspaceUI.jsx` | Common heading hierarchy, with appropriate workspace density |
+| `Surface.astro` / `ContentCard.astro` / React `Panel` | Shared panel surface; document bodies use the reading variant |
+| `Button.astro` / `.btn` | Equivalent link and action appearance; React controls use the same classes |
+| `ResourceCard.astro` | Linked resource-card appearance and states |
+| `Badge` in `WorkspaceUI.jsx` | Labeled semantic status outcomes |
+| `EvidenceMap.astro` | Homepage relationship illustration; conceptual, not a real investigation or a graph of released definitions |
 
-Canvas rendering is limited to 300 question instances per view; the paginated text list remains complete. Private bundles, selections, and replay positions are neither uploaded nor written to URLs, storage, or telemetry. The public working definition selection may appear in a shareable URL. Heavy Cytoscape code loads dynamically and is destroyed on unmount; renderer failure retains the text controls.
+Task-specific CSS owns layout, density and scrolling: graph geometry and inspectors, Lab panes, catalog filters, coverage tables, historical metrics and Studio tools. It must consume central tokens. It must not change body backgrounds, shell geometry, or define a second palette. Scoped page layout is allowed; copying a new theme is not. The old page-wide circuit background and unused earlier Lab styles have been removed.
 
-Verify all changes with `npm run validate`, then exercise desktop and mobile graph selection, replay, local imports, legacy deep links, keyboard controls, and empty/failure states in a browser. Build checks enforce identical primary navigation and footer links, one header/main/footer/title, CSP, hosting headers, and canonical URLs across every generated page.
+Both Cytoscape and Three.js resolve their visual colors from the central CSS roles. Domain color is a labeled grouping aid, never evidence of severity, confidence, causality or equivalent meaning. Changes to display colors do not change graph definitions or records.
 
-## Investigation atlas
+## Preserved journeys and data boundaries
 
-Exploration opens with the complete 588-question published graph. The reduced working draft remains an explicitly selected source; guided examples select their pinned working source. The public graph workspace uses the shared shell, buttons, badges, focus treatment and typography. Canvas surface tokens (`--bg-canvas`, `--bg-canvas-panel`, `--line-canvas`, `--text-canvas-muted`) live in the central token file. Domain encodings are labeled directly; selection is amber and outcomes retain the shared semantic colors and names.
+The atlas exposes all 609 working questions and the separate preserved 588-question release. Explore and Follow an investigation retain source selection, search, outgoing routes, renderer switch, Fit all, focus, expansion, overview, whole-graph highlighting and path-plus-next-options. Published catalog links continue to pin version and question ID. Profile walkthroughs retain their explicit qualified definitions and evidence limits.
 
-`GraphAtlasCanvas` owns the public definition camera and renders all source nodes. `graphAtlas.mjs` owns deterministic domain/stage placement and shareable state. Wide and portrait layouts organize the same definitions; coordinates never assert causality or a recorded investigation path. The existing `GraphCanvas` continues to render actual Investigation Lab instances/selections. Source switching, question search, route inspector, zoom, Fit all, Expand and optional overview preserve the complete graph. All source questions and routes also have server-rendered text alternatives.
+Three.js loads only on request. The nebula preserves deterministic domain/topic grouping, complete source nodes, bounded layout, orbit/reset controls and labeled routes. Coordinates do not assert a finding. WebGL failure offers the atlas; complete server-rendered text stays available. Playback requires an explicit start, pauses on inspection/context changes or a hidden tab, and ends at the last step.
 
-## Guided investigations and optional 3D
+Investigation Lab keeps private local imports, validation, record browsing, assessment history, recorded path, export and reimport. Only explicit Decision selections produce recorded-path edges. File order is presentation order. The 300-instance canvas limit retains a complete paginated text list. Private records and selections stay out of telemetry, storage and URLs; evidence is never retrieved and recorded actions are never executed.
 
-The atlas is the main public graph interface. Explore and Follow an investigation share the source selector, question inspector, renderer controls and outcome encodings. Historical Studio import and overlay tools remain under Reference tools; published catalog links and released artifacts are unchanged.
+Core, schemas, releases, frozen review artifacts and source digests are unchanged by this design system. No invitations are sent.
 
-`guidedInvestigations.mjs` contains authored illustrative scenarios pinned to the exact working graph and evidence-criteria digests. Each step retains its evidence basis, assessment, limitations and outcome. Timeline order is presentation order. These guides are neither real incident evidence nor Core exchange bundles. Only declared, outcome-matching routes connect completed steps; available next options are not findings. Whole graph highlights the visited path; Path + next options reveals the prefix and every outgoing target of the active question. The existing Lab still handles portable records and private imports.
+## Motion and access
 
-Three.js is loaded only when 3D is requested. One scene uses instanced nodes and arrows, batched route segments, and DOM labels/controls. The 3D nebula uses graphNebula.mjs: stable domain clusters and subgroups from existing question archetypes, with bounded spring attraction and collision separation computed once per source. Sorting IDs and edges makes geometry independent of input order. Display coordinates and proximity have no causal, confidence, severity or equivalence meaning. All source nodes and routes remain present; no decorative points impersonate questions. Node glows belong to real definitions; translucent domain haze is only a grouping aid. No continuous simulation or automatic rotation changes positions. The 2D atlas keeps its domain/stage grid. Drag or keyboard arrows orbit; zoom, Reset view, Focus path, question search and the inspector provide alternatives. Rendering happens only when the scene changes, DPR is capped at 1.5, and scene resources are disposed on source/renderer changes. WebGL failure retains the timeline and offers the 2D atlas; full server-rendered graph text remains below.
+Entry reveals establish homepage hierarchy (320/540 ms); controls respond immediately and selected states carry the amber accent. Existing graph/timeline choreography remains. Reduced-motion preferences remove entry/camera transitions without disabling user-controlled replay. Every composition uses the same visible keyboard focus; Skip to content leads to the main landmark. Mobile documents expose a scrollable resource rail with a visible cue, while full-screen tools retain their text and failure alternatives.
 
-Playback starts only on request, advances at the chosen reading interval, pauses on inspection, source/mode changes and hidden tabs, and ends at the final step. Reduced motion removes camera animation and entry transitions. Public renderer, guide, bounded step and context may be shared in URLs; private Lab contents remain excluded. Mobile keeps a compact current-evidence and playback bar with the graph, with the full timeline below.
+## Validation and maintenance
+
+Run `npm run validate`. It includes `check:design`, which rejects independent page colors, root token overrides, body skins and shell restyling, and checks PWA theme consistency. The existing build gate checks identical primary/footer navigation, one header/main/footer/title, CSP, hosting headers and canonical URLs across all generated pages.
+
+For visual changes, also inspect desktop and mobile Home, a reading page, the graph and Lab. Exercise search, source switching, 3D, playback, local bundle round trip and preserved deep links. Verify overflow, keyboard focus, reduced motion, empty/failure states and downloads. Automated checks do not establish aesthetic acceptance, evidence truth, full accessibility certification or institutional readiness.
+
+The optional `scripts/check-design-browser.mjs` gate checks the 24 representative routes at desktop/mobile sizes against a running preview or deployed origin. It uses an installed Playwright module (set `PLAYWRIGHT_MODULE` if it is outside normal Node resolution); `TENSOR_QA_BASE` selects the origin and `TENSOR_DESIGN_OUTPUT` optionally saves renders/results. It adds no production dependency or network requirement to the offline gate.

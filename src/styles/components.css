@@ -19,3 +19,24 @@
 .tone-yes { color: var(--accent-success); }
 .tone-no { color: var(--accent-danger); }
 .tone-unknown { color: var(--accent-warning); }
+
+.tensor-resource-card { display: flex; flex-direction: column; padding: var(--space-4); gap: .5rem; border: 1px solid var(--line-soft); border-radius: var(--radius-md); background: var(--bg-card); color: var(--text-primary); text-decoration: none; transition: background var(--duration-reveal) var(--ease-out), border-color 160ms; }
+.tensor-resource-card:hover { background: var(--bg-card-hover); border-color: var(--accent-primary); }
+.tensor-resource-card strong { display: flex; justify-content: space-between; gap: 1rem; font-size: .95rem; }
+.tensor-resource-card strong span { color: var(--accent-primary); }
+.tensor-resource-card small { margin-top: auto; color: var(--text-muted); font-family: var(--font-mono); }
+.segmented-control { display: flex; align-items: center; gap: .2rem; padding: .2rem; background: var(--bg-input); border: 1px solid var(--line-soft); border-radius: var(--radius-sm); }
+.segmented-control button { border: 0; background: transparent; color: var(--text-secondary); padding: .55rem .8rem; font-size: .75rem; min-height: 40px; border-radius: var(--radius-sm); }
+.segmented-control button[aria-pressed=true] { color: var(--accent-primary); background: var(--accent-soft); box-shadow: inset 0 -2px var(--accent-primary); }
+.btn { transition: background-color 160ms var(--ease-out), border-color 160ms var(--ease-out); }
+.btn[aria-pressed=true] { border-color: var(--accent-primary); color: var(--accent-primary); background: var(--accent-soft); }
+.prose-card :is(input:not([type=checkbox]):not([type=radio]), select, textarea) { min-height: 44px; background: var(--bg-input); color: var(--text-primary); border: 1px solid var(--line-strong); border-radius: var(--radius-sm); padding: .6rem .75rem; font: inherit; }
+.prose-card details { margin-top: .75rem; }
+.prose-card summary { cursor: pointer; color: var(--accent-secondary); min-height: 44px; padding-block: .5rem; }
+
+.workspace-heading { padding: var(--space-5); display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); border-bottom: 1px solid var(--line-soft); }
+.workspace-title { font-size: var(--type-workspace-title); font-weight: 500; letter-spacing: -.055em; line-height: 1.15; margin-top: .6rem; }
+.workspace-title > span { color: var(--accent-primary); }
+@media (max-width: 800px) { .workspace-heading { flex-wrap: wrap; padding: var(--space-4); } }
+
+.tensor-resource-card p { color: var(--text-secondary); font-size: .85rem; }
