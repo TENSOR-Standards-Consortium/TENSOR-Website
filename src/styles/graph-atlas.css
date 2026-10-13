@@ -267,3 +267,10 @@ body:has(.atlas) .header-inner { width: min(1800px, 96vw); }
 .three-label-stage { font-size: .5rem; color: #b0c3d3; background: #0c141eb8; padding: .15rem .25rem; }
 .three-label-domain small { display: block; color: #acc0d0; letter-spacing: 0; font-size: .5rem; text-align: center; margin-top: .2rem; }
 @media(max-width:600px) { .three-label-domain { font-size: .5rem; } .three-label-domain small { display: none; } .atlas-render-tabs { min-width: 155px; } }
+
+.atlas-profile-context { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; padding: .9rem 1.5rem; border-bottom: 1px solid var(--line-soft); background: var(--bg-card); font-size: .8rem; }
+.atlas-profile-context strong { color: var(--accent-primary); }
+.atlas-profile-context span { color: var(--text-secondary); flex: 1; }
+.atlas-resumption code, .timeline-question code { display: block; font-size: .7rem; overflow-wrap: anywhere; }
+
+.atlas-inspector { scroll-margin-top: 6rem; }

@@ -70,9 +70,9 @@ export function guideState(graph, guide, index, visibility = 'all') {
   return { currentId, visitedIds, nextIds, selectedEdges, visibleIds: visibility === 'path' ? [...new Set([...visitedIds, ...nextIds])] : null };
 }
 
-export function readGuideState(search) {
+export function readGuideState(search, guides = GUIDES) {
   const params = new URLSearchParams(search);
-  const guide = GUIDES.find(g => g.id === params.get('investigation'));
+  const guide = guides.find(g => g.id === params.get('investigation'));
   const raw = Number(params.get('step') || 0);
   return {
     renderer: params.get('renderer') === '3d' ? '3d' : 'atlas',

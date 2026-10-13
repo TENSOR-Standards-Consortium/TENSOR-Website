@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ContentCard from '../../../components/ContentCard.astro';
+import catalog from '../../../../public/graphs/working/event-profiles/catalog.json';
+import validation from '../../../../public/graphs/working/event-profiles/validation.json';
+const domains = ['Identity','Host','Network','Cloud','Email','Application','File'];
+---
+<BaseLayout title="Event profiles" description="Explicit event contexts and evidence walkthroughs across all seven TENSOR investigation domains." canonicalPath="/graphs/profiles/">
+  <ContentCard>
+    <p class="section-kicker">Same graph · explicit event contexts</p>
+    <h2>Investigate the event you actually have.</h2>
+    <p>State changes, mailbox rules and autonomous actions need their own subjects and evidence. These <strong>{Object.keys(catalog.profiles).length} public draft profiles</strong> add those contexts above the complete 609-question graph. Follow {validation.scenarioCount} authored investigation routes, including contradicted hypotheses, unavailable evidence, independent fallback and coverage gaps.</p>
+    <p><strong>{catalog.version} · author-tested draft.</strong> Each profile publishes distinct, qualified question identities. The base graph, schema, published releases and frozen review package are unchanged. External domain review and independent exchange remain open.</p>
+    <div class="profile-domain-list">{domains.map(domain => <section aria-label={`${domain} event profiles`}><h3>{domain}</h3><div class="profile-cards">{Object.entries(catalog.profiles).filter(([,p])=>p.domain===domain).map(([id,p])=><a class="profile-card" href={`/graphs/profiles/${id}/`}><strong>{p.title} <span aria-hidden="true">↗</span></strong><p>{p.proposition}</p><small>Bind {p.bindings.join(' · ')}</small></a>)}</div></section>)}</div>
+    <h2>Keep the distinctions visible</h2>
+    <p>A snapshot does not establish a historical change. A requested or failed action does not prove success. A missing file does not prove deletion; unlink does not prove secure erasure. Unavailable content stays unknown for content-based hypotheses. Every relationship target retains its own profile, subjects, evidence and time context.</p>
+    <p>These are plausible investigations using fictitious identifiers and supplied assessed observations. They do not authenticate production evidence, demonstrate universal coverage or grant authority to act.</p>
+    <p><a href="/graphs/working/event-profiles/README.md">Profile contract and limits</a> · <a href="/graphs/working/event-profiles/catalog.json" download>Catalog</a> · <a href="/graphs/working/event-profiles/definitions.json" download>Qualified definitions</a> · <a href="/graphs/working/event-profiles/scenarios.json" download>Scenario evidence</a> · <a href="/graphs/working/event-profiles/validation.json" download>Validation and source pins</a></p>
+    <p><a class="btn btn-secondary" href="/graphs/">Explore the base graph</a> <a class="btn btn-secondary" href="/graphs/coverage/">Original-question coverage ledger</a></p>
+  </ContentCard>
+</BaseLayout>
+<style>
+.profile-domain-list { display: grid; gap: 1.4rem; margin: 2rem 0; }
+h3 { color: var(--text-primary); margin-bottom: .6rem; }
+.profile-cards { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,16rem),1fr)); gap: .6rem; }
+.profile-card { display: block; padding: 1rem; border: 1px solid var(--line-soft); background: var(--bg-card); color: var(--text-primary); text-decoration: none; }
+.profile-card:hover, .profile-card:focus-visible { border-color: var(--accent-primary); }
+.profile-card strong { display: flex; justify-content: space-between; gap: .8rem; }
+.profile-card p { font-size: .85rem; color: var(--text-secondary); }
+.profile-card small { font: .7rem 'JetBrains Mono',monospace; overflow-wrap: anywhere; }
+</style>

@@ -3,7 +3,7 @@
   "manifestVersion": 1,
   "bindingVersion": "0.1.0-draft.1",
   "sourceRepository": "https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework",
-  "sourceCommit": "78a275b127d2f24933c3ec16d9a2b0b1c38fb0af",
+  "sourceCommit": "349e1ff2d79254c6a73695d110797fe5d4c11eec",
   "sourceDirty": false,
   "foundingSource": "framework-repository",
   "files": [
@@ -100,8 +100,8 @@
     {
       "source": "docs/graph-coverage-roadmap.md",
       "target": "public/docs/graph-coverage-roadmap.md",
-      "sha256": "745a87ce8a22d6ff79dd5d1a69aada8d90b24c465e1aa4aae6e3aecf3b851646",
-      "bytes": 5624
+      "sha256": "00fd8bc086fd93b91a81773906cea65b2f9e06b7300cae310ee3639ae04a2d5f",
+      "bytes": 6535
     },
     {
       "source": "docs/legacy-migration.md",
@@ -234,6 +234,36 @@
       "target": "public/graphs/working/entry-evidence-criteria.json",
       "sha256": "3a5d0701960d34d26503777e0021b7cb84b71367651ce7bbaceaf1ede576f5c6",
       "bytes": 526179
+    },
+    {
+      "source": "drafts/core/event-profiles/README.md",
+      "target": "public/graphs/working/event-profiles/README.md",
+      "sha256": "5bb5f3da70b85e5a0926bc6da4a2a47b1d1cf19a5486d0f7e677195fe6883ab4",
+      "bytes": 8826
+    },
+    {
+      "source": "drafts/core/event-profiles/catalog.json",
+      "target": "public/graphs/working/event-profiles/catalog.json",
+      "sha256": "78ba233e3e0bc90f81532276cab24c68940a12bed647faf4acf300978043b6a6",
+      "bytes": 24804
+    },
+    {
+      "source": "drafts/core/event-profiles/definitions.json",
+      "target": "public/graphs/working/event-profiles/definitions.json",
+      "sha256": "ec2af6603af8580a782f756e7daeb735a488ca5fa23406cd49947f41dcb2cf0d",
+      "bytes": 375139
+    },
+    {
+      "source": "drafts/core/event-profiles/scenarios.json",
+      "target": "public/graphs/working/event-profiles/scenarios.json",
+      "sha256": "501f1c0f6258e723075f2794f6982eed2af171edecea69494b6168242e508444",
+      "bytes": 1039401
+    },
+    {
+      "source": "drafts/core/event-profiles/validation.json",
+      "target": "public/graphs/working/event-profiles/validation.json",
+      "sha256": "ac01304e3ec5749e4068385e7cc01a9df7cda5bbda50540fa9627391bbd890ae",
+      "bytes": 247107
     },
     {
       "source": "drafts/core/reviews/2026-10-12-independent-review/README.md",
