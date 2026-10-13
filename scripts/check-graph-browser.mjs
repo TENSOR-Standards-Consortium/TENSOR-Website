@@ -3,11 +3,24 @@ import {readFile} from 'node:fs/promises';
 const {chromium}=await import(process.env.PLAYWRIGHT_MODULE || 'playwright');
 const base=process.env.TENSOR_QA_BASE||'http://127.0.0.1:4321';
 const graph=JSON.parse(await readFile(new URL('../public/graphs/working/tensor.core.graph.json',import.meta.url)));
+const criteria=JSON.parse(await readFile(new URL('../public/graphs/working/entry-evidence-criteria.json',import.meta.url)));
 const b=await chromium.launch({headless:true,args:['--enable-unsafe-swiftshader']});
 try {
 const p=await b.newPage({viewport:{width:1600,height:1100},reducedMotion:'reduce'});const errors=[];p.on('pageerror',e=>errors.push(e.message));
 await p.goto(base+'/graphs/');await p.locator('[data-graph-ready=true]').waitFor();
 assert.equal(await p.locator('.atlas-stage').evaluate(el=>el._cyreg.cy.nodes().length),graph.nodes.length,'default exploration must load every working question');
+// Expanding context must leave the actual navigation button usable. Invoking
+// click handlers directly would miss a squeezed or clipped button.
+for(const roles of Object.values(criteria.domains)) {
+ const source=roles.correlation;
+ await p.evaluate(id=>{history.replaceState(null,'','?graph=working&node='+id);dispatchEvent(new PopStateEvent('popstate'));},source);
+ await p.waitForFunction(id=>document.querySelector('.atlas-inspector .section-kicker')?.textContent.startsWith(id+' /'),source);
+ const outgoing=graph.edges.filter(e=>e.source===source),i=outgoing.findIndex(e=>e.extensions?.['tensor:investigativeLead']?.kind==='cross-domain-lead'&&e.decision==='yes');
+ const row=p.locator('.atlas-routes li').nth(i);await row.locator('summary').click();
+ const bounds=await row.locator('button').boundingBox();assert.ok(bounds.width>=100&&bounds.height>=44,'Expanded context cannot squeeze the route action');
+ await row.locator('button').click();await p.waitForFunction(id=>document.querySelector('.atlas-inspector .section-kicker')?.textContent.startsWith(id+' /'),outgoing[i].target);
+}
+console.log('Expanded cross-domain route controls passed in all seven domains');
 // Full catalog sweep uses the atlas; both renderers share these inspector handlers.
 // Representative real WebGL picking and routing are covered in the guided suite.
 // Actual rendered inspector for each public ID, then actual route-button handlers.
