@@ -1,0 +1,599 @@
+{
+  "format": "tensor-independent-challenge-receipts",
+  "lane": "network",
+  "scope": "Separate AI reviewers and fictional normalized observations; not field evidence or institutional approval.",
+  "receipts": [
+    {
+      "originalName": "network-final-challenges.json",
+      "sha256": "37ac06f145fb67b76c37eacb8cf8098759c5a8c7e45d135c00f1abd2c6d94310",
+      "receipt": {
+        "format": "tensor-independent-network-challenges/1",
+        "graphVersion": "0.20261013b",
+        "profileVersion": "0.1.0-draft.2",
+        "inputPins": {
+          "drafts/core/tensor.core.graph.json": "5bbe0573940a20d7efe4cf9b78ae76f4ac79a3771bd92f5b182f3e18961aa874",
+          "drafts/core/entry-evidence-criteria.json": "bbf1faf9a29396cb327c8a8b178328bc8cda6f6b4b95828d43b801ee7cace21a",
+          "drafts/core/event-profiles/catalog.json": "970df04928781450e199f8cccccac763818428ecd1e78f939060138f9234eefd",
+          "drafts/core/event-profiles/catalog.source.json": "f4dca9a6e5b6939fb0eda1391b274105c120d07ebdfb590fe7995c697ad4bf93",
+          "drafts/core/event-profiles/definitions.json": "d45fea46d5f5b786dd6a3f3059ddd7c4880c16d05691ac43b3ccb7916f1509e6",
+          "scripts/evaluate_entry_scenarios.py": "3202d33efd8d8a4f36533e01eee359b3ea1213d8bd1a05e5d7705732e1c88a2a",
+          "scripts/restored_evidence.py": "3389bdb86e90fa13f27a997e5ce8f885dde735bddaa9109f423033270d24629b",
+          "scripts/event_profiles.py": "f5fe76851de59b3caf52a91ac458b8f7131be9375c8fad4176a205bf37d20211",
+          "scripts/investigative_routing.py": "41eb4e9674f55de32ed16c0cf470d0fcebc5d4749cf00200f1cba7f93d7bafea",
+          "scripts/semantic_graph_review.py": "89f26ed10c33547eb4bfbfce100e9296371f73bf82f3446ef809439c013ea8ad"
+        },
+        "assumptions": "All examples are independently authored normalized observations and cited assessments. Explicit clock bounds, complete declared source subjects, exact optional hypothesis meaning, own target contexts and separate retained answers are supplied where tested. These inputs are assessed claims, not authenticated packet/device evidence. No repository fixture or generator oracle was used.",
+        "summary": {
+          "total": 43,
+          "passed": 43,
+          "failed": 0
+        },
+        "results": [
+          {
+            "id": "original-clock-crosses-start",
+            "expected": "unknown",
+            "observed": "unknown",
+            "reason": "Record time or independent lineage is unresolved",
+            "passed": true,
+            "items": [
+              "Q3",
+              "Q66"
+            ],
+            "scenario": "Entire +/-0.5 second clock bound crosses start from an in-window point timestamp.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "original-clock-outside-overlap",
+            "expected": "unknown",
+            "observed": "unknown",
+            "reason": "Record time or independent lineage is unresolved",
+            "passed": true,
+            "items": [
+              "Q3",
+              "Q66"
+            ],
+            "scenario": "Point time is outside but assessed clock bound overlaps the interval.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "original-inaccessible-exclusion",
+            "expected": "unknown",
+            "observed": "unknown",
+            "reason": "Both declared evidence groups need available, completed searches",
+            "passed": true,
+            "items": [
+              "Q591"
+            ],
+            "scenario": "Declared evidence material is unavailable; supplied complete-coverage flags cannot override this contradiction.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "original-refuted-transfer-independent-metric",
+            "expected": "yes",
+            "observed": "yes",
+            "reason": "The supplied bounded metric changed; attribution and broader impact remain separate",
+            "passed": true,
+            "items": [
+              "Q506"
+            ],
+            "scenario": "Successful transfer hypothesis is false while the separately evidenced comparable reset-count metric changed 10->20.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "original-supported-nontransfer-control",
+            "expected": "yes",
+            "observed": "yes",
+            "reason": "The supplied bounded metric changed; attribution and broader impact remain separate",
+            "passed": true,
+            "items": [
+              "Q506"
+            ],
+            "scenario": "Changing only optional hypothesis to a true nontransfer criterion leaves the same metric result.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "original-ambiguous-record-order",
+            "expected": "unknown",
+            "observed": "unknown",
+            "reason": "The generic target needs its own facet-bound matching event record",
+            "passed": true,
+            "items": [
+              "Q152"
+            ],
+            "scenario": "Multiple eligible observations need explicit selection before provenance assessment.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "original-reversed-record-order",
+            "expected": "unknown",
+            "observed": "unknown",
+            "reason": "The generic target needs its own facet-bound matching event record",
+            "passed": true,
+            "items": [
+              "Q152"
+            ],
+            "scenario": "Reversing the identical candidate set cannot choose a new provenance result.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "explicit-selected-observation",
+            "expected": "yes",
+            "observed": "yes",
+            "reason": "Supplied provenance and interpretation assessments cite a supporting basis",
+            "passed": true,
+            "items": [
+              "Q152"
+            ],
+            "scenario": "An explicitly named unique acceptable observation is independently validated.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "original-profile-direct-copy-validation",
+            "expected": "unknown",
+            "observed": "unknown",
+            "reason": "The independent observation needs an identity and origin separate from every primary record",
+            "passed": true,
+            "items": [
+              "network-configuration:Q82",
+              "Q3-yes-Q82"
+            ],
+            "scenario": "The selected forwarded copy shares its originating primary source despite a different record ID.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "original-profile-alternate-copy-control",
+            "expected": "unknown",
+            "observed": "unknown",
+            "reason": "The independent observation needs an identity and origin separate from every primary record",
+            "passed": true,
+            "items": [
+              "network-configuration:Q10"
+            ],
+            "scenario": "The alternate-search question rejects the same copied origin.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "original-profile-clock-control",
+            "expected": "unknown",
+            "observed": "unknown",
+            "reason": "Matching material lacks a resolved profile, event kind or event time",
+            "passed": true,
+            "items": [
+              "network-configuration:Q3"
+            ],
+            "scenario": "Profile entry keeps clock-boundary uncertainty.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "fact-led-no-hypothesis-metric",
+            "expected": "yes",
+            "observed": "yes",
+            "reason": "The supplied bounded metric changed; attribution and broader impact remain separate",
+            "passed": true,
+            "items": [
+              "Q506"
+            ],
+            "scenario": "Fact-led metric has its own exact context and no supplied hypothesis.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "fact-led-no-hypothesis-scope",
+            "expected": "yes",
+            "observed": "yes",
+            "reason": "Bound scope and entity dispositions are documented; completeness is not asserted",
+            "passed": true,
+            "items": [
+              "Q303"
+            ],
+            "scenario": "A full source composite identity has evidenced inclusion without a positive hypothesis.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "partial-scope-composite",
+            "expected": "unknown",
+            "observed": "unknown",
+            "reason": "A scope inclusion or exclusion must retain all declared endpoint fields",
+            "passed": true,
+            "items": [
+              "Q303"
+            ],
+            "scenario": "A partial endpoint identity cannot establish inclusion of this exact communication.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "wrong-scope-composite",
+            "expected": "unknown",
+            "observed": "unknown",
+            "reason": "The bound source subject has no complete evidenced inclusion",
+            "passed": true,
+            "items": [
+              "Q303"
+            ],
+            "scenario": "Same source endpoint with a different communication ID is a different bounded entity.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "metric-incomparable-units",
+            "expected": "unknown",
+            "observed": "unknown",
+            "reason": "Comparable metric and units need ordered measurements in the explicit baseline and observation intervals",
+            "passed": true,
+            "items": [
+              "Q506"
+            ],
+            "scenario": "Packet counts and bytes cannot be compared as one reset-count metric.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "metric-unchanged",
+            "expected": "no",
+            "observed": "no",
+            "reason": "The supplied bounded metric is unchanged; other effects have not been excluded",
+            "passed": true,
+            "items": [
+              "Q506"
+            ],
+            "scenario": "The named comparable metric is unchanged; other effects remain open.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "metric-separate-pre-event-baseline",
+            "expected": "yes",
+            "observed": "yes",
+            "reason": "The supplied bounded metric changed; attribution and broader impact remain separate",
+            "passed": true,
+            "items": [
+              "Q506"
+            ],
+            "scenario": "A separately bounded pre-event baseline is valid without moving the source event interval.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "metric-baseline-outside-declared-context",
+            "expected": "unknown",
+            "observed": "unknown",
+            "reason": "Comparable metric and units need ordered measurements in the explicit baseline and observation intervals",
+            "passed": true,
+            "items": [
+              "Q506"
+            ],
+            "scenario": "The baseline time does not belong to its explicitly declared baseline interval.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "independent-source-under-refuted-transfer",
+            "expected": "yes",
+            "observed": "yes",
+            "reason": "The assessed discriminator satisfies the declared criterion",
+            "passed": true,
+            "items": [
+              "Q439"
+            ],
+            "scenario": "An assessed technical source can remain supported while successful transfer is false; no human identity follows.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "technical-source-wrong-criterion",
+            "expected": "unknown",
+            "observed": "unknown",
+            "reason": "The discriminator does not test the named technical source",
+            "passed": true,
+            "items": [
+              "Q439"
+            ],
+            "scenario": "A criterion about a different technical source cannot establish the named source.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "direct-independent-classification-rechecks-witness",
+            "expected": "unknown",
+            "observed": "unknown",
+            "reason": "The generic target needs its own facet-bound matching event record",
+            "passed": true,
+            "items": [
+              "Q187"
+            ],
+            "scenario": "The explicitly independent base question cannot use only the primary record when independent material is inaccessible.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "base-declared-corroboration-discriminator",
+            "expected": "yes",
+            "observed": "yes",
+            "reason": "Independent assessed records agree on the bound event discriminator",
+            "passed": true,
+            "items": [
+              "Q89"
+            ],
+            "scenario": "Both independent origins share the chosen mapped session discriminator despite different local event IDs.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "network-configuration-declared-corroboration-discriminator",
+            "expected": "yes",
+            "observed": "yes",
+            "reason": "Separate accepted origins agree on the event discriminator",
+            "passed": true,
+            "items": [
+              "network-configuration:Q89",
+              "network-configuration:Q145"
+            ],
+            "scenario": "Declared mapped state discriminator agrees; exporter-local event IDs differ and are not the declared test.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "network-configuration-partial-record-subject",
+            "expected": "unknown",
+            "observed": "unknown",
+            "reason": "Matching material lacks a resolved profile, event kind or event time",
+            "passed": true,
+            "items": [
+              "network-configuration:Q3",
+              "network-configuration:Q10"
+            ],
+            "scenario": "One matching composite subject is known, but the other is redacted/missing and this candidate could belong to the bound observation.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "network-sensor-coverage-declared-corroboration-discriminator",
+            "expected": "yes",
+            "observed": "yes",
+            "reason": "Separate accepted origins agree on the event discriminator",
+            "passed": true,
+            "items": [
+              "network-sensor-coverage:Q89",
+              "network-sensor-coverage:Q145"
+            ],
+            "scenario": "Declared mapped state discriminator agrees; exporter-local event IDs differ and are not the declared test.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "network-sensor-coverage-partial-record-subject",
+            "expected": "unknown",
+            "observed": "unknown",
+            "reason": "Matching material lacks a resolved profile, event kind or event time",
+            "passed": true,
+            "items": [
+              "network-sensor-coverage:Q3",
+              "network-sensor-coverage:Q10"
+            ],
+            "scenario": "One matching composite subject is known, but the other is redacted/missing and this candidate could belong to the bound observation.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "network-configuration-partial-record-prevents-exclusion",
+            "expected": "unknown",
+            "observed": "unknown",
+            "reason": "Unresolved profile event context prevents a bounded exclusion",
+            "passed": true,
+            "items": [
+              "network-configuration:Q591"
+            ],
+            "scenario": "A partial composite candidate could match this observation; full supplied coverage flags cannot turn that unresolved identity into exclusion.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "network-sensor-coverage-partial-record-prevents-exclusion",
+            "expected": "unknown",
+            "observed": "unknown",
+            "reason": "Unresolved profile event context prevents a bounded exclusion",
+            "passed": true,
+            "items": [
+              "network-sensor-coverage:Q591"
+            ],
+            "scenario": "A partial composite candidate could match this observation; full supplied coverage flags cannot turn that unresolved identity into exclusion.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "temporal-separate-target-interval",
+            "expected": "yes",
+            "observed": "yes",
+            "reason": "Even the outer clock bounds meet the declared coincidence tolerance; no causation is inferred",
+            "passed": true,
+            "items": [
+              "Q314"
+            ],
+            "scenario": "Both observed timestamps satisfy their own full clock/subject contexts and worst separation is within 320 seconds; no causality is inferred.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "temporal-separate-target-interval-no",
+            "expected": "no",
+            "observed": "no",
+            "reason": "Even the closest clock bounds contradict this coincidence tolerance",
+            "passed": true,
+            "items": [
+              "Q314"
+            ],
+            "scenario": "Closest separation exceeds the independently declared tolerance.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "temporal-target-clock-overlap",
+            "expected": "unknown",
+            "observed": "unknown",
+            "reason": "Temporal endpoints need separate validated origins and bound subjects",
+            "passed": true,
+            "items": [
+              "Q314"
+            ],
+            "scenario": "Target clock bound crosses its own interval start; membership is unresolved.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "dependency-full-composites-and-direction",
+            "expected": "yes",
+            "observed": "yes",
+            "reason": "An explicit evidenced dependency is included; shared time or identifiers alone do not establish it",
+            "passed": true,
+            "items": [
+              "Q306"
+            ],
+            "scenario": "Full endpoint fields, relation ID, direction and target scope inclusion independently support this documented dependency.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "dependency-direction-contradiction",
+            "expected": "no",
+            "observed": "no",
+            "reason": "Assessed dependency relationship or direction contradicts the proposed relation",
+            "passed": true,
+            "items": [
+              "Q306"
+            ],
+            "scenario": "Assessed direction at one endpoint contradicts the named direction.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "dependency-partial-target-discriminator",
+            "expected": "unknown",
+            "observed": "unknown",
+            "reason": "The documented dependency must bind every endpoint field",
+            "passed": true,
+            "items": [
+              "Q306"
+            ],
+            "scenario": "Endpoint identity alone cannot supply the missing full communication discriminator.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "actual-focus-retention-at-legacy-terminal",
+            "expected": "yes",
+            "observed": "yes",
+            "reason": "Separate answers, limitations and open questions are retained; this route ends only",
+            "passed": true,
+            "items": [
+              "Q533",
+              "Q66-no-Q533"
+            ],
+            "scenario": "Transport search is retained at the former ancestry terminal without inventing process ancestry evidence or an unrelated open question.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "retained-event-refutation-and-independent-effect",
+            "expected": "yes",
+            "observed": "yes",
+            "reason": "Separate answers, limitations and open questions are retained; this route ends only",
+            "passed": true,
+            "items": [
+              "Q560"
+            ],
+            "scenario": "Established event, rejected transfer hypothesis and measured effect retain their actual separate answers without visiting every stage.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "retention-changed-hypothesis-criterion",
+            "expected": "unknown",
+            "observed": "unknown",
+            "reason": "Retention must preserve the exact hypothesis statement, criterion, alternatives and context",
+            "passed": true,
+            "items": [
+              "Q560"
+            ],
+            "scenario": "Reusing the hypothesis ID while changing its criterion is not exact semantic retention.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "retention-overwritten-source-answer",
+            "expected": "no",
+            "observed": "no",
+            "reason": "The retained record drops or changes a preceding assessment",
+            "passed": true,
+            "items": [
+              "Q560"
+            ],
+            "scenario": "Retained trace says metric=yes but retained record changes it to unknown.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "network-configuration-retained-generic-assessed-focus",
+            "expected": "yes",
+            "observed": "yes",
+            "reason": "Separate profile-qualified assessments and limitations are retained; this route does not close the investigation",
+            "passed": true,
+            "items": [
+              "network-configuration:Q560"
+            ],
+            "scenario": "Completed exact qualified generic assessments explicitly retain this applicable focus; no extra restored-facet question is needed to label it assessed.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "network-sensor-coverage-retained-generic-assessed-focus",
+            "expected": "yes",
+            "observed": "yes",
+            "reason": "Separate profile-qualified assessments and limitations are retained; this route does not close the investigation",
+            "passed": true,
+            "items": [
+              "network-sensor-coverage:Q560"
+            ],
+            "scenario": "Completed exact qualified generic assessments explicitly retain this applicable focus; no extra restored-facet question is needed to label it assessed.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "early-unknown-cross-domain-profile-target",
+            "expected": [
+              "Q3-unknown-Q2"
+            ],
+            "observed": [
+              "Q3-unknown-Q2"
+            ],
+            "reason": null,
+            "passed": true,
+            "items": [
+              "Q3-unknown-Q2"
+            ],
+            "scenario": "An unresolved source may motivate an explicitly selected profile-qualified host-state target with its own bindings, not a fabricated process ID.",
+            "independentlyAuthored": true
+          },
+          {
+            "id": "unsupported-qualified-source-question-unready",
+            "expected": [],
+            "observed": [],
+            "reason": null,
+            "passed": true,
+            "items": [
+              "Q335-unknown-Q5"
+            ],
+            "scenario": "Network-configuration has no applicable Q335 message-delivery-path definition, so that qualified source instance cannot make a lead ready.",
+            "independentlyAuthored": true
+          }
+        ]
+      }
+    },
+    {
+      "originalName": "network-supplemental-variant-challenge.json",
+      "sha256": "c03f8d2636d0ee7ca872bd1d4e3216dc3e41ba03abad1e14ff04bb052b13f64d",
+      "receipt": {
+        "format": "tensor-independent-network-supplemental-challenge/1",
+        "inputPins": {
+          "drafts/core/tensor.core.graph.json": "5bbe0573940a20d7efe4cf9b78ae76f4ac79a3771bd92f5b182f3e18961aa874",
+          "drafts/core/entry-evidence-criteria.json": "bbf1faf9a29396cb327c8a8b178328bc8cda6f6b4b95828d43b801ee7cace21a",
+          "drafts/core/event-profiles/catalog.json": "970df04928781450e199f8cccccac763818428ecd1e78f939060138f9234eefd",
+          "drafts/core/event-profiles/catalog.source.json": "f4dca9a6e5b6939fb0eda1391b274105c120d07ebdfb590fe7995c697ad4bf93",
+          "drafts/core/event-profiles/definitions.json": "d45fea46d5f5b786dd6a3f3059ddd7c4880c16d05691ac43b3ccb7916f1509e6",
+          "scripts/evaluate_entry_scenarios.py": "3202d33efd8d8a4f36533e01eee359b3ea1213d8bd1a05e5d7705732e1c88a2a",
+          "scripts/restored_evidence.py": "3389bdb86e90fa13f27a997e5ce8f885dde735bddaa9109f423033270d24629b",
+          "scripts/event_profiles.py": "f5fe76851de59b3caf52a91ac458b8f7131be9375c8fad4176a205bf37d20211",
+          "scripts/investigative_routing.py": "41eb4e9674f55de32ed16c0cf470d0fcebc5d4749cf00200f1cba7f93d7bafea",
+          "scripts/semantic_graph_review.py": "89f26ed10c33547eb4bfbfce100e9296371f73bf82f3446ef809439c013ea8ad"
+        },
+        "independentlyAuthored": true,
+        "assumptions": "Complete exact normalized Network context, explicit zero clock uncertainty, accepted independently originating observation, full unchanged falsifiable hypothesis. Primary material is explicitly unavailable; inherited selected group is independent.",
+        "results": [
+          {
+            "id": "direct-primary-classification-rechecks-primary-variant",
+            "items": [
+              "Q159"
+            ],
+            "expected": "unknown",
+            "observed": "unknown",
+            "passed": true,
+            "reason": "The generic target needs its own facet-bound matching event record",
+            "recordGroup": "primary",
+            "scenario": "Q159 explicitly asks about the validated primary record. With primary accessible=false/searched=false, independent accepted record and _selectedGroup=independent, it must not use the wrong witness variant."
+          }
+        ]
+      }
+    }
+  ]
+}

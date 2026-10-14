@@ -28,6 +28,7 @@ export const resourceGroups = [
     { title: 'Cross-domain investigations', url: '/investigations/', description: 'Matching interactive graphs and Core records across seven domains, with human, agent, vendor, and company roles.' },
     { title: 'Investigation atlas', url: '/graphs/', description: 'All public working questions, evidence criteria, routes, and guided examples.' },
     { title: 'Event profiles', url: '/graphs/profiles/', description: 'Sixteen event contexts and example paths across seven domains.' },
+    { title: 'Question and route review', url: '/graphs/review/', description: 'Item-level semantic review, independent challenges, exact source pins, and scope limits.' },
     { title: 'Coverage ledger', url: '/graphs/coverage/', description: 'Original and revised questions, evidence changes, and review status.' },
     { title: 'Published question catalog', url: '/questions/', description: 'Versioned citations for all 588 published questions.' },
     { title: 'Graph Studio', url: '/studio/', description: 'Import, combine, and export published-format graphs and custom layers.' },

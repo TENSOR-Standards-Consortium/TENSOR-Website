@@ -69,7 +69,7 @@ try {
  await page.goto(base+'/');
  await page.getByRole('banner').getByRole('link',{name:'Resources',exact:true}).click();
  await page.waitForURL(base+'/docs/');
- assert.equal(await page.locator('main .tensor-resource-card').count(),20);
+ assert.equal(await page.locator('main .tensor-resource-card').count(),21);
  for(const link of await page.locator('main .tensor-resource-card').all()) assert.equal(await link.isVisible(),true);
  await capture({path:output+'/resources.png',fullPage:true});
  await page.getByRole('banner').getByRole('link',{name:'Vendors & organizations',exact:true}).click();
@@ -139,5 +139,5 @@ try {
  await failure.close();
  assert.deepEqual(errors,[]);checks.pageErrors=errors;
  await writeFile(output+'/results.json',JSON.stringify(checks,null,2));
- console.log(JSON.stringify({base,layering:'passed',layerPackRoundTrip:'passed',recordRoundTrip:'passed',resources:20,navigationWidths:nav.length,errors,output}));
+ console.log(JSON.stringify({base,layering:'passed',layerPackRoundTrip:'passed',recordRoundTrip:'passed',resources:21,navigationWidths:nav.length,errors,output}));
 }finally{await browser.close();await rm(temporary,{recursive:true,force:true});}

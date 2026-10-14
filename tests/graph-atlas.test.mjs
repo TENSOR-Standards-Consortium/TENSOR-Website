@@ -42,7 +42,11 @@ test('coverage ledger is pinned to both graph artifacts and records all original
   assert.ok(ledger.originalQuestions.every(r => r.semanticReview === 'author-reviewed-agent-audit-external-review-pending' && r.disposition && r.scenarioRefs.length && r.applicabilityLimitations.length && r.agentReviewRef));
   const analysis = await read('graphs/working/reviews/2026-10-12-restoration/analysis.json');
   const routing=await read('graphs/working/reviews/2026-10-13-routing/review.json');
-  assert.equal(routing.graphSha256,ledger.working.sha256);
+  const semantic=await read('graphs/working/reviews/2026-10-13-semantic/review.json');
+  assert.equal(semantic.graphSha256,ledger.working.sha256);
+  assert.equal(semantic.status,'separate-ai-review-complete');
+  assert.equal(semantic.institutionalApproval,false);
+  assert.equal(routing.graphSha256,'4943feee2af28d414fcfd98194e63d196bee529ce8f85117aed4932d977e4d5e');
   assert.equal(analysis.graphSha256,routing.priorGraphSha256);
   assert.equal(analysis.summary.independentlyApprovedDispositions, 0);
   assert.equal(analysis.summary.distinctSourcePrompts, 479);
@@ -52,11 +56,32 @@ test('coverage ledger is pinned to both graph artifacts and records all original
   assert.equal(review.summary.remainingUnrelatedFixedFacetEdges, 0);
   assert.equal(review.summary.questions, graphs.working.nodes.length);
   assert.equal(review.summary.routes,routing.summary.retainedContinuationRoutes);
-  assert.equal(routing.inputs.find(f => f.path === 'drafts/core/entry-evidence-criteria.json').sha256,
+  assert.equal(semantic.criteriaSha256,
     createHash('sha256').update(await bytes('graphs/working/entry-evidence-criteria.json')).digest('hex'));
   const targets = new Map(graphs.working.nodes.map(n => [n.id, n]));
   for (const row of analysis.questions) {
-    assert.equal(targets.get(row.targetId)?.text, row.targetText);
+    const lineage=ledger.originalQuestions.find(r=>r.sourceId===row.sourceId);
+    assert.equal(lineage.historicalReviewedPredicate,row.targetText);
+    assert.equal(targets.get(row.targetId)?.text,lineage.currentPredicate);
     assert.ok(row.issues.length && row.sourceFacet && row.meaningChange && row.scenarioRefs.length);
   }
+});
+
+test('current semantic review covers every displayed item and mirrors pinned final ledgers',async()=>{
+ const prefix='graphs/working/reviews/2026-10-13-semantic/';
+ const review=await read(prefix+'review.json');
+ assert.equal(review.counts.nodes,graphs.working.nodes.length);
+ assert.equal(review.counts.edges,graphs.working.edges.length);
+ assert.equal(review.definitionsSha256,createHash('sha256').update(await bytes('graphs/working/event-profiles/definitions.json')).digest('hex'));
+ for(const row of review.domains){
+  const ledger=await read(prefix+'items/'+row.id+'.json');
+  assert.deepEqual(new Set(ledger.nodes.map(n=>n.id)),new Set(graphs.working.nodes.filter(n=>n.category===row.domain).map(n=>n.id)));
+  const ids=new Set(ledger.nodes.map(n=>n.id));
+  assert.deepEqual(new Set(ledger.edges.map(e=>e.id)),new Set(graphs.working.edges.filter(e=>ids.has(e.source)).map(e=>e.id)));
+  assert.ok([...ledger.nodes,...ledger.edges,...ledger.profileDefinitions].every(i=>i.verdict==='accept'));
+  for(const kind of ['items','challenges']){
+   const file=kind+'/'+row.id+'.json';
+   assert.equal(createHash('sha256').update(await bytes(prefix+file)).digest('hex'),review.ledgerPins[file]);
+  }
+ }
 });
