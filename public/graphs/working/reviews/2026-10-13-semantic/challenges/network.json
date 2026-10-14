@@ -559,6 +559,41 @@
           }
         ]
       }
+    },
+    {
+      "originalName": "network-supplemental-variant-challenge.json",
+      "sha256": "c03f8d2636d0ee7ca872bd1d4e3216dc3e41ba03abad1e14ff04bb052b13f64d",
+      "receipt": {
+        "format": "tensor-independent-network-supplemental-challenge/1",
+        "inputPins": {
+          "drafts/core/tensor.core.graph.json": "5bbe0573940a20d7efe4cf9b78ae76f4ac79a3771bd92f5b182f3e18961aa874",
+          "drafts/core/entry-evidence-criteria.json": "bbf1faf9a29396cb327c8a8b178328bc8cda6f6b4b95828d43b801ee7cace21a",
+          "drafts/core/event-profiles/catalog.json": "970df04928781450e199f8cccccac763818428ecd1e78f939060138f9234eefd",
+          "drafts/core/event-profiles/catalog.source.json": "f4dca9a6e5b6939fb0eda1391b274105c120d07ebdfb590fe7995c697ad4bf93",
+          "drafts/core/event-profiles/definitions.json": "d45fea46d5f5b786dd6a3f3059ddd7c4880c16d05691ac43b3ccb7916f1509e6",
+          "scripts/evaluate_entry_scenarios.py": "3202d33efd8d8a4f36533e01eee359b3ea1213d8bd1a05e5d7705732e1c88a2a",
+          "scripts/restored_evidence.py": "3389bdb86e90fa13f27a997e5ce8f885dde735bddaa9109f423033270d24629b",
+          "scripts/event_profiles.py": "f5fe76851de59b3caf52a91ac458b8f7131be9375c8fad4176a205bf37d20211",
+          "scripts/investigative_routing.py": "41eb4e9674f55de32ed16c0cf470d0fcebc5d4749cf00200f1cba7f93d7bafea",
+          "scripts/semantic_graph_review.py": "89f26ed10c33547eb4bfbfce100e9296371f73bf82f3446ef809439c013ea8ad"
+        },
+        "independentlyAuthored": true,
+        "assumptions": "Complete exact normalized Network context, explicit zero clock uncertainty, accepted independently originating observation, full unchanged falsifiable hypothesis. Primary material is explicitly unavailable; inherited selected group is independent.",
+        "results": [
+          {
+            "id": "direct-primary-classification-rechecks-primary-variant",
+            "items": [
+              "Q159"
+            ],
+            "expected": "unknown",
+            "observed": "unknown",
+            "passed": true,
+            "reason": "The generic target needs its own facet-bound matching event record",
+            "recordGroup": "primary",
+            "scenario": "Q159 explicitly asks about the validated primary record. With primary accessible=false/searched=false, independent accepted record and _selectedGroup=independent, it must not use the wrong witness variant."
+          }
+        ]
+      }
     }
   ]
 }

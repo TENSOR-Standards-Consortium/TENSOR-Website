@@ -3,7 +3,7 @@
   "manifestVersion": 1,
   "bindingVersion": "0.1.0-draft.1",
   "sourceRepository": "https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework",
-  "sourceCommit": "f7665a8997280baa8fdce50d0c249e1408320c91",
+  "sourceCommit": "a65763a9d6f9416bc16376b1a0f6896fd1a8792f",
   "sourceDirty": false,
   "foundingSource": "framework-repository",
   "files": [
@@ -352,8 +352,8 @@
     {
       "source": "drafts/core/reviews/2026-10-13-semantic/challenges/network.json",
       "target": "public/graphs/working/reviews/2026-10-13-semantic/challenges/network.json",
-      "sha256": "74cfca696a54f9a5b9291122fd6d030a7ecac704039e5ee6be190f8cc674ce0f",
-      "bytes": 24604
+      "sha256": "519b55bc1c6984c9a5699ca11afc59fc4623e315086444bc50d21f87074c669b",
+      "bytes": 27040
     },
     {
       "source": "drafts/core/reviews/2026-10-13-semantic/items/application.json",
@@ -406,7 +406,7 @@
     {
       "source": "drafts/core/reviews/2026-10-13-semantic/review.json",
       "target": "public/graphs/working/reviews/2026-10-13-semantic/review.json",
-      "sha256": "01cfd282f9070f6c69f6c748f112cc7430090e82fa8893d994313170b2f9fb3e",
+      "sha256": "c0e6c3c351dc7dd8a463c332795081e9a4e8b39a12ef466bd74cfc4f51f4a897",
       "bytes": 22245
     },
     {
