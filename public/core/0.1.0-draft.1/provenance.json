@@ -3,7 +3,7 @@
   "manifestVersion": 1,
   "bindingVersion": "0.1.0-draft.1",
   "sourceRepository": "https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework",
-  "sourceCommit": "e6ced17aeaa1cf1d8be31ba1fbd24bf96d0890e0",
+  "sourceCommit": "f7665a8997280baa8fdce50d0c249e1408320c91",
   "sourceDirty": false,
   "foundingSource": "framework-repository",
   "files": [
@@ -100,8 +100,8 @@
     {
       "source": "docs/graph-coverage-roadmap.md",
       "target": "public/docs/graph-coverage-roadmap.md",
-      "sha256": "00fd8bc086fd93b91a81773906cea65b2f9e06b7300cae310ee3639ae04a2d5f",
-      "bytes": 6535
+      "sha256": "5dfbb689b1b7884bd3ed7ebe5e6d94a46d530f6d7433926ee18c92b52e27d3b9",
+      "bytes": 6853
     },
     {
       "source": "docs/legacy-migration.md",
@@ -226,44 +226,44 @@
     {
       "source": "drafts/core/coverage-inventory.json",
       "target": "public/graphs/working/coverage-inventory.json",
-      "sha256": "ef3921b17a11ffadf81442398f2f0e3689c8d292af843725a1acf208a0e48508",
-      "bytes": 1059209
+      "sha256": "3c7f49649e08370324a9024d56e9b8871dba75b3a1084bb3419362e11804417b",
+      "bytes": 1333875
     },
     {
       "source": "drafts/core/entry-evidence-criteria.json",
       "target": "public/graphs/working/entry-evidence-criteria.json",
-      "sha256": "e57de29a7b0edc64139d6ef5f1f9ff0447785f5cba14c388bfb954f6cb216cf6",
-      "bytes": 526556
+      "sha256": "bbf1faf9a29396cb327c8a8b178328bc8cda6f6b4b95828d43b801ee7cace21a",
+      "bytes": 560283
     },
     {
       "source": "drafts/core/event-profiles/README.md",
       "target": "public/graphs/working/event-profiles/README.md",
-      "sha256": "5bb5f3da70b85e5a0926bc6da4a2a47b1d1cf19a5486d0f7e677195fe6883ab4",
-      "bytes": 8826
+      "sha256": "4a32f92b1b5e9ec2049bbf7d823bde98be8aac7015fe6f18ecd5d1b133bd534e",
+      "bytes": 9839
     },
     {
       "source": "drafts/core/event-profiles/catalog.json",
       "target": "public/graphs/working/event-profiles/catalog.json",
-      "sha256": "dfef3f2948c26dbce78e0774eb77f4243de2ee412197da15ff03ee8c07bb3de8",
-      "bytes": 24804
+      "sha256": "970df04928781450e199f8cccccac763818428ecd1e78f939060138f9234eefd",
+      "bytes": 32197
     },
     {
       "source": "drafts/core/event-profiles/definitions.json",
       "target": "public/graphs/working/event-profiles/definitions.json",
-      "sha256": "b7d7d2dc7ceeafe539635f4c2fdfbec426347066f8868d1aa3b2f3df98cd202c",
-      "bytes": 375139
+      "sha256": "d45fea46d5f5b786dd6a3f3059ddd7c4880c16d05691ac43b3ccb7916f1509e6",
+      "bytes": 403130
     },
     {
       "source": "drafts/core/event-profiles/scenarios.json",
       "target": "public/graphs/working/event-profiles/scenarios.json",
-      "sha256": "abf735c206f0d0cab1c0af57ea5013aa2f6a3b80574590ae51bec7fef9aa4436",
-      "bytes": 1039401
+      "sha256": "cb7d00b4f7a1f6d0c0bfca31621fa443e6956aedc467b63eb2c2458505d31703",
+      "bytes": 1216933
     },
     {
       "source": "drafts/core/event-profiles/validation.json",
       "target": "public/graphs/working/event-profiles/validation.json",
-      "sha256": "bfdae9f85a75be0d2b8892994387a9bae728f951eb696e9d6784b02e69422d05",
-      "bytes": 247107
+      "sha256": "3b3c0f68c3670632fb160fcb5d09c0108f16bf687392f5e48de75b19415029f4",
+      "bytes": 280547
     },
     {
       "source": "drafts/core/reviews/2026-10-12-independent-review/README.md",
@@ -302,16 +302,124 @@
       "bytes": 1419
     },
     {
+      "source": "drafts/core/reviews/2026-10-13-semantic/README.md",
+      "target": "public/graphs/working/reviews/2026-10-13-semantic/README.md",
+      "sha256": "44d3a7b88fe59280d6460de90290d220ce900df7ac1b9cabef141f04b77830f7",
+      "bytes": 7032
+    },
+    {
+      "source": "drafts/core/reviews/2026-10-13-semantic/challenges/application.json",
+      "target": "public/graphs/working/reviews/2026-10-13-semantic/challenges/application.json",
+      "sha256": "70af06f7b9c9362044a673a3dd054610b8a26ecb90544971f714006b0be38c51",
+      "bytes": 208431
+    },
+    {
+      "source": "drafts/core/reviews/2026-10-13-semantic/challenges/cloud.json",
+      "target": "public/graphs/working/reviews/2026-10-13-semantic/challenges/cloud.json",
+      "sha256": "f89af88762c11e45c64be2b72e00f707ef12bbd9f7a0eadcbbf115398eddf490",
+      "bytes": 546833
+    },
+    {
+      "source": "drafts/core/reviews/2026-10-13-semantic/challenges/cross-domain.json",
+      "target": "public/graphs/working/reviews/2026-10-13-semantic/challenges/cross-domain.json",
+      "sha256": "3a5b7086902d526303ee0eea85a3c287eee0947c3ab87726e5b8af8ebc024caf",
+      "bytes": 3632
+    },
+    {
+      "source": "drafts/core/reviews/2026-10-13-semantic/challenges/email.json",
+      "target": "public/graphs/working/reviews/2026-10-13-semantic/challenges/email.json",
+      "sha256": "153f709d139ef9b459798a7bec9a75196064568bd881900be0d064a45285edee",
+      "bytes": 225922
+    },
+    {
+      "source": "drafts/core/reviews/2026-10-13-semantic/challenges/file.json",
+      "target": "public/graphs/working/reviews/2026-10-13-semantic/challenges/file.json",
+      "sha256": "7481a341c0fda7ded6c03b311ea19062f63562d536cfe2127a440c6ff5e056c1",
+      "bytes": 302984
+    },
+    {
+      "source": "drafts/core/reviews/2026-10-13-semantic/challenges/host.json",
+      "target": "public/graphs/working/reviews/2026-10-13-semantic/challenges/host.json",
+      "sha256": "39ef3b6c953a561ca16598aa284a2cb3ef5ad220afd2d582b45119d3d8eac40f",
+      "bytes": 159611
+    },
+    {
+      "source": "drafts/core/reviews/2026-10-13-semantic/challenges/identity.json",
+      "target": "public/graphs/working/reviews/2026-10-13-semantic/challenges/identity.json",
+      "sha256": "1ca9a0392bf793eed5c351790c96db8367236ea66c55b32069249e402109205d",
+      "bytes": 869114
+    },
+    {
+      "source": "drafts/core/reviews/2026-10-13-semantic/challenges/network.json",
+      "target": "public/graphs/working/reviews/2026-10-13-semantic/challenges/network.json",
+      "sha256": "74cfca696a54f9a5b9291122fd6d030a7ecac704039e5ee6be190f8cc674ce0f",
+      "bytes": 24604
+    },
+    {
+      "source": "drafts/core/reviews/2026-10-13-semantic/items/application.json",
+      "target": "public/graphs/working/reviews/2026-10-13-semantic/items/application.json",
+      "sha256": "02d5e326b16a06e629cc36ec739bc39446a0ca25793758acaa8ce1731b09786a",
+      "bytes": 849966
+    },
+    {
+      "source": "drafts/core/reviews/2026-10-13-semantic/items/cloud.json",
+      "target": "public/graphs/working/reviews/2026-10-13-semantic/items/cloud.json",
+      "sha256": "5e83257468295b90d2019dfb134fd45145be082e7dd62c4517edc35bcd560c3a",
+      "bytes": 909081
+    },
+    {
+      "source": "drafts/core/reviews/2026-10-13-semantic/items/cross-domain.json",
+      "target": "public/graphs/working/reviews/2026-10-13-semantic/items/cross-domain.json",
+      "sha256": "1b059e1932efe9ea6dcd731631c81a995bef7a5409e2125b5d8660ae9d155d0c",
+      "bytes": 848683
+    },
+    {
+      "source": "drafts/core/reviews/2026-10-13-semantic/items/email.json",
+      "target": "public/graphs/working/reviews/2026-10-13-semantic/items/email.json",
+      "sha256": "2be646386d50f3d6526c0befa4b19058932e842cf0664b53a56f3ef169c7dff6",
+      "bytes": 698213
+    },
+    {
+      "source": "drafts/core/reviews/2026-10-13-semantic/items/file.json",
+      "target": "public/graphs/working/reviews/2026-10-13-semantic/items/file.json",
+      "sha256": "c79a4938d872f0790cdeda39af06604000123832c0641f40d13159a418c679a2",
+      "bytes": 891500
+    },
+    {
+      "source": "drafts/core/reviews/2026-10-13-semantic/items/host.json",
+      "target": "public/graphs/working/reviews/2026-10-13-semantic/items/host.json",
+      "sha256": "7be7e9b9d5f859758b4e2fe787ee72cd4bf545dc78c94db1f68224a17bb32807",
+      "bytes": 1482659
+    },
+    {
+      "source": "drafts/core/reviews/2026-10-13-semantic/items/identity.json",
+      "target": "public/graphs/working/reviews/2026-10-13-semantic/items/identity.json",
+      "sha256": "6e4caab59e862a2591e1c65e70acb0db52217d4c1605b3e4df9f62a919e350aa",
+      "bytes": 608655
+    },
+    {
+      "source": "drafts/core/reviews/2026-10-13-semantic/items/network.json",
+      "target": "public/graphs/working/reviews/2026-10-13-semantic/items/network.json",
+      "sha256": "57ed260250d13e620c8fab459be5f2b66ef6b350d36098680c4dca3a5caf7e0c",
+      "bytes": 1000041
+    },
+    {
+      "source": "drafts/core/reviews/2026-10-13-semantic/review.json",
+      "target": "public/graphs/working/reviews/2026-10-13-semantic/review.json",
+      "sha256": "01cfd282f9070f6c69f6c748f112cc7430090e82fa8893d994313170b2f9fb3e",
+      "bytes": 22245
+    },
+    {
       "source": "drafts/core/source/entry_nodes.json",
       "target": "public/graphs/working/source/entry_nodes.json",
-      "sha256": "3b32bfab27f5f499a69be4c64b2cd532296b7eaa88faa07c10bf2391c24dbb03",
+      "sha256": "70391e0f4c5771d3b85672aa081d43e575cbbeaddceb5ababbe16237d16b39f2",
       "bytes": 4301
     },
     {
       "source": "drafts/core/tensor.core.graph.json",
       "target": "public/graphs/working/tensor.core.graph.json",
-      "sha256": "4943feee2af28d414fcfd98194e63d196bee529ce8f85117aed4932d977e4d5e",
-      "bytes": 1618282
+      "sha256": "5bbe0573940a20d7efe4cf9b78ae76f4ac79a3771bd92f5b182f3e18961aa874",
+      "bytes": 2554519
     },
     {
       "source": "examples/investigations/v1/README.md",

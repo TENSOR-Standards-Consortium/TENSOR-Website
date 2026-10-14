@@ -1,0 +1,3936 @@
+{
+  "format": "tensor-independent-challenge-receipts",
+  "lane": "host",
+  "scope": "Separate AI reviewers and fictional normalized observations; not field evidence or institutional approval.",
+  "receipts": [
+    {
+      "originalName": "host-witness-probes.json",
+      "sha256": "460497443c21b3839447bd1239233610487811ff95c297f4ec5b08f2b79aebf7",
+      "receipt": {
+        "candidateVersion": "0.20261013b",
+        "profileVersion": "0.1.0-draft.2",
+        "fixtureOrigin": "Original baseline reviewer hand-authored cases plus explicit candidate clock/hypothesis retention/focus/version facts and new independent cases; no generator fixtures or expected traces imported",
+        "inputs": {
+          "drafts/core/tensor.core.graph.json": "5bbe0573940a20d7efe4cf9b78ae76f4ac79a3771bd92f5b182f3e18961aa874",
+          "drafts/core/entry-evidence-criteria.json": "bbf1faf9a29396cb327c8a8b178328bc8cda6f6b4b95828d43b801ee7cace21a",
+          "drafts/core/event-profiles/catalog.json": "970df04928781450e199f8cccccac763818428ecd1e78f939060138f9234eefd",
+          "drafts/core/event-profiles/catalog.source.json": "f4dca9a6e5b6939fb0eda1391b274105c120d07ebdfb590fe7995c697ad4bf93",
+          "drafts/core/event-profiles/definitions.json": "d45fea46d5f5b786dd6a3f3059ddd7c4880c16d05691ac43b3ccb7916f1509e6",
+          "scripts/evaluate_entry_scenarios.py": "3202d33efd8d8a4f36533e01eee359b3ea1213d8bd1a05e5d7705732e1c88a2a",
+          "scripts/restored_evidence.py": "3389bdb86e90fa13f27a997e5ce8f885dde735bddaa9109f423033270d24629b",
+          "scripts/event_profiles.py": "f5fe76851de59b3caf52a91ac458b8f7131be9375c8fad4176a205bf37d20211",
+          "scripts/investigative_routing.py": "41eb4e9674f55de32ed16c0cf470d0fcebc5d4749cf00200f1cba7f93d7bafea",
+          "scripts/semantic_graph_review.py": "89f26ed10c33547eb4bfbfce100e9296371f73bf82f3446ef809439c013ea8ad",
+          "scripts/restore_original_questions.py": "d41f78f4a0cd99c4454c8155aeacb2fda6d4360f21106560acae19bd7e4c96e1"
+        },
+        "cases": {
+          "known-execution-downstream-unknown": {
+            "id": "independent-host-validated-event-unknown-hypothesis",
+            "domain": "Host",
+            "bindings": {
+              "hostId": "review-host:H",
+              "processId": "review-process:P"
+            },
+            "interval": {
+              "start": "2026-10-13T10:00:00Z",
+              "end": "2026-10-13T11:00:00Z"
+            },
+            "primaryOrigin": "review:local-process-sensor",
+            "primary": {
+              "accessible": true,
+              "searched": true,
+              "records": [
+                {
+                  "id": "review:process-start:P",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "processId": "review-process:P"
+                  },
+                  "eventTime": "2026-10-13T10:30:00Z",
+                  "clockUncertaintySeconds": 1,
+                  "origin": "review:local-process-sensor",
+                  "provenanceAssessment": "accepted",
+                  "interpretationAssessment": "accepted",
+                  "assessmentEvidenceRefs": [
+                    "review:acquisition:1",
+                    "review:interpretation:1"
+                  ],
+                  "eventInterpretation": "This sensor record observes process P execution; no statement about injection is available.",
+                  "facts": {
+                    "execution.observed": {
+                      "value": true,
+                      "assessment": "accepted",
+                      "method": "Review fixture declares a process start observation",
+                      "evidenceRefs": [
+                        "review:process-start:P"
+                      ]
+                    }
+                  },
+                  "evidenceFacet": "endpoint state changes"
+                }
+              ]
+            },
+            "independent": {
+              "accessible": false,
+              "searched": false,
+              "records": []
+            },
+            "coverage": {},
+            "analysis": {
+              "hypothesis": {
+                "hypothesisId": "review:injection-test",
+                "subjects": {
+                  "hostId": "review-host:H",
+                  "processId": "review-process:P"
+                },
+                "interval": {
+                  "start": "2026-10-13T10:00:00Z",
+                  "end": "2026-10-13T11:00:00Z"
+                },
+                "statement": "Process P received an injected executable memory mapping.",
+                "criterion": {
+                  "fact": "memory.injected-mapping",
+                  "equals": true,
+                  "method": "Assess mapped executable page evidence"
+                },
+                "alternatives": [
+                  "A normal mapped executable image",
+                  "An unobserved mapping"
+                ]
+              }
+            },
+            "semanticReview": true,
+            "focus": "endpoint state changes",
+            "retention": {
+              "subjects": {
+                "hostId": "review-host:H",
+                "processId": "review-process:P"
+              },
+              "interval": {
+                "start": "2026-10-13T10:00:00Z",
+                "end": "2026-10-13T11:00:00Z"
+              },
+              "graphVersion": "0.20261013b",
+              "hypothesis": {
+                "hypothesisId": "review:injection-test",
+                "subjects": {
+                  "hostId": "review-host:H",
+                  "processId": "review-process:P"
+                },
+                "interval": {
+                  "start": "2026-10-13T10:00:00Z",
+                  "end": "2026-10-13T11:00:00Z"
+                },
+                "statement": "Process P received an injected executable memory mapping.",
+                "criterion": {
+                  "fact": "memory.injected-mapping",
+                  "equals": true,
+                  "method": "Assess mapped executable page evidence"
+                },
+                "alternatives": [
+                  "A normal mapped executable image",
+                  "An unobserved mapping"
+                ]
+              },
+              "closesInvestigation": false,
+              "focusDispositions": {
+                "endpoint state changes": "assessed"
+              },
+              "assessments": [
+                {
+                  "nodeId": "Q2",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "processId": "review-process:P"
+                  },
+                  "interval": {
+                    "start": "2026-10-13T10:00:00Z",
+                    "end": "2026-10-13T11:00:00Z"
+                  },
+                  "hypothesisId": "review:injection-test",
+                  "focus": "endpoint state changes",
+                  "answer": "yes",
+                  "method": "Independent reviewer declared retained observation/validation/hypothesis assessment",
+                  "rationale": "Matching process execution record observed",
+                  "evidenceRefs": [
+                    "review:process-start:P",
+                    "review:retained-basis"
+                  ],
+                  "limitations": [
+                    "Mapped-memory evidence is unavailable; process execution remains observed"
+                  ]
+                },
+                {
+                  "nodeId": "Q156",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "processId": "review-process:P"
+                  },
+                  "interval": {
+                    "start": "2026-10-13T10:00:00Z",
+                    "end": "2026-10-13T11:00:00Z"
+                  },
+                  "hypothesisId": "review:injection-test",
+                  "focus": "endpoint state changes",
+                  "answer": "yes",
+                  "method": "Independent reviewer declared retained observation/validation/hypothesis assessment",
+                  "rationale": "Separate cited provenance and interpretation basis accepted",
+                  "evidenceRefs": [
+                    "review:process-start:P",
+                    "review:retained-basis"
+                  ],
+                  "limitations": [
+                    "Mapped-memory evidence is unavailable; process execution remains observed"
+                  ]
+                },
+                {
+                  "nodeId": "Q214",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "processId": "review-process:P"
+                  },
+                  "interval": {
+                    "start": "2026-10-13T10:00:00Z",
+                    "end": "2026-10-13T11:00:00Z"
+                  },
+                  "hypothesisId": "review:injection-test",
+                  "focus": "endpoint state changes",
+                  "answer": "unknown",
+                  "method": "Independent reviewer declared retained observation/validation/hypothesis assessment",
+                  "rationale": "Declared injection discriminator unavailable",
+                  "evidenceRefs": [
+                    "review:process-start:P",
+                    "review:retained-basis"
+                  ],
+                  "limitations": [
+                    "Mapped-memory evidence is unavailable; process execution remains observed"
+                  ]
+                }
+              ]
+            }
+          },
+          "base-crossing-clock-boundary": {
+            "id": "independent-host-clock-boundary",
+            "domain": "Host",
+            "bindings": {
+              "hostId": "review-host:H",
+              "processId": "review-process:P"
+            },
+            "interval": {
+              "start": "2026-10-13T10:00:00Z",
+              "end": "2026-10-13T11:00:00Z"
+            },
+            "primaryOrigin": "review:local-process-sensor",
+            "primary": {
+              "accessible": true,
+              "searched": true,
+              "records": [
+                {
+                  "id": "review:process-start:P",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "processId": "review-process:P"
+                  },
+                  "eventTime": "2026-10-13T10:00:01Z",
+                  "clockUncertaintySeconds": 30,
+                  "origin": "review:local-process-sensor",
+                  "provenanceAssessment": "accepted",
+                  "interpretationAssessment": "accepted",
+                  "assessmentEvidenceRefs": [
+                    "review:acquisition:1",
+                    "review:interpretation:1"
+                  ],
+                  "eventInterpretation": "This sensor record observes process P execution; no statement about injection is available.",
+                  "facts": {
+                    "execution.observed": {
+                      "value": true,
+                      "assessment": "accepted",
+                      "method": "Review fixture declares a process start observation",
+                      "evidenceRefs": [
+                        "review:process-start:P"
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            "independent": {
+              "accessible": false,
+              "searched": false,
+              "records": []
+            },
+            "coverage": {},
+            "analysis": {
+              "hypothesis": {
+                "hypothesisId": "review:injection-test",
+                "subjects": {
+                  "hostId": "review-host:H",
+                  "processId": "review-process:P"
+                },
+                "interval": {
+                  "start": "2026-10-13T10:00:00Z",
+                  "end": "2026-10-13T11:00:00Z"
+                },
+                "statement": "Process P received an injected executable memory mapping.",
+                "criterion": {
+                  "fact": "memory.injected-mapping",
+                  "equals": true,
+                  "method": "Assess mapped executable page evidence"
+                },
+                "alternatives": [
+                  "A normal mapped executable image",
+                  "An unobserved mapping"
+                ]
+              }
+            },
+            "semanticReview": true
+          },
+          "base-retention-actual-source-focus": {
+            "id": "independent-host-validated-event-unknown-hypothesis",
+            "domain": "Host",
+            "bindings": {
+              "hostId": "review-host:H",
+              "processId": "review-process:P"
+            },
+            "interval": {
+              "start": "2026-10-13T10:00:00Z",
+              "end": "2026-10-13T11:00:00Z"
+            },
+            "primaryOrigin": "review:local-process-sensor",
+            "primary": {
+              "accessible": true,
+              "searched": true,
+              "records": [
+                {
+                  "id": "review:process-start:P",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "processId": "review-process:P"
+                  },
+                  "eventTime": "2026-10-13T10:30:00Z",
+                  "clockUncertaintySeconds": 1,
+                  "origin": "review:local-process-sensor",
+                  "provenanceAssessment": "accepted",
+                  "interpretationAssessment": "accepted",
+                  "assessmentEvidenceRefs": [
+                    "review:acquisition:1",
+                    "review:interpretation:1"
+                  ],
+                  "eventInterpretation": "This sensor record observes process P execution; no statement about injection is available.",
+                  "facts": {
+                    "execution.observed": {
+                      "value": true,
+                      "assessment": "accepted",
+                      "method": "Review fixture declares a process start observation",
+                      "evidenceRefs": [
+                        "review:process-start:P"
+                      ]
+                    }
+                  },
+                  "evidenceFacet": "transport metadata"
+                }
+              ]
+            },
+            "independent": {
+              "accessible": false,
+              "searched": false,
+              "records": []
+            },
+            "coverage": {},
+            "analysis": {
+              "hypothesis": {
+                "hypothesisId": "review:injection-test",
+                "subjects": {
+                  "hostId": "review-host:H",
+                  "processId": "review-process:P"
+                },
+                "interval": {
+                  "start": "2026-10-13T10:00:00Z",
+                  "end": "2026-10-13T11:00:00Z"
+                },
+                "statement": "Process P received an injected executable memory mapping.",
+                "criterion": {
+                  "fact": "memory.injected-mapping",
+                  "equals": true,
+                  "method": "Assess mapped executable page evidence"
+                },
+                "alternatives": [
+                  "A normal mapped executable image",
+                  "An unobserved mapping"
+                ]
+              }
+            },
+            "focus": "transport metadata",
+            "retainedTrace": [
+              {
+                "nodeId": "Q58",
+                "answer": "no"
+              }
+            ],
+            "retention": {
+              "subjects": {
+                "hostId": "review-host:H",
+                "processId": "review-process:P"
+              },
+              "interval": {
+                "start": "2026-10-13T10:00:00Z",
+                "end": "2026-10-13T11:00:00Z"
+              },
+              "graphVersion": "0.20261013b",
+              "closesInvestigation": false,
+              "assessments": [
+                {
+                  "nodeId": "Q58",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "processId": "review-process:P"
+                  },
+                  "interval": {
+                    "start": "2026-10-13T10:00:00Z",
+                    "end": "2026-10-13T11:00:00Z"
+                  },
+                  "hypothesisId": "review:injection-test",
+                  "answer": "no",
+                  "method": "Declared completed transport-material search",
+                  "rationale": "No matching record in the examined transport source",
+                  "evidenceRefs": [
+                    "review:search:transport"
+                  ],
+                  "limitations": [
+                    "Another source may have evidence"
+                  ]
+                }
+              ],
+              "focusDispositions": {
+                "transport metadata": "assessed"
+              },
+              "hypothesis": {
+                "hypothesisId": "review:injection-test",
+                "subjects": {
+                  "hostId": "review-host:H",
+                  "processId": "review-process:P"
+                },
+                "interval": {
+                  "start": "2026-10-13T10:00:00Z",
+                  "end": "2026-10-13T11:00:00Z"
+                },
+                "statement": "Process P received an injected executable memory mapping.",
+                "criterion": {
+                  "fact": "memory.injected-mapping",
+                  "equals": true,
+                  "method": "Assess mapped executable page evidence"
+                },
+                "alternatives": [
+                  "A normal mapped executable image",
+                  "An unobserved mapping"
+                ]
+              }
+            },
+            "semanticReview": true
+          },
+          "copied-independent-profile-validation": {
+            "id": "independent-host-profile-copied-validation",
+            "domain": "Host",
+            "bindings": {
+              "hostId": "review-host:H",
+              "stateKey": "service.enabled"
+            },
+            "interval": {
+              "start": "2026-10-13T10:00:00Z",
+              "end": "2026-10-13T11:00:00Z"
+            },
+            "primaryOrigin": "review:local-process-sensor",
+            "primary": {
+              "accessible": true,
+              "searched": true,
+              "records": [
+                {
+                  "id": "review:process-start:P",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "stateKey": "service.enabled"
+                  },
+                  "eventTime": "2026-10-13T10:30:00Z",
+                  "clockUncertaintySeconds": 1,
+                  "origin": "review:local-process-sensor",
+                  "provenanceAssessment": "accepted",
+                  "interpretationAssessment": "accepted",
+                  "assessmentEvidenceRefs": [
+                    "review:acquisition:1",
+                    "review:interpretation:1"
+                  ],
+                  "eventInterpretation": "This sensor record observes process P execution; no statement about injection is available.",
+                  "facts": {
+                    "execution.observed": {
+                      "value": true,
+                      "assessment": "accepted",
+                      "method": "Review fixture declares a process start observation",
+                      "evidenceRefs": [
+                        "review:process-start:P"
+                      ]
+                    },
+                    "event.kind": {
+                      "value": "host-state",
+                      "assessment": "accepted",
+                      "method": "Declared state observation type",
+                      "evidenceRefs": [
+                        "review:state:1"
+                      ]
+                    },
+                    "state.value": {
+                      "value": false,
+                      "assessment": "accepted",
+                      "method": "Observed named service state",
+                      "evidenceRefs": [
+                        "review:state:1"
+                      ]
+                    }
+                  },
+                  "eventProfile": "host-state",
+                  "profileVersion": "0.1.0-draft.2",
+                  "assessmentMethod": "Review declared provenance/interpretation basis"
+                }
+              ]
+            },
+            "independent": {
+              "accessible": true,
+              "searched": true,
+              "records": [
+                {
+                  "id": "review:process-start:P",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "stateKey": "service.enabled"
+                  },
+                  "eventTime": "2026-10-13T10:30:00Z",
+                  "clockUncertaintySeconds": 1,
+                  "origin": "review:local-process-sensor",
+                  "provenanceAssessment": "accepted",
+                  "interpretationAssessment": "accepted",
+                  "assessmentEvidenceRefs": [
+                    "review:acquisition:1",
+                    "review:interpretation:1"
+                  ],
+                  "eventInterpretation": "This sensor record observes process P execution; no statement about injection is available.",
+                  "facts": {
+                    "execution.observed": {
+                      "value": true,
+                      "assessment": "accepted",
+                      "method": "Review fixture declares a process start observation",
+                      "evidenceRefs": [
+                        "review:process-start:P"
+                      ]
+                    },
+                    "event.kind": {
+                      "value": "host-state",
+                      "assessment": "accepted",
+                      "method": "Declared state observation type",
+                      "evidenceRefs": [
+                        "review:state:1"
+                      ]
+                    },
+                    "state.value": {
+                      "value": false,
+                      "assessment": "accepted",
+                      "method": "Observed named service state",
+                      "evidenceRefs": [
+                        "review:state:1"
+                      ]
+                    }
+                  },
+                  "eventProfile": "host-state",
+                  "profileVersion": "0.1.0-draft.2",
+                  "assessmentMethod": "Review declared provenance/interpretation basis"
+                }
+              ]
+            },
+            "coverage": {},
+            "analysis": {
+              "hypothesis": {
+                "hypothesisId": "review:injection-test",
+                "subjects": {
+                  "hostId": "review-host:H",
+                  "processId": "review-process:P"
+                },
+                "interval": {
+                  "start": "2026-10-13T10:00:00Z",
+                  "end": "2026-10-13T11:00:00Z"
+                },
+                "statement": "Process P received an injected executable memory mapping.",
+                "criterion": {
+                  "fact": "memory.injected-mapping",
+                  "equals": true,
+                  "method": "Assess mapped executable page evidence"
+                },
+                "alternatives": [
+                  "A normal mapped executable image",
+                  "An unobserved mapping"
+                ]
+              }
+            },
+            "eventProfile": "host-state",
+            "profileVersion": "0.1.0-draft.2"
+          },
+          "profile-crossing-clock-boundary": {
+            "id": "independent-host-profile-copied-validation",
+            "domain": "Host",
+            "bindings": {
+              "hostId": "review-host:H",
+              "stateKey": "service.enabled"
+            },
+            "interval": {
+              "start": "2026-10-13T10:00:00Z",
+              "end": "2026-10-13T11:00:00Z"
+            },
+            "primaryOrigin": "review:local-process-sensor",
+            "primary": {
+              "accessible": true,
+              "searched": true,
+              "records": [
+                {
+                  "id": "review:process-start:P",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "stateKey": "service.enabled"
+                  },
+                  "eventTime": "2026-10-13T10:00:01Z",
+                  "clockUncertaintySeconds": 30,
+                  "origin": "review:local-process-sensor",
+                  "provenanceAssessment": "accepted",
+                  "interpretationAssessment": "accepted",
+                  "assessmentEvidenceRefs": [
+                    "review:acquisition:1",
+                    "review:interpretation:1"
+                  ],
+                  "eventInterpretation": "This sensor record observes process P execution; no statement about injection is available.",
+                  "facts": {
+                    "execution.observed": {
+                      "value": true,
+                      "assessment": "accepted",
+                      "method": "Review fixture declares a process start observation",
+                      "evidenceRefs": [
+                        "review:process-start:P"
+                      ]
+                    },
+                    "event.kind": {
+                      "value": "host-state",
+                      "assessment": "accepted",
+                      "method": "Declared state observation type",
+                      "evidenceRefs": [
+                        "review:state:1"
+                      ]
+                    },
+                    "state.value": {
+                      "value": false,
+                      "assessment": "accepted",
+                      "method": "Observed named service state",
+                      "evidenceRefs": [
+                        "review:state:1"
+                      ]
+                    }
+                  },
+                  "eventProfile": "host-state",
+                  "profileVersion": "0.1.0-draft.2",
+                  "assessmentMethod": "Review declared provenance/interpretation basis"
+                }
+              ]
+            },
+            "independent": {
+              "accessible": true,
+              "searched": true,
+              "records": [
+                {
+                  "id": "review:process-start:P",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "stateKey": "service.enabled"
+                  },
+                  "eventTime": "2026-10-13T10:30:00Z",
+                  "clockUncertaintySeconds": 1,
+                  "origin": "review:local-process-sensor",
+                  "provenanceAssessment": "accepted",
+                  "interpretationAssessment": "accepted",
+                  "assessmentEvidenceRefs": [
+                    "review:acquisition:1",
+                    "review:interpretation:1"
+                  ],
+                  "eventInterpretation": "This sensor record observes process P execution; no statement about injection is available.",
+                  "facts": {
+                    "execution.observed": {
+                      "value": true,
+                      "assessment": "accepted",
+                      "method": "Review fixture declares a process start observation",
+                      "evidenceRefs": [
+                        "review:process-start:P"
+                      ]
+                    },
+                    "event.kind": {
+                      "value": "host-state",
+                      "assessment": "accepted",
+                      "method": "Declared state observation type",
+                      "evidenceRefs": [
+                        "review:state:1"
+                      ]
+                    },
+                    "state.value": {
+                      "value": false,
+                      "assessment": "accepted",
+                      "method": "Observed named service state",
+                      "evidenceRefs": [
+                        "review:state:1"
+                      ]
+                    }
+                  },
+                  "eventProfile": "host-state",
+                  "profileVersion": "0.1.0-draft.2",
+                  "assessmentMethod": "Review declared provenance/interpretation basis"
+                }
+              ]
+            },
+            "coverage": {},
+            "analysis": {
+              "hypothesis": {
+                "hypothesisId": "review:injection-test",
+                "subjects": {
+                  "hostId": "review-host:H",
+                  "processId": "review-process:P"
+                },
+                "interval": {
+                  "start": "2026-10-13T10:00:00Z",
+                  "end": "2026-10-13T11:00:00Z"
+                },
+                "statement": "Process P received an injected executable memory mapping.",
+                "criterion": {
+                  "fact": "memory.injected-mapping",
+                  "equals": true,
+                  "method": "Assess mapped executable page evidence"
+                },
+                "alternatives": [
+                  "A normal mapped executable image",
+                  "An unobserved mapping"
+                ]
+              }
+            },
+            "eventProfile": "host-state",
+            "profileVersion": "0.1.0-draft.2"
+          },
+          "direct-independent-selection": {
+            "id": "independent-host-profile-direct-validation-group",
+            "domain": "Host",
+            "bindings": {
+              "hostId": "review-host:H",
+              "stateKey": "service.enabled"
+            },
+            "interval": {
+              "start": "2026-10-13T10:00:00Z",
+              "end": "2026-10-13T11:00:00Z"
+            },
+            "primaryOrigin": "review:local-process-sensor",
+            "primary": {
+              "accessible": false,
+              "searched": false,
+              "records": []
+            },
+            "independent": {
+              "accessible": true,
+              "searched": true,
+              "records": [
+                {
+                  "id": "review:independent-state:2",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "stateKey": "service.enabled"
+                  },
+                  "eventTime": "2026-10-13T10:30:00Z",
+                  "clockUncertaintySeconds": 1,
+                  "origin": "review:separate-host-observer",
+                  "provenanceAssessment": "accepted",
+                  "interpretationAssessment": "accepted",
+                  "assessmentEvidenceRefs": [
+                    "review:acquisition:1",
+                    "review:interpretation:1"
+                  ],
+                  "eventInterpretation": "This sensor record observes process P execution; no statement about injection is available.",
+                  "facts": {
+                    "execution.observed": {
+                      "value": true,
+                      "assessment": "accepted",
+                      "method": "Review fixture declares a process start observation",
+                      "evidenceRefs": [
+                        "review:process-start:P"
+                      ]
+                    },
+                    "event.kind": {
+                      "value": "host-state",
+                      "assessment": "accepted",
+                      "method": "Declared state observation type",
+                      "evidenceRefs": [
+                        "review:state:1"
+                      ]
+                    },
+                    "state.value": {
+                      "value": false,
+                      "assessment": "accepted",
+                      "method": "Observed named service state",
+                      "evidenceRefs": [
+                        "review:state:1"
+                      ]
+                    }
+                  },
+                  "eventProfile": "host-state",
+                  "profileVersion": "0.1.0-draft.2",
+                  "assessmentMethod": "Review declared provenance/interpretation basis"
+                }
+              ]
+            },
+            "coverage": {},
+            "analysis": {
+              "hypothesis": {
+                "hypothesisId": "review:injection-test",
+                "subjects": {
+                  "hostId": "review-host:H",
+                  "stateKey": "service.enabled"
+                },
+                "interval": {
+                  "start": "2026-10-13T10:00:00Z",
+                  "end": "2026-10-13T11:00:00Z"
+                },
+                "statement": "The observed named service state was disabled",
+                "criterion": {
+                  "fact": "state.value",
+                  "equals": false,
+                  "method": "Compare the separately observed service state"
+                },
+                "alternatives": [
+                  "A normal mapped executable image",
+                  "An unobserved mapping"
+                ],
+                "eventProfile": "host-state",
+                "profileVersion": "0.1.0-draft.2"
+              }
+            },
+            "eventProfile": "host-state",
+            "profileVersion": "0.1.0-draft.2",
+            "entry": "Q151",
+            "focus": "endpoint state changes"
+          },
+          "qualified-terminal-history": {
+            "id": "independent-host-profile-retained-qualified-terminal",
+            "domain": "Host",
+            "bindings": {
+              "hostId": "review-host:H",
+              "stateKey": "service.enabled"
+            },
+            "interval": {
+              "start": "2026-10-13T10:00:00Z",
+              "end": "2026-10-13T11:00:00Z"
+            },
+            "primaryOrigin": "review:local-process-sensor",
+            "primary": {
+              "accessible": false,
+              "searched": false,
+              "records": []
+            },
+            "independent": {
+              "accessible": true,
+              "searched": true,
+              "records": [
+                {
+                  "id": "review:independent-state:2",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "stateKey": "service.enabled"
+                  },
+                  "eventTime": "2026-10-13T10:30:00Z",
+                  "clockUncertaintySeconds": 1,
+                  "origin": "review:separate-host-observer",
+                  "provenanceAssessment": "accepted",
+                  "interpretationAssessment": "accepted",
+                  "assessmentEvidenceRefs": [
+                    "review:acquisition:1",
+                    "review:interpretation:1"
+                  ],
+                  "eventInterpretation": "This sensor record observes process P execution; no statement about injection is available.",
+                  "facts": {
+                    "execution.observed": {
+                      "value": true,
+                      "assessment": "accepted",
+                      "method": "Review fixture declares a process start observation",
+                      "evidenceRefs": [
+                        "review:process-start:P"
+                      ]
+                    },
+                    "event.kind": {
+                      "value": "host-state",
+                      "assessment": "accepted",
+                      "method": "Declared state observation type",
+                      "evidenceRefs": [
+                        "review:state:1"
+                      ]
+                    },
+                    "state.value": {
+                      "value": false,
+                      "assessment": "accepted",
+                      "method": "Observed named service state",
+                      "evidenceRefs": [
+                        "review:state:1"
+                      ]
+                    }
+                  },
+                  "eventProfile": "host-state",
+                  "profileVersion": "0.1.0-draft.2",
+                  "assessmentMethod": "Review declared provenance/interpretation basis"
+                }
+              ]
+            },
+            "coverage": {},
+            "analysis": {
+              "hypothesis": {
+                "hypothesisId": "review:injection-test",
+                "subjects": {
+                  "hostId": "review-host:H",
+                  "stateKey": "service.enabled"
+                },
+                "interval": {
+                  "start": "2026-10-13T10:00:00Z",
+                  "end": "2026-10-13T11:00:00Z"
+                },
+                "statement": "The observed named service state was disabled",
+                "criterion": {
+                  "fact": "state.value",
+                  "equals": false,
+                  "method": "Compare the separately observed service state"
+                },
+                "alternatives": [
+                  "A normal mapped executable image",
+                  "An unobserved mapping"
+                ],
+                "eventProfile": "host-state",
+                "profileVersion": "0.1.0-draft.2"
+              }
+            },
+            "eventProfile": "host-state",
+            "profileVersion": "0.1.0-draft.2",
+            "entry": "Q151",
+            "focus": "control-plane actions",
+            "retention": {
+              "eventProfile": "host-state",
+              "profileVersion": "0.1.0-draft.2",
+              "subjects": {
+                "hostId": "review-host:H",
+                "stateKey": "service.enabled"
+              },
+              "interval": {
+                "start": "2026-10-13T10:00:00Z",
+                "end": "2026-10-13T11:00:00Z"
+              },
+              "hypothesisId": "review:injection-test",
+              "graphVersion": "0.20261013b",
+              "hypothesis": {
+                "hypothesisId": "review:injection-test",
+                "subjects": {
+                  "hostId": "review-host:H",
+                  "stateKey": "service.enabled"
+                },
+                "interval": {
+                  "start": "2026-10-13T10:00:00Z",
+                  "end": "2026-10-13T11:00:00Z"
+                },
+                "statement": "The observed named service state was disabled",
+                "criterion": {
+                  "fact": "state.value",
+                  "equals": false,
+                  "method": "Compare the separately observed service state"
+                },
+                "alternatives": [
+                  "A normal mapped executable image",
+                  "An unobserved mapping"
+                ],
+                "eventProfile": "host-state",
+                "profileVersion": "0.1.0-draft.2"
+              },
+              "closesInvestigation": false,
+              "focusDispositions": {
+                "control-plane actions": "assessed"
+              },
+              "assessments": [
+                {
+                  "eventProfile": "host-state",
+                  "profileVersion": "0.1.0-draft.2",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "stateKey": "service.enabled"
+                  },
+                  "interval": {
+                    "start": "2026-10-13T10:00:00Z",
+                    "end": "2026-10-13T11:00:00Z"
+                  },
+                  "hypothesisId": "review:injection-test",
+                  "nodeId": "Q65",
+                  "questionId": "urn:tensor:event-profile:host-state:0.1.0-draft.2:Q65",
+                  "answer": "no",
+                  "method": "Completed bound control-plane-material search",
+                  "evidenceRefs": [
+                    "review:search:state"
+                  ],
+                  "rationale": "No record in that material; state existence stays open",
+                  "limitations": [
+                    "Search is limited to declared material"
+                  ],
+                  "focus": "control-plane actions"
+                },
+                {
+                  "eventProfile": "host-state",
+                  "profileVersion": "0.1.0-draft.2",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "stateKey": "service.enabled"
+                  },
+                  "interval": {
+                    "start": "2026-10-13T10:00:00Z",
+                    "end": "2026-10-13T11:00:00Z"
+                  },
+                  "hypothesisId": "review:injection-test",
+                  "nodeId": "Q532",
+                  "questionId": "urn:tensor:event-profile:host-state:0.1.0-draft.2:Q532",
+                  "answer": "yes",
+                  "method": "Retain qualified host-state assessments",
+                  "evidenceRefs": [
+                    "review:search:state"
+                  ],
+                  "rationale": "Qualified terminal retained the bound state assessments and source focus",
+                  "limitations": [
+                    "Search is limited to declared material"
+                  ],
+                  "focus": "control-plane actions"
+                }
+              ]
+            }
+          },
+          "profile-corroboration-needs-declared-discriminator": {
+            "id": "independent-host-profile-copied-validation",
+            "domain": "Host",
+            "bindings": {
+              "hostId": "review-host:H",
+              "stateKey": "service.enabled"
+            },
+            "interval": {
+              "start": "2026-10-13T10:00:00Z",
+              "end": "2026-10-13T11:00:00Z"
+            },
+            "primaryOrigin": "sensor:A",
+            "primary": {
+              "accessible": true,
+              "searched": true,
+              "records": [
+                {
+                  "id": "sensor:A:record:1",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "stateKey": "service.enabled"
+                  },
+                  "eventTime": "2026-10-13T10:30:00Z",
+                  "clockUncertaintySeconds": 1,
+                  "origin": "sensor:A",
+                  "provenanceAssessment": "accepted",
+                  "interpretationAssessment": "accepted",
+                  "assessmentEvidenceRefs": [
+                    "review:acquisition:1",
+                    "review:interpretation:1"
+                  ],
+                  "eventInterpretation": "This sensor record observes process P execution; no statement about injection is available.",
+                  "facts": {
+                    "execution.observed": {
+                      "value": true,
+                      "assessment": "accepted",
+                      "method": "Review fixture declares a process start observation",
+                      "evidenceRefs": [
+                        "review:process-start:P"
+                      ]
+                    },
+                    "event.kind": {
+                      "value": "host-state",
+                      "assessment": "accepted",
+                      "method": "Declared state observation type",
+                      "evidenceRefs": [
+                        "review:state:1"
+                      ]
+                    },
+                    "state.value": {
+                      "value": false,
+                      "assessment": "accepted",
+                      "method": "Observed named service state",
+                      "evidenceRefs": [
+                        "review:state:1"
+                      ]
+                    },
+                    "event.id": {
+                      "value": "local:1",
+                      "assessment": "accepted",
+                      "method": "Read local counter in originating sensor",
+                      "evidenceRefs": [
+                        "review:process-start:P"
+                      ]
+                    }
+                  },
+                  "eventProfile": "host-state",
+                  "profileVersion": "0.1.0-draft.2",
+                  "assessmentMethod": "Review declared provenance/interpretation basis",
+                  "evidenceFacet": "artifact provenance"
+                }
+              ]
+            },
+            "independent": {
+              "accessible": true,
+              "searched": true,
+              "records": [
+                {
+                  "id": "sensor:B:record:1",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "stateKey": "service.enabled"
+                  },
+                  "eventTime": "2026-10-13T10:30:00Z",
+                  "clockUncertaintySeconds": 1,
+                  "origin": "sensor:B",
+                  "provenanceAssessment": "accepted",
+                  "interpretationAssessment": "accepted",
+                  "assessmentEvidenceRefs": [
+                    "review:acquisition:1",
+                    "review:interpretation:1"
+                  ],
+                  "eventInterpretation": "This sensor record observes process P execution; no statement about injection is available.",
+                  "facts": {
+                    "execution.observed": {
+                      "value": true,
+                      "assessment": "accepted",
+                      "method": "Review fixture declares a process start observation",
+                      "evidenceRefs": [
+                        "review:process-start:P"
+                      ]
+                    },
+                    "event.kind": {
+                      "value": "host-state",
+                      "assessment": "accepted",
+                      "method": "Declared state observation type",
+                      "evidenceRefs": [
+                        "review:state:1"
+                      ]
+                    },
+                    "state.value": {
+                      "value": false,
+                      "assessment": "accepted",
+                      "method": "Observed named service state",
+                      "evidenceRefs": [
+                        "review:state:1"
+                      ]
+                    },
+                    "event.id": {
+                      "value": "local:1",
+                      "assessment": "accepted",
+                      "method": "Read local counter in originating sensor",
+                      "evidenceRefs": [
+                        "review:process-start:P"
+                      ]
+                    }
+                  },
+                  "eventProfile": "host-state",
+                  "profileVersion": "0.1.0-draft.2",
+                  "assessmentMethod": "Review declared provenance/interpretation basis",
+                  "evidenceFacet": "artifact provenance"
+                }
+              ]
+            },
+            "coverage": {},
+            "analysis": {},
+            "eventProfile": "host-state",
+            "profileVersion": "0.1.0-draft.2",
+            "focus": "artifact provenance"
+          },
+          "fact-led-scope-and-pre-event-baseline": {
+            "id": "independent-host-validated-event-unknown-hypothesis",
+            "domain": "Host",
+            "bindings": {
+              "hostId": "review-host:H",
+              "processId": "review-process:P"
+            },
+            "interval": {
+              "start": "2026-10-13T10:00:00Z",
+              "end": "2026-10-13T11:00:00Z"
+            },
+            "primaryOrigin": "review:local-process-sensor",
+            "primary": {
+              "accessible": true,
+              "searched": true,
+              "records": [
+                {
+                  "id": "review:process-start:P",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "processId": "review-process:P"
+                  },
+                  "eventTime": "2026-10-13T10:30:00Z",
+                  "clockUncertaintySeconds": 1,
+                  "origin": "review:local-process-sensor",
+                  "provenanceAssessment": "accepted",
+                  "interpretationAssessment": "accepted",
+                  "assessmentEvidenceRefs": [
+                    "review:acquisition:1",
+                    "review:interpretation:1"
+                  ],
+                  "eventInterpretation": "This sensor record observes process P execution; no statement about injection is available.",
+                  "facts": {
+                    "execution.observed": {
+                      "value": true,
+                      "assessment": "accepted",
+                      "method": "Review fixture declares a process start observation",
+                      "evidenceRefs": [
+                        "review:process-start:P"
+                      ]
+                    },
+                    "metric.before": {
+                      "value": 1,
+                      "assessment": "accepted",
+                      "method": "Observed bounded process counter",
+                      "evidenceRefs": [
+                        "review:before"
+                      ]
+                    },
+                    "metric.after": {
+                      "value": 4,
+                      "assessment": "accepted",
+                      "method": "Observed bounded process counter",
+                      "evidenceRefs": [
+                        "review:after"
+                      ]
+                    },
+                    "unit.before": {
+                      "value": "bytes",
+                      "assessment": "accepted",
+                      "method": "Explicit independently authored comparator evidence",
+                      "evidenceRefs": [
+                        "review:metric:own-context"
+                      ]
+                    },
+                    "unit.after": {
+                      "value": "bytes",
+                      "assessment": "accepted",
+                      "method": "Explicit independently authored comparator evidence",
+                      "evidenceRefs": [
+                        "review:metric:own-context"
+                      ]
+                    },
+                    "metric.name.before": {
+                      "value": "process-output",
+                      "assessment": "accepted",
+                      "method": "Explicit independently authored comparator evidence",
+                      "evidenceRefs": [
+                        "review:metric:own-context"
+                      ]
+                    },
+                    "metric.name.after": {
+                      "value": "process-output",
+                      "assessment": "accepted",
+                      "method": "Explicit independently authored comparator evidence",
+                      "evidenceRefs": [
+                        "review:metric:own-context"
+                      ]
+                    },
+                    "time.before": {
+                      "value": "2026-10-13T09:30:00Z",
+                      "assessment": "accepted",
+                      "method": "Explicit independently authored comparator evidence",
+                      "evidenceRefs": [
+                        "review:metric:own-context"
+                      ]
+                    },
+                    "time.after": {
+                      "value": "2026-10-13T10:45:00Z",
+                      "assessment": "accepted",
+                      "method": "Explicit independently authored comparator evidence",
+                      "evidenceRefs": [
+                        "review:metric:own-context"
+                      ]
+                    }
+                  },
+                  "evidenceFacet": "endpoint state changes"
+                }
+              ]
+            },
+            "independent": {
+              "accessible": false,
+              "searched": false,
+              "records": []
+            },
+            "coverage": {},
+            "analysis": {
+              "scope": {
+                "subjects": {
+                  "hostId": "review-host:H",
+                  "processId": "review-process:P"
+                },
+                "interval": {
+                  "start": "2026-10-13T10:00:00Z",
+                  "end": "2026-10-13T11:00:00Z"
+                },
+                "hypothesisId": null,
+                "method": "Record independent process context",
+                "evidenceRefs": [
+                  "review:process-start:P"
+                ],
+                "claimsCompletePopulation": false,
+                "entities": [
+                  {
+                    "domain": "Host",
+                    "subjectId": "review-host:H",
+                    "subjects": {
+                      "hostId": "review-host:H",
+                      "processId": "review-process:P"
+                    },
+                    "disposition": "included",
+                    "evidenceRefs": [
+                      "review:process-start:P"
+                    ]
+                  }
+                ]
+              },
+              "impact": {
+                "subjects": {
+                  "hostId": "review-host:H",
+                  "processId": "review-process:P"
+                },
+                "interval": {
+                  "start": "2026-10-13T10:00:00Z",
+                  "end": "2026-10-13T11:00:00Z"
+                },
+                "hypothesisId": null,
+                "method": "Record independent process context",
+                "evidenceRefs": [
+                  "review:process-start:P"
+                ],
+                "claimKind": "observed-metric-change",
+                "metricId": "process-output",
+                "unit": "bytes",
+                "baselineFact": "metric.before",
+                "observedFact": "metric.after",
+                "baselineUnitFact": "unit.before",
+                "observedUnitFact": "unit.after",
+                "baselineMetricFact": "metric.name.before",
+                "observedMetricFact": "metric.name.after",
+                "baselineTimeFact": "time.before",
+                "observedTimeFact": "time.after",
+                "baselineInterval": {
+                  "start": "2026-10-13T09:00:00Z",
+                  "end": "2026-10-13T10:00:00Z"
+                }
+              }
+            },
+            "semanticReview": true,
+            "focus": "endpoint state changes",
+            "retention": {
+              "subjects": {
+                "hostId": "review-host:H",
+                "processId": "review-process:P"
+              },
+              "interval": {
+                "start": "2026-10-13T10:00:00Z",
+                "end": "2026-10-13T11:00:00Z"
+              },
+              "graphVersion": "0.20261013b",
+              "hypothesis": {
+                "hypothesisId": "review:injection-test",
+                "subjects": {
+                  "hostId": "review-host:H",
+                  "processId": "review-process:P"
+                },
+                "interval": {
+                  "start": "2026-10-13T10:00:00Z",
+                  "end": "2026-10-13T11:00:00Z"
+                },
+                "statement": "Process P received an injected executable memory mapping.",
+                "criterion": {
+                  "fact": "memory.injected-mapping",
+                  "equals": true,
+                  "method": "Assess mapped executable page evidence"
+                },
+                "alternatives": [
+                  "A normal mapped executable image",
+                  "An unobserved mapping"
+                ]
+              },
+              "closesInvestigation": false,
+              "focusDispositions": {
+                "endpoint state changes": "assessed"
+              },
+              "assessments": [
+                {
+                  "nodeId": "Q2",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "processId": "review-process:P"
+                  },
+                  "interval": {
+                    "start": "2026-10-13T10:00:00Z",
+                    "end": "2026-10-13T11:00:00Z"
+                  },
+                  "hypothesisId": "review:injection-test",
+                  "focus": "endpoint state changes",
+                  "answer": "yes",
+                  "method": "Independent reviewer declared retained observation/validation/hypothesis assessment",
+                  "rationale": "Matching process execution record observed",
+                  "evidenceRefs": [
+                    "review:process-start:P",
+                    "review:retained-basis"
+                  ],
+                  "limitations": [
+                    "Mapped-memory evidence is unavailable; process execution remains observed"
+                  ]
+                },
+                {
+                  "nodeId": "Q156",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "processId": "review-process:P"
+                  },
+                  "interval": {
+                    "start": "2026-10-13T10:00:00Z",
+                    "end": "2026-10-13T11:00:00Z"
+                  },
+                  "hypothesisId": "review:injection-test",
+                  "focus": "endpoint state changes",
+                  "answer": "yes",
+                  "method": "Independent reviewer declared retained observation/validation/hypothesis assessment",
+                  "rationale": "Separate cited provenance and interpretation basis accepted",
+                  "evidenceRefs": [
+                    "review:process-start:P",
+                    "review:retained-basis"
+                  ],
+                  "limitations": [
+                    "Mapped-memory evidence is unavailable; process execution remains observed"
+                  ]
+                },
+                {
+                  "nodeId": "Q214",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "processId": "review-process:P"
+                  },
+                  "interval": {
+                    "start": "2026-10-13T10:00:00Z",
+                    "end": "2026-10-13T11:00:00Z"
+                  },
+                  "hypothesisId": "review:injection-test",
+                  "focus": "endpoint state changes",
+                  "answer": "unknown",
+                  "method": "Independent reviewer declared retained observation/validation/hypothesis assessment",
+                  "rationale": "Declared injection discriminator unavailable",
+                  "evidenceRefs": [
+                    "review:process-start:P",
+                    "review:retained-basis"
+                  ],
+                  "limitations": [
+                    "Mapped-memory evidence is unavailable; process execution remains observed"
+                  ]
+                }
+              ]
+            }
+          },
+          "metric-no-retained-as-no": {
+            "id": "independent-host-validated-event-unknown-hypothesis",
+            "domain": "Host",
+            "bindings": {
+              "hostId": "review-host:H",
+              "processId": "review-process:P"
+            },
+            "interval": {
+              "start": "2026-10-13T10:00:00Z",
+              "end": "2026-10-13T11:00:00Z"
+            },
+            "primaryOrigin": "review:local-process-sensor",
+            "primary": {
+              "accessible": true,
+              "searched": true,
+              "records": [
+                {
+                  "id": "review:process-start:P",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "processId": "review-process:P"
+                  },
+                  "eventTime": "2026-10-13T10:30:00Z",
+                  "clockUncertaintySeconds": 1,
+                  "origin": "review:local-process-sensor",
+                  "provenanceAssessment": "accepted",
+                  "interpretationAssessment": "accepted",
+                  "assessmentEvidenceRefs": [
+                    "review:acquisition:1",
+                    "review:interpretation:1"
+                  ],
+                  "eventInterpretation": "This sensor record observes process P execution; no statement about injection is available.",
+                  "facts": {
+                    "execution.observed": {
+                      "value": true,
+                      "assessment": "accepted",
+                      "method": "Review fixture declares a process start observation",
+                      "evidenceRefs": [
+                        "review:process-start:P"
+                      ]
+                    },
+                    "metric.before": {
+                      "value": 1,
+                      "assessment": "accepted",
+                      "method": "Observed bounded process counter",
+                      "evidenceRefs": [
+                        "review:before"
+                      ]
+                    },
+                    "metric.after": {
+                      "value": 1,
+                      "assessment": "accepted",
+                      "method": "Observed bounded process counter",
+                      "evidenceRefs": [
+                        "review:after"
+                      ]
+                    },
+                    "unit.before": {
+                      "value": "bytes",
+                      "assessment": "accepted",
+                      "method": "Explicit independently authored comparator evidence",
+                      "evidenceRefs": [
+                        "review:metric:own-context"
+                      ]
+                    },
+                    "unit.after": {
+                      "value": "bytes",
+                      "assessment": "accepted",
+                      "method": "Explicit independently authored comparator evidence",
+                      "evidenceRefs": [
+                        "review:metric:own-context"
+                      ]
+                    },
+                    "metric.name.before": {
+                      "value": "process-output",
+                      "assessment": "accepted",
+                      "method": "Explicit independently authored comparator evidence",
+                      "evidenceRefs": [
+                        "review:metric:own-context"
+                      ]
+                    },
+                    "metric.name.after": {
+                      "value": "process-output",
+                      "assessment": "accepted",
+                      "method": "Explicit independently authored comparator evidence",
+                      "evidenceRefs": [
+                        "review:metric:own-context"
+                      ]
+                    },
+                    "time.before": {
+                      "value": "2026-10-13T09:30:00Z",
+                      "assessment": "accepted",
+                      "method": "Explicit independently authored comparator evidence",
+                      "evidenceRefs": [
+                        "review:metric:own-context"
+                      ]
+                    },
+                    "time.after": {
+                      "value": "2026-10-13T10:45:00Z",
+                      "assessment": "accepted",
+                      "method": "Explicit independently authored comparator evidence",
+                      "evidenceRefs": [
+                        "review:metric:own-context"
+                      ]
+                    }
+                  },
+                  "evidenceFacet": "endpoint state changes"
+                }
+              ]
+            },
+            "independent": {
+              "accessible": false,
+              "searched": false,
+              "records": []
+            },
+            "coverage": {},
+            "analysis": {
+              "scope": {
+                "subjects": {
+                  "hostId": "review-host:H",
+                  "processId": "review-process:P"
+                },
+                "interval": {
+                  "start": "2026-10-13T10:00:00Z",
+                  "end": "2026-10-13T11:00:00Z"
+                },
+                "hypothesisId": null,
+                "method": "Record independent process context",
+                "evidenceRefs": [
+                  "review:process-start:P"
+                ],
+                "claimsCompletePopulation": false,
+                "entities": [
+                  {
+                    "domain": "Host",
+                    "subjectId": "review-host:H",
+                    "subjects": {
+                      "hostId": "review-host:H",
+                      "processId": "review-process:P"
+                    },
+                    "disposition": "included",
+                    "evidenceRefs": [
+                      "review:process-start:P"
+                    ]
+                  }
+                ]
+              },
+              "impact": {
+                "subjects": {
+                  "hostId": "review-host:H",
+                  "processId": "review-process:P"
+                },
+                "interval": {
+                  "start": "2026-10-13T10:00:00Z",
+                  "end": "2026-10-13T11:00:00Z"
+                },
+                "hypothesisId": null,
+                "method": "Record independent process context",
+                "evidenceRefs": [
+                  "review:process-start:P"
+                ],
+                "claimKind": "observed-metric-change",
+                "metricId": "process-output",
+                "unit": "bytes",
+                "baselineFact": "metric.before",
+                "observedFact": "metric.after",
+                "baselineUnitFact": "unit.before",
+                "observedUnitFact": "unit.after",
+                "baselineMetricFact": "metric.name.before",
+                "observedMetricFact": "metric.name.after",
+                "baselineTimeFact": "time.before",
+                "observedTimeFact": "time.after",
+                "baselineInterval": {
+                  "start": "2026-10-13T09:00:00Z",
+                  "end": "2026-10-13T10:00:00Z"
+                }
+              }
+            },
+            "semanticReview": true,
+            "focus": "endpoint state changes",
+            "retention": {
+              "subjects": {
+                "hostId": "review-host:H",
+                "processId": "review-process:P"
+              },
+              "interval": {
+                "start": "2026-10-13T10:00:00Z",
+                "end": "2026-10-13T11:00:00Z"
+              },
+              "graphVersion": "0.20261013b",
+              "hypothesis": {
+                "hypothesisId": "review:injection-test",
+                "subjects": {
+                  "hostId": "review-host:H",
+                  "processId": "review-process:P"
+                },
+                "interval": {
+                  "start": "2026-10-13T10:00:00Z",
+                  "end": "2026-10-13T11:00:00Z"
+                },
+                "statement": "Process P received an injected executable memory mapping.",
+                "criterion": {
+                  "fact": "memory.injected-mapping",
+                  "equals": true,
+                  "method": "Assess mapped executable page evidence"
+                },
+                "alternatives": [
+                  "A normal mapped executable image",
+                  "An unobserved mapping"
+                ]
+              },
+              "closesInvestigation": false,
+              "focusDispositions": {
+                "endpoint state changes": "assessed"
+              },
+              "assessments": [
+                {
+                  "nodeId": "Q2",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "processId": "review-process:P"
+                  },
+                  "interval": {
+                    "start": "2026-10-13T10:00:00Z",
+                    "end": "2026-10-13T11:00:00Z"
+                  },
+                  "hypothesisId": "review:injection-test",
+                  "focus": "endpoint state changes",
+                  "answer": "yes",
+                  "method": "Independent reviewer declared retained observation/validation/hypothesis assessment",
+                  "rationale": "Matching process execution record observed",
+                  "evidenceRefs": [
+                    "review:process-start:P",
+                    "review:retained-basis"
+                  ],
+                  "limitations": [
+                    "Mapped-memory evidence is unavailable; process execution remains observed"
+                  ]
+                },
+                {
+                  "nodeId": "Q156",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "processId": "review-process:P"
+                  },
+                  "interval": {
+                    "start": "2026-10-13T10:00:00Z",
+                    "end": "2026-10-13T11:00:00Z"
+                  },
+                  "hypothesisId": "review:injection-test",
+                  "focus": "endpoint state changes",
+                  "answer": "yes",
+                  "method": "Independent reviewer declared retained observation/validation/hypothesis assessment",
+                  "rationale": "Separate cited provenance and interpretation basis accepted",
+                  "evidenceRefs": [
+                    "review:process-start:P",
+                    "review:retained-basis"
+                  ],
+                  "limitations": [
+                    "Mapped-memory evidence is unavailable; process execution remains observed"
+                  ]
+                },
+                {
+                  "nodeId": "Q214",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "processId": "review-process:P"
+                  },
+                  "interval": {
+                    "start": "2026-10-13T10:00:00Z",
+                    "end": "2026-10-13T11:00:00Z"
+                  },
+                  "hypothesisId": "review:injection-test",
+                  "focus": "endpoint state changes",
+                  "answer": "unknown",
+                  "method": "Independent reviewer declared retained observation/validation/hypothesis assessment",
+                  "rationale": "Declared injection discriminator unavailable",
+                  "evidenceRefs": [
+                    "review:process-start:P",
+                    "review:retained-basis"
+                  ],
+                  "limitations": [
+                    "Mapped-memory evidence is unavailable; process execution remains observed"
+                  ]
+                }
+              ]
+            }
+          },
+          "metric-unknown-retained-as-unknown": {
+            "id": "independent-host-validated-event-unknown-hypothesis",
+            "domain": "Host",
+            "bindings": {
+              "hostId": "review-host:H",
+              "processId": "review-process:P"
+            },
+            "interval": {
+              "start": "2026-10-13T10:00:00Z",
+              "end": "2026-10-13T11:00:00Z"
+            },
+            "primaryOrigin": "review:local-process-sensor",
+            "primary": {
+              "accessible": true,
+              "searched": true,
+              "records": [
+                {
+                  "id": "review:process-start:P",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "processId": "review-process:P"
+                  },
+                  "eventTime": "2026-10-13T10:30:00Z",
+                  "clockUncertaintySeconds": 1,
+                  "origin": "review:local-process-sensor",
+                  "provenanceAssessment": "accepted",
+                  "interpretationAssessment": "accepted",
+                  "assessmentEvidenceRefs": [
+                    "review:acquisition:1",
+                    "review:interpretation:1"
+                  ],
+                  "eventInterpretation": "This sensor record observes process P execution; no statement about injection is available.",
+                  "facts": {
+                    "execution.observed": {
+                      "value": true,
+                      "assessment": "accepted",
+                      "method": "Review fixture declares a process start observation",
+                      "evidenceRefs": [
+                        "review:process-start:P"
+                      ]
+                    },
+                    "metric.before": {
+                      "value": 1,
+                      "assessment": "accepted",
+                      "method": "Observed bounded process counter",
+                      "evidenceRefs": [
+                        "review:before"
+                      ]
+                    },
+                    "metric.after": {
+                      "value": 4,
+                      "assessment": "accepted",
+                      "method": "Observed bounded process counter",
+                      "evidenceRefs": [
+                        "review:after"
+                      ]
+                    },
+                    "unit.after": {
+                      "value": "bytes",
+                      "assessment": "accepted",
+                      "method": "Explicit independently authored comparator evidence",
+                      "evidenceRefs": [
+                        "review:metric:own-context"
+                      ]
+                    },
+                    "metric.name.before": {
+                      "value": "process-output",
+                      "assessment": "accepted",
+                      "method": "Explicit independently authored comparator evidence",
+                      "evidenceRefs": [
+                        "review:metric:own-context"
+                      ]
+                    },
+                    "metric.name.after": {
+                      "value": "process-output",
+                      "assessment": "accepted",
+                      "method": "Explicit independently authored comparator evidence",
+                      "evidenceRefs": [
+                        "review:metric:own-context"
+                      ]
+                    },
+                    "time.before": {
+                      "value": "2026-10-13T09:30:00Z",
+                      "assessment": "accepted",
+                      "method": "Explicit independently authored comparator evidence",
+                      "evidenceRefs": [
+                        "review:metric:own-context"
+                      ]
+                    },
+                    "time.after": {
+                      "value": "2026-10-13T10:45:00Z",
+                      "assessment": "accepted",
+                      "method": "Explicit independently authored comparator evidence",
+                      "evidenceRefs": [
+                        "review:metric:own-context"
+                      ]
+                    }
+                  },
+                  "evidenceFacet": "endpoint state changes"
+                }
+              ]
+            },
+            "independent": {
+              "accessible": false,
+              "searched": false,
+              "records": []
+            },
+            "coverage": {},
+            "analysis": {
+              "scope": {
+                "subjects": {
+                  "hostId": "review-host:H",
+                  "processId": "review-process:P"
+                },
+                "interval": {
+                  "start": "2026-10-13T10:00:00Z",
+                  "end": "2026-10-13T11:00:00Z"
+                },
+                "hypothesisId": null,
+                "method": "Record independent process context",
+                "evidenceRefs": [
+                  "review:process-start:P"
+                ],
+                "claimsCompletePopulation": false,
+                "entities": [
+                  {
+                    "domain": "Host",
+                    "subjectId": "review-host:H",
+                    "subjects": {
+                      "hostId": "review-host:H",
+                      "processId": "review-process:P"
+                    },
+                    "disposition": "included",
+                    "evidenceRefs": [
+                      "review:process-start:P"
+                    ]
+                  }
+                ]
+              },
+              "impact": {
+                "subjects": {
+                  "hostId": "review-host:H",
+                  "processId": "review-process:P"
+                },
+                "interval": {
+                  "start": "2026-10-13T10:00:00Z",
+                  "end": "2026-10-13T11:00:00Z"
+                },
+                "hypothesisId": null,
+                "method": "Record independent process context",
+                "evidenceRefs": [
+                  "review:process-start:P"
+                ],
+                "claimKind": "observed-metric-change",
+                "metricId": "process-output",
+                "unit": "bytes",
+                "baselineFact": "metric.before",
+                "observedFact": "metric.after",
+                "baselineUnitFact": "unit.before",
+                "observedUnitFact": "unit.after",
+                "baselineMetricFact": "metric.name.before",
+                "observedMetricFact": "metric.name.after",
+                "baselineTimeFact": "time.before",
+                "observedTimeFact": "time.after",
+                "baselineInterval": {
+                  "start": "2026-10-13T09:00:00Z",
+                  "end": "2026-10-13T10:00:00Z"
+                }
+              }
+            },
+            "semanticReview": true,
+            "focus": "endpoint state changes",
+            "retention": {
+              "subjects": {
+                "hostId": "review-host:H",
+                "processId": "review-process:P"
+              },
+              "interval": {
+                "start": "2026-10-13T10:00:00Z",
+                "end": "2026-10-13T11:00:00Z"
+              },
+              "graphVersion": "0.20261013b",
+              "hypothesis": {
+                "hypothesisId": "review:injection-test",
+                "subjects": {
+                  "hostId": "review-host:H",
+                  "processId": "review-process:P"
+                },
+                "interval": {
+                  "start": "2026-10-13T10:00:00Z",
+                  "end": "2026-10-13T11:00:00Z"
+                },
+                "statement": "Process P received an injected executable memory mapping.",
+                "criterion": {
+                  "fact": "memory.injected-mapping",
+                  "equals": true,
+                  "method": "Assess mapped executable page evidence"
+                },
+                "alternatives": [
+                  "A normal mapped executable image",
+                  "An unobserved mapping"
+                ]
+              },
+              "closesInvestigation": false,
+              "focusDispositions": {
+                "endpoint state changes": "assessed"
+              },
+              "assessments": [
+                {
+                  "nodeId": "Q2",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "processId": "review-process:P"
+                  },
+                  "interval": {
+                    "start": "2026-10-13T10:00:00Z",
+                    "end": "2026-10-13T11:00:00Z"
+                  },
+                  "hypothesisId": "review:injection-test",
+                  "focus": "endpoint state changes",
+                  "answer": "yes",
+                  "method": "Independent reviewer declared retained observation/validation/hypothesis assessment",
+                  "rationale": "Matching process execution record observed",
+                  "evidenceRefs": [
+                    "review:process-start:P",
+                    "review:retained-basis"
+                  ],
+                  "limitations": [
+                    "Mapped-memory evidence is unavailable; process execution remains observed"
+                  ]
+                },
+                {
+                  "nodeId": "Q156",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "processId": "review-process:P"
+                  },
+                  "interval": {
+                    "start": "2026-10-13T10:00:00Z",
+                    "end": "2026-10-13T11:00:00Z"
+                  },
+                  "hypothesisId": "review:injection-test",
+                  "focus": "endpoint state changes",
+                  "answer": "yes",
+                  "method": "Independent reviewer declared retained observation/validation/hypothesis assessment",
+                  "rationale": "Separate cited provenance and interpretation basis accepted",
+                  "evidenceRefs": [
+                    "review:process-start:P",
+                    "review:retained-basis"
+                  ],
+                  "limitations": [
+                    "Mapped-memory evidence is unavailable; process execution remains observed"
+                  ]
+                },
+                {
+                  "nodeId": "Q214",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "processId": "review-process:P"
+                  },
+                  "interval": {
+                    "start": "2026-10-13T10:00:00Z",
+                    "end": "2026-10-13T11:00:00Z"
+                  },
+                  "hypothesisId": "review:injection-test",
+                  "focus": "endpoint state changes",
+                  "answer": "unknown",
+                  "method": "Independent reviewer declared retained observation/validation/hypothesis assessment",
+                  "rationale": "Declared injection discriminator unavailable",
+                  "evidenceRefs": [
+                    "review:process-start:P",
+                    "review:retained-basis"
+                  ],
+                  "limitations": [
+                    "Mapped-memory evidence is unavailable; process execution remains observed"
+                  ]
+                }
+              ]
+            }
+          },
+          "base-fixed-focus-laundering": {
+            "id": "independent-host-validated-event-unknown-hypothesis",
+            "domain": "Host",
+            "bindings": {
+              "hostId": "review-host:H",
+              "processId": "review-process:P"
+            },
+            "interval": {
+              "start": "2026-10-13T10:00:00Z",
+              "end": "2026-10-13T11:00:00Z"
+            },
+            "primaryOrigin": "review:local-process-sensor",
+            "primary": {
+              "accessible": true,
+              "searched": true,
+              "records": [
+                {
+                  "id": "review:process-start:P",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "processId": "review-process:P"
+                  },
+                  "eventTime": "2026-10-13T10:30:00Z",
+                  "clockUncertaintySeconds": 1,
+                  "origin": "review:local-process-sensor",
+                  "provenanceAssessment": "accepted",
+                  "interpretationAssessment": "accepted",
+                  "assessmentEvidenceRefs": [
+                    "review:acquisition:1",
+                    "review:interpretation:1"
+                  ],
+                  "eventInterpretation": "This sensor record observes process P execution; no statement about injection is available.",
+                  "facts": {
+                    "execution.observed": {
+                      "value": true,
+                      "assessment": "accepted",
+                      "method": "Review fixture declares a process start observation",
+                      "evidenceRefs": [
+                        "review:process-start:P"
+                      ]
+                    }
+                  },
+                  "evidenceFacet": "transport metadata"
+                }
+              ]
+            },
+            "independent": {
+              "accessible": false,
+              "searched": false,
+              "records": []
+            },
+            "coverage": {},
+            "analysis": {
+              "hypothesis": {
+                "hypothesisId": "review:injection-test",
+                "subjects": {
+                  "hostId": "review-host:H",
+                  "processId": "review-process:P"
+                },
+                "interval": {
+                  "start": "2026-10-13T10:00:00Z",
+                  "end": "2026-10-13T11:00:00Z"
+                },
+                "statement": "Process P received an injected executable memory mapping.",
+                "criterion": {
+                  "fact": "memory.injected-mapping",
+                  "equals": true,
+                  "method": "Assess mapped executable page evidence"
+                },
+                "alternatives": [
+                  "A normal mapped executable image",
+                  "An unobserved mapping"
+                ]
+              }
+            },
+            "focus": "artifact provenance",
+            "retainedTrace": [
+              {
+                "nodeId": "Q58",
+                "answer": "no"
+              }
+            ],
+            "retention": {
+              "subjects": {
+                "hostId": "review-host:H",
+                "processId": "review-process:P"
+              },
+              "interval": {
+                "start": "2026-10-13T10:00:00Z",
+                "end": "2026-10-13T11:00:00Z"
+              },
+              "graphVersion": "0.20261013b",
+              "closesInvestigation": false,
+              "assessments": [
+                {
+                  "nodeId": "Q58",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "processId": "review-process:P"
+                  },
+                  "interval": {
+                    "start": "2026-10-13T10:00:00Z",
+                    "end": "2026-10-13T11:00:00Z"
+                  },
+                  "hypothesisId": "review:injection-test",
+                  "answer": "no",
+                  "method": "Declared completed transport-material search",
+                  "rationale": "No matching record in the examined transport source",
+                  "evidenceRefs": [
+                    "review:search:transport"
+                  ],
+                  "limitations": [
+                    "Another source may have evidence"
+                  ],
+                  "focus": "artifact provenance"
+                }
+              ],
+              "focusDispositions": {
+                "artifact provenance": "assessed"
+              },
+              "hypothesis": {
+                "hypothesisId": "review:injection-test",
+                "subjects": {
+                  "hostId": "review-host:H",
+                  "processId": "review-process:P"
+                },
+                "interval": {
+                  "start": "2026-10-13T10:00:00Z",
+                  "end": "2026-10-13T11:00:00Z"
+                },
+                "statement": "Process P received an injected executable memory mapping.",
+                "criterion": {
+                  "fact": "memory.injected-mapping",
+                  "equals": true,
+                  "method": "Assess mapped executable page evidence"
+                },
+                "alternatives": [
+                  "A normal mapped executable image",
+                  "An unobserved mapping"
+                ]
+              }
+            },
+            "semanticReview": true
+          },
+          "base-extra-focus-unsupported-assessment": {
+            "id": "independent-host-validated-event-unknown-hypothesis",
+            "domain": "Host",
+            "bindings": {
+              "hostId": "review-host:H",
+              "processId": "review-process:P"
+            },
+            "interval": {
+              "start": "2026-10-13T10:00:00Z",
+              "end": "2026-10-13T11:00:00Z"
+            },
+            "primaryOrigin": "review:local-process-sensor",
+            "primary": {
+              "accessible": true,
+              "searched": true,
+              "records": [
+                {
+                  "id": "review:process-start:P",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "processId": "review-process:P"
+                  },
+                  "eventTime": "2026-10-13T10:30:00Z",
+                  "clockUncertaintySeconds": 1,
+                  "origin": "review:local-process-sensor",
+                  "provenanceAssessment": "accepted",
+                  "interpretationAssessment": "accepted",
+                  "assessmentEvidenceRefs": [
+                    "review:acquisition:1",
+                    "review:interpretation:1"
+                  ],
+                  "eventInterpretation": "This sensor record observes process P execution; no statement about injection is available.",
+                  "facts": {
+                    "execution.observed": {
+                      "value": true,
+                      "assessment": "accepted",
+                      "method": "Review fixture declares a process start observation",
+                      "evidenceRefs": [
+                        "review:process-start:P"
+                      ]
+                    }
+                  },
+                  "evidenceFacet": "transport metadata"
+                }
+              ]
+            },
+            "independent": {
+              "accessible": false,
+              "searched": false,
+              "records": []
+            },
+            "coverage": {},
+            "analysis": {
+              "hypothesis": {
+                "hypothesisId": "review:injection-test",
+                "subjects": {
+                  "hostId": "review-host:H",
+                  "processId": "review-process:P"
+                },
+                "interval": {
+                  "start": "2026-10-13T10:00:00Z",
+                  "end": "2026-10-13T11:00:00Z"
+                },
+                "statement": "Process P received an injected executable memory mapping.",
+                "criterion": {
+                  "fact": "memory.injected-mapping",
+                  "equals": true,
+                  "method": "Assess mapped executable page evidence"
+                },
+                "alternatives": [
+                  "A normal mapped executable image",
+                  "An unobserved mapping"
+                ]
+              }
+            },
+            "focus": "transport metadata",
+            "retainedTrace": [
+              {
+                "nodeId": "Q58",
+                "answer": "no"
+              }
+            ],
+            "retention": {
+              "subjects": {
+                "hostId": "review-host:H",
+                "processId": "review-process:P"
+              },
+              "interval": {
+                "start": "2026-10-13T10:00:00Z",
+                "end": "2026-10-13T11:00:00Z"
+              },
+              "graphVersion": "0.20261013b",
+              "closesInvestigation": false,
+              "assessments": [
+                {
+                  "nodeId": "Q58",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "processId": "review-process:P"
+                  },
+                  "interval": {
+                    "start": "2026-10-13T10:00:00Z",
+                    "end": "2026-10-13T11:00:00Z"
+                  },
+                  "hypothesisId": "review:injection-test",
+                  "answer": "no",
+                  "method": "Declared completed transport-material search",
+                  "rationale": "No matching record in the examined transport source",
+                  "evidenceRefs": [
+                    "review:search:transport"
+                  ],
+                  "limitations": [
+                    "Another source may have evidence"
+                  ]
+                }
+              ],
+              "focusDispositions": {
+                "transport metadata": "assessed",
+                "artifact provenance": "assessed"
+              },
+              "hypothesis": {
+                "hypothesisId": "review:injection-test",
+                "subjects": {
+                  "hostId": "review-host:H",
+                  "processId": "review-process:P"
+                },
+                "interval": {
+                  "start": "2026-10-13T10:00:00Z",
+                  "end": "2026-10-13T11:00:00Z"
+                },
+                "statement": "Process P received an injected executable memory mapping.",
+                "criterion": {
+                  "fact": "memory.injected-mapping",
+                  "equals": true,
+                  "method": "Assess mapped executable page evidence"
+                },
+                "alternatives": [
+                  "A normal mapped executable image",
+                  "An unobserved mapping"
+                ]
+              }
+            },
+            "semanticReview": true
+          },
+          "early-unknown-discovery-lead": {
+            "_source": {
+              "nodeId": "Q2",
+              "answer": "unknown",
+              "graphVersion": "0.20261013b",
+              "domain": "Host",
+              "bindings": {
+                "hostId": "review-host:H"
+              },
+              "interval": null,
+              "missingContextFields": [
+                "processId",
+                "interval"
+              ],
+              "evidenceRefs": [
+                "review:unavailable-host-material"
+              ],
+              "rationale": "Recorded host-material limitation without any target assertion"
+            },
+            "Q6": {
+              "domain": "Application",
+              "questionId": "urn:tensor:event-profile:application-agent-action:0.1.0-draft.2:Q6",
+              "graphVersion": "0.20261013b",
+              "eventProfile": "application-agent-action",
+              "profileVersion": "0.1.0-draft.2",
+              "bindings": {
+                "applicationId": "review:app",
+                "agentId": "review:agent",
+                "actionId": "review:action"
+              },
+              "interval": {
+                "start": "2026-10-13T10:00:00Z",
+                "end": "2026-10-13T11:00:00Z"
+              },
+              "discoveryEvidenceRefs": [
+                "review:separate-agent-action-observation"
+              ],
+              "discoveryRationale": "Independently bound agent action record suggests assessing this action; host process remains unknown"
+            }
+          },
+          "early-lead-missing-discovery-rejected": {
+            "_source": {
+              "nodeId": "Q2",
+              "answer": "unknown",
+              "graphVersion": "0.20261013b",
+              "domain": "Host",
+              "bindings": {
+                "hostId": "review-host:H"
+              },
+              "interval": null,
+              "missingContextFields": [
+                "processId",
+                "interval"
+              ],
+              "evidenceRefs": [
+                "review:unavailable-host-material"
+              ],
+              "rationale": "Recorded host-material limitation without any target assertion"
+            },
+            "Q6": {
+              "domain": "Application",
+              "questionId": "urn:tensor:event-profile:application-agent-action:0.1.0-draft.2:Q6",
+              "graphVersion": "0.20261013b",
+              "eventProfile": "application-agent-action",
+              "profileVersion": "0.1.0-draft.2",
+              "bindings": {
+                "applicationId": "review:app",
+                "agentId": "review:agent",
+                "actionId": "review:action"
+              },
+              "interval": {
+                "start": "2026-10-13T10:00:00Z",
+                "end": "2026-10-13T11:00:00Z"
+              },
+              "discoveryRationale": "Independently bound agent action record suggests assessing this action; host process remains unknown"
+            }
+          },
+          "qualified-lead-no-fabricated-base-binding": {
+            "_source": {
+              "nodeId": "Q2",
+              "answer": "unknown",
+              "graphVersion": "0.20261013b",
+              "domain": "Host",
+              "bindings": {
+                "hostId": "review-host:H"
+              },
+              "interval": null,
+              "missingContextFields": [
+                "processId",
+                "interval"
+              ],
+              "evidenceRefs": [
+                "review:unavailable-host-material"
+              ],
+              "rationale": "Recorded host-material limitation without any target assertion"
+            },
+            "Q6": {
+              "domain": "Application",
+              "questionId": "urn:tensor:event-profile:application-agent-action:0.1.0-draft.2:Q6",
+              "graphVersion": "0.20261013b",
+              "eventProfile": "application-agent-action",
+              "profileVersion": "0.1.0-draft.2",
+              "bindings": {
+                "applicationId": "review:app",
+                "requestId": "fabricated:request"
+              },
+              "interval": {
+                "start": "2026-10-13T10:00:00Z",
+                "end": "2026-10-13T11:00:00Z"
+              },
+              "discoveryEvidenceRefs": [
+                "review:separate-agent-action-observation"
+              ],
+              "discoveryRationale": "Independently bound agent action record suggests assessing this action; host process remains unknown"
+            }
+          },
+          "direct-independent-lead-own-lineage": {
+            "_source": {
+              "nodeId": "Q2",
+              "answer": "yes",
+              "graphVersion": "0.20261013b",
+              "domain": "Host",
+              "bindings": {
+                "hostId": "review-host:H",
+                "processId": "review-process:P"
+              },
+              "interval": {
+                "start": "2026-10-13T10:00:00Z",
+                "end": "2026-10-13T11:00:00Z"
+              },
+              "evidenceRefs": [
+                "review:primary:P"
+              ],
+              "rationale": "Bound process execution recorded",
+              "recordIds": [
+                "review:primary:P"
+              ],
+              "materialOrigins": [
+                "review:sensor:A"
+              ]
+            },
+            "Q151": {
+              "domain": "Host",
+              "questionId": "Q151",
+              "graphVersion": "0.20261013b",
+              "bindings": {
+                "hostId": "review-host:H",
+                "processId": "review-process:P"
+              },
+              "interval": {
+                "start": "2026-10-13T10:00:00Z",
+                "end": "2026-10-13T11:00:00Z"
+              },
+              "evidenceRefs": [
+                "review:independent:P"
+              ],
+              "method": "Assess independent process observation",
+              "materialOrigin": "review:sensor:B",
+              "recordId": "review:independent:P",
+              "materialDescription": "Separate originating process observation"
+            }
+          },
+          "direct-independent-lead-copy-rejected": {
+            "_source": {
+              "nodeId": "Q2",
+              "answer": "yes",
+              "graphVersion": "0.20261013b",
+              "domain": "Host",
+              "bindings": {
+                "hostId": "review-host:H",
+                "processId": "review-process:P"
+              },
+              "interval": {
+                "start": "2026-10-13T10:00:00Z",
+                "end": "2026-10-13T11:00:00Z"
+              },
+              "evidenceRefs": [
+                "review:primary:P"
+              ],
+              "rationale": "Bound process execution recorded",
+              "recordIds": [
+                "review:primary:P"
+              ],
+              "materialOrigins": [
+                "review:sensor:A"
+              ]
+            },
+            "Q151": {
+              "domain": "Host",
+              "questionId": "Q151",
+              "graphVersion": "0.20261013b",
+              "bindings": {
+                "hostId": "review-host:H",
+                "processId": "review-process:P"
+              },
+              "interval": {
+                "start": "2026-10-13T10:00:00Z",
+                "end": "2026-10-13T11:00:00Z"
+              },
+              "evidenceRefs": [
+                "review:independent:P"
+              ],
+              "method": "Assess independent process observation",
+              "materialOrigin": "review:sensor:A",
+              "recordId": "review:independent:P",
+              "materialDescription": "Separate originating process observation"
+            }
+          },
+          "unsupported-qualified-source-no-lead": {
+            "_source": {
+              "nodeId": "Q313",
+              "answer": "no",
+              "graphVersion": "0.20261013b",
+              "domain": "Host",
+              "eventProfile": "host-state",
+              "profileVersion": "0.1.0-draft.2",
+              "questionId": "urn:tensor:event-profile:host-state:0.1.0-draft.2:Q313",
+              "bindings": {
+                "hostId": "review-host:H",
+                "stateKey": "service.enabled"
+              },
+              "interval": {
+                "start": "2026-10-13T10:00:00Z",
+                "end": "2026-10-13T11:00:00Z"
+              },
+              "evidenceRefs": [
+                "review:unsupported-authentication-focus"
+              ],
+              "rationale": "Declared negative relationship under an inapplicable Host state source definition"
+            },
+            "Q6": {
+              "domain": "Application",
+              "questionId": "urn:tensor:event-profile:application-agent-action:0.1.0-draft.2:Q6",
+              "graphVersion": "0.20261013b",
+              "eventProfile": "application-agent-action",
+              "profileVersion": "0.1.0-draft.2",
+              "bindings": {
+                "applicationId": "review:app",
+                "agentId": "review:agent",
+                "actionId": "review:action"
+              },
+              "interval": {
+                "start": "2026-10-13T10:00:00Z",
+                "end": "2026-10-13T11:00:00Z"
+              },
+              "discoveryEvidenceRefs": [
+                "review:separate-agent-action-observation"
+              ],
+              "discoveryRationale": "Independently bound agent action record suggests assessing this action; host process remains unknown"
+            }
+          },
+          "explicit-known-event-gap-retention": {
+            "id": "independent-host-validated-event-unknown-hypothesis",
+            "domain": "Host",
+            "bindings": {
+              "hostId": "review-host:H",
+              "processId": "review-process:P"
+            },
+            "interval": {
+              "start": "2026-10-13T10:00:00Z",
+              "end": "2026-10-13T11:00:00Z"
+            },
+            "primaryOrigin": "review:local-process-sensor",
+            "primary": {
+              "accessible": true,
+              "searched": true,
+              "records": [
+                {
+                  "id": "review:process-start:P",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "processId": "review-process:P"
+                  },
+                  "eventTime": "2026-10-13T10:30:00Z",
+                  "clockUncertaintySeconds": 1,
+                  "origin": "review:local-process-sensor",
+                  "provenanceAssessment": "accepted",
+                  "interpretationAssessment": "accepted",
+                  "assessmentEvidenceRefs": [
+                    "review:acquisition:1",
+                    "review:interpretation:1"
+                  ],
+                  "eventInterpretation": "This sensor record observes process P execution; no statement about injection is available.",
+                  "facts": {
+                    "execution.observed": {
+                      "value": true,
+                      "assessment": "accepted",
+                      "method": "Review fixture declares a process start observation",
+                      "evidenceRefs": [
+                        "review:process-start:P"
+                      ]
+                    }
+                  },
+                  "evidenceFacet": "endpoint state changes"
+                }
+              ]
+            },
+            "independent": {
+              "accessible": false,
+              "searched": false,
+              "records": []
+            },
+            "coverage": {},
+            "analysis": {
+              "hypothesis": {
+                "hypothesisId": "review:injection-test",
+                "subjects": {
+                  "hostId": "review-host:H",
+                  "processId": "review-process:P"
+                },
+                "interval": {
+                  "start": "2026-10-13T10:00:00Z",
+                  "end": "2026-10-13T11:00:00Z"
+                },
+                "statement": "Process P received an injected executable memory mapping.",
+                "criterion": {
+                  "fact": "memory.injected-mapping",
+                  "equals": true,
+                  "method": "Assess mapped executable page evidence"
+                },
+                "alternatives": [
+                  "A normal mapped executable image",
+                  "An unobserved mapping"
+                ]
+              }
+            },
+            "semanticReview": true,
+            "focus": "endpoint state changes",
+            "retention": {
+              "subjects": {
+                "hostId": "review-host:H",
+                "processId": "review-process:P"
+              },
+              "interval": {
+                "start": "2026-10-13T10:00:00Z",
+                "end": "2026-10-13T11:00:00Z"
+              },
+              "graphVersion": "0.20261013b",
+              "hypothesis": {
+                "hypothesisId": "review:injection-test",
+                "subjects": {
+                  "hostId": "review-host:H",
+                  "processId": "review-process:P"
+                },
+                "interval": {
+                  "start": "2026-10-13T10:00:00Z",
+                  "end": "2026-10-13T11:00:00Z"
+                },
+                "statement": "Process P received an injected executable memory mapping.",
+                "criterion": {
+                  "fact": "memory.injected-mapping",
+                  "equals": true,
+                  "method": "Assess mapped executable page evidence"
+                },
+                "alternatives": [
+                  "A normal mapped executable image",
+                  "An unobserved mapping"
+                ]
+              },
+              "closesInvestigation": false,
+              "focusDispositions": {
+                "endpoint state changes": "assessed"
+              },
+              "assessments": [
+                {
+                  "nodeId": "Q2",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "processId": "review-process:P"
+                  },
+                  "interval": {
+                    "start": "2026-10-13T10:00:00Z",
+                    "end": "2026-10-13T11:00:00Z"
+                  },
+                  "hypothesisId": "review:injection-test",
+                  "focus": "endpoint state changes",
+                  "answer": "yes",
+                  "method": "Independent reviewer declared retained observation/validation/hypothesis assessment",
+                  "rationale": "Matching process execution record observed",
+                  "evidenceRefs": [
+                    "review:process-start:P",
+                    "review:retained-basis"
+                  ],
+                  "limitations": [
+                    "Mapped-memory evidence is unavailable; process execution remains observed"
+                  ]
+                },
+                {
+                  "nodeId": "Q156",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "processId": "review-process:P"
+                  },
+                  "interval": {
+                    "start": "2026-10-13T10:00:00Z",
+                    "end": "2026-10-13T11:00:00Z"
+                  },
+                  "hypothesisId": "review:injection-test",
+                  "focus": "endpoint state changes",
+                  "answer": "yes",
+                  "method": "Independent reviewer declared retained observation/validation/hypothesis assessment",
+                  "rationale": "Separate cited provenance and interpretation basis accepted",
+                  "evidenceRefs": [
+                    "review:process-start:P",
+                    "review:retained-basis"
+                  ],
+                  "limitations": [
+                    "Mapped-memory evidence is unavailable; process execution remains observed"
+                  ]
+                },
+                {
+                  "nodeId": "Q214",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "processId": "review-process:P"
+                  },
+                  "interval": {
+                    "start": "2026-10-13T10:00:00Z",
+                    "end": "2026-10-13T11:00:00Z"
+                  },
+                  "hypothesisId": "review:injection-test",
+                  "focus": "endpoint state changes",
+                  "answer": "unknown",
+                  "method": "Independent reviewer declared retained observation/validation/hypothesis assessment",
+                  "rationale": "Declared injection discriminator unavailable",
+                  "evidenceRefs": [
+                    "review:process-start:P",
+                    "review:retained-basis"
+                  ],
+                  "limitations": [
+                    "Mapped-memory evidence is unavailable; process execution remains observed"
+                  ]
+                }
+              ]
+            }
+          },
+          "declared-qualified-corroboration-yes": {
+            "id": "independent-host-profile-copied-validation",
+            "domain": "Host",
+            "bindings": {
+              "hostId": "review-host:H",
+              "stateKey": "service.enabled"
+            },
+            "interval": {
+              "start": "2026-10-13T10:00:00Z",
+              "end": "2026-10-13T11:00:00Z"
+            },
+            "primaryOrigin": "sensor:A",
+            "primary": {
+              "accessible": true,
+              "searched": true,
+              "records": [
+                {
+                  "id": "sensor:A:record:1",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "stateKey": "service.enabled"
+                  },
+                  "eventTime": "2026-10-13T10:30:00Z",
+                  "clockUncertaintySeconds": 1,
+                  "origin": "sensor:A",
+                  "provenanceAssessment": "accepted",
+                  "interpretationAssessment": "accepted",
+                  "assessmentEvidenceRefs": [
+                    "review:acquisition:1",
+                    "review:interpretation:1"
+                  ],
+                  "eventInterpretation": "This sensor record observes process P execution; no statement about injection is available.",
+                  "facts": {
+                    "execution.observed": {
+                      "value": true,
+                      "assessment": "accepted",
+                      "method": "Review fixture declares a process start observation",
+                      "evidenceRefs": [
+                        "review:process-start:P"
+                      ]
+                    },
+                    "event.kind": {
+                      "value": "host-state",
+                      "assessment": "accepted",
+                      "method": "Declared state observation type",
+                      "evidenceRefs": [
+                        "review:state:1"
+                      ]
+                    },
+                    "state.value": {
+                      "value": false,
+                      "assessment": "accepted",
+                      "method": "Observed named service state",
+                      "evidenceRefs": [
+                        "review:state:1"
+                      ]
+                    },
+                    "event.id": {
+                      "value": "local:1",
+                      "assessment": "accepted",
+                      "method": "Read local counter in originating sensor",
+                      "evidenceRefs": [
+                        "review:process-start:P"
+                      ]
+                    },
+                    "review.shared-observation": {
+                      "value": "review:state-observation:42",
+                      "assessment": "accepted",
+                      "method": "Read shared observation discriminator under the declared mapping",
+                      "evidenceRefs": [
+                        "review:shared-key-mapping",
+                        "sensor:A:record:1"
+                      ]
+                    }
+                  },
+                  "eventProfile": "host-state",
+                  "profileVersion": "0.1.0-draft.2",
+                  "assessmentMethod": "Review declared provenance/interpretation basis",
+                  "evidenceFacet": "artifact provenance"
+                }
+              ]
+            },
+            "independent": {
+              "accessible": true,
+              "searched": true,
+              "records": [
+                {
+                  "id": "sensor:B:record:1",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "stateKey": "service.enabled"
+                  },
+                  "eventTime": "2026-10-13T10:30:00Z",
+                  "clockUncertaintySeconds": 1,
+                  "origin": "sensor:B",
+                  "provenanceAssessment": "accepted",
+                  "interpretationAssessment": "accepted",
+                  "assessmentEvidenceRefs": [
+                    "review:acquisition:1",
+                    "review:interpretation:1"
+                  ],
+                  "eventInterpretation": "This sensor record observes process P execution; no statement about injection is available.",
+                  "facts": {
+                    "execution.observed": {
+                      "value": true,
+                      "assessment": "accepted",
+                      "method": "Review fixture declares a process start observation",
+                      "evidenceRefs": [
+                        "review:process-start:P"
+                      ]
+                    },
+                    "event.kind": {
+                      "value": "host-state",
+                      "assessment": "accepted",
+                      "method": "Declared state observation type",
+                      "evidenceRefs": [
+                        "review:state:1"
+                      ]
+                    },
+                    "state.value": {
+                      "value": false,
+                      "assessment": "accepted",
+                      "method": "Observed named service state",
+                      "evidenceRefs": [
+                        "review:state:1"
+                      ]
+                    },
+                    "event.id": {
+                      "value": "local:1",
+                      "assessment": "accepted",
+                      "method": "Read local counter in originating sensor",
+                      "evidenceRefs": [
+                        "review:process-start:P"
+                      ]
+                    },
+                    "review.shared-observation": {
+                      "value": "review:state-observation:42",
+                      "assessment": "accepted",
+                      "method": "Read shared observation discriminator under the declared mapping",
+                      "evidenceRefs": [
+                        "review:shared-key-mapping",
+                        "sensor:B:record:1"
+                      ]
+                    }
+                  },
+                  "eventProfile": "host-state",
+                  "profileVersion": "0.1.0-draft.2",
+                  "assessmentMethod": "Review declared provenance/interpretation basis",
+                  "evidenceFacet": "artifact provenance"
+                }
+              ]
+            },
+            "coverage": {},
+            "analysis": {
+              "corroboration": {
+                "eventProfile": "host-state",
+                "profileVersion": "0.1.0-draft.2",
+                "subjects": {
+                  "hostId": "review-host:H",
+                  "stateKey": "service.enabled"
+                },
+                "interval": {
+                  "start": "2026-10-13T10:00:00Z",
+                  "end": "2026-10-13T11:00:00Z"
+                },
+                "hypothesisId": null,
+                "sourceRecordId": "sensor:A:record:1",
+                "sourceFact": "review.shared-observation",
+                "targetFact": "review.shared-observation",
+                "identifierNamespace": "review:cross-observer-state-observation",
+                "method": "Compare expressly declared shared observation key with an assessed common namespace",
+                "evidenceRefs": [
+                  "review:shared-key-mapping",
+                  "sensor:A:record:1",
+                  "sensor:B:record:1"
+                ]
+              }
+            },
+            "eventProfile": "host-state",
+            "profileVersion": "0.1.0-draft.2",
+            "focus": "artifact provenance"
+          },
+          "declared-qualified-corroboration-no": {
+            "id": "independent-host-profile-copied-validation",
+            "domain": "Host",
+            "bindings": {
+              "hostId": "review-host:H",
+              "stateKey": "service.enabled"
+            },
+            "interval": {
+              "start": "2026-10-13T10:00:00Z",
+              "end": "2026-10-13T11:00:00Z"
+            },
+            "primaryOrigin": "sensor:A",
+            "primary": {
+              "accessible": true,
+              "searched": true,
+              "records": [
+                {
+                  "id": "sensor:A:record:1",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "stateKey": "service.enabled"
+                  },
+                  "eventTime": "2026-10-13T10:30:00Z",
+                  "clockUncertaintySeconds": 1,
+                  "origin": "sensor:A",
+                  "provenanceAssessment": "accepted",
+                  "interpretationAssessment": "accepted",
+                  "assessmentEvidenceRefs": [
+                    "review:acquisition:1",
+                    "review:interpretation:1"
+                  ],
+                  "eventInterpretation": "This sensor record observes process P execution; no statement about injection is available.",
+                  "facts": {
+                    "execution.observed": {
+                      "value": true,
+                      "assessment": "accepted",
+                      "method": "Review fixture declares a process start observation",
+                      "evidenceRefs": [
+                        "review:process-start:P"
+                      ]
+                    },
+                    "event.kind": {
+                      "value": "host-state",
+                      "assessment": "accepted",
+                      "method": "Declared state observation type",
+                      "evidenceRefs": [
+                        "review:state:1"
+                      ]
+                    },
+                    "state.value": {
+                      "value": false,
+                      "assessment": "accepted",
+                      "method": "Observed named service state",
+                      "evidenceRefs": [
+                        "review:state:1"
+                      ]
+                    },
+                    "event.id": {
+                      "value": "local:1",
+                      "assessment": "accepted",
+                      "method": "Read local counter in originating sensor",
+                      "evidenceRefs": [
+                        "review:process-start:P"
+                      ]
+                    },
+                    "review.shared-observation": {
+                      "value": "review:state-observation:42",
+                      "assessment": "accepted",
+                      "method": "Read shared observation discriminator under the declared mapping",
+                      "evidenceRefs": [
+                        "review:shared-key-mapping",
+                        "sensor:A:record:1"
+                      ]
+                    }
+                  },
+                  "eventProfile": "host-state",
+                  "profileVersion": "0.1.0-draft.2",
+                  "assessmentMethod": "Review declared provenance/interpretation basis",
+                  "evidenceFacet": "artifact provenance"
+                }
+              ]
+            },
+            "independent": {
+              "accessible": true,
+              "searched": true,
+              "records": [
+                {
+                  "id": "sensor:B:record:1",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "stateKey": "service.enabled"
+                  },
+                  "eventTime": "2026-10-13T10:30:00Z",
+                  "clockUncertaintySeconds": 1,
+                  "origin": "sensor:B",
+                  "provenanceAssessment": "accepted",
+                  "interpretationAssessment": "accepted",
+                  "assessmentEvidenceRefs": [
+                    "review:acquisition:1",
+                    "review:interpretation:1"
+                  ],
+                  "eventInterpretation": "This sensor record observes process P execution; no statement about injection is available.",
+                  "facts": {
+                    "execution.observed": {
+                      "value": true,
+                      "assessment": "accepted",
+                      "method": "Review fixture declares a process start observation",
+                      "evidenceRefs": [
+                        "review:process-start:P"
+                      ]
+                    },
+                    "event.kind": {
+                      "value": "host-state",
+                      "assessment": "accepted",
+                      "method": "Declared state observation type",
+                      "evidenceRefs": [
+                        "review:state:1"
+                      ]
+                    },
+                    "state.value": {
+                      "value": false,
+                      "assessment": "accepted",
+                      "method": "Observed named service state",
+                      "evidenceRefs": [
+                        "review:state:1"
+                      ]
+                    },
+                    "event.id": {
+                      "value": "local:1",
+                      "assessment": "accepted",
+                      "method": "Read local counter in originating sensor",
+                      "evidenceRefs": [
+                        "review:process-start:P"
+                      ]
+                    },
+                    "review.shared-observation": {
+                      "value": "review:another-observation:84",
+                      "assessment": "accepted",
+                      "method": "Read shared observation discriminator under the declared mapping",
+                      "evidenceRefs": [
+                        "review:shared-key-mapping",
+                        "sensor:B:record:1"
+                      ]
+                    }
+                  },
+                  "eventProfile": "host-state",
+                  "profileVersion": "0.1.0-draft.2",
+                  "assessmentMethod": "Review declared provenance/interpretation basis",
+                  "evidenceFacet": "artifact provenance"
+                }
+              ]
+            },
+            "coverage": {},
+            "analysis": {
+              "corroboration": {
+                "eventProfile": "host-state",
+                "profileVersion": "0.1.0-draft.2",
+                "subjects": {
+                  "hostId": "review-host:H",
+                  "stateKey": "service.enabled"
+                },
+                "interval": {
+                  "start": "2026-10-13T10:00:00Z",
+                  "end": "2026-10-13T11:00:00Z"
+                },
+                "hypothesisId": null,
+                "sourceRecordId": "sensor:A:record:1",
+                "sourceFact": "review.shared-observation",
+                "targetFact": "review.shared-observation",
+                "identifierNamespace": "review:cross-observer-state-observation",
+                "method": "Compare expressly declared shared observation key with an assessed common namespace",
+                "evidenceRefs": [
+                  "review:shared-key-mapping",
+                  "sensor:A:record:1",
+                  "sensor:B:record:1"
+                ]
+              }
+            },
+            "eventProfile": "host-state",
+            "profileVersion": "0.1.0-draft.2",
+            "focus": "artifact provenance"
+          },
+          "declared-qualified-corroboration-conflict": {
+            "id": "independent-host-profile-copied-validation",
+            "domain": "Host",
+            "bindings": {
+              "hostId": "review-host:H",
+              "stateKey": "service.enabled"
+            },
+            "interval": {
+              "start": "2026-10-13T10:00:00Z",
+              "end": "2026-10-13T11:00:00Z"
+            },
+            "primaryOrigin": "sensor:A",
+            "primary": {
+              "accessible": true,
+              "searched": true,
+              "records": [
+                {
+                  "id": "sensor:A:record:1",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "stateKey": "service.enabled"
+                  },
+                  "eventTime": "2026-10-13T10:30:00Z",
+                  "clockUncertaintySeconds": 1,
+                  "origin": "sensor:A",
+                  "provenanceAssessment": "accepted",
+                  "interpretationAssessment": "accepted",
+                  "assessmentEvidenceRefs": [
+                    "review:acquisition:1",
+                    "review:interpretation:1"
+                  ],
+                  "eventInterpretation": "This sensor record observes process P execution; no statement about injection is available.",
+                  "facts": {
+                    "execution.observed": {
+                      "value": true,
+                      "assessment": "accepted",
+                      "method": "Review fixture declares a process start observation",
+                      "evidenceRefs": [
+                        "review:process-start:P"
+                      ]
+                    },
+                    "event.kind": {
+                      "value": "host-state",
+                      "assessment": "accepted",
+                      "method": "Declared state observation type",
+                      "evidenceRefs": [
+                        "review:state:1"
+                      ]
+                    },
+                    "state.value": {
+                      "value": false,
+                      "assessment": "accepted",
+                      "method": "Observed named service state",
+                      "evidenceRefs": [
+                        "review:state:1"
+                      ]
+                    },
+                    "event.id": {
+                      "value": "local:1",
+                      "assessment": "accepted",
+                      "method": "Read local counter in originating sensor",
+                      "evidenceRefs": [
+                        "review:process-start:P"
+                      ]
+                    },
+                    "review.shared-observation": {
+                      "value": "review:state-observation:42",
+                      "assessment": "accepted",
+                      "method": "Read shared observation discriminator under the declared mapping",
+                      "evidenceRefs": [
+                        "review:shared-key-mapping",
+                        "sensor:A:record:1"
+                      ]
+                    }
+                  },
+                  "eventProfile": "host-state",
+                  "profileVersion": "0.1.0-draft.2",
+                  "assessmentMethod": "Review declared provenance/interpretation basis",
+                  "evidenceFacet": "artifact provenance"
+                }
+              ]
+            },
+            "independent": {
+              "accessible": true,
+              "searched": true,
+              "records": [
+                {
+                  "id": "sensor:B:record:1",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "stateKey": "service.enabled"
+                  },
+                  "eventTime": "2026-10-13T10:30:00Z",
+                  "clockUncertaintySeconds": 1,
+                  "origin": "sensor:B",
+                  "provenanceAssessment": "accepted",
+                  "interpretationAssessment": "accepted",
+                  "assessmentEvidenceRefs": [
+                    "review:acquisition:1",
+                    "review:interpretation:1"
+                  ],
+                  "eventInterpretation": "This sensor record observes process P execution; no statement about injection is available.",
+                  "facts": {
+                    "execution.observed": {
+                      "value": true,
+                      "assessment": "accepted",
+                      "method": "Review fixture declares a process start observation",
+                      "evidenceRefs": [
+                        "review:process-start:P"
+                      ]
+                    },
+                    "event.kind": {
+                      "value": "host-state",
+                      "assessment": "accepted",
+                      "method": "Declared state observation type",
+                      "evidenceRefs": [
+                        "review:state:1"
+                      ]
+                    },
+                    "state.value": {
+                      "value": false,
+                      "assessment": "accepted",
+                      "method": "Observed named service state",
+                      "evidenceRefs": [
+                        "review:state:1"
+                      ]
+                    },
+                    "event.id": {
+                      "value": "local:1",
+                      "assessment": "accepted",
+                      "method": "Read local counter in originating sensor",
+                      "evidenceRefs": [
+                        "review:process-start:P"
+                      ]
+                    },
+                    "review.shared-observation": {
+                      "value": "review:state-observation:42",
+                      "assessment": "accepted",
+                      "method": "Read shared observation discriminator under the declared mapping",
+                      "evidenceRefs": [
+                        "review:shared-key-mapping",
+                        "sensor:B:record:1"
+                      ]
+                    }
+                  },
+                  "eventProfile": "host-state",
+                  "profileVersion": "0.1.0-draft.2",
+                  "assessmentMethod": "Review declared provenance/interpretation basis",
+                  "evidenceFacet": "artifact provenance"
+                },
+                {
+                  "id": "sensor:C:record:1",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "stateKey": "service.enabled"
+                  },
+                  "eventTime": "2026-10-13T10:30:00Z",
+                  "clockUncertaintySeconds": 1,
+                  "origin": "sensor:C",
+                  "provenanceAssessment": "accepted",
+                  "interpretationAssessment": "accepted",
+                  "assessmentEvidenceRefs": [
+                    "review:acquisition:1",
+                    "review:interpretation:1"
+                  ],
+                  "eventInterpretation": "This sensor record observes process P execution; no statement about injection is available.",
+                  "facts": {
+                    "execution.observed": {
+                      "value": true,
+                      "assessment": "accepted",
+                      "method": "Review fixture declares a process start observation",
+                      "evidenceRefs": [
+                        "review:process-start:P"
+                      ]
+                    },
+                    "event.kind": {
+                      "value": "host-state",
+                      "assessment": "accepted",
+                      "method": "Declared state observation type",
+                      "evidenceRefs": [
+                        "review:state:1"
+                      ]
+                    },
+                    "state.value": {
+                      "value": false,
+                      "assessment": "accepted",
+                      "method": "Observed named service state",
+                      "evidenceRefs": [
+                        "review:state:1"
+                      ]
+                    },
+                    "event.id": {
+                      "value": "local:1",
+                      "assessment": "accepted",
+                      "method": "Read local counter in originating sensor",
+                      "evidenceRefs": [
+                        "review:process-start:P"
+                      ]
+                    },
+                    "review.shared-observation": {
+                      "value": "review:another-observation:84",
+                      "assessment": "accepted",
+                      "method": "Read shared observation discriminator under the declared mapping",
+                      "evidenceRefs": [
+                        "review:shared-key-mapping",
+                        "sensor:B:record:1"
+                      ]
+                    }
+                  },
+                  "eventProfile": "host-state",
+                  "profileVersion": "0.1.0-draft.2",
+                  "assessmentMethod": "Review declared provenance/interpretation basis",
+                  "evidenceFacet": "artifact provenance"
+                }
+              ]
+            },
+            "coverage": {},
+            "analysis": {
+              "corroboration": {
+                "eventProfile": "host-state",
+                "profileVersion": "0.1.0-draft.2",
+                "subjects": {
+                  "hostId": "review-host:H",
+                  "stateKey": "service.enabled"
+                },
+                "interval": {
+                  "start": "2026-10-13T10:00:00Z",
+                  "end": "2026-10-13T11:00:00Z"
+                },
+                "hypothesisId": null,
+                "sourceRecordId": "sensor:A:record:1",
+                "sourceFact": "review.shared-observation",
+                "targetFact": "review.shared-observation",
+                "identifierNamespace": "review:cross-observer-state-observation",
+                "method": "Compare expressly declared shared observation key with an assessed common namespace",
+                "evidenceRefs": [
+                  "review:shared-key-mapping",
+                  "sensor:A:record:1",
+                  "sensor:B:record:1"
+                ]
+              }
+            },
+            "eventProfile": "host-state",
+            "profileVersion": "0.1.0-draft.2",
+            "focus": "artifact provenance"
+          },
+          "inherited-base-witness-cannot-promote-primary": {
+            "id": "independent-host-validated-event-unknown-hypothesis",
+            "domain": "Host",
+            "bindings": {
+              "hostId": "review-host:H",
+              "processId": "review-process:P"
+            },
+            "interval": {
+              "start": "2026-10-13T10:00:00Z",
+              "end": "2026-10-13T11:00:00Z"
+            },
+            "primaryOrigin": "review:local-process-sensor",
+            "primary": {
+              "accessible": false,
+              "searched": false,
+              "records": []
+            },
+            "independent": {
+              "accessible": true,
+              "searched": true,
+              "records": [
+                {
+                  "id": "review:independent-process:P",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "processId": "review-process:P"
+                  },
+                  "eventTime": "2026-10-13T10:30:00Z",
+                  "clockUncertaintySeconds": 1,
+                  "origin": "review:separate-process-sensor",
+                  "provenanceAssessment": "accepted",
+                  "interpretationAssessment": "accepted",
+                  "assessmentEvidenceRefs": [
+                    "review:acquisition:1",
+                    "review:interpretation:1"
+                  ],
+                  "eventInterpretation": "This sensor record observes process P execution; no statement about injection is available.",
+                  "facts": {
+                    "execution.observed": {
+                      "value": true,
+                      "assessment": "accepted",
+                      "method": "Review fixture declares a process start observation",
+                      "evidenceRefs": [
+                        "review:process-start:P"
+                      ]
+                    },
+                    "memory.injected-mapping": {
+                      "value": true,
+                      "assessment": "accepted",
+                      "method": "Separate explicitly assessed mapping observation",
+                      "evidenceRefs": [
+                        "review:independent-process:P",
+                        "review:mapping-observation"
+                      ]
+                    }
+                  },
+                  "evidenceFacet": "endpoint state changes"
+                }
+              ]
+            },
+            "coverage": {},
+            "analysis": {
+              "hypothesis": {
+                "hypothesisId": "review:injection-test",
+                "subjects": {
+                  "hostId": "review-host:H",
+                  "processId": "review-process:P"
+                },
+                "interval": {
+                  "start": "2026-10-13T10:00:00Z",
+                  "end": "2026-10-13T11:00:00Z"
+                },
+                "statement": "Process P received an injected executable memory mapping.",
+                "criterion": {
+                  "fact": "memory.injected-mapping",
+                  "equals": true,
+                  "method": "Assess mapped executable page evidence"
+                },
+                "alternatives": [
+                  "A normal mapped executable image",
+                  "An unobserved mapping"
+                ]
+              }
+            },
+            "semanticReview": true,
+            "focus": "endpoint state changes",
+            "retention": {
+              "subjects": {
+                "hostId": "review-host:H",
+                "processId": "review-process:P"
+              },
+              "interval": {
+                "start": "2026-10-13T10:00:00Z",
+                "end": "2026-10-13T11:00:00Z"
+              },
+              "graphVersion": "0.20261013b",
+              "hypothesis": {
+                "hypothesisId": "review:injection-test",
+                "subjects": {
+                  "hostId": "review-host:H",
+                  "processId": "review-process:P"
+                },
+                "interval": {
+                  "start": "2026-10-13T10:00:00Z",
+                  "end": "2026-10-13T11:00:00Z"
+                },
+                "statement": "Process P received an injected executable memory mapping.",
+                "criterion": {
+                  "fact": "memory.injected-mapping",
+                  "equals": true,
+                  "method": "Assess mapped executable page evidence"
+                },
+                "alternatives": [
+                  "A normal mapped executable image",
+                  "An unobserved mapping"
+                ]
+              },
+              "closesInvestigation": false,
+              "focusDispositions": {
+                "endpoint state changes": "assessed"
+              },
+              "assessments": [
+                {
+                  "nodeId": "Q2",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "processId": "review-process:P"
+                  },
+                  "interval": {
+                    "start": "2026-10-13T10:00:00Z",
+                    "end": "2026-10-13T11:00:00Z"
+                  },
+                  "hypothesisId": "review:injection-test",
+                  "focus": "endpoint state changes",
+                  "answer": "yes",
+                  "method": "Independent reviewer declared retained observation/validation/hypothesis assessment",
+                  "rationale": "Matching process execution record observed",
+                  "evidenceRefs": [
+                    "review:process-start:P",
+                    "review:retained-basis"
+                  ],
+                  "limitations": [
+                    "Mapped-memory evidence is unavailable; process execution remains observed"
+                  ]
+                },
+                {
+                  "nodeId": "Q156",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "processId": "review-process:P"
+                  },
+                  "interval": {
+                    "start": "2026-10-13T10:00:00Z",
+                    "end": "2026-10-13T11:00:00Z"
+                  },
+                  "hypothesisId": "review:injection-test",
+                  "focus": "endpoint state changes",
+                  "answer": "yes",
+                  "method": "Independent reviewer declared retained observation/validation/hypothesis assessment",
+                  "rationale": "Separate cited provenance and interpretation basis accepted",
+                  "evidenceRefs": [
+                    "review:process-start:P",
+                    "review:retained-basis"
+                  ],
+                  "limitations": [
+                    "Mapped-memory evidence is unavailable; process execution remains observed"
+                  ]
+                },
+                {
+                  "nodeId": "Q214",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "processId": "review-process:P"
+                  },
+                  "interval": {
+                    "start": "2026-10-13T10:00:00Z",
+                    "end": "2026-10-13T11:00:00Z"
+                  },
+                  "hypothesisId": "review:injection-test",
+                  "focus": "endpoint state changes",
+                  "answer": "unknown",
+                  "method": "Independent reviewer declared retained observation/validation/hypothesis assessment",
+                  "rationale": "Declared injection discriminator unavailable",
+                  "evidenceRefs": [
+                    "review:process-start:P",
+                    "review:retained-basis"
+                  ],
+                  "limitations": [
+                    "Mapped-memory evidence is unavailable; process execution remains observed"
+                  ]
+                }
+              ]
+            },
+            "_selectedGroup": "independent",
+            "_selectedRecordId": "review:independent-process:P"
+          },
+          "inherited-qualified-witness-cannot-promote-primary": {
+            "id": "independent-host-profile-direct-validation-group",
+            "domain": "Host",
+            "bindings": {
+              "hostId": "review-host:H",
+              "stateKey": "service.enabled"
+            },
+            "interval": {
+              "start": "2026-10-13T10:00:00Z",
+              "end": "2026-10-13T11:00:00Z"
+            },
+            "primaryOrigin": "review:local-process-sensor",
+            "primary": {
+              "accessible": false,
+              "searched": false,
+              "records": []
+            },
+            "independent": {
+              "accessible": true,
+              "searched": true,
+              "records": [
+                {
+                  "id": "review:independent-state:2",
+                  "subjects": {
+                    "hostId": "review-host:H",
+                    "stateKey": "service.enabled"
+                  },
+                  "eventTime": "2026-10-13T10:30:00Z",
+                  "clockUncertaintySeconds": 1,
+                  "origin": "review:separate-host-observer",
+                  "provenanceAssessment": "accepted",
+                  "interpretationAssessment": "accepted",
+                  "assessmentEvidenceRefs": [
+                    "review:acquisition:1",
+                    "review:interpretation:1"
+                  ],
+                  "eventInterpretation": "This sensor record observes process P execution; no statement about injection is available.",
+                  "facts": {
+                    "execution.observed": {
+                      "value": true,
+                      "assessment": "accepted",
+                      "method": "Review fixture declares a process start observation",
+                      "evidenceRefs": [
+                        "review:process-start:P"
+                      ]
+                    },
+                    "event.kind": {
+                      "value": "host-state",
+                      "assessment": "accepted",
+                      "method": "Declared state observation type",
+                      "evidenceRefs": [
+                        "review:state:1"
+                      ]
+                    },
+                    "state.value": {
+                      "value": false,
+                      "assessment": "accepted",
+                      "method": "Observed named service state",
+                      "evidenceRefs": [
+                        "review:state:1"
+                      ]
+                    }
+                  },
+                  "eventProfile": "host-state",
+                  "profileVersion": "0.1.0-draft.2",
+                  "assessmentMethod": "Review declared provenance/interpretation basis"
+                }
+              ]
+            },
+            "coverage": {},
+            "analysis": {
+              "hypothesis": {
+                "hypothesisId": "review:injection-test",
+                "subjects": {
+                  "hostId": "review-host:H",
+                  "stateKey": "service.enabled"
+                },
+                "interval": {
+                  "start": "2026-10-13T10:00:00Z",
+                  "end": "2026-10-13T11:00:00Z"
+                },
+                "statement": "The observed named service state was disabled",
+                "criterion": {
+                  "fact": "state.value",
+                  "equals": false,
+                  "method": "Compare the separately observed service state"
+                },
+                "alternatives": [
+                  "A normal mapped executable image",
+                  "An unobserved mapping"
+                ],
+                "eventProfile": "host-state",
+                "profileVersion": "0.1.0-draft.2"
+              }
+            },
+            "eventProfile": "host-state",
+            "profileVersion": "0.1.0-draft.2",
+            "entry": "Q151",
+            "focus": "endpoint state changes",
+            "_selectedGroup": "independent",
+            "_selectedRecordId": "review:independent-state:2"
+          }
+        },
+        "results": [
+          {
+            "id": "known-execution-downstream-unknown",
+            "expected": "execution yes/validated yes remain separate while Q214 unknown and repaired Q597 retains that gap",
+            "actual": {
+              "caseId": "independent-host-validated-event-unknown-hypothesis",
+              "trace": [
+                {
+                  "nodeId": "Q2",
+                  "answer": "yes",
+                  "reason": "The selected record's entire clock bound matches the exact subjects and interval",
+                  "recordId": "review:process-start:P"
+                },
+                {
+                  "nodeId": "Q156",
+                  "answer": "yes",
+                  "reason": "Supplied provenance and interpretation assessments cite a supporting basis",
+                  "recordId": "review:process-start:P"
+                },
+                {
+                  "nodeId": "Q214",
+                  "answer": "unknown",
+                  "reason": "The discriminator is missing, unassessed, or has incompatible types",
+                  "recordId": "review:process-start:P",
+                  "hypothesisId": "review:injection-test",
+                  "method": "Assess mapped executable page evidence",
+                  "evidenceRefs": [
+                    "review:acquisition:1",
+                    "review:interpretation:1"
+                  ]
+                },
+                {
+                  "nodeId": "Q597",
+                  "answer": "yes",
+                  "reason": "Retain the named unresolved assessment or evidence limitation separately from known event findings",
+                  "recordId": "review:process-start:P"
+                }
+              ],
+              "state": "unresolved"
+            },
+            "passed": true
+          },
+          {
+            "id": "base-crossing-clock-boundary",
+            "expected": "unknown",
+            "actual": [
+              "unknown",
+              "Record time or independent lineage is unresolved"
+            ],
+            "passed": true
+          },
+          {
+            "id": "base-retention-actual-source-focus",
+            "expected": "yes without adding workload-identity focus",
+            "actual": [
+              "yes",
+              "Separate answers, limitations and open questions are retained; this route ends only"
+            ],
+            "passed": true
+          },
+          {
+            "id": "copied-independent-profile-validation",
+            "expected": "unknown",
+            "actual": [
+              "unknown",
+              "The independent observation needs an identity and origin separate from every primary record"
+            ],
+            "passed": true
+          },
+          {
+            "id": "profile-crossing-clock-boundary",
+            "expected": "unknown",
+            "actual": [
+              "unknown",
+              "Matching material lacks a resolved profile, event kind or event time"
+            ],
+            "passed": true
+          },
+          {
+            "id": "direct-independent-selection",
+            "expected": "Q151 yes then Q221 yes from the selected independent state record",
+            "actual": {
+              "caseId": "independent-host-profile-direct-validation-group",
+              "eventProfile": "host-state",
+              "profileVersion": "0.1.0-draft.2",
+              "trace": [
+                {
+                  "nodeId": "Q151",
+                  "questionId": "urn:tensor:event-profile:host-state:0.1.0-draft.2:Q151",
+                  "focus": "endpoint state changes",
+                  "answer": "yes",
+                  "reason": "Supplied provenance and interpretation assessments cite a supporting basis"
+                },
+                {
+                  "nodeId": "Q221",
+                  "questionId": "urn:tensor:event-profile:host-state:0.1.0-draft.2:Q221",
+                  "focus": "endpoint state changes",
+                  "answer": "yes",
+                  "reason": "The assessed discriminator satisfies the declared criterion"
+                },
+                {
+                  "nodeId": "Q261",
+                  "questionId": "urn:tensor:event-profile:host-state:0.1.0-draft.2:Q261",
+                  "focus": "endpoint state changes",
+                  "answer": "unknown",
+                  "reason": "Scope needs its exact profile context, selected evidence and explicit incomplete-population boundary"
+                },
+                {
+                  "nodeId": "Q597",
+                  "questionId": "urn:tensor:event-profile:host-state:0.1.0-draft.2:Q597",
+                  "focus": "endpoint state changes",
+                  "answer": "unknown",
+                  "reason": "Retain the exact profile/version, graph version, subjects and interval without closure"
+                }
+              ]
+            },
+            "passed": true
+          },
+          {
+            "id": "qualified-terminal-history",
+            "expected": "yes with explicit actual source focus on retained terminal",
+            "actual": [
+              "yes",
+              "Separate profile-qualified assessments and limitations are retained; this route does not close the investigation"
+            ],
+            "passed": true
+          },
+          {
+            "id": "profile-corroboration-needs-declared-discriminator",
+            "expected": "unknown: no named corroboration assessment, cross-source namespace or mapping was supplied",
+            "actual": [
+              "unknown",
+              "Corroboration needs its exact profile context, source record, declared fact fields, namespace or mapping, method and evidence basis"
+            ],
+            "passed": true
+          },
+          {
+            "id": "fact-led-scope-and-pre-event-baseline",
+            "expected": "scope yes and metric yes independently, with explicit pre-event baseline interval",
+            "actual": {
+              "scope": [
+                "yes",
+                "Bound scope and entity dispositions are documented; completeness is not asserted"
+              ],
+              "impact": [
+                "yes",
+                "The supplied bounded metric changed; attribution and broader impact remain separate"
+              ]
+            },
+            "passed": true
+          },
+          {
+            "id": "metric-no-retained-as-no",
+            "expected": "no",
+            "actual": [
+              "no",
+              "The supplied bounded metric is unchanged; other effects have not been excluded"
+            ],
+            "passed": true
+          },
+          {
+            "id": "metric-unknown-retained-as-unknown",
+            "expected": "unknown",
+            "actual": [
+              "unknown",
+              "Comparable metric and units need ordered measurements in the explicit baseline and observation intervals"
+            ],
+            "passed": true
+          },
+          {
+            "id": "base-fixed-focus-laundering",
+            "expected": "unknown: Q58 is fixed transport-metadata evidence; a row.focus override cannot turn it into assessed artifact provenance",
+            "actual": [
+              "unknown",
+              "A fixed-facet question cannot be retained under a different evidence focus"
+            ],
+            "passed": true
+          },
+          {
+            "id": "base-extra-focus-unsupported-assessment",
+            "expected": "unknown: no retained artifact-provenance assessment supports that assessed disposition",
+            "actual": [
+              "unknown",
+              "Every assessed focus needs its own applicable retained nonterminal assessment"
+            ],
+            "passed": true
+          },
+          {
+            "id": "early-unknown-discovery-lead",
+            "expected": "Q2-unknown-Q6 eligible from separately bound discovery despite explicit missing source context",
+            "actual": [
+              "Q2-unknown-Q6"
+            ],
+            "passed": true
+          },
+          {
+            "id": "early-lead-missing-discovery-rejected",
+            "expected": "no lead",
+            "actual": [],
+            "passed": true
+          },
+          {
+            "id": "qualified-lead-no-fabricated-base-binding",
+            "expected": "no lead",
+            "actual": [],
+            "passed": true
+          },
+          {
+            "id": "direct-independent-lead-own-lineage",
+            "expected": "Q2-yes-Q151 eligible",
+            "actual": [
+              "Q2-yes-Q151"
+            ],
+            "passed": true
+          },
+          {
+            "id": "direct-independent-lead-copy-rejected",
+            "expected": "Q2-yes-Q151 ineligible",
+            "actual": [],
+            "passed": true
+          },
+          {
+            "id": "unsupported-qualified-source-no-lead",
+            "expected": "no lead: host-state has no qualified Q313 definition; source no is not an applicable assessed outcome",
+            "actual": [],
+            "passed": true
+          },
+          {
+            "id": "explicit-known-event-gap-retention",
+            "expected": "yes with event yes/validation yes/hypothesis unknown preserved separately in the explicit retained ledger",
+            "actual": [
+              "yes",
+              "Named unresolved assessment or evidence gaps are retained separately from known event findings"
+            ],
+            "passed": true
+          },
+          {
+            "id": "declared-qualified-corroboration-yes",
+            "expected": "yes from explicit own qualified assessment/namespace/discriminator",
+            "actual": [
+              "yes",
+              "Separate accepted origins agree on the event discriminator"
+            ],
+            "passed": true
+          },
+          {
+            "id": "declared-qualified-corroboration-no",
+            "expected": "no for the declared corroboration only",
+            "actual": [
+              "no",
+              "Separate accepted origins contradict corroboration"
+            ],
+            "passed": true
+          },
+          {
+            "id": "declared-qualified-corroboration-conflict",
+            "expected": "unknown when accepted independent witnesses disagree",
+            "actual": [
+              "unknown",
+              "Accepted independent observations conflict"
+            ],
+            "passed": true
+          },
+          {
+            "id": "inherited-base-witness-cannot-promote-primary",
+            "expected": "Q214 unknown from unavailable primary; Q221 yes from explicit independent discriminator",
+            "actual": {
+              "primary": [
+                "unknown",
+                "The generic target needs its own facet-bound matching event record"
+              ],
+              "independent": [
+                "yes",
+                "The assessed discriminator satisfies the declared criterion"
+              ]
+            },
+            "passed": true
+          },
+          {
+            "id": "inherited-qualified-witness-cannot-promote-primary",
+            "expected": "Qualified Q214 unknown from unavailable primary; qualified Q221 yes from selected independent state observation",
+            "actual": {
+              "primary": [
+                "unknown",
+                "Resumption needs an independently matched profile event record"
+              ],
+              "independent": [
+                "yes",
+                "The assessed discriminator satisfies the declared criterion"
+              ]
+            },
+            "passed": true
+          }
+        ]
+      }
+    }
+  ]
+}

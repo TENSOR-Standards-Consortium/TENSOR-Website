@@ -289,3 +289,9 @@
 .atlas-lead-context p { margin-block: var(--space-2); }
 
 @media (max-width: 600px) { .case-map .atlas-orientation { top: auto; bottom: 5.5rem; } }
+
+/* Route choices scroll with their assessment, preserving usable playback space. */
+.timeline-entry-body .timeline-next-options { display: grid; gap: .55rem; padding: .8rem 0; border-bottom: 0; border-top: 1px solid var(--line-soft); margin-top: .7rem; }
+.timeline-entry-body .timeline-next-options button { align-items: flex-start; gap: .5rem; min-height: 44px; font-family: var(--font-body); text-align: left; }
+.timeline-entry-body .timeline-next-options button > :nth-child(2) { flex: 1; line-height: 1.6; }
+.timeline-entry-body .timeline-next-options button > :last-child { flex-shrink: 0; }

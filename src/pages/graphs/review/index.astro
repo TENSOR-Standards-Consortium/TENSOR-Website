@@ -1,0 +1,27 @@
+---
+import DocumentLayout from '../../../layouts/DocumentLayout.astro';
+import ContentCard from '../../../components/ContentCard.astro';
+import ReferenceTable from '../../../components/ReferenceTable.astro';
+import Button from '../../../components/Button.astro';
+import review from '../../../../public/graphs/working/reviews/2026-10-13-semantic/review.json';
+const resources = '/graphs/working/reviews/2026-10-13-semantic';
+---
+<DocumentLayout title="Question and route review" description="Item-level review of the working investigation graph, evidence criteria, routes and public event profiles." canonicalPath="/graphs/review/">
+  <ContentCard>
+    <p class="section-kicker">Working graph · Semantic review</p>
+    <h2>Investigation meaning, question by question.</h2>
+    <p>The current review covers <strong>{review.counts.nodes} questions, {review.counts.edges.toLocaleString()} routes and {review.counts.qualifiedDefinitions} profile-qualified definitions</strong> across all seven domains. Separate AI reviewers assessed each item and tested realistic fictional investigations with independently declared expectations.</p>
+    <p><strong>{review.graphVersion} · {review.status === 'separate-ai-review-complete' ? 'Separate AI review complete' : 'Review in progress'}.</strong> These results concern the declared evidence contracts and supplied observations. Institutional approval, authenticated incident evidence and independent interoperability remain open.</p>
+    <div class="cta-group"><Button href="/graphs/" variant="primary">Explore the reviewed graph</Button><Button href="/investigations/" variant="secondary">Follow an investigation</Button></div>
+    <h2>Domain review records</h2>
+    <ReferenceTable label="Complete item review by domain"><thead><tr><th>Domain</th><th>Questions</th><th>Routes</th><th>Qualified definitions</th><th>Evidence</th></tr></thead><tbody>{review.domains.map(row => <tr><th>{row.domain}</th><td>{row.nodes}</td><td>{row.edges}</td><td>{row.qualifiedDefinitions}</td><td><a href={`${resources}/items/${row.id}.json`} download>Item ledger</a> · <a href={`${resources}/challenges/${row.id}.json`} download>Challenges</a></td></tr>)}</tbody></ReferenceTable>
+    <p>The additional <a href={`${resources}/items/cross-domain.json`} download>routing review</a> checks every added investigative lead. Its <a href={`${resources}/challenges/cross-domain.json`} download>challenge receipt</a> records source preservation, independent material, qualified profiles, cross-domain discovery and partial unknown contexts.</p>
+    <h2>Evidence rules carried through every route</h2>
+    <ul><li>Missing identities, uncertain clocks and unavailable material stay unknown. Copied observations cannot become independent witnesses.</li><li>A refuted hypothesis does not erase an observed event or prevent another independently evidenced question.</li><li>Every relationship retains its own endpoints and time context. Technical metrics use comparable units and a separately bounded baseline.</li><li>Handoffs preserve actual answers, exact hypothesis meaning, evidence focus and open questions. A route endpoint does not close the investigation.</li><li>Public questions assess investigative facts. Vendor acquisition and tool graphs, company policy, approvals and business decisions remain separate layers.</li></ul>
+    <p>All 588 original IDs and 21 repair questions remain available. Repeated predicates and aliases are recorded as maintenance limits, not counted as proof of distinct capabilities or universal coverage. Schema, published releases and the frozen review package retain their existing bytes.</p>
+    <h2>Reproduce or inspect</h2>
+    <p><a href={`${resources}/README.md`}>Method, repairs and reproduction steps</a> · <a href={`${resources}/review.json`} download>Complete receipt and source pins</a> · <a href="/graphs/coverage/">Original-question lineage</a> · <a href="/graphs/profiles/">Event-profile contracts</a></p>
+    <p><a href="/extensions/">Vendor and organization layering</a> · <a href="/review/">Frozen technical review package</a></p>
+    <details><summary>Exact reviewed graph identity</summary><p>Graph: <code>{review.graphSha256}</code></p><p>Criteria: <code>{review.criteriaSha256}</code></p><p>Qualified definitions: <code>{review.definitionsSha256}</code></p></details>
+  </ContentCard>
+</DocumentLayout>

@@ -19,6 +19,8 @@ const INVESTIGATIONS = 'examples/investigations/v1';
 const INVESTIGATION_TARGET = 'public/investigations/v1';
 const INVESTIGATION_FILES = ['README.md', 'catalog.json', 'manifest.json', ...['soc-signin', 'workload-cloud-egress', 'attachment-host-tool'].flatMap(id => [`${id}.bundle.json`, `${id}.definition.json`])];
 const WORKING = ['tensor.core.graph.json', 'entry-evidence-criteria.json', 'source/entry_nodes.json', 'coverage-inventory.json',
+  'reviews/2026-10-13-semantic/README.md', 'reviews/2026-10-13-semantic/review.json',
+  ...['identity','host','network','cloud','email','application','file','cross-domain'].flatMap(id => [`reviews/2026-10-13-semantic/items/${id}.json`, `reviews/2026-10-13-semantic/challenges/${id}.json`]),
   'reviews/2026-10-13-routing/README.md', 'reviews/2026-10-13-routing/review.json',
   'reviews/2026-10-12-restoration/README.md', 'reviews/2026-10-12-restoration/analysis.json',
   'reviews/2026-10-12-independent-review/README.md', 'reviews/2026-10-12-independent-review/review.json',
