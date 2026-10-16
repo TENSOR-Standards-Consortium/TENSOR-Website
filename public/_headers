@@ -21,3 +21,27 @@
 
 /standards/*
   Cache-Control: public, max-age=0, must-revalidate
+
+/dataset/*
+  Cache-Control: no-cache
+
+/review/current/*
+  Cache-Control: no-cache
+
+/graphs/working/*
+  Cache-Control: no-cache
+
+/investigations/*
+  Cache-Control: no-cache
+
+/examples/*
+  Cache-Control: no-cache
+
+/core/*
+  Cache-Control: no-cache
+
+/schemas/core/*
+  Cache-Control: no-cache
+
+/assets/data/core.schema.json
+  Cache-Control: no-cache

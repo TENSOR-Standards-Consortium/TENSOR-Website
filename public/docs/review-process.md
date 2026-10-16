@@ -4,6 +4,8 @@ Status: bootstrap handling procedure, October 11, 2026. This does not ratify the
 
 The accepted [bootstrap steward](stewardship.md) coordinates intake. Reviewers may select one bounded task: challenge requirements, inspect graph evidence routes, implement exchange, or evaluate a handoff. Review is participation, not endorsement.
 
+The [current public dataset](../dataset/current.json) is the same for visitors, implementers and reviewers. The [current review package](../review/current/README.md) contains its exact source and verification material. Earlier review snapshots are historical evidence; they do not define a second active dataset. Findings identify the current dataset digest, source commit and affected definitions.
+
 1. Submit a nonsensitive Implementation report with review ID, source commit, artifact paths or TC requirement IDs, environment, reproduction, observed and expected behavior, affiliations/conflicts, and exclusions. Synthetic reproductions are preferred. Sensitive reports use SECURITY.md.
 2. Assign a public finding ID using the GitHub issue number. Classify it as semantic ambiguity, evidence/route defect, exchange loss, implementation defect, governance concern, or usability issue. Identify the affected review snapshot.
 3. Record the proposed disposition: accepted, needs evidence, disputed, deferred, or rejected with rationale. Link any correction, counterexample, independent review and remaining objection. A closed issue alone is not evidence that a concern was resolved.

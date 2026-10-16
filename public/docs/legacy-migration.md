@@ -1,6 +1,8 @@
 # Legacy graph preservation and migration inventory
 
-TENSOR keeps the existing graph work. The release catalog currently selects graph/schema `0.20260206e` (588 questions, 1,554 edges); the separate working graph is `0.20261012b` (609 questions, 1,554 edges). Those artifacts retain their original contracts and identifiers.
+The [current public dataset](../dataset/current.json) uses graph `0.20261013b`: 609 questions and 2,131 routes, under unchanged graph schema `0.20260206e`. The website, Studio, Lab reference cases and current review package use this same inventory. Event profiles supply explicit assessment contexts; vendor and organization layers add their own declared content above the public graph.
+
+The original published graph `0.20260206e` (588 questions and 1,554 routes) remains an exact historical archive under its original contract and identifiers. It is not a second active dataset or a different graph for reviewers.
 
 The active draft now includes all 588 original IDs and 21 repair questions. The 82 prior evidence repairs remain; 506 originals return with revised predicates, criteria and routes after author analysis. The earlier 219-, 184- and 103-question drafts remain historical stages. See the [coverage inventory and review roadmap](graph-coverage-roadmap.md) and [per-ID restoration analysis](../drafts/core/reviews/2026-10-12-restoration/README.md). Reinclusion does not establish source/target equivalence, independent semantic approval or full investigative coverage.
 

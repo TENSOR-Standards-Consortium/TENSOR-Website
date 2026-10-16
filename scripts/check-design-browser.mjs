@@ -16,14 +16,14 @@ try {
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   const routes = [
-    '/', '/start/', '/investigations/', '/investigations/soc-signin/', '/investigations/workload-cloud-egress/', '/investigations/attachment-host-tool/', '/core/', '/docs/', '/about/', '/ai-reliability/', '/conformance/',
+    '/', '/archives/', '/archives/0.20260206e/', '/graphs/review/', '/questions/0.20261013b/Q1/', '/start/', '/investigations/', '/investigations/soc-signin/', '/investigations/workload-cloud-egress/', '/investigations/attachment-host-tool/', '/core/', '/docs/', '/about/', '/ai-reliability/', '/conformance/',
     '/contribute/', '/extensions/', '/governance/', '/implement/', '/review/',
     '/schemas/', '/standards/', '/questions/', '/questions/0.20260206e/Q1/',
     '/graphs/', '/graphs/coverage/', '/graphs/profiles/',
     '/graphs/profiles/application-agent-action/', '/investigation-lab/',
     '/metrics/', '/studio/', '/offline/', '/404.html',
   ];
-  const capture = new Set(['/', '/start/', '/core/', '/docs/', '/review/', '/graphs/profiles/', '/investigation-lab/']);
+  const capture = new Set(['/', '/archives/', '/archives/0.20260206e/', '/graphs/review/', '/questions/0.20261013b/Q1/', '/start/', '/core/', '/docs/', '/review/', '/graphs/profiles/', '/investigation-lab/']);
   const results = [];
   let commonTheme;
   for (const width of [1440, 768, 390, 320]) {
@@ -87,7 +87,7 @@ try {
     assert.equal(await page.locator('.guide-mobile-current p').isVisible(), true);
     assert.equal(await page.locator('.atlas-toolbar').isVisible(), false);
     const toggle = page.locator('.atlas-tools-toggle');
-    assert.match(await toggle.textContent(), /Working draft 609 · 3D nebula/);
+    assert.match(await toggle.textContent(), /Current graph 609 · 3D nebula/);
     if (output) await page.screenshot({ path: path.join(output, `${width}-guided.png`) });
     await toggle.click();
     assert.equal(await toggle.getAttribute('aria-expanded'), 'true');

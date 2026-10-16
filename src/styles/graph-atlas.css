@@ -295,3 +295,6 @@
 .timeline-entry-body .timeline-next-options button { align-items: flex-start; gap: .5rem; min-height: 44px; font-family: var(--font-body); text-align: left; }
 .timeline-entry-body .timeline-next-options button > :nth-child(2) { flex: 1; line-height: 1.6; }
 .timeline-entry-body .timeline-next-options button > :last-child { flex-shrink: 0; }
+
+.atlas-current-source { display:flex; align-items:center; gap:1rem; color:var(--accent-primary); border:1px solid var(--accent-primary); padding:.65rem 1rem; font-size:.8rem; }
+.atlas-current-source strong { font-family:var(--font-mono); font-size:1rem; }

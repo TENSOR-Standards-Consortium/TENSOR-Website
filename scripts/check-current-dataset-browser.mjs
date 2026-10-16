@@ -1,0 +1,45 @@
+import assert from 'node:assert/strict';
+import {readFile,mkdir,mkdtemp,rm,writeFile} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+import {tmpdir} from 'node:os';
+import path from 'node:path';
+const {chromium}=await import(process.env.PLAYWRIGHT_MODULE||'playwright');
+const base=process.env.TENSOR_QA_BASE||'http://127.0.0.1:4321';
+const temp=await mkdtemp(path.join(tmpdir(),'tensor-current-dataset-'));
+const output=process.env.TENSOR_DATASET_OUTPUT||temp;await mkdir(output,{recursive:true});
+const dataset=JSON.parse(await readFile('public/dataset/current.json'));
+const graph=JSON.parse(await readFile('public'+dataset.graph));
+const browser=await chromium.launch({headless:true,args:['--enable-unsafe-swiftshader']});
+const page=await browser.newPage({viewport:{width:1440,height:1000},reducedMotion:'reduce',acceptDownloads:true});
+const errors=[],warnings=[],requests=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());if(m.type()==='warning')warnings.push(m.text());});page.on('request',r=>requests.push({url:r.url(),method:r.method()}));
+try {
+ const live=await page.request.get(base+'/dataset/current.json');assert.deepEqual(await live.json(),dataset);
+ await page.goto(base+'/questions/');await page.locator('#question-filters').waitFor({state:'visible'});
+ assert.equal(await page.locator('[data-question]').count(),graph.nodes.length);assert.equal(await page.locator('#question-library').getAttribute('data-dataset-id'),dataset.id);
+ await page.locator('.question-list a').first().click();assert.equal(await page.getByRole('heading',{name:graph.nodes[0].text,exact:true}).count(),1);
+ await page.getByRole('link',{name:'Open in the graph',exact:true}).click();await page.locator('[data-graph-ready=true]').waitFor();
+ assert.equal(await page.locator('.atlas[data-dataset-id]').getAttribute('data-dataset-id'),dataset.id);
+ assert.equal(await page.locator('.atlas-stage').getAttribute('data-node-count'),String(graph.nodes.length));
+ assert.equal(await page.getByRole('button',{name:/Published graph/}).count(),0);
+ const stage=page.locator('.atlas-stage');const initial=await stage.evaluate(el=>el._cyreg.cy.zoom());
+ const box=await stage.boundingBox();await page.mouse.move(box.x+box.width/2,box.y+box.height/2);await page.mouse.wheel(0,-120);await page.waitForTimeout(200);
+ const zoom=await stage.evaluate(el=>el._cyreg.cy.zoom());assert.ok(zoom>initial&&zoom<initial*5,'default mouse zoom stays usable');
+ await page.goto(base+'/studio/');await page.waitForFunction(n=>document.querySelector('#total-nodes')?.textContent===String(n),graph.nodes.length);
+ assert.equal(await page.locator('[data-dataset-id]').first().getAttribute('data-dataset-id'),dataset.id);
+ assert.equal(await page.locator('#graph-version-select option').count(),1);assert.equal(await page.locator('#graph-version-select').inputValue(),graph.version);
+ const exported=page.waitForEvent('download');await page.locator('#export-core-btn').click();const download=await exported;await download.saveAs(output+'/studio-base.json');const core=JSON.parse(await readFile(output+'/studio-base.json'));
+ const data=n=>n.data||n;assert.deepEqual(core.nodes.map(data).map(n=>n.id),graph.nodes.map(n=>n.id));assert.deepEqual(core.edges.map(data).map(e=>e.id),graph.edges.map(e=>e.id));
+ await page.goto(base+'/review/');assert.equal(await page.locator('.dataset-notice').getAttribute('data-dataset-id'),dataset.id);
+ const zipEvent=page.waitForEvent('download');await page.getByRole('link',{name:'Download current review package · ZIP',exact:true}).click();const zip=await zipEvent;await zip.saveAs(output+'/review-package.zip');
+ const digest=b=>createHash('sha256').update(b).digest('hex');assert.equal(digest(await readFile(output+'/review-package.zip')),digest(await readFile('public/review/current/review-package.zip')));
+ await page.goto(base+'/investigation-lab/?case=soc-signin');await page.locator('[data-case-ready=true]').waitFor();assert.equal(await page.locator('.tensor-investigation-lab').getAttribute('data-dataset-id'),dataset.id);
+ await page.locator('#il-bundle-file').setInputFiles('public/investigations/v1/soc-signin.bundle.json');await page.waitForFunction(()=>document.querySelector('.il-workspace-bar .il-eyebrow')?.textContent.includes('Imported record'));assert.equal(await page.locator('.tensor-investigation-lab').getAttribute('data-dataset-id'),null);
+ const redirects=(await readFile('dist/_redirects','utf8')).trim().split('\n');for(const line of redirects){const [from,to]=line.split(/\s+/);const r=await page.request.get(base+from,{maxRedirects:0});assert.equal(r.status(),302,from);assert.equal(new URL(r.headers().location,base).href,new URL(to,base).href,from);}
+ await page.goto(base+'/graphs/?graph=published&node=Q1');await page.waitForURL(base+'/archives/0.20260206e/#Q1');assert.equal(await page.locator('[data-question]').count(),588);
+ assert.equal(requests.filter(r=>r.method==='POST'&&r.url.includes('/api/')).length,0);
+ assert.equal(requests.filter(r=>r.url.includes('/assets/data/tensor-core.json')||r.url.includes('/api/graph')).length,0,'active tools cannot fall back to old graph data');
+ const failure=await browser.newPage({serviceWorkers:'block'});await failure.route('**/graphs/working/tensor.core.graph.json',r=>r.fulfill({status:200,contentType:'application/json',body:JSON.stringify({...graph,nodes:graph.nodes.map((n,i)=>i? n:{...n,text:'changed investigative meaning'})})}));await failure.goto(base+'/studio/');await failure.waitForFunction(()=>document.querySelector('#canvas-empty')?.textContent.includes('differs from the current dataset'));await failure.close();
+ assert.deepEqual(errors,[]);assert.deepEqual(warnings,[]);
+ await page.goto(base+'/review/');await page.screenshot({path:output+'/review-desktop.png'});
+ const result={base,dataset:dataset.id,questions:graph.nodes.length,routes:graph.edges.length,redirects:redirects.length,privateImports:'separate',publicMismatch:'rejected',legacyFallbacks:0,errors,warnings};await writeFile(output+'/results.json',JSON.stringify(result,null,2));console.log(JSON.stringify(result));
+}finally{await browser.close();await rm(temp,{recursive:true,force:true});}

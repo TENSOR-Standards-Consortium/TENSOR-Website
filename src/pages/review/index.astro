@@ -2,52 +2,48 @@
 import ReferenceTable from '../../components/ReferenceTable.astro';
 import Button from '../../components/Button.astro';
 import ContentCard from '../../components/ContentCard.astro';
+import DatasetNotice from '../../components/DatasetNotice.astro';
 import DocumentLayout from '../../layouts/DocumentLayout.astro';
-import { seo } from '../../data/seo';
-import snapshot from '../../../public/review/2026-10-11.1/manifest.json';
-const meta = seo.review;
-const files = `/review/${snapshot.reviewId}`;
-const source = `${snapshot.sourceRepository}/tree/${snapshot.sourceCommit}`;
+import dataset from '../../../public/dataset/current.json';
+import snapshot from '../../../public/review/current/manifest.json';
+import validation from '../../../public/review/current/validation.json';
+const files = '/review/current';
+if (snapshot.dataset.id !== dataset.id) throw new Error('Review and public dataset differ');
 ---
-
-<DocumentLayout title={meta.title} description={meta.description} canonicalPath={meta.canonicalPath} ogType={meta.ogType}>
+<DocumentLayout title="Technical review | TENSOR" description="Review the same current public TENSOR dataset used by the graph, profiles and Lab reference investigations." canonicalPath="/review/">
   <ContentCard class="review-package">
-<p class="section-kicker">Technical review package · {snapshot.reviewId}</p>
-    <h2>Pinned source and evaluation baseline</h2>
-    <p>This package contains the Core implementation candidate, its source archive, artifact manifest, reference cases, validation results, and review forms. Its technical target is fixed at source commit <a href={source}><code>{snapshot.sourceCommit}</code></a>.</p>
-    <p>The <a href="/graphs/">609-question working graph</a> and <a href="/graphs/profiles/">event profiles</a> have later revisions. They are documented separately in the <a href="/graphs/coverage/">coverage ledger</a> and are not part of this earlier snapshot.</p>
-    <p>The current <a href="/graphs/working/reviews/2026-10-13-routing/README.md">routing review</a> covers multiple routes per answer, independently bound cross-domain leads, and fresh-instance revisits under the unchanged schemas. The <a href="/investigations/">interactive cases</a> show explicit selections and retained parallel findings in the graph and Lab.</p>
-    <div class="cta-group"><Button variant="primary" href={`${files}/review-package.zip`} download>Download review package · ZIP</Button><Button variant="secondary" href="/investigation-lab/">Reference investigations</Button></div>
-    <p><a href={`${files}/README.md`}>Review brief</a> · <a href={`${files}/manifest.json`}>Artifact manifest</a> · <a href={`${files}/validation.json`}>Validation baseline</a> · <a href={`${files}/walkthrough.md`}>Review walkthrough</a> · <a href={`${files}/review-form.md`}>Finding form</a></p>
-    <h2>Package contents</h2>
-    <ReferenceTable label="Review package contents"><thead><tr><th>Artifact</th><th>Version</th><th>Scope</th></tr></thead><tbody>
-      <tr><td>Founding proposal</td><td>0.1.0</td><td>Purpose, 38 proposed Core requirements, and governance proposal.</td></tr>
-      <tr><td>Core record binding</td><td>0.1.0-draft.1</td><td>Investigation-record representation and reference implementation.</td></tr>
-      <tr><td>Earlier evidence-route graph</td><td>0.20261011b</td><td>103 questions, 225 edges, evidence criteria, and 252 author-side scenarios.</td></tr>
-      <tr><td>Published graph archive</td><td>0.20260206e</td><td>588 questions and 1,554 routes under the original graph schema.</td></tr>
-      <tr><td>Source archive</td><td>{snapshot.sourceCommit.slice(0,12)}</td><td>All {snapshot.files.length} tracked source files at the pinned commit.</td></tr>
+    <p class="section-kicker">Current public dataset · Technical review</p>
+    <h2>One dataset for exploration, implementation and review.</h2>
+    <p>The review package contains the same graph, evidence criteria, event profiles and reference investigations used throughout this site. Reviewers use the public candidate; there is no separate reviewer edition.</p>
+    <DatasetNotice />
+    <div class="cta-group"><Button variant="primary" href={`${files}/review-package.zip`} download>Download current review package · ZIP</Button><Button variant="secondary" href="/investigations/soc-signin/">Follow the SOC investigation</Button></div>
+    <p><a href={`${files}/README.md`}>Review brief</a> · <a href={`${files}/dataset.json`}>Exact dataset inventory</a> · <a href={`${files}/manifest.json`}>Source pins</a> · <a href={`${files}/validation.json`}>Validation results</a> · <a href={`${files}/walkthrough.md`}>First-hour walkthrough</a> · <a href={`${files}/review-form.md`}>Finding form</a></p>
+    <h2>Review contents</h2>
+    <ReferenceTable label="Current review contents"><thead><tr><th>Artifact</th><th>Scope</th></tr></thead><tbody>
+      <tr><th>Public graph</th><td>{dataset.counts.questions} questions and {dataset.counts.routes.toLocaleString()} routes across {dataset.counts.domains} domains.</td></tr>
+      <tr><th>Evidence and event contexts</th><td>Evidence criteria, {dataset.counts.eventProfiles} event profiles and {dataset.counts.qualifiedDefinitions} qualified definitions.</td></tr>
+      <tr><th>Reference investigations</th><td>{dataset.counts.referenceCases} cross-domain cases, their graph and Lab records, plus the Core binding reference bundles.</td></tr>
+      <tr><th>Core proposal and binding</th><td>38 logical requirements, binding {dataset.bindingVersion}, unchanged schemas and reference implementation.</td></tr>
+      <tr><th>Source and checks</th><td>{snapshot.files.length} exact source-file pins, verifier, validation record and finding form.</td></tr>
     </tbody></ReferenceTable>
     <h2>Review workflow</h2>
-    <ol><li><strong>Contract:</strong> compare the <a href="/founding/01-core-contract.md">Core requirements</a> with the binding and implementation behavior.</li><li><strong>Records:</strong> inspect the agent-transfer and identity cases in the <a href="/investigation-lab/">Lab</a>, including unknowns, revisions, and export/reimport.</li><li><strong>Routes:</strong> compare entry questions and yes/no/unknown branches in the snapshot with their evidence criteria.</li><li><strong>Exchange:</strong> compare separately developed readers or exporters and record preserved, unsupported, and lost meaning.</li><li><strong>Findings:</strong> cite an exact version and requirement or question ID, a minimal example, observed behavior, and untested scope.</li></ol>
-    <h2>Baseline reproduction</h2>
-    <p>The ZIP contains <code>source.tar.gz</code>, its manifest, and the snapshot verifier. After extraction into an empty directory, Python 3.9 or later can verify archive and source-file hashes. The Core checks use Node.js 24.21.0 and npm 11.19.0.</p>
-    <pre><code>{`python3 verify-snapshot.py /absolute/path/to/extracted-source
+    <ol><li><strong>Understand:</strong> read <a href="/start/">TENSOR in five minutes</a> and follow the SOC investigation into the graph and Lab.</li><li><strong>Challenge meaning:</strong> examine the <a href="/questions/">question catalog</a>, evidence criteria and <a href="/graphs/review/">item-level review</a>. Check unknowns, bounded negative findings, multiple routes and cross-domain leads.</li><li><strong>Check layers:</strong> inspect <a href="/extensions/">vendor and organization additions</a> without changing public question meaning or treating policy as an investigative fact.</li><li><strong>Exchange:</strong> independently read, export and reimport cases; report preserved, unsupported and lost meaning.</li><li><strong>Return findings:</strong> cite the dataset digest, exact question/profile/requirement, reproduction and untested scope.</li></ol>
+    <h2>Reproduce the same source</h2>
+    <p>Extract the ZIP into an empty directory. Verify its source archive before extraction, then verify the extracted files. The package uses Node.js 24.21.0 and Python 3.11 or later.</p>
+    <pre><code>{`python3 verify-snapshot.py
+python3 verify-snapshot.py /absolute/path/to/extracted-source
 cd /absolute/path/to/extracted-source
 npm ci
 npm run check
+node scripts/build_dataset.mjs --check
 python3 -m unittest discover -s tests/legacy -q
-python3 scripts/validate_release_contract.py
+python3 scripts/verify_semantic_review.py
 python3 scripts/evaluate_entry_scenarios.py`}</code></pre>
-    <p>The recorded baseline includes 161 Node tests, two Core cases, 58 Python tests, release preservation, and 252 route scenarios. <a href={`${files}/validation.json`}>The validation record</a> identifies the environment, checks, and limitations.</p>
-    <h2>Evaluation status</h2>
-    <p>Core remains an unratified candidate. The supplied cases and route reconstructions are illustrative; no original incident logs are supplied. External technical review, independent exchange, CASE/UCO mapping and loss analysis, and field evaluation remain open.</p>
-    <h2>Finding process</h2>
-    <p><a href="/governance/">Current stewardship</a> and the <a href="/docs/review-process.md">finding process</a> identify review handling, responses, and dissent. Public reports use fictional or authorized material. Sensitive vulnerabilities use <a href="https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework/security/advisories/new">private vulnerability reporting</a>.</p>
-    <div class="cta-group"><Button variant="primary" href="https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework/issues/new?template=implementation-report.yml">Technical finding</Button><Button variant="secondary" href="/contribute/">Contribution guide</Button></div>
+    <p>The <a href={`${files}/validation.json`}>validation record</a> contains observed commands, environment and limits. Its {validation.checks.find(c=>c.nodeTests)?.nodeTests} Node tests and {validation.checks.find(c=>c.tests)?.tests} Python regressions are author-side checks. Separate implementations, authenticated field evidence and institutional approval remain external evaluation work.</p>
+    <h2>Findings and stewardship</h2>
+    <p><a href="/governance/">Current stewardship</a> and the <a href="/docs/review-process.md">finding process</a> cover responses and dissent. Review participation is not endorsement. Public reports use fictional or authorized material; sensitive vulnerabilities use <a href="https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework/security/advisories/new">private reporting</a>.</p>
+    <div class="cta-group"><Button variant="primary" href="https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework/issues/new?template=implementation-report.yml">Technical finding</Button><Button variant="secondary" href="/archives/">Historical archives</Button></div>
+    <details><summary>Exact source and dataset identity</summary><p>Dataset: <code>{dataset.id}</code></p><p>Source: <a href={`${snapshot.sourceRepository}/tree/${snapshot.sourceCommit}`}><code>{snapshot.sourceCommit}</code></a>. Generated review packaging is excluded from its own source archive to avoid recursion.</p></details>
   </ContentCard>
 </DocumentLayout>
-
-<style>
-  .review-package { overflow-wrap: anywhere; }
-  .review-package pre { overflow-wrap: normal; }
-</style>
+<style>.review-package { overflow-wrap:anywhere; } .review-package pre { overflow-wrap:normal; }</style>

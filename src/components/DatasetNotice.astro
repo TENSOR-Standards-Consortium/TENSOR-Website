@@ -1,0 +1,5 @@
+---
+import dataset from '../../public/dataset/current.json';
+---
+<p class="dataset-notice" data-dataset-id={dataset.id}>Current public dataset · {dataset.counts.questions} questions · {dataset.counts.routes.toLocaleString()} routes · <a href="/dataset/current.json">Dataset inventory</a> · <a href="/review/">Review this dataset</a></p>
+<style>.dataset-notice { color: var(--text-muted); font-size: .8rem; line-height: 1.65; margin: 1rem 0; } .dataset-notice a { white-space: nowrap; }</style>

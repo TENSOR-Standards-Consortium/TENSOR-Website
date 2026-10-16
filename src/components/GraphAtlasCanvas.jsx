@@ -32,7 +32,7 @@ export default function GraphAtlasCanvas({ graph, layout, selectedId, view, onSe
       const instance = cytoscape({ container: host.current, elements: [
         ...layout.nodes.map((n) => ({ data: { id: n.id, displayLabel:n.displayLabel||compactQuestionLabel(n), title: `${n.category} · ${questionLabel(n)}`, color: color(n.color) }, position: n.position })),
         ...graph.edges.map((e, i) => ({ data: { id: `atlas-edge-${i}`, routeId:e.id, source: e.source, target: e.target, outcome: e.decision } })),
-      ], layout: { name: 'preset', fit: false }, minZoom: .025, maxZoom: 3.5, wheelSensitivity: .18, boxSelectionEnabled: false, autoungrabify: true,
+      ], layout: { name: 'preset', fit: false }, minZoom: .025, maxZoom: 3.5, boxSelectionEnabled: false, autoungrabify: true,
       style: [
         { selector: 'node', style: { width: cardLabels?220:130, height:cardLabels?86:46, shape: 'round-rectangle', 'background-color': color('var(--bg-input)'), 'background-opacity': 1, 'border-width': 1.5, 'border-color': 'data(color)', label: 'data(displayLabel)', 'text-max-width': cardLabels?200:118, 'min-zoomed-font-size':cardLabels?0:7, color: color('var(--text-primary)'), 'font-family': 'JetBrains Mono, monospace', 'font-size':cardLabels?15:12, 'text-wrap':'wrap', 'font-weight': 500, 'text-valign': 'center', 'text-halign': 'center', 'text-outline-color': color('var(--bg-input)'), 'text-outline-width': 2 } },
         { selector: 'edge', style: { width: 1.1, opacity: .2, 'line-color': color('var(--graph-route)'), 'target-arrow-color': color('var(--graph-route)'), 'target-arrow-shape': 'triangle', 'arrow-scale': .7, 'curve-style': 'bezier' } },

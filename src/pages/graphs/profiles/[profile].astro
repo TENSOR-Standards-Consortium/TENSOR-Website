@@ -3,7 +3,6 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import ContentCard from '../../../components/ContentCard.astro';
 import WorkingGraph from '../../../components/WorkingGraph.jsx';
 import graph from '../../../../public/graphs/working/tensor.core.graph.json';
-import published from '../../../../public/legacy/0.20260206e/tensor.core.graph.json';
 import criteria from '../../../../public/graphs/working/entry-evidence-criteria.json';
 import source from '../../../../public/core/0.1.0-draft.1/provenance.json';
 import catalog from '../../../../public/graphs/working/event-profiles/catalog.json';
@@ -19,7 +18,7 @@ const context = { profileId: id, version: catalog.version, graphVersion: catalog
 ---
 <BaseLayout title={`${profile.title} · Event profile`} description={`Supported, refuted, and unresolved ${profile.title.toLowerCase()} investigations with explicit TENSOR evidence criteria.`} canonicalPath={`/graphs/profiles/${id}/`} hidePageTitle>
   <section class="atlas-page" aria-label={`${profile.title} investigation workspace`}>
-    <WorkingGraph graph={graph} published={published} criteria={criteria} source={source} profileContext={context} guides={guides} client:load />
+    <WorkingGraph graph={graph} criteria={criteria} source={source} profileContext={context} guides={guides} client:load />
     <ContentCard>
       <p class="section-kicker">{profile.domain} / public event profile</p>
       <h2>{profile.title}</h2>

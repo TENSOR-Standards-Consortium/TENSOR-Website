@@ -9,6 +9,8 @@ import '../styles/investigation-lab.css';
 import { Badge } from './WorkspaceUI.jsx';
 import InvestigationGraph from './InvestigationGraph.jsx';
 import CaseInvestigation from './CaseInvestigation.jsx';
+import dataset from '../../public/dataset/current.json';
+import { datasetArtifact } from '../lib/datasetArtifact.mjs';
 
 const PAGE_SIZE = 30;
 
@@ -157,7 +159,8 @@ export default function InvestigationLab() {
       if (!response.ok) throw new Error(`The example could not be loaded (${response.status}). Download it below or try again.`);
       const declared = Number(response.headers.get('content-length'));
       if (Number.isFinite(declared) && declared > MAX_BUNDLE_BYTES) throw new Error('The example exceeds the 2 MiB import limit.');
-      await importText(decodeBundleBytes(await response.arrayBuffer()), { label: sample.title, kind: 'synthetic', caseId: sample.id, walkthrough: sample.walkthrough }, ticket);
+      const bytes = await datasetArtifact(response,dataset.files.find(file=>file.publicPath===sample.path));
+      await importText(decodeBundleBytes(bytes), { label: sample.title, kind: 'synthetic', caseId: sample.id, walkthrough: sample.walkthrough }, ticket);
     });
   }
 
@@ -187,10 +190,11 @@ export default function InvestigationLab() {
     window.requestAnimationFrame(() => contentRef.current?.focus({ preventScroll: false }));
   }
 
-  return <div className="tensor-investigation-lab" aria-busy={busy || !ready}>
+  return <div className="tensor-investigation-lab" data-dataset-id={source?.kind === 'import' ? undefined : dataset.id} aria-busy={busy || !ready}>
     <section className="tensor-panel il-start" aria-labelledby="il-start-title">
       <div className="il-start-heading"><div><p className="il-eyebrow">Core investigation bundles</p><h2 id="il-start-title">Open an investigation</h2></div><span className="il-version">Core {BINDING_VERSION}</span></div>
       <p className="il-lead">Example investigations and local imports include questions, evidence, assessments, decisions, and retained history.</p>
+      <p className="il-caption">Reference cases come from the <a href="/dataset/current.json">current public dataset</a>, shared with the graph and <a href="/review/">review package</a>. Local imports retain their own declared definitions.</p>
       <details className="il-examples" open={!bundle}><summary>Example investigations · {CASES.length} cases</summary><div className="il-case-grid">{CASES.map((sample, index) => <button type="button" className={`il-case ${source?.label === sample.title ? 'is-selected' : ''}`} key={sample.id} disabled={busy || !ready} onClick={() => loadCase(sample)}><span className="il-case-number">0{index + 1} / EXAMPLE INVESTIGATION</span><strong>{sample.title}</strong><span>{sample.description}</span><span className="il-case-action">Open reference case <span aria-hidden="true">↗</span></span></button>)}</div></details>
       <div className="il-import-row"><div><label htmlFor="il-bundle-file" className="il-file-label">Import a local bundle</label><input id="il-bundle-file" type="file" accept=".json,application/json" onChange={importFile} disabled={busy || !ready} aria-describedby="il-privacy" /></div><p id="il-privacy">JSON · up to 2 MiB · Browser-only processing, without upload, evidence retrieval, or action execution.</p></div>
       <details className="il-paste"><summary>Or paste bundle JSON</summary><form onSubmit={(event) => { event.preventDefault(); runOperation((ticket) => importText(paste, { label: 'Pasted bundle', kind: 'import' }, ticket)); }}><label htmlFor="il-json-paste">Bundle JSON to open</label><textarea id="il-json-paste" value={paste} onChange={(event) => setPaste(event.target.value)} spellCheck="false" rows={7} placeholder='{ "format": "tensor-investigation-bundle", … }' maxLength={MAX_BUNDLE_BYTES} /><button type="submit" className="btn btn-primary" disabled={busy || !ready || !paste.trim()}>Open pasted bundle</button></form></details>

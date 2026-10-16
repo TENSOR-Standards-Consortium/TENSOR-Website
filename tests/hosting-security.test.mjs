@@ -93,3 +93,35 @@ test('API navigations bypass the service worker cache', async () => {
   assert.equal((await response).status, 200);
   assert.equal(cacheOpened, false);
 });
+
+test('current dataset downloads never serve stale cached artifacts, including offline navigations', async () => {
+  const source = await readFile(new URL('../public/sw.js', import.meta.url), 'utf8');
+  const handlers = new Map();
+  let offline = false;
+  const requests = [];
+  const context = vm.createContext({
+    self: { location: { origin: 'https://tensor.invalid' }, addEventListener: (type, handler) => handlers.set(type, handler) },
+    caches: { open: async () => { throw new Error('Current dataset must not use a stale cache'); } },
+    fetch: async (request, options) => {
+      requests.push(options.cache);
+      if (offline) throw new Error('offline');
+      return new Response('current');
+    },
+    URL, Response,
+  });
+  vm.runInContext(source, context);
+  const dataset = JSON.parse(await readFile(new URL('../public/dataset/current.json', import.meta.url), 'utf8'));
+  for (const path of ['/dataset/current.json', '/review/current/review-package.zip', '/review/current/README.md', ...dataset.files.map((file) => file.publicPath)]) {
+    for (const mode of ['cors', 'navigate']) {
+      let response;
+      offline = false;
+      const event = { request: { method: 'GET', mode, url: `https://tensor.invalid${path}` }, respondWith: (promise) => { response = promise; } };
+      handlers.get('fetch')(event);
+      assert.equal(await (await response).text(), 'current');
+      offline = true;
+      handlers.get('fetch')(event);
+      assert.equal((await response).type, 'error');
+    }
+  }
+  assert.ok(requests.every((cache) => cache === 'no-cache'));
+});

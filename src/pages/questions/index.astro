@@ -1,36 +1,40 @@
 ---
 import ContentCard from '../../components/ContentCard.astro';
 import DocumentLayout from '../../layouts/DocumentLayout.astro';
-import { legacyGraph, legacyQuestions, legacyCategories, questionPath, LEGACY_VERSION, LEGACY_DOWNLOAD, LEGACY_SHA256, LEGACY_SOURCE } from '../../data/legacy-questions';
-const title = 'Published question catalog';
-const description = `Browse and cite the ${legacyQuestions.length} questions in TENSOR's preserved graph release ${LEGACY_VERSION}.`;
+import { graph, questions, categories, questionPath, dataset, source } from '../../data/current-dataset';
+const GRAPH_VERSION = graph.version;
+const GRAPH_DOWNLOAD = dataset.graph;
+const GRAPH_SHA256 = dataset.files.find(f => f.publicPath === dataset.graph)!.sha256;
+const GRAPH_SOURCE = `${source.sourceRepository}/blob/${source.sourceCommit}/drafts/core/tensor.core.graph.json`;
+const title = 'Investigation question catalog';
+const description = `Browse and cite the ${questions.length} questions in TENSOR's current public graph ${GRAPH_VERSION}.`;
 ---
 
 <DocumentLayout title={title} description={description} canonicalPath="/questions/">
   <ContentCard>
-    <p class="section-kicker">Preserved graph release · {LEGACY_VERSION}</p>
-    <h2>Published questions and citations</h2>
-    <p>This library preserves {legacyQuestions.length} questions and {legacyGraph.edges.length} recorded routes from the published graph. Each question has a version-scoped page with its original wording, classification, and outgoing routes.</p>
-    <p>The catalog retains the original wording and routes for citation. The <a href="/graphs/">working graph</a> supplies the revised questions and evidence criteria; the <a href="/graphs/coverage/">coverage ledger</a> links the two. Investigation records use the separate <a href="/core/">Core binding</a>.</p>
-    <p><a href={LEGACY_DOWNLOAD} download>Download the original graph JSON</a> · <a href={LEGACY_SOURCE}>Inspect the pinned repository source</a></p>
-    <details class="source-details"><summary>Release identity and digest</summary><p>Graph version: <code>{LEGACY_VERSION}</code><br />SHA-256 of the exact source bytes: <code class="digest">{LEGACY_SHA256}</code></p><p>Question identifiers are scoped to this release. A matching identifier in a different graph version does not establish equivalent meaning.</p></details>
+    <p class="section-kicker">Current public dataset · {GRAPH_VERSION}</p>
+    <h2>Investigation questions and evidence criteria</h2>
+    <p>This catalog uses the same {questions.length} questions and {graph.edges.length} routes as the Atlas, Graph Studio and current review package. Each question includes its evidence criteria, bindings and outgoing routes.</p>
+    <p>Explore these questions in the <a href="/graphs/">Atlas</a>, follow the <a href="/graphs/profiles/">event profiles</a>, or <a href="/review/">review the same dataset</a>. The <a href="/archives/">archive</a> preserves older releases for citation. Investigation records use the <a href="/core/">Core binding</a>.</p>
+    <p><a href={GRAPH_DOWNLOAD} download>Download the current graph JSON</a> · <a href={GRAPH_SOURCE}>Inspect the pinned repository source</a></p>
+    <details class="source-details"><summary>Dataset identity and graph digest</summary><p>Graph version: <code>{GRAPH_VERSION}</code><br />SHA-256 of the exact source bytes: <code class="digest">{GRAPH_SHA256}</code></p><p>The dataset inventory pins the graph, profiles and reference cases. Historical identifiers retain their original source context in the archive.</p></details>
 
     <form id="question-filters" role="search" hidden>
       <div><label for="question-query">Find a question</label><input id="question-query" type="search" placeholder="Question ID, wording, or archetype" autocomplete="off" /></div>
-      <div><label for="question-category">Category</label><select id="question-category"><option value="">All categories</option>{legacyCategories.map((category) => <option value={category}>{category}</option>)}</select></div>
+      <div><label for="question-category">Category</label><select id="question-category"><option value="">All categories</option>{categories.map((category) => <option value={category}>{category}</option>)}</select></div>
     </form>
-    <p id="question-count" role="status" aria-live="polite">Showing {legacyQuestions.length} questions.</p>
+    <p id="question-count" role="status" aria-live="polite">Showing {questions.length} questions.</p>
     <p id="question-empty" hidden>No questions match. Try a shorter phrase or another category.</p>
-    <nav class="category-links" aria-label="Jump to a question category">{legacyCategories.map((category) => <a href={`#category-${category.toLowerCase()}`}>{category}</a>)}</nav>
-    <div id="question-library">
-      {legacyCategories.map((category) => (
+    <nav class="category-links" aria-label="Jump to a question category">{categories.map((category) => <a href={`#category-${category.toLowerCase()}`}>{category}</a>)}</nav>
+    <div id="question-library" data-dataset-id={dataset.id}>
+      {categories.map((category) => (
         <section class="question-category" data-category={category} aria-labelledby={`category-${category.toLowerCase()}`}>
           <h2 id={`category-${category.toLowerCase()}`}>{category}</h2>
           <ul class="question-list">
-            {legacyQuestions.filter((question) => question.category === category).map((question) => (
-              <li data-question data-search={`${question.id} ${question.label} ${question.text} ${question.category} ${question.archetype}`.toLowerCase()} data-category={question.category}>
+            {questions.filter((question) => question.category === category).map((question) => (
+              <li id={question.id} data-question data-search={`${question.id} ${question.label} ${question.text} ${question.category} ${question.archetype}`.toLowerCase()} data-category={question.category}>
                 <a href={questionPath(question.id)}><span>{question.text}</span></a>
-                <p class="question-meta">{question.archetype}{legacyGraph.entryNodeIds.includes(question.id) ? ' · Declared entry point' : ''}</p>
+                <p class="question-meta">{question.archetype}{graph.entryNodeIds.includes(question.id) ? ' · Declared entry point' : ''}</p>
               </li>
             ))}
           </ul>

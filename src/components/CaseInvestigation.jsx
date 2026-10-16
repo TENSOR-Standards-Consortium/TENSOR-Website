@@ -1,3 +1,4 @@
+import dataset from '../../public/dataset/current.json';
 import { questionLabel, subjectLabel, entryTitle } from '../lib/displayLabels.mjs';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { validateBundle } from '../vendor/tensor-core/index.mjs';
@@ -61,7 +62,7 @@ export default function CaseInvestigation({ bundle, initialStep = 0, linkState =
   const futureFrame=model.frames.findIndex((f,i)=>i>index&&(selectedInstance?f.instance.id===selectedInstance:f.node.id===inspected.id));
   function inspect(id,instanceId=null){setPlaying(false);setSelected(id);setSelectedInstance(instanceId);}
   function inspectRecord(id){if(onInspect)onInspect(id);}
-  return <div className="case-workspace atlas" ref={shell} data-case-ready="true" data-case-step={index}>
+  return <div className="case-workspace atlas" ref={shell} data-dataset-id={publicCaseId ? dataset.id : undefined} data-case-ready="true" data-case-step={index}>
     <div className="case-heading"><div><p className="section-kicker">Core case · Reference checks passed</p><h2>{model.title}</h2><p>{model.graph.nodes.length} questions · <span className="case-domains-wide">{model.domains.join(' → ')}</span><span className="case-domains-mobile">{model.domains.length} domains</span></p></div>{publicCaseId&&<a href={labMode?`/investigations/${publicCaseId}/?step=${index}`:`/investigation-lab/?case=${publicCaseId}&step=${index}`}>{labMode?'Open this step in the graph':'Open this step in the Lab'} ↗</a>}</div>
     <div className="case-controls" data-open={viewTools}>
       <div className="case-playback" role="group" aria-label="Case playback"><button className="btn btn-primary" onClick={()=>{if(index===model.frames.length-1&&!playing)advance(0);setPlaying(!playing);}}>{playing?'Pause':index===model.frames.length-1?'Replay':'Play'}</button><button className="btn btn-secondary" aria-label="Previous case step" disabled={index===0} onClick={()=>advance(index-1)}>←</button><button className="btn btn-secondary" aria-label="Next case step" disabled={index===model.frames.length-1} onClick={()=>advance(index+1)}>→</button><span aria-live="polite">{index+1}/{model.frames.length}</span></div>
