@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tensor-pwa-v10';
+const CACHE_NAME = 'tensor-pwa-v11';
 const PRECACHE_URLS = [
   '/',
   '/offline/',
@@ -14,8 +14,6 @@ const PRECACHE_URLS = [
   '/manifest.webmanifest',
   '/icons/icon-192.png',
   '/icons/icon-512.png',
-  '/assets/data/tensor-core.json',
-  '/assets/data/core.schema.json',
   '/assets/js/app-init.js',
   '/assets/img/logo-tensor-icon.png',
   '/assets/img/logo-tensor-framework.png'
@@ -128,7 +126,7 @@ async function networkFirst(request) {
 
 async function networkOnly(request) {
   try {
-    return await fetch(request);
+    return await fetch(request, { cache: 'no-cache' });
   } catch {
     return Response.error();
   }
@@ -145,7 +143,10 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  if (url.pathname.startsWith('/api/')) {
+  // Mutable public dataset paths must never fall back to a previous dataset.
+  // Historical releases and ordinary reading pages retain their offline policy.
+  const currentData = ['/dataset/', '/review/current/', '/graphs/working/', '/investigations/', '/examples/', '/core/', '/schemas/core/'];
+  if (url.pathname.startsWith('/api/') || currentData.some((prefix) => url.pathname.startsWith(prefix)) || url.pathname === '/assets/data/core.schema.json') {
     event.respondWith(networkOnly(request));
     return;
   }

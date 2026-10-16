@@ -190,6 +190,7 @@
 .resource-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: var(--space-5); }
 .reference-table { max-width: 100%; overflow-x: auto; margin-top: .75rem; }
 .reference-table > table { min-width: 36rem; margin-top: 0; }
+.reference-table:has(thead th:nth-child(5)) > table { min-width: 50rem; }
 .reference-table thead th { white-space: nowrap; }
 .reference-table :is(th, td):first-child { min-width: 10rem; }
 .reference-table-hint { display: none; }

@@ -35,7 +35,7 @@ export default function GraphCanvas({ nodes, edges, selectedId, onSelect, label 
           { selector: '.is-selected', style: { 'border-color': token('--accent-primary'), 'border-width': 4 } },
         ],
         layout: layout(),
-        minZoom: .01, maxZoom: 2.5, wheelSensitivity: .15,
+        minZoom: .01, maxZoom: 2.5,
       });
       cy.current = instance;
       instance.on('tap', 'node', (event) => select.current(event.target.id()));

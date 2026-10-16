@@ -14,7 +14,8 @@ const FOUNDING = 'proposals/founding-core-v0.1.0';
 const LEGACY = 'releases/core/graphs/v0.20260206e/tensor.core.graph.json';
 const LEGACY_TARGET = 'public/legacy/0.20260206e/tensor.core.graph.json';
 const LEGACY_SHA256 = 'dfc3f1a965c01b6f7ade253e426e69abcbad688fab20d9d00065d71c777c010c';
-const REVIEW = 'review/2026-10-11.1';
+const REVIEW = 'review/current';
+const ARCHIVED_REVIEW = 'review/2026-10-11.1';
 const INVESTIGATIONS = 'examples/investigations/v1';
 const INVESTIGATION_TARGET = 'public/investigations/v1';
 const INVESTIGATION_FILES = ['README.md', 'catalog.json', 'manifest.json', ...['soc-signin', 'workload-cloud-egress', 'attachment-host-tool'].flatMap(id => [`${id}.bundle.json`, `${id}.definition.json`])];
@@ -40,7 +41,8 @@ const FOUNDING_FILES = [
   'examples/manifest.json', 'examples/check_authoring.py',
 ];
 const LICENSE_TARGETS = ['src/vendor/tensor-core/LICENSE', `${PUBLIC_CORE}/LICENSE`];
-const OWNED_ROOTS = ['src/vendor/tensor-core', PUBLIC_CORE, 'public/founding', 'public/legacy/0.20260206e', 'public/review/2026-10-11.1', 'public/docs', WORKING_TARGET, INVESTIGATION_TARGET];
+const OWNED_FILES = ['public/assets/data/core.schema.json'];
+const OWNED_ROOTS = ['src/vendor/tensor-core', PUBLIC_CORE, 'public/founding', 'public/legacy/0.20260206e', 'public/review/2026-10-11.1', 'public/review/current', 'public/dataset', 'public/examples/layers', 'public/docs', WORKING_TARGET, INVESTIGATION_TARGET];
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const fail = (message) => { throw new Error(message); };
 const lexicalOrder = (a, b) => a < b ? -1 : a > b ? 1 : 0;
@@ -69,7 +71,7 @@ async function safePath(root, relative, { missing = false } = {}) {
 
 function allowedTarget(relative) {
   safeRelative(relative);
-  if (!OWNED_ROOTS.some((root) => relative.startsWith(`${root}/`))) fail(`Path is outside generated artifact directories: ${relative}`);
+  if (!OWNED_FILES.includes(relative) && !OWNED_ROOTS.some((root) => relative.startsWith(`${root}/`))) fail(`Path is outside generated artifact directories: ${relative}`);
   return relative;
 }
 
@@ -114,10 +116,11 @@ async function sourceSnapshot(options) {
     ...DOCUMENTS.map((name) => ({ source: `${CORE}/${name}`, target: `${PUBLIC_CORE}/${name}` })),
     ...FOUNDING_FILES.map((name) => ({ source: `${FOUNDING}/${name}`, readRoot: foundingRoot, readPath: `${foundingPrefix}${name}`, target: `public/founding/${name}` })),
     { source: LEGACY, target: LEGACY_TARGET },
+    { source: 'dataset/current.json', target: 'public/dataset/current.json' },
     ...WORKING.map((name) => ({ source: `drafts/core/${name}`, target: `${WORKING_TARGET}/${name}` })),
     ...INVESTIGATION_FILES.map(name => ({ source: `${INVESTIGATIONS}/${name}`, target: `${INVESTIGATION_TARGET}/${name}` })),
   ];
-  for (const filename of await listFiles(source, REVIEW)) {
+  for (const filename of [...await listFiles(source, REVIEW), ...await listFiles(source, ARCHIVED_REVIEW)]) {
     pairs.push({ source: filename, target: `public/${filename}` });
   }
   for (const name of REVIEW_DOCS) pairs.push({ source: `docs/${name}`, target: `public/docs/${name}` });
@@ -126,6 +129,14 @@ async function sourceSnapshot(options) {
       if (!/\.(json|md)$/.test(filename)) fail(`Unexpected public Core artifact: ${filename}`);
       pairs.push({ source: filename, target: `${PUBLIC_CORE}/${filename.slice(CORE.length + 1)}` });
     }
+  }
+  const dataset = JSON.parse(await readFile(await safePath(source, 'dataset/current.json'), 'utf8'));
+  for (const file of dataset.files) {
+    if (typeof file.publicPath !== 'string' || !file.publicPath.startsWith('/')) fail('Invalid dataset publication path');
+    const target = `public${file.publicPath}`;
+    const existing = pairs.find(item => item.target === target);
+    if (existing && existing.source !== file.source) fail(`Conflicting canonical dataset source: ${target}`);
+    if (!existing) pairs.push({ source:file.source, target });
   }
   pairs.sort((a, b) => lexicalOrder(a.target, b.target));
   for (const file of pairs) {
@@ -168,6 +179,16 @@ async function checkManifest() {
     if (!seen.has(required)) fail(`Required generated artifact is absent: ${required}`);
   }
   if (manifest.files.find((file) => file.target === LEGACY_TARGET)?.sha256 !== LEGACY_SHA256) fail('Legacy graph SHA-256 does not match the published release.');
+  const dataset = JSON.parse(await readFile(await safePath(WEBSITE, 'public/dataset/current.json'), 'utf8'));
+  if (dataset.format !== 'tensor-current-dataset' || dataset.manifestVersion !== 1) fail('Invalid current dataset inventory.');
+  for (const file of dataset.files) {
+    if (typeof file.publicPath !== 'string' || !file.publicPath.startsWith('/')) fail('Invalid public dataset path.');
+    const copy = manifest.files.find(item => item.target === `public${file.publicPath}`);
+    if (!copy || copy.source !== file.source || copy.sha256 !== file.sha256 || copy.bytes !== file.bytes) fail(`Current dataset differs from website artifacts: ${file.publicPath}`);
+  }
+  const currentReview = JSON.parse(await readFile(await safePath(WEBSITE, 'public/review/current/manifest.json'), 'utf8'));
+  if (currentReview.dataset.id !== dataset.id || JSON.stringify(currentReview.dataset.counts) !== JSON.stringify(dataset.counts)) fail('Review package uses a different dataset.');
+  if (hash(await readFile(await safePath(WEBSITE, 'public/review/current/dataset.json'))) !== hash(await readFile(await safePath(WEBSITE, 'public/dataset/current.json')))) fail('Review download contains a different dataset inventory.');
   for (const root of OWNED_ROOTS) {
     for (const filename of await listFiles(WEBSITE, root)) {
       if (filename !== MANIFEST && !seen.has(filename)) fail(`Unrecorded file in generated directory: ${filename}`);

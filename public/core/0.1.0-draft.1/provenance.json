@@ -3,10 +3,16 @@
   "manifestVersion": 1,
   "bindingVersion": "0.1.0-draft.1",
   "sourceRepository": "https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework",
-  "sourceCommit": "a65763a9d6f9416bc16376b1a0f6896fd1a8792f",
+  "sourceCommit": "39b38960272a9da0ebdcf0ae806033921f674c90",
   "sourceDirty": false,
   "foundingSource": "framework-repository",
   "files": [
+    {
+      "source": "releases/core/schemas/v0.20260206e/tensor.core.schema.json",
+      "target": "public/assets/data/core.schema.json",
+      "sha256": "6520f4cd90c26d72252c986e4db7e8639c76e30f2f5c865a7318101c2a513ad5",
+      "bytes": 6672
+    },
     {
       "source": "LICENSE",
       "target": "public/core/0.1.0-draft.1/LICENSE",
@@ -98,6 +104,12 @@
       "bytes": 67314
     },
     {
+      "source": "dataset/current.json",
+      "target": "public/dataset/current.json",
+      "sha256": "9b400eaf8f417acde7365fd00706f9e8f59e6976472e7de8ce0a055835a050c2",
+      "bytes": 8634
+    },
+    {
       "source": "docs/graph-coverage-roadmap.md",
       "target": "public/docs/graph-coverage-roadmap.md",
       "sha256": "5dfbb689b1b7884bd3ed7ebe5e6d94a46d530f6d7433926ee18c92b52e27d3b9",
@@ -106,20 +118,38 @@
     {
       "source": "docs/legacy-migration.md",
       "target": "public/docs/legacy-migration.md",
-      "sha256": "2a2dcc6d6ca5a76e679d4196cbfcd49701ae5da4b750b8d668bb00ecfeb41540",
-      "bytes": 2882
+      "sha256": "1b03425c0ca18947082aefd860ac282c59ccfe1b3e9da4b4a0d9b3eaf5292c07",
+      "bytes": 3225
     },
     {
       "source": "docs/review-process.md",
       "target": "public/docs/review-process.md",
-      "sha256": "5a63a532236ef7352661fc80e845bd8accb3568a3e038c956c967e62d1e58b01",
-      "bytes": 3170
+      "sha256": "17a0a709d04095b77ac5b766a3e8fd94bdba1a98dbafb589ee1639ac4b6f954a",
+      "bytes": 3570
     },
     {
       "source": "docs/stewardship.md",
       "target": "public/docs/stewardship.md",
       "sha256": "f711bcb5ba7be5e1a9a8f6104c124f93cf4ea950c848aa02ae8323dce8422e35",
       "bytes": 4568
+    },
+    {
+      "source": "examples/layers/cloud-investigation.layers.json",
+      "target": "public/examples/layers/cloud-investigation.layers.json",
+      "sha256": "58a0e69fb751a6834d1541b68c7767449041a8bc85acd96f1f1ddac01eb620b0",
+      "bytes": 4189
+    },
+    {
+      "source": "examples/layers/organization-cloud.layer.json",
+      "target": "public/examples/layers/organization-cloud.layer.json",
+      "sha256": "48bded65d085fb0b0fb61d0751d6bf084e6dffcc89537effdbb8c11ab6d34ae6",
+      "bytes": 2048
+    },
+    {
+      "source": "examples/layers/vendor-cloud.layer.json",
+      "target": "public/examples/layers/vendor-cloud.layer.json",
+      "sha256": "da534394aa7c94a7b915ce7525de0fbd2f9cc1c414beb81a106c1385d6129311",
+      "bytes": 1970
     },
     {
       "source": "proposals/founding-core-v0.1.0/00-charter.md",
@@ -528,6 +558,60 @@
       "target": "public/review/2026-10-11.1/walkthrough.md",
       "sha256": "945495bb91d3e2e0d757fd315cb9263fb18e788f031fe82735942e7be1995f51",
       "bytes": 3615
+    },
+    {
+      "source": "review/current/README.md",
+      "target": "public/review/current/README.md",
+      "sha256": "b88126890b9895fe324182817ab809a7391279dbd0b87189543e6aa85854e2c3",
+      "bytes": 2219
+    },
+    {
+      "source": "review/current/dataset.json",
+      "target": "public/review/current/dataset.json",
+      "sha256": "9b400eaf8f417acde7365fd00706f9e8f59e6976472e7de8ce0a055835a050c2",
+      "bytes": 8634
+    },
+    {
+      "source": "review/current/manifest.json",
+      "target": "public/review/current/manifest.json",
+      "sha256": "68bd35df91af330d00f5182439df91ab19e7d8438c0a2407b4989a609b776d03",
+      "bytes": 51562
+    },
+    {
+      "source": "review/current/review-form.md",
+      "target": "public/review/current/review-form.md",
+      "sha256": "0a1d44c95cf68e7e93e688099ef3d46d5b5569144a382060f9b90123bd1aa028",
+      "bytes": 1020
+    },
+    {
+      "source": "review/current/review-package.zip",
+      "target": "public/review/current/review-package.zip",
+      "sha256": "f6899f4f20f939c7f223d2a9e1ad6d40632539a79c72d1c78dac680100b38879",
+      "bytes": 2821424
+    },
+    {
+      "source": "review/current/source.tar.gz",
+      "target": "public/review/current/source.tar.gz",
+      "sha256": "a7a04e8a0a3a66c138731d7e0020d98b2509847f3fa2fd3d069a0a71f9e22d88",
+      "bytes": 2843652
+    },
+    {
+      "source": "review/current/validation.json",
+      "target": "public/review/current/validation.json",
+      "sha256": "43977c8234a5f641b7e81ed88d4967d54dbbc48a8a4c49d40ceac1a8268b5106",
+      "bytes": 1718
+    },
+    {
+      "source": "review/current/verify-snapshot.py",
+      "target": "public/review/current/verify-snapshot.py",
+      "sha256": "7061175627d60e30c6640b5720574402314101e30e2108a66db3fabd812f54cf",
+      "bytes": 4276
+    },
+    {
+      "source": "review/current/walkthrough.md",
+      "target": "public/review/current/walkthrough.md",
+      "sha256": "d730ad58c3724ca0367c969112656a97dcbc3ac484dd6c6cee47aaf5c4a98063",
+      "bytes": 1708
     },
     {
       "source": "LICENSE",

@@ -1,0 +1,60 @@
+{
+  "status": "observed-author-side-validation",
+  "date": "2026-10-16",
+  "sourceIdentity": "See manifest.json sourceCommit; this record accompanies the exact archived source.",
+  "environment": {
+    "node": "24.21.0",
+    "python": "Python 3.14.4"
+  },
+  "checks": [
+    {
+      "command": "npm run check",
+      "status": "pass",
+      "nodeTests": 169,
+      "coreExamples": 2,
+      "crossDomainCases": 3,
+      "walkthroughFrames": 24,
+      "datasetInventory": "30 exact artifacts"
+    },
+    {
+      "command": "python3 -m unittest discover -s tests/legacy -q",
+      "status": "pass",
+      "tests": 223
+    },
+    {
+      "command": "python3 scripts/restore_original_questions.py --check",
+      "status": "pass",
+      "questions": 609,
+      "routes": 2131
+    },
+    {
+      "command": "python3 scripts/build_event_profiles.py --check",
+      "status": "pass",
+      "eventProfiles": 16,
+      "scenarios": 144
+    },
+    {
+      "command": "python3 scripts/audit_graph_coverage.py --check",
+      "status": "pass"
+    },
+    {
+      "command": "python3 scripts/evaluate_entry_scenarios.py",
+      "status": "pass",
+      "scenarios": 1791
+    },
+    {
+      "command": "python3 scripts/verify_semantic_review.py",
+      "status": "pass",
+      "qualifiedDefinitions": 567
+    },
+    {
+      "command": "python3 scripts/validate_release_contract.py",
+      "status": "pass"
+    }
+  ],
+  "limits": [
+    "Author-side checks and fictional supplied observations do not establish evidence truth or institutional approval.",
+    "Independent implementation exchange, CASE/UCO loss analysis and authorized field validation remain open.",
+    "No invitations or formal review window have been initiated."
+  ]
+}

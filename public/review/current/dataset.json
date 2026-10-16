@@ -1,0 +1,205 @@
+{
+  "format": "tensor-current-dataset",
+  "manifestVersion": 1,
+  "id": "urn:tensor:dataset:sha256:48840d95be44369a0d8beb34bd25aefadc21567ad316bfe5b5e295739c5551ad",
+  "graphVersion": "0.20261013b",
+  "graphSchemaVersion": "0.20260206e",
+  "bindingVersion": "0.1.0-draft.1",
+  "counts": {
+    "questions": 609,
+    "routes": 2131,
+    "domains": 7,
+    "eventProfiles": 16,
+    "qualifiedDefinitions": 567,
+    "referenceCases": 3
+  },
+  "graphSchema": "/assets/data/core.schema.json",
+  "graph": "/graphs/working/tensor.core.graph.json",
+  "criteria": "/graphs/working/entry-evidence-criteria.json",
+  "eventProfiles": "/graphs/working/event-profiles/catalog.json",
+  "referenceCases": "/investigations/v1/catalog.json",
+  "reviewPackage": "/review/current/review-package.zip",
+  "scope": "The same current public reference dataset for exploration, implementation and review. Case records and event profiles supply declared contexts; they are not audience-specific graph versions. Historical releases are archives.",
+  "files": [
+    {
+      "source": "core/v0.1.0-draft.1/examples/case-a.bundle.json",
+      "publicPath": "/core/0.1.0-draft.1/examples/case-a.bundle.json",
+      "bytes": 23501,
+      "sha256": "b8dc145fd470eeec0a13f4e2881dc95fec528c7e178681abb3b54b93b3934c7a"
+    },
+    {
+      "source": "core/v0.1.0-draft.1/examples/case-a.definition.json",
+      "publicPath": "/core/0.1.0-draft.1/examples/case-a.definition.json",
+      "bytes": 3666,
+      "sha256": "d24cc27aba68e7dff4d053bd7a65e9c6f5324f7286332913d5059794a52e2ff4"
+    },
+    {
+      "source": "core/v0.1.0-draft.1/examples/case-a.record.json",
+      "publicPath": "/core/0.1.0-draft.1/examples/case-a.record.json",
+      "bytes": 18396,
+      "sha256": "0df4fb0e28cbbe57774d36a5003c66a2fdd48da27c956979efb61ebbe8042616"
+    },
+    {
+      "source": "core/v0.1.0-draft.1/examples/case-b.bundle.json",
+      "publicPath": "/core/0.1.0-draft.1/examples/case-b.bundle.json",
+      "bytes": 22742,
+      "sha256": "b241ebd34eb90963303d531b05968dd859ec77346494f16d28e113abb6ada4df"
+    },
+    {
+      "source": "core/v0.1.0-draft.1/examples/case-b.definition.json",
+      "publicPath": "/core/0.1.0-draft.1/examples/case-b.definition.json",
+      "bytes": 3672,
+      "sha256": "6e85c07aacf21ff813efab19b8e2a4b7ebca71ca850de42d3b6dd368cffea399"
+    },
+    {
+      "source": "core/v0.1.0-draft.1/examples/case-b.record.json",
+      "publicPath": "/core/0.1.0-draft.1/examples/case-b.record.json",
+      "bytes": 17650,
+      "sha256": "f44ba5b99d744bb1f385fbfce51ff55c7f79c80729b56bcf933de6bbc07a053d"
+    },
+    {
+      "source": "core/v0.1.0-draft.1/examples/manifest.json",
+      "publicPath": "/core/0.1.0-draft.1/examples/manifest.json",
+      "bytes": 901,
+      "sha256": "8e3382804d20ee765426a7531a4cf14a11668fbab18acd1e65fbddd28bb41da1"
+    },
+    {
+      "source": "core/v0.1.0-draft.1/schemas/bundle.schema.json",
+      "publicPath": "/core/0.1.0-draft.1/schemas/bundle.schema.json",
+      "bytes": 8742,
+      "sha256": "b76d92b6d3f82f201ee494f794b464ce50703a129382ad73b052a0ef797f6460"
+    },
+    {
+      "source": "core/v0.1.0-draft.1/schemas/definition.schema.json",
+      "publicPath": "/core/0.1.0-draft.1/schemas/definition.schema.json",
+      "bytes": 13407,
+      "sha256": "e360b1f228720a665647a3b3d961956242611cf3da767cdccd57b251d3d54b60"
+    },
+    {
+      "source": "core/v0.1.0-draft.1/schemas/record.schema.json",
+      "publicPath": "/core/0.1.0-draft.1/schemas/record.schema.json",
+      "bytes": 67314,
+      "sha256": "61d433b6d293ae413530a6ab90d69c2a11e4fd9ccffb52ca94299ea19fe03dfc"
+    },
+    {
+      "source": "drafts/core/coverage-inventory.json",
+      "publicPath": "/graphs/working/coverage-inventory.json",
+      "bytes": 1333875,
+      "sha256": "3c7f49649e08370324a9024d56e9b8871dba75b3a1084bb3419362e11804417b"
+    },
+    {
+      "source": "drafts/core/entry-evidence-criteria.json",
+      "publicPath": "/graphs/working/entry-evidence-criteria.json",
+      "bytes": 560283,
+      "sha256": "bbf1faf9a29396cb327c8a8b178328bc8cda6f6b4b95828d43b801ee7cace21a"
+    },
+    {
+      "source": "drafts/core/event-profiles/catalog.json",
+      "publicPath": "/graphs/working/event-profiles/catalog.json",
+      "bytes": 32197,
+      "sha256": "970df04928781450e199f8cccccac763818428ecd1e78f939060138f9234eefd"
+    },
+    {
+      "source": "drafts/core/event-profiles/definitions.json",
+      "publicPath": "/graphs/working/event-profiles/definitions.json",
+      "bytes": 403130,
+      "sha256": "d45fea46d5f5b786dd6a3f3059ddd7c4880c16d05691ac43b3ccb7916f1509e6"
+    },
+    {
+      "source": "drafts/core/event-profiles/scenarios.json",
+      "publicPath": "/graphs/working/event-profiles/scenarios.json",
+      "bytes": 1216933,
+      "sha256": "cb7d00b4f7a1f6d0c0bfca31621fa443e6956aedc467b63eb2c2458505d31703"
+    },
+    {
+      "source": "drafts/core/event-profiles/validation.json",
+      "publicPath": "/graphs/working/event-profiles/validation.json",
+      "bytes": 280547,
+      "sha256": "3b3c0f68c3670632fb160fcb5d09c0108f16bf687392f5e48de75b19415029f4"
+    },
+    {
+      "source": "drafts/core/source/entry_nodes.json",
+      "publicPath": "/graphs/working/source/entry_nodes.json",
+      "bytes": 4301,
+      "sha256": "70391e0f4c5771d3b85672aa081d43e575cbbeaddceb5ababbe16237d16b39f2"
+    },
+    {
+      "source": "drafts/core/tensor.core.graph.json",
+      "publicPath": "/graphs/working/tensor.core.graph.json",
+      "bytes": 2554519,
+      "sha256": "5bbe0573940a20d7efe4cf9b78ae76f4ac79a3771bd92f5b182f3e18961aa874"
+    },
+    {
+      "source": "examples/investigations/v1/attachment-host-tool.bundle.json",
+      "publicPath": "/investigations/v1/attachment-host-tool.bundle.json",
+      "bytes": 110501,
+      "sha256": "c431fca46ec276ed804ad3a0c36e67bd69755a365b9cf00f26aa9d952cf91f35"
+    },
+    {
+      "source": "examples/investigations/v1/attachment-host-tool.definition.json",
+      "publicPath": "/investigations/v1/attachment-host-tool.definition.json",
+      "bytes": 40445,
+      "sha256": "054a7030e97938bd87eecd9c1998f93acb08e537c5febeda8765123a60ae0415"
+    },
+    {
+      "source": "examples/investigations/v1/catalog.json",
+      "publicPath": "/investigations/v1/catalog.json",
+      "bytes": 1547,
+      "sha256": "ff017fe9f9d380bf27ddcfe7dd3e05fa517000bfa99224d639fac1dafccf9267"
+    },
+    {
+      "source": "examples/investigations/v1/manifest.json",
+      "publicPath": "/investigations/v1/manifest.json",
+      "bytes": 1038,
+      "sha256": "9996aa3b0611da49b9263c75316f86d2bc22d0c0378fde5194541e4d8f37677b"
+    },
+    {
+      "source": "examples/investigations/v1/soc-signin.bundle.json",
+      "publicPath": "/investigations/v1/soc-signin.bundle.json",
+      "bytes": 81491,
+      "sha256": "2e7a2141b68b0d7a987178090d884c600e652deb480de5a16260e464273bbd8d"
+    },
+    {
+      "source": "examples/investigations/v1/soc-signin.definition.json",
+      "publicPath": "/investigations/v1/soc-signin.definition.json",
+      "bytes": 31954,
+      "sha256": "41d1b13e4530b5bbc50284fde898b97a4f692f0dfef19f93e1eaa6d96d74854a"
+    },
+    {
+      "source": "examples/investigations/v1/workload-cloud-egress.bundle.json",
+      "publicPath": "/investigations/v1/workload-cloud-egress.bundle.json",
+      "bytes": 82719,
+      "sha256": "9b6c7afb726ecccf042f323fc003c29ca93df6c0c7fed9ed0628ec357b0afdb1"
+    },
+    {
+      "source": "examples/investigations/v1/workload-cloud-egress.definition.json",
+      "publicPath": "/investigations/v1/workload-cloud-egress.definition.json",
+      "bytes": 30946,
+      "sha256": "9eb50dc9c9a225f1da80006c6fe4b40c20fb1a2242d562c12c765b6d7a441ea2"
+    },
+    {
+      "source": "examples/layers/cloud-investigation.layers.json",
+      "publicPath": "/examples/layers/cloud-investigation.layers.json",
+      "bytes": 4189,
+      "sha256": "58a0e69fb751a6834d1541b68c7767449041a8bc85acd96f1f1ddac01eb620b0"
+    },
+    {
+      "source": "examples/layers/organization-cloud.layer.json",
+      "publicPath": "/examples/layers/organization-cloud.layer.json",
+      "bytes": 2048,
+      "sha256": "48bded65d085fb0b0fb61d0751d6bf084e6dffcc89537effdbb8c11ab6d34ae6"
+    },
+    {
+      "source": "examples/layers/vendor-cloud.layer.json",
+      "publicPath": "/examples/layers/vendor-cloud.layer.json",
+      "bytes": 1970,
+      "sha256": "da534394aa7c94a7b915ce7525de0fbd2f9cc1c414beb81a106c1385d6129311"
+    },
+    {
+      "source": "releases/core/schemas/v0.20260206e/tensor.core.schema.json",
+      "publicPath": "/assets/data/core.schema.json",
+      "bytes": 6672,
+      "sha256": "6520f4cd90c26d72252c986e4db7e8639c76e30f2f5c865a7318101c2a513ad5"
+    }
+  ]
+}

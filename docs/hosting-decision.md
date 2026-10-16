@@ -38,7 +38,7 @@ Cytoscape 3.33.3 dynamically inserts one fixed renderer stylesheet, `.__________
 
 `astro preview` exercises the built HTML CSP but does not emulate Cloudflare's response headers. Check the actual headers with a local Wrangler Pages server or a deployed preview before declaring hosting behavior verified. `_headers` applies to static assets; a future Worker route must supply its own response headers where appropriate. [Cloudflare header behavior](https://developers.cloudflare.com/pages/configuration/headers/).
 
-The service worker uses a new cache generation, revalidates standards assets over the network before falling back to cache, and never caches API requests, including API navigations. Cached data does not imply that it is the latest standard or constitute conformance evidence.
+The service worker uses a new cache generation. Mutable current-dataset artifacts and API requests always require the network, including direct navigations to downloads; they never fall back to a previous dataset. Public tools also verify downloaded artifacts against the shared inventory. Standards reading pages retain network-first caching and an offline fallback. Cached reading content does not imply that it is the latest standard or constitute conformance evidence.
 
 ## Publication and recovery
 

@@ -9,12 +9,12 @@ The public website and browser tools for TENSOR: a shared investigative Core for
 | Surface | Purpose |
 | --- | --- |
 | `/standards/`, `/docs/`, `/governance/`, `/implement/` | Explain the proposal, implementation boundary and participation process |
-| `/investigation-lab/` | Import, inspect, validate and export candidate investigation bundles; load two synthetic worked cases |
-| `/questions/` | Browse 588 preserved legacy questions with version-specific citation pages |
-| `/studio/`, `/graphs/`, `/schemas/` | Preserve the legacy graph ecosystem and its authoring/exploration tools |
+| `/investigation-lab/` | Follow the three cross-domain reference investigations, use the Core examples, or import and exchange private records |
+| `/questions/` | Browse all 609 current questions, criteria, routes and citations |
+| `/studio/`, `/graphs/`, `/schemas/` | Explore the same current dataset and compose vendor/organization layers |
 | `/metrics/` | Inspect historical graph quality reports; these are not evidence of investigative effectiveness |
 
-The [framework repository](https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework) owns the specifications, runtime, schemas, examples and releases. This repository owns their presentation and browser interfaces. Astro builds static HTML, React supplies interactive islands, and Cytoscape renders legacy graphs.
+The [framework repository](https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework) owns the specifications, runtime, schemas, examples and releases. This repository owns their presentation and browser interfaces. Astro builds static HTML, React supplies interactive islands, and Cytoscape and Three.js render the current public graph.
 
 The Core runtime validates representations and declared dependencies. It does not establish evidence truth, grant authority, execute actions or contact agents. Imported Lab bundles stay in browser memory and can be downloaded again; the Lab and Studio disable client telemetry. Validation reports retain `fail`, `indeterminate` and `notRun` distinctions. Using one implementation is not independent interoperability proof.
 
@@ -56,7 +56,9 @@ The offline check compares every generated file with its recorded SHA-256 and re
 | `src/vendor/tensor-core/` | Four browser-safe reference-runtime modules |
 | `public/core/0.1.0-draft.1/` | Candidate binding, coverage notes, schemas, example bundles and provenance |
 | `public/founding/` | Founding charter, Core contract, governance, crosswalk and review proposal |
-| `public/legacy/0.20260206e/` | Exact published legacy graph used by the question catalog |
+| `public/dataset/`, `public/review/current/` | One current inventory and its exact source review package |
+| `public/examples/layers/` | Shared vendor/organization reference layers from the Framework source |
+| `public/legacy/0.20260206e/` | Exact historical graph, retained only in archives |
 
 `public/core/0.1.0-draft.1/provenance.json` records the full source commit, dirty status, source/destination paths, sizes and hashes. Local integration can record uncommitted or bootstrap sources explicitly; release preparation must resynchronize from the clean committed framework source with `sourceDirty: false` and `foundingSource: "framework-repository"`. A provenance inventory is not a signature or external endorsement. See [the sync contract](docs/core-sync.md) for details. Do not hand-edit generated copies.
 
@@ -90,7 +92,7 @@ For a local provider-style preview, without publishing:
 npx --yes wrangler@4.149.0 pages dev dist --port 8788
 ```
 
-The HTML contains Astro-generated script/style hashes. `_headers` adds frame-embedding and transport controls without a second script policy that would block hydration. Inline style attributes support React/Cytoscape dimensions; inline JavaScript and `unsafe-eval` remain disallowed. The service worker never caches API requests, revalidates standards assets and provides an offline fallback; cached content is not proof of the latest release.
+The HTML contains Astro-generated script/style hashes. `_headers` adds frame-embedding and transport controls without a second script policy that would block hydration. Inline style attributes support React/Cytoscape dimensions; inline JavaScript and `unsafe-eval` remain disallowed. The service worker never caches API requests or mutable current-dataset downloads. Current artifacts require network revalidation and never fall back to stale copies. Reading pages retain an offline fallback; cached content is not proof of the latest release.
 
 See [the hosting decision](docs/hosting-decision.md) for the platform rationale and security contract. A successful build or preview does not establish production deployment, independent ownership, or custom-domain readiness.
 
@@ -111,7 +113,9 @@ The optional Worker deployment configuration is `worker.wrangler.toml`. Its exis
 
 ## Institutional technical review
 
-`/review/` is the reviewer entry point for frozen review `2026-10-11.1`. Its ZIP includes the source at Framework commit `c82cd1c540b2ca6fbf5ba7ee3e38edcd2e1e6f8f`, all 175 source pins, verifier, validation baseline and guides. Website provenance separately identifies the committed Framework source used for synchronization. Current stewardship and finding procedures are generated from Framework docs. Public questions and Studio still use the preserved published graph; the evidence-route draft is available in the frozen source rather than silently replacing that release. No invitations are sent by building or deploying this site.
+`/review/` serves the same current public dataset as the Atlas, question catalog, Studio and Lab reference cases. `public/dataset/current.json` pins the graph, evidence criteria, profiles, schemas and records; `public/review/current/` packages those exact inputs with a committed source archive, verifier, walkthrough and finding form. CI rejects mismatched inventories. Historical graph releases and the earlier `2026-10-11.1` review remain under `/archives/`, with original bytes and citation URLs intact. No invitations are sent by building or deploying this site.
+
+Downloaded Markdown retains its exact source bytes. The build resolves repository-relative document links to hosted copies or the pinned GitHub source through generated Cloudflare redirects. `check:links` validates HTML and Markdown targets, fragments, redirects and page reachability.
 
 ### Investigation display labels
 

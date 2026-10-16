@@ -51,7 +51,7 @@ For an apex domain, Cloudflare Pages requires the domain zone in the same Cloudf
 2. On the reviewed website commit, run `npm ci`, `npm audit` and `npm run validate` with the intended production `SITE_URL`. Confirm the generated canonical URLs and sitemap rather than assuming the setting took effect.
 3. Publish an explicitly named preview to the dedicated destination account/project using its scoped credential. Record the immutable deployment URL and deployment ID. Do not rely on ambient OAuth or an unspecified Wrangler project.
 4. Download the deployed provenance manifest and verify every served downloadable artifact against its listed byte length and SHA-256. Match bundled runtime provenance to the reviewed website build. Verify the preserved legacy graph's known hash; do not regenerate old release artifacts.
-5. Check the home page, 588 versioned question pages, candidate downloads, Lab import/validation/export and legacy Studio on desktop and mobile. Confirm browser console behavior, CSP hashes, response headers and that private-workspace data is not sent through telemetry. Local tests and a successful upload do not substitute for deployed browser checks.
+5. Check the home page, current question catalog and citation pages, Atlas/3D graph, current downloads, Lab import/validation/export and Studio layer composition on desktop and mobile. Verify the same dataset ID and exact artifact pins throughout, plus the separately labeled historical archive. Confirm browser console behavior, CSP hashes, response headers and that private-workspace data is not sent through telemetry. Local tests and a successful upload do not substitute for deployed browser checks.
 
 ## Cutover and rollback
 

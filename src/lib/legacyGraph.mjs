@@ -11,10 +11,20 @@ const archetypes = ['detect', 'validate', 'classify', 'scope', 'correlate', 'att
 const decisions = ['yes', 'no', 'unknown'];
 const own = (value, key) => Object.hasOwn(value, key);
 
+export function checkLayerBase(payload, graph, digest) {
+  for (const declaration of [payload, payload?.metadata]) {
+    const version = declaration?.baseGraphVersion;
+    const pin = declaration?.baseGraphSha256;
+    if (version && version !== graph.version) throw new Error('This layer names a different base graph. Use its archived source or a layer for the current graph.');
+    if (pin && pin !== digest) throw new Error('This layer names different base graph bytes. Load its exact source graph before composing it.');
+  }
+  if (Array.isArray(payload?.layers)) for (const layer of payload.layers) checkLayerBase(layer, graph, digest);
+}
+
 export function checkLegacyGraphStructure(graph, schema) {
   const errors = [];
   const error = (message) => errors.push({ message });
-  const result = () => ({ valid: errors.length === 0, errors, scope: 'Legacy structure only; full schema, investigative meaning, and Core record conformance are not checked.' });
+  const result = () => ({ valid: errors.length === 0, errors, scope: 'Graph structure only; full schema, investigative meaning, and Core record conformance are not checked.' });
   if (!object(graph)) { error('Graph must be an object'); return result(); }
   const allowedTop = ['namespace', 'product', 'version', 'generatedAt', 'schemaVersion', 'entryNodeIds', 'nodes', 'edges', 'locale', 'extensions'];
   for (const key of Object.keys(graph)) if (!allowedTop.includes(key)) error(`Unsupported top-level key: ${key}`);

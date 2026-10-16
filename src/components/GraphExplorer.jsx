@@ -1,6 +1,8 @@
+import currentDataset from '../../public/dataset/current.json';
+import { artifactDigest, datasetArtifact } from '../lib/datasetArtifact.mjs';
 import { questionLabel } from '../lib/displayLabels.mjs';
 import { useEffect, useRef } from 'react';
-import { checkLegacyGraphStructure, mergeLegacyGraphWithLayers } from '../lib/legacyGraph.mjs';
+import { checkLayerBase, checkLegacyGraphStructure, mergeLegacyGraphWithLayers } from '../lib/legacyGraph.mjs';
 import { resolveApiOrigins } from '../lib/runtimeApi';
 import {
   buildFrameworkAssetUrls,
@@ -11,8 +13,8 @@ import {
 } from '../lib/frameworkDataApi';
 
 const DEFAULT_DECISIONS = ['yes', 'no', 'unknown'];
-const DEFAULT_GRAPH_VERSION = '0.20260206e';
-const DEFAULT_SCHEMA_VERSION = '0.20260206e';
+const DEFAULT_GRAPH_VERSION = currentDataset.graphVersion;
+const DEFAULT_SCHEMA_VERSION = currentDataset.graphSchemaVersion;
 
 const VERSION_PATTERN = /^\d+\.\d{8}[a-z]?$/;
 
@@ -1270,7 +1272,7 @@ export default function GraphExplorer() {
       const validation = checkLegacyGraphStructure(state.mergedGraph || state.baseGraph, state.schema);
       const firstError = validation.errors[0]?.message;
       setPill(selectors.schemaStatus, validation.valid
-        ? 'Legacy structural checks passed · full schema not checked'
+        ? 'Graph structural checks passed · full schema not checked'
         : `Structural warning: ${firstError}`, validation.valid ? 'is-warn' : 'is-bad');
       selectors.schemaStatus.title = validation.scope;
     };
@@ -1323,77 +1325,27 @@ export default function GraphExplorer() {
     };
 
     const loadReleaseManifest = async (preserveSelection = false) => {
-      const manifestResult = await fetchReleaseManifest({
-        headers: {
-          Accept: 'application/json',
-        },
-        cache: 'no-store',
-      });
-
-      state.releaseManifest = normalizeReleasesPayload(manifestResult.data);
-      state.releasesSorted = sortReleasesByDate(state.releaseManifest.releases || []);
-      state.graphVersionToRelease.clear();
-      state.schemaVersionToRelease.clear();
-
-      for (const release of state.releasesSorted) {
-        if (release?.graphVersion) {
-          state.graphVersionToRelease.set(release.graphVersion, release);
-        }
-        if (release?.schemaVersion) {
-          state.schemaVersionToRelease.set(release.schemaVersion, release);
-        }
-      }
-
+      // One active public source. Historical releases belong to the archive.
+      state.releaseManifest = { latestGraphVersion: DEFAULT_GRAPH_VERSION, latestSchemaVersion: DEFAULT_SCHEMA_VERSION, releases: [] };
+      state.releasesSorted = [];
+      state.graphVersionToRelease.clear(); state.schemaVersionToRelease.clear();
       updateVersionSelectors(preserveSelection);
     };
 
-    const fetchGraphForVersion = async (graphVersion) => {
-      const release = state.graphVersionToRelease.get(graphVersion);
-
-      const releaseSources = [
-        release?.graphUrl ? { url: release.graphUrl, label: `Framework release asset ${graphVersion}` } : null,
-        release?.graphPath ? { url: release.graphPath, label: `Release asset ${graphVersion}` } : null,
-      ].filter(Boolean);
-
-      const graphResult = await fetchJsonWithFallback(
-        releaseSources.length > 0
-          ? [{ url: `/api/graph?version=${encodeURIComponent(graphVersion)}`, label: 'Worker API' }, ...releaseSources]
-          : [
-              { url: `/api/graph?version=${encodeURIComponent(graphVersion)}`, label: 'Worker API' },
-              { url: '/assets/data/tensor-core.json', label: 'Static asset' },
-            ]
-      );
-
-      return normalizeGraphPayload(graphResult.data);
+    const fetchGraphForVersion = async () => {
+      const response = await fetch(currentDataset.graph, { credentials: 'omit', redirect: 'error' });
+      if (!response.ok) throw new Error(`Current public graph unavailable (${response.status})`);
+      const bytes = await datasetArtifact(response,currentDataset.files.find(file=>file.publicPath===currentDataset.graph));
+      const graph = JSON.parse(new TextDecoder().decode(bytes));
+      if (graph.version !== currentDataset.graphVersion || graph.nodes.length !== currentDataset.counts.questions || graph.edges.length !== currentDataset.counts.routes) throw new Error('Current public graph differs from its dataset inventory');
+      return { ...normalizeGraphPayload(graph), artifactSha256: currentDataset.files.find(file=>file.publicPath===currentDataset.graph).sha256 };
     };
 
-    const fetchSchemaForVersion = async (schemaVersion) => {
-      const release = state.schemaVersionToRelease.get(schemaVersion);
-
-      const releaseSources = [
-        release?.schemaUrl
-          ? { url: release.schemaUrl, label: `Framework release schema ${schemaVersion}` }
-          : null,
-        release?.schemaPath
-          ? { url: release.schemaPath, label: `Release schema ${schemaVersion}` }
-          : null,
-      ].filter(Boolean);
-
-      const schemaResult = await fetchJsonWithFallback(
-        releaseSources.length > 0
-          ? [{ url: `/api/schema?version=${encodeURIComponent(schemaVersion)}`, label: 'Worker API' }, ...releaseSources]
-          : [
-              { url: `/api/schema?version=${encodeURIComponent(schemaVersion)}`, label: 'Worker API' },
-              { url: '/assets/data/core.schema.json', label: 'Static asset' },
-            ]
-      );
-
-      const normalized = normalizeSchemaPayload(schemaResult.data);
-      if (!normalized) {
-        throw new Error('Invalid schema payload shape');
-      }
-
-      return normalized;
+    const fetchSchemaForVersion = async () => {
+      const response = await fetch(currentDataset.graphSchema, { credentials: 'omit', redirect: 'error' });
+      if (!response.ok) throw new Error(`Graph schema unavailable (${response.status})`);
+      const bytes = await datasetArtifact(response,currentDataset.files.find(file=>file.publicPath===currentDataset.graphSchema));
+      return normalizeSchemaPayload(JSON.parse(new TextDecoder().decode(bytes)));
     };
 
     const loadMetricsHistory = async () => {
@@ -1537,7 +1489,9 @@ export default function GraphExplorer() {
       const graphPayload = await fetchGraphForVersion(normalizedGraphVersion);
       const schemaPayload = await fetchSchemaForVersion(normalizedSchemaVersion);
 
+      rootRef.current.dataset.datasetId = currentDataset.id;
       state.baseGraph = graphPayload.graph;
+      state.baseGraphDigest = graphPayload.artifactSha256;
       state.graphMeta = graphPayload.meta;
       state.schema = schemaPayload.schema;
       state.activeGraphVersion = graphPayload.version || normalizedGraphVersion;
@@ -1546,14 +1500,13 @@ export default function GraphExplorer() {
       selectors.graphVersionSelect.value = normalizedGraphVersion;
       selectors.schemaVersionSelect.value = normalizedSchemaVersion;
 
-      updateReleaseNotes(state.activeGraphVersion);
-      await updateTimelineDiff(state.activeGraphVersion);
-      try {
-        await updateVersionMetrics(state.activeGraphVersion);
-      } catch (error) {
-        setPill(selectors.metrics, `Metrics unavailable: ${error.message}`, 'is-warn');
-        resetMetricsDetails(`Metrics unavailable: ${error.message}`);
-      }
+      const datasetNote = document.createElement('li');
+      datasetNote.textContent = 'The same current public graph, evidence criteria and profiles used by the Atlas and review package.';
+      selectors.releaseNotes.replaceChildren(datasetNote);
+      selectors.diffSummary.textContent = 'Current public dataset. Original releases and their metrics remain in the historical archive.';
+      setPill(selectors.timeline, 'Current public dataset', 'is-good');
+      setPill(selectors.metrics, 'Item-level review available', 'is-good');
+      resetMetricsDetails('Historical scores do not describe this current candidate.');
 
       const sourceParts = [];
       sourceParts.push(`Graph ${state.activeGraphVersion}`);
@@ -1569,8 +1522,11 @@ export default function GraphExplorer() {
     const importGraphFromFile = async (file) => {
       const payload = await readJsonFile(file);
       const normalized = normalizeGraphPayload(payload);
+      const digest = await artifactDigest(await file.arrayBuffer());
 
+      delete rootRef.current.dataset.datasetId;
       state.baseGraph = normalized.graph;
+      state.baseGraphDigest = digest;
       state.graphMeta = normalized.meta;
       state.activeGraphVersion = `import:${file.name}`;
 
@@ -1599,6 +1555,7 @@ export default function GraphExplorer() {
     };
 
     const appendLayers = async (payload, label) => {
+      checkLayerBase(payload,state.baseGraph,state.baseGraphDigest);
       const parsedLayers = normalizeLayerPayload(payload, label.replace(/\.json$/i, ''));
 
       const nextLayers = [...state.layers, ...parsedLayers];
@@ -1766,7 +1723,8 @@ export default function GraphExplorer() {
         makeDownload(`tensor-layers-${Date.now()}.json`, {
           format: 'tensor-layer-pack.v1',
           generatedAt: new Date().toISOString(),
-          baseGraphVersion: state.activeGraphVersion,
+          baseGraphVersion: state.baseGraph.version,
+          baseGraphSha256: state.baseGraphDigest,
           baseSchemaVersion: state.activeSchemaVersion,
           layers: state.layers.map((layer) => ({
             metadata: {
@@ -1797,13 +1755,6 @@ export default function GraphExplorer() {
         resetMetricsDetails('Loading release metrics...');
 
         await loadReleaseManifest();
-        try {
-          await loadMetricsHistory();
-          setPill(selectors.metrics, 'Metrics history ready', 'is-good');
-        } catch {
-          setPill(selectors.metrics, 'Metrics history unavailable', 'is-warn');
-          resetMetricsDetails('Metrics history could not be loaded.');
-        }
 
         if (state.destroyed) {
           return;
@@ -1813,15 +1764,16 @@ export default function GraphExplorer() {
 
         const params = new URL(window.location.href).searchParams;
         const requestedVersion = sanitizeVersion(params.get('graph'));
-        // Deep links from the catalog retain the exact published graph version.
-        await loadVersions(requestedVersion || selectors.graphVersionSelect.value, selectors.schemaVersionSelect.value);
+        if (requestedVersion && requestedVersion !== DEFAULT_GRAPH_VERSION) { window.location.replace('/archives/0.20260206e/'); return; }
+        await loadVersions(DEFAULT_GRAPH_VERSION, DEFAULT_SCHEMA_VERSION);
         // Only the explicit example link loads these public, non-executing fixtures.
         if (params.get('example') === 'cloud-layers') {
           try {
             const response = await fetch('/examples/layers/cloud-investigation.layers.json', { credentials: 'omit', redirect: 'error' });
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             if (state.destroyed) return;
-            await appendLayers(await response.json(), 'Cloud layer example');
+            const bytes = await datasetArtifact(response,currentDataset.files.find(file=>file.publicPath==='/examples/layers/cloud-investigation.layers.json'));
+            await appendLayers(JSON.parse(new TextDecoder().decode(bytes)), 'Cloud layer example');
           } catch (error) {
             setPill(selectors.stats, `Example layers unavailable: ${error.message}. Local layer import remains available.`, 'is-warn');
           }
@@ -1838,34 +1790,7 @@ export default function GraphExplorer() {
           state.cy.fit(node.closedNeighborhood(), 45);
         }
 
-        releasePollTimer = window.setInterval(async () => {
-          if (state.destroyed) {
-            return;
-          }
 
-          const previousGraphVersions = new Set(
-            state.releasesSorted.map((release) => release.graphVersion).filter(Boolean)
-          );
-
-          try {
-            await loadReleaseManifest(true);
-            const hasNewRelease = state.releasesSorted.some(
-              (release) => release.graphVersion && !previousGraphVersions.has(release.graphVersion)
-            );
-
-            if (hasNewRelease) {
-              setPill(selectors.timeline, 'New framework release detected', 'is-warn');
-            }
-
-            try {
-              await loadMetricsHistory();
-            } catch {
-              // Keep existing metrics history if polling fails.
-            }
-          } catch {
-            // Keep existing release state if polling fails.
-          }
-        }, 4 * 60 * 1000);
       } catch (error) {
         setPill(selectors.dataSource, 'Graph load failed', 'is-bad');
         setPill(selectors.schemaStatus, 'Structural check skipped', 'is-warn');
@@ -1904,7 +1829,7 @@ export default function GraphExplorer() {
         <aside className="tensor-panel studio-panel controls-panel">
           <h2>Graph controls</h2>
 
-          <p className="studio-field">Published versions</p>
+          <p className="studio-field">Current public source</p>
           <div className="version-grid">
             <label htmlFor="graph-version-select">Graph version</label>
             <select id="graph-version-select"></select>
@@ -1914,7 +1839,7 @@ export default function GraphExplorer() {
           </div>
 
           <div className="button-row button-row-single">
-            <button className="btn btn-secondary" type="button" id="load-versions-btn">Load selected versions</button>
+            <button className="btn btn-secondary" type="button" id="load-versions-btn">Reload current dataset</button>
           </div>
 
           <p className="studio-field">Import and export</p>
@@ -1995,18 +1920,18 @@ export default function GraphExplorer() {
         </section>
 
         <aside className="tensor-panel studio-panel details-panel">
-          <h2>Release and selection details</h2>
+          <h2>Dataset and selection details</h2>
           <p className="detail-kv detail-text" id="diff-summary">
-            Release comparison appears after loading a version.
+            Current dataset details appear after loading the graph.
           </p>
 
           <div className="detail-section">
-            <h3>Release Notes</h3>
+            <h3>Current dataset</h3>
             <ul id="release-notes" className="release-notes"></ul>
           </div>
 
-          <div className="detail-section">
-            <h3>Release Metrics</h3>
+          <div className="detail-section" hidden>
+            <h3>Historical metrics</h3>
             <p className="detail-empty">Historical structural diagnostics for this graph release.</p>
             <div className="metrics-mini-grid">
               <p className="detail-kv"><span>Version</span><strong id="metrics-version">n/a</strong></p>

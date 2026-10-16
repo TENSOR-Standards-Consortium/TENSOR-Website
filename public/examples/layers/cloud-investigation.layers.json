@@ -2,18 +2,19 @@
   "format": "tensor-layer-pack.v1",
   "metadata": {
     "name": "Cloud investigation layer example",
-    "baseGraphVersion": "0.20260206e",
-    "scope": "Fictional vendor and organization graph layers; no incident data or execution."
+    "baseGraphVersion": "0.20261013b",
+    "scope": "Fictional vendor and organization graph layers; no incident data or execution.",
+    "baseGraphSha256": "5bbe0573940a20d7efe4cf9b78ae76f4ac79a3771bd92f5b182f3e18961aa874"
   },
   "layers": [
     {
       "metadata": {
         "id": "example-vendor-cloud-1",
-        "name": "Example vendor \u00b7 cloud audit v1.0",
+        "name": "Example vendor \u00b7 cloud audit v1.1",
         "owner": "Example vendor (fictional)",
         "type": "vendor",
-        "description": "Collection mappings and an audit-export check above the published public graph.",
-        "source": "Example layer 1.0 \u00b7 published graph 0.20260206e",
+        "description": "Collection mappings and an audit-export check above the current public graph.",
+        "source": "Example layer 1.1 \u00b7 current graph 0.20261013b",
         "enabled": true
       },
       "nodes": [
@@ -62,11 +63,11 @@
     {
       "metadata": {
         "id": "example-organization-cloud-1",
-        "name": "Example organization \u00b7 cloud review v1.0",
+        "name": "Example organization \u00b7 cloud review v1.1",
         "owner": "Example organization (fictional)",
         "type": "business",
-        "description": "Local policy context and a review question above the published public graph.",
-        "source": "Example layer 1.0 \u00b7 published graph 0.20260206e",
+        "description": "Local policy context and a review question above the current public graph.",
+        "source": "Example layer 1.1 \u00b7 current graph 0.20261013b",
         "enabled": true
       },
       "nodes": [

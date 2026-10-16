@@ -14,7 +14,7 @@ The first command copies the four browser runtime modules, Core documentation, s
 
 `public/core/0.1.0-draft.1/provenance.json` records the full source Git commit, whether the checkout had uncommitted changes, source-relative paths, destination-relative paths, byte lengths, and SHA-256 digests. It has no timestamps or machine-specific paths. The manifest is reproducible for the same checkout and inputs. It is an integrity inventory, not a cryptographic signature or independent endorsement. Review the manifest and source diff together.
 
-The sync also copies the frozen `review/2026-10-11.1/` package (including its pinned source archive and single ZIP distribution bundle) to `public/review/2026-10-11.1/`, and current stewardship/review-process records to `public/docs/`. These are included in the same SHA-256 provenance inventory. Technical snapshot identity and the website synchronization commit are distinct.
+The sync copies `dataset/current.json` and `review/current/` alongside the graph, criteria, profiles and reference records. The inventory must agree with every current copied artifact and the review ZIP's dataset; verification fails if they differ. The exact review source archive excludes its own generated packaging directory to avoid recursion. The website synchronization commit can additionally contain generated packaging while the archived source and public dataset remain identical. The earlier `review/2026-10-11.1/` package is copied only as an unchanged historical archive. Current stewardship and finding procedures are generated from Framework docs.
 
 The generated directories are:
 
@@ -22,6 +22,9 @@ The generated directories are:
 - `public/core/0.1.0-draft.1/`: downloadable candidate documentation, schemas, examples, upstream `LICENSE`, and provenance.
 - `public/founding/`: the founding proposal, validation notes, and explicitly listed illustrative examples from `proposals/founding-core-v0.1.0/`. The Python authoring checker is a downloadable source file; the sync script never executes it.
 - `public/graphs/working/`: exact current draft graph, evidence criteria, and entry configuration from `drafts/core/`. These are working definitions, separate from published releases and the Core example definitions. Their source commit and digests are recorded in the same provenance manifest.
+- `public/dataset/`: the one current public inventory, shared by all tools and the review package.
+- `public/review/current/`: the exact current dataset, committed source archive, verifier, guides and observed validation.
+- `public/examples/layers/`: canonical vendor/organization reference layers from the Framework repository.
 - `public/legacy/0.20260206e/`: the exact published legacy graph. Its fixed SHA-256 is `dfc3f1a965c01b6f7ade253e426e69abcbad688fab20d9d00065d71c777c010c`.
 
 Edit the framework source and resync rather than editing these copies. Both source and destination paths reject traversal, unexpected path characters, and symbolic links. Unknown files in generated directories fail verification; the script never deletes them automatically.
