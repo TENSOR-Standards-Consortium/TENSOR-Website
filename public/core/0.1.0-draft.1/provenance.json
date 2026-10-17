@@ -3,7 +3,7 @@
   "manifestVersion": 1,
   "bindingVersion": "0.1.0-draft.1",
   "sourceRepository": "https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework",
-  "sourceCommit": "c3131d26a6dd66db6020f652363ce5c6d23437e5",
+  "sourceCommit": "0b0168f626a9c2a52a9a2833207a5fab678260cc",
   "sourceDirty": false,
   "foundingSource": "framework-repository",
   "files": [
@@ -598,8 +598,8 @@
     {
       "source": "review/current/README.md",
       "target": "public/review/current/README.md",
-      "sha256": "5882a2fe863be6dbc7d307a8a6e267cd587e781f92ed268580065bdc20c25222",
-      "bytes": 2219
+      "sha256": "2fff1ece4613182aafa930851e6bb1e599eb451b9ac2077fc99fef37a1e16ca6",
+      "bytes": 3600
     },
     {
       "source": "review/current/dataset.json",
@@ -610,32 +610,32 @@
     {
       "source": "review/current/manifest.json",
       "target": "public/review/current/manifest.json",
-      "sha256": "d924f503d6a778a2b8d7c696fc35e315955dbd961a81e476e6de33dc0eca2e0d",
+      "sha256": "ad50d65bacc2f39ea623c27c29642ce27f2171a3fa1f267a5af0dbacf58e7cc9",
       "bytes": 58909
     },
     {
       "source": "review/current/review-form.md",
       "target": "public/review/current/review-form.md",
-      "sha256": "2f0b7ff6571cdd20559b2c09b2816f9274f9c02c9945c4d47d1ce3f9b9d9bec9",
+      "sha256": "db4a868b05acde28a477583325b7d64e1b1b485ef8813758afe1330e7456a3d1",
       "bytes": 1020
     },
     {
       "source": "review/current/review-package.zip",
       "target": "public/review/current/review-package.zip",
-      "sha256": "4ba3dda99a45aba5dd117ff28406d0f4b3f893be23ab4a520cb11f0854a59f90",
-      "bytes": 3372143
+      "sha256": "cd08d7fce2dbe241b6e8207e39cad0ae90c2f34623dddbe725fe3535f2cd3be4",
+      "bytes": 3373631
     },
     {
       "source": "review/current/source.tar.gz",
       "target": "public/review/current/source.tar.gz",
-      "sha256": "90662713be32d1e6dd823c1097a83084f49e9fe074df362f8bbf87a780404c56",
-      "bytes": 3407810
+      "sha256": "75d157efbc613c82665a4ae6b800e0c731618dab0520d1750d5b969812d169fe",
+      "bytes": 3408459
     },
     {
       "source": "review/current/validation.json",
       "target": "public/review/current/validation.json",
-      "sha256": "07bdcdfaf7522ed2e62f0655c2ee7083bd5ed8d40311f1fc8db3f0dfee9abfc9",
-      "bytes": 1977
+      "sha256": "8580c4a29d7300bf6bd2929bbc57ff45e5c01d75c59d28a6ba7f8b2471bb22ae",
+      "bytes": 2865
     },
     {
       "source": "review/current/verify-snapshot.py",
@@ -646,8 +646,8 @@
     {
       "source": "review/current/walkthrough.md",
       "target": "public/review/current/walkthrough.md",
-      "sha256": "ed0e28ca8e064cca192349838d1ef0387b6522f358b05cc43071abe91b88f2d8",
-      "bytes": 1931
+      "sha256": "8566611b626720942c4dd6cbd146a2a019fcd94d041acfc234ab4f36d95b6cee",
+      "bytes": 2070
     },
     {
       "source": "LICENSE",

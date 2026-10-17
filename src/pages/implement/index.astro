@@ -1,4 +1,5 @@
 ---
+import review from '../../../public/review/current/manifest.json';
 import ReferenceTable from '../../components/ReferenceTable.astro';
 import Button from '../../components/Button.astro';
 import ContentCard from '../../components/ContentCard.astro';
@@ -36,7 +37,7 @@ const jsonLd = {
     <p>The reproducible Core baseline uses Node.js 24.21.0, npm 11.19.0, and the source commit pinned in the <a href="/review/">technical review package</a>:</p>
     <pre><code>{`git clone https://github.com/tensor-standards-consortium/TENSOR-Framework.git
 cd TENSOR-Framework
-git checkout --detach c82cd1c540b2ca6fbf5ba7ee3e38edcd2e1e6f8f
+git checkout --detach ${review.sourceCommit}
 npm ci
 npm run check
 node core/v0.1.0-draft.1/cli.mjs core/v0.1.0-draft.1/examples/case-a.bundle.json`}</code></pre>

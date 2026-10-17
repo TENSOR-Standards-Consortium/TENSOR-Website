@@ -14,43 +14,51 @@
       "coreExamples": 2,
       "crossDomainCases": 4,
       "walkthroughFrames": 33,
-      "datasetInventory": "33 exact artifacts"
+      "datasetInventory": "33 exact artifacts",
+      "executionContext": "standalone archive and full-history checkout"
     },
     {
       "command": "python3 -m unittest discover -s tests/legacy -q",
       "status": "pass",
-      "tests": 230
+      "tests": 230,
+      "executionContext": "full-history checkout"
     },
     {
       "command": "python3 scripts/restore_original_questions.py --check",
       "status": "pass",
       "questions": 609,
-      "routes": 1743
+      "routes": 1743,
+      "executionContext": "full-history checkout"
     },
     {
       "command": "python3 scripts/build_event_profiles.py --check",
       "status": "pass",
       "eventProfiles": 16,
-      "scenarios": 144
+      "scenarios": 144,
+      "executionContext": "full-history checkout"
     },
     {
       "command": "python3 scripts/audit_graph_coverage.py --check",
-      "status": "pass"
+      "status": "pass",
+      "executionContext": "full-history checkout"
     },
     {
       "command": "python3 scripts/evaluate_entry_scenarios.py",
       "status": "pass",
-      "scenarios": 1791
+      "scenarios": 1791,
+      "executionContext": "full-history checkout"
     },
     {
       "command": "python3 scripts/verify_semantic_review.py",
       "status": "pass",
       "qualifiedDefinitions": 567,
-      "scope": "Historical October 13 AI review verified against archived exact inputs; it does not approve the current repair."
+      "scope": "Historical October 13 AI review verified against archived exact inputs; it does not approve the current repair.",
+      "executionContext": "full-history checkout"
     },
     {
       "command": "python3 scripts/validate_release_contract.py",
-      "status": "pass"
+      "status": "pass",
+      "executionContext": "full-history checkout"
     }
   ],
   "limits": [
@@ -58,5 +66,10 @@
     "Independent implementation exchange, CASE/UCO loss analysis and authorized field validation remain open.",
     "No invitations or formal review window have been initiated.",
     "The 16 October answer/context repair is author reviewed. Independent external review of these new routes remains pending."
-  ]
+  ],
+  "reproduction": {
+    "standaloneArchive": "Exact source archive verified before extraction; npm ci and npm run check passed without Git metadata.",
+    "fullHistoryCheckout": "Fresh full clone checked out at the review source commit and verified against all source pins; all listed checks passed.",
+    "historyPrerequisite": "The Python regression suite and coverage-lineage audit require full Git history. They are not standalone archive checks."
+  }
 }

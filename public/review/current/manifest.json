@@ -2,7 +2,7 @@
   "format": "tensor-current-review-package",
   "manifestVersion": 1,
   "sourceRepository": "https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework",
-  "sourceCommit": "3990297f1120a61de65fc4f9e1d1e9da13cce681",
+  "sourceCommit": "106fe87159f37a18d8ecebd9db009a0c8c03dd0d",
   "dataset": {
     "id": "urn:tensor:dataset:sha256:ae1b56d7b19ab3c4f94229a5f816e375b216200314c53219c0dcbd0ecf6df536",
     "graphVersion": "0.20261016a",
@@ -19,8 +19,8 @@
   "scope": "The current public dataset, identical for implementers, visitors and reviewers. Generated review/current packaging is excluded from its own source archive.",
   "archive": {
     "path": "source.tar.gz",
-    "bytes": 3407810,
-    "sha256": "90662713be32d1e6dd823c1097a83084f49e9fe074df362f8bbf87a780404c56"
+    "bytes": 3408459,
+    "sha256": "75d157efbc613c82665a4ae6b800e0c731618dab0520d1750d5b969812d169fe"
   },
   "files": [
     {
@@ -1260,8 +1260,8 @@
     },
     {
       "path": "review/templates/README.md",
-      "bytes": 2190,
-      "sha256": "8bbbb4d3f20a64c28187009b26321140c0515c239a7ec0994842d854b3b314e9"
+      "bytes": 3548,
+      "sha256": "7e47571f1c64cecc3071eb467552c37d3566846e76943fbb43668d1295ce0279"
     },
     {
       "path": "review/templates/review-form.md",
@@ -1270,13 +1270,13 @@
     },
     {
       "path": "review/templates/validation.json",
-      "bytes": 1977,
-      "sha256": "07bdcdfaf7522ed2e62f0655c2ee7083bd5ed8d40311f1fc8db3f0dfee9abfc9"
+      "bytes": 2865,
+      "sha256": "8580c4a29d7300bf6bd2929bbc57ff45e5c01d75c59d28a6ba7f8b2471bb22ae"
     },
     {
       "path": "review/templates/walkthrough.md",
-      "bytes": 1838,
-      "sha256": "06c24a49aa5448d125a04c4e07d865e5d6755024cbbc299397696fcd47e81faf"
+      "bytes": 1977,
+      "sha256": "6be2a7264df6869afc160bbd11e6269d1be936ef5680c364912c7f92bd254ac4"
     },
     {
       "path": "scripts/audit_graph_coverage.py",
