@@ -1,8 +1,8 @@
 {
   "format": "tensor-event-profile-scenarios",
   "version": "0.1.0-draft.2",
-  "graphVersion": "0.20261013b",
-  "graphSha256": "5bbe0573940a20d7efe4cf9b78ae76f4ac79a3771bd92f5b182f3e18961aa874",
+  "graphVersion": "0.20261016a",
+  "graphSha256": "72a4e8a80ae9b20538b80a282f96882b65595ff6887b7161cfc64fca3ba5dc55",
   "cases": [
     {
       "id": "identity-credential-state-supported",
@@ -964,7 +964,7 @@
           "unknown"
         ],
         [
-          "Q558",
+          "Q596",
           "yes"
         ]
       ],
@@ -1953,7 +1953,7 @@
           "unknown"
         ],
         [
-          "Q558",
+          "Q596",
           "yes"
         ]
       ],
@@ -2942,7 +2942,7 @@
           "unknown"
         ],
         [
-          "Q559",
+          "Q597",
           "yes"
         ]
       ],
@@ -3931,7 +3931,7 @@
           "unknown"
         ],
         [
-          "Q560",
+          "Q598",
           "yes"
         ]
       ],
@@ -4920,7 +4920,7 @@
           "unknown"
         ],
         [
-          "Q560",
+          "Q598",
           "yes"
         ]
       ],
@@ -5927,7 +5927,7 @@
           "unknown"
         ],
         [
-          "Q561",
+          "Q599",
           "yes"
         ]
       ],
@@ -6934,7 +6934,7 @@
           "unknown"
         ],
         [
-          "Q561",
+          "Q599",
           "yes"
         ]
       ],
@@ -7941,7 +7941,7 @@
           "unknown"
         ],
         [
-          "Q562",
+          "Q600",
           "yes"
         ]
       ],
@@ -8948,7 +8948,7 @@
           "unknown"
         ],
         [
-          "Q562",
+          "Q600",
           "yes"
         ]
       ],
@@ -9955,7 +9955,7 @@
           "unknown"
         ],
         [
-          "Q562",
+          "Q600",
           "yes"
         ]
       ],
@@ -10944,7 +10944,7 @@
           "unknown"
         ],
         [
-          "Q563",
+          "Q601",
           "yes"
         ]
       ],
@@ -11933,7 +11933,7 @@
           "unknown"
         ],
         [
-          "Q563",
+          "Q601",
           "yes"
         ]
       ],
@@ -12940,7 +12940,7 @@
           "unknown"
         ],
         [
-          "Q563",
+          "Q601",
           "yes"
         ]
       ],
@@ -13947,7 +13947,7 @@
           "unknown"
         ],
         [
-          "Q588",
+          "Q602",
           "yes"
         ]
       ],
@@ -14954,7 +14954,7 @@
           "unknown"
         ],
         [
-          "Q588",
+          "Q602",
           "yes"
         ]
       ],
@@ -15943,7 +15943,7 @@
           "unknown"
         ],
         [
-          "Q588",
+          "Q602",
           "yes"
         ]
       ],
@@ -16854,7 +16854,7 @@
       "retention": {
         "eventProfile": "identity-credential-state",
         "profileVersion": "0.1.0-draft.2",
-        "graphVersion": "0.20261013b",
+        "graphVersion": "0.20261016a",
         "subjects": {
           "principalId": "principal-payroll",
           "credentialId": "credential-key-07"
@@ -17959,7 +17959,7 @@
       "retention": {
         "eventProfile": "identity-workload-binding",
         "profileVersion": "0.1.0-draft.2",
-        "graphVersion": "0.20261013b",
+        "graphVersion": "0.20261016a",
         "subjects": {
           "principalId": "principal-deploy",
           "workloadId": "workload-build-19"
@@ -19064,7 +19064,7 @@
       "retention": {
         "eventProfile": "host-state",
         "profileVersion": "0.1.0-draft.2",
-        "graphVersion": "0.20261013b",
+        "graphVersion": "0.20261016a",
         "subjects": {
           "hostId": "host-build-04",
           "stateKey": "endpoint-sensor-enabled"
@@ -20169,7 +20169,7 @@
       "retention": {
         "eventProfile": "network-configuration",
         "profileVersion": "0.1.0-draft.2",
-        "graphVersion": "0.20261013b",
+        "graphVersion": "0.20261016a",
         "subjects": {
           "deviceId": "firewall-west",
           "configurationId": "rule-egress-42"
@@ -21274,7 +21274,7 @@
       "retention": {
         "eventProfile": "network-sensor-coverage",
         "profileVersion": "0.1.0-draft.2",
-        "graphVersion": "0.20261013b",
+        "graphVersion": "0.20261016a",
         "subjects": {
           "sensorId": "sensor-west",
           "collectionId": "capture-20261012"
@@ -22392,7 +22392,7 @@
       "retention": {
         "eventProfile": "cloud-data-access",
         "profileVersion": "0.1.0-draft.2",
-        "graphVersion": "0.20261013b",
+        "graphVersion": "0.20261016a",
         "subjects": {
           "tenantId": "tenant-research",
           "resourceId": "bucket-payroll/object-7",
@@ -23519,7 +23519,7 @@
       "retention": {
         "eventProfile": "cloud-resource-state",
         "profileVersion": "0.1.0-draft.2",
-        "graphVersion": "0.20261013b",
+        "graphVersion": "0.20261016a",
         "subjects": {
           "tenantId": "tenant-research",
           "resourceId": "bucket-payroll",
@@ -24689,7 +24689,7 @@
       "retention": {
         "eventProfile": "email-mailbox-rule",
         "profileVersion": "0.1.0-draft.2",
-        "graphVersion": "0.20261013b",
+        "graphVersion": "0.20261016a",
         "subjects": {
           "mailboxId": "mailbox-finance",
           "ruleId": "rule-forward-09",
@@ -25816,7 +25816,7 @@
       "retention": {
         "eventProfile": "email-mailbox-access",
         "profileVersion": "0.1.0-draft.2",
-        "graphVersion": "0.20261013b",
+        "graphVersion": "0.20261016a",
         "subjects": {
           "mailboxId": "mailbox-finance",
           "principalId": "principal-delegate",
@@ -26943,7 +26943,7 @@
       "retention": {
         "eventProfile": "email-collaboration-artifact",
         "profileVersion": "0.1.0-draft.2",
-        "graphVersion": "0.20261013b",
+        "graphVersion": "0.20261016a",
         "subjects": {
           "workspaceId": "workspace-finance",
           "artifactId": "document-payroll",
@@ -28057,7 +28057,7 @@
       "retention": {
         "eventProfile": "application-state",
         "profileVersion": "0.1.0-draft.2",
-        "graphVersion": "0.20261013b",
+        "graphVersion": "0.20261016a",
         "subjects": {
           "applicationId": "application-reporting",
           "stateKey": "export-mode"
@@ -29162,7 +29162,7 @@
       "retention": {
         "eventProfile": "application-session",
         "profileVersion": "0.1.0-draft.2",
-        "graphVersion": "0.20261013b",
+        "graphVersion": "0.20261016a",
         "subjects": {
           "applicationId": "application-reporting",
           "sessionId": "session-revoked-11"
@@ -30280,7 +30280,7 @@
       "retention": {
         "eventProfile": "application-agent-action",
         "profileVersion": "0.1.0-draft.2",
-        "graphVersion": "0.20261013b",
+        "graphVersion": "0.20261016a",
         "subjects": {
           "applicationId": "application-agent-runner",
           "agentId": "agent-exporter",
@@ -31407,7 +31407,7 @@
       "retention": {
         "eventProfile": "file-deletion",
         "profileVersion": "0.1.0-draft.2",
-        "graphVersion": "0.20261013b",
+        "graphVersion": "0.20261016a",
         "subjects": {
           "fileId": "file-payroll-export",
           "systemId": "system-staging-3",
@@ -32534,7 +32534,7 @@
       "retention": {
         "eventProfile": "file-historical-lineage",
         "profileVersion": "0.1.0-draft.2",
-        "graphVersion": "0.20261013b",
+        "graphVersion": "0.20261016a",
         "subjects": {
           "fileId": "file-payroll-export",
           "systemId": "system-version-store",
@@ -33648,7 +33648,7 @@
       "retention": {
         "eventProfile": "file-unavailable-content",
         "profileVersion": "0.1.0-draft.2",
-        "graphVersion": "0.20261013b",
+        "graphVersion": "0.20261016a",
         "subjects": {
           "fileId": "file-payroll-export",
           "systemId": "system-evidence-store"

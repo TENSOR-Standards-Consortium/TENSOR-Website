@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {caseModel,caseOccurrenceView} from '../src/lib/caseInvestigations.mjs';
 import { readFile, mkdir, writeFile, mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
@@ -18,14 +19,15 @@ try {
  await page.goto(base+'/graphs/?investigation=agent-request');await page.locator('[data-graph-ready=true]').waitFor();await page.locator('#guide-select').selectOption('case:soc-signin');await page.waitForURL(base+'/investigations/soc-signin/');await ready();results.publicAtlasDiscovery='passed';
  for(const sample of catalog.scenarios){
   const source=JSON.parse(await readFile(`public/investigations/v1/${sample.bundle}`,'utf8'));
-  const definition=JSON.parse(source.definitions[0].content),frames=source.record.metadata.walkthrough.frames;
+  const definition=JSON.parse(source.definitions[0].content),frames=source.record.metadata.walkthrough.frames,model=caseModel(source);
+  const projected=(step=0,layers=['public','vendor','company'])=>caseOccurrenceView(model,step,'all',layers);
   await page.goto(base+`/investigations/${sample.id}/`);await ready();await page.evaluate(()=>document.fonts.ready);
   assert.match(await page.title(),new RegExp(sample.title.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')));
   assert.equal(await page.getByRole('heading',{name:'Case walkthrough',exact:true}).count(),1);
   assert.equal(await page.locator('astro-error-overlay, vite-error-overlay').count(),0);
-  assert.equal(await page.locator('.atlas-stage').getAttribute('data-node-count'),String(definition.questions.length));
+  assert.equal(await page.locator('.atlas-stage').getAttribute('data-node-count'),String(projected(Number(await page.locator('.case-workspace').getAttribute('data-case-step'))).graph.nodes.length));
   for(const [i,frame] of frames.entries()){
-   await at(i);const assessment=source.record.entries.find(e=>e.id===frame.assessmentId),instance=source.record.entries.find(e=>e.id===assessment.targetInstanceId),question=definition.questions.find(q=>q.id===instance.questionId);
+   await at(i);await ready();assert.equal(await page.locator('.atlas-stage').getAttribute('data-node-count'),String(projected(i).graph.nodes.length));const assessment=source.record.entries.find(e=>e.id===frame.assessmentId),instance=source.record.entries.find(e=>e.id===assessment.targetInstanceId),question=definition.questions.find(q=>q.id===instance.questionId);
    assert.equal(await page.locator('.case-current h3').textContent(),question.prompt);
    assert.doesNotMatch(await page.locator('.case-workspace').innerText(), /\bS\d+\b|urn:tensor:|\b(?:s-42|r-7|job-17|tx-71|obj-9|h-17|req-42)\b/, 'Ordinary case UI uses properties, not opaque aliases');
    assert.equal(await page.locator('.case-assessment .tensor-badge').textContent(),assessment.outcome);
@@ -35,26 +37,28 @@ try {
    const pending=new Set(retained.filter(e=>e.type==='Decision').flatMap(e=>(e.selections||[]).map(s=>s.targetInstanceId)).filter(id=>!assessed.has(id)));
    assert.match(await page.locator('.case-leads strong').textContent(),new RegExp(`^${pending.size} open leads?$`));
    assert.equal(await page.locator('.case-leads li').count(),pending.size);
-   if(question.metadata.archetype!=='terminal')assert.ok(await page.locator('.case-next-options button').count()>0);
+   assert.equal(await page.locator('.case-next-options button').count(),definition.transitions.filter(t=>t.sourceQuestionId===instance.questionId&&t.guardOutcome===assessment.outcome).length);
    const guardTexts=await page.locator('.case-next-options button > span').allTextContents();assert.ok(guardTexts.every(t=>t.startsWith(assessment.outcome+' →')));
+   if(sample.id==='parallel-followup'&&i===6){await page.getByRole('button',{name:/Reporting workload’s later sign-in/}).first().click();assert.match(await page.locator('.case-current').textContent(),/No assessment for this question is visible/);await page.locator('.case-step-navigation button').nth(i).click();}
+   if(sample.id==='parallel-followup'&&i===8){assert.equal(await page.locator('.atlas-stage').evaluate(el=>el._cyreg.cy.nodes().filter(n=>n.data('displayLabel').includes('Context')).length),2);await page.locator('.case-body').screenshot({path:output+'/parallel-followup-return-atlas.png'});}
    if(i<frames.length-1)await page.getByRole('button',{name:'Next case step',exact:true}).click();
   }
   assert.equal(await page.getByRole('button',{name:'Next case step',exact:true}).isDisabled(),true);
   await page.locator('.case-step-navigation button').first().click();await at(0);
   await page.getByRole('button',{name:'Toggle overview map',exact:true}).click();
-  const mini=page.locator('.atlas-minimap rect:not(.atlas-viewport)');assert.equal(await mini.count(),definition.questions.length);
-  await page.getByRole('checkbox',{name:'Vendor',exact:true}).uncheck();assert.equal(await mini.count(),definition.questions.filter(q=>q.metadata.layerId!=='vendor').length);
-  await page.getByRole('checkbox',{name:'Company',exact:true}).uncheck();assert.equal(await mini.count(),definition.questions.filter(q=>q.metadata.layerId==='public').length);
+  const mini=page.locator('.atlas-minimap rect:not(.atlas-viewport)');assert.equal(await mini.count(),projected().trace.visibleIds.length);
+  await page.getByRole('checkbox',{name:'Vendor',exact:true}).uncheck();assert.equal(await mini.count(),projected(0,['public','company']).trace.visibleIds.length);
+  await page.getByRole('checkbox',{name:'Company',exact:true}).uncheck();assert.equal(await mini.count(),projected(0,['public']).trace.visibleIds.length);
   await page.getByRole('checkbox',{name:'Public',exact:true}).uncheck();assert.equal(await page.getByText('No question layers are visible.',{exact:true}).isVisible(),true);
   await page.getByRole('button',{name:'Show all layers',exact:true}).click();await ready();
   await page.getByRole('button',{name:'Path + open leads',exact:true}).click();await page.getByRole('button',{name:'Toggle overview map',exact:true}).click();const firstAssessment=source.record.entries.find(e=>e.id===frames[0].assessmentId),firstInstance=source.record.entries.find(e=>e.id===firstAssessment.targetInstanceId);
-  const firstOptions=new Set(definition.transitions.filter(t=>t.sourceQuestionId===firstInstance.questionId&&t.guardOutcome===firstAssessment.outcome).map(t=>t.targetQuestionId));assert.equal(await mini.count(),firstOptions.size+1);
+  const firstOptions=new Set(definition.transitions.filter(t=>t.sourceQuestionId===firstInstance.questionId&&t.guardOutcome===firstAssessment.outcome).map(t=>t.targetQuestionId));assert.equal(await mini.count(),caseOccurrenceView(model,0,'path').trace.visibleIds.length);
   await page.locator('.case-next-options button[data-route-status=recorded]').first().focus();await page.keyboard.press('Enter');
   assert.equal(await page.locator('.case-workspace').getAttribute('data-case-step'),'0');assert.match(await page.locator('.case-current').textContent(),/No assessment for this question is visible/);
   await page.getByRole('button',{name:'Next case step',exact:true}).click();await at(1);
-  await page.getByRole('button',{name:'All case questions',exact:true}).click();
+  await page.getByRole('button',{name:'All retained contexts',exact:true}).click();
   await page.getByRole('button',{name:'3D nebula',exact:true}).click();await page.locator('.atlas-stage[data-renderer=three][data-graph-ready=true]').waitFor();
-  assert.equal(await page.locator('.atlas-stage').getAttribute('data-node-count'),String(definition.questions.length));
+  assert.equal(await page.locator('.atlas-stage').getAttribute('data-node-count'),String(projected(Number(await page.locator('.case-workspace').getAttribute('data-case-step'))).graph.nodes.length));
   await page.waitForTimeout(500);await page.locator('.case-body').screenshot({path:output+`/${sample.id}-3d.png`});
   await page.getByRole('button',{name:'Atlas',exact:true}).click();await ready();
   await page.getByRole('button',{name:'Play',exact:true}).click();await page.waitForTimeout(7200);await at(2);assert.equal(await page.getByRole('button',{name:'Pause',exact:true}).isVisible(),true);

@@ -1,0 +1,8 @@
+---
+import DocumentLayout from '../../../layouts/DocumentLayout.astro';
+import ContentCard from '../../../components/ContentCard.astro';
+import {previousGraph,PREVIOUS_DOWNLOAD,PREVIOUS_SHA256} from '../../../data/previous-draft';
+---
+<DocumentLayout title="Archived draft · 13 October 2026" description="Exact historical draft for existing question citations. Use the current dataset for investigation and implementation." canonicalPath="/archives/0.20261013b/">
+<ContentCard><p class="section-kicker">Historical archive</p><h2>13 October working draft</h2><p>This archived draft preserves existing citations and the input to the 13 October AI review. Its routing has been superseded. <a href="/graphs/">Use the current public dataset</a> for exploration, implementation and review.</p><p><a href={PREVIOUS_DOWNLOAD}>Exact archived graph</a> · SHA-256 <code>{PREVIOUS_SHA256}</code></p><h3>Archived question citations</h3><ul>{previousGraph.nodes.map(n=><li><a href={`/questions/${previousGraph.version}/${n.id}/`}>{n.text}</a></li>)}</ul></ContentCard>
+</DocumentLayout>

@@ -4,14 +4,14 @@
   "reviewKind": "author-side-scenario-and-counterexample-review",
   "independentInstitutionalApproval": false,
   "baseGraphUnchanged": true,
-  "graphSha256": "5bbe0573940a20d7efe4cf9b78ae76f4ac79a3771bd92f5b182f3e18961aa874",
+  "graphSha256": "72a4e8a80ae9b20538b80a282f96882b65595ff6887b7161cfc64fca3ba5dc55",
   "profiles": 16,
   "scenarioCount": 144,
   "passed": 144,
   "artifactPins": {
-    "catalog.json": "970df04928781450e199f8cccccac763818428ecd1e78f939060138f9234eefd",
-    "definitions.json": "d45fea46d5f5b786dd6a3f3059ddd7c4880c16d05691ac43b3ccb7916f1509e6",
-    "scenarios.json": "cb7d00b4f7a1f6d0c0bfca31621fa443e6956aedc467b63eb2c2458505d31703"
+    "catalog.json": "b19d845e0158f85155fef9e736c206775905537fc3246d784ff30067045f3582",
+    "definitions.json": "a21f88a7f52145bbc642685cb232321b621df6359cdd08e3693098038a7c8196",
+    "scenarios.json": "7a7ccb4a33fba6b9f96062505a2c355938085f91be04395e68810fc4cd11cfd8"
   },
   "preservedArtifacts": {
     "releases/manifest.json": "713c94d5b066a1f6b2725cbdd8fc1c27956e95f3aa4d58b39f7d744f883174d8",
@@ -483,8 +483,8 @@
           "reason": "Comparable metric and units need ordered measurements in the explicit baseline and observation intervals"
         },
         {
-          "nodeId": "Q558",
-          "questionId": "urn:tensor:event-profile:identity-credential-state:0.1.0-draft.2:Q558",
+          "nodeId": "Q596",
+          "questionId": "urn:tensor:event-profile:identity-credential-state:0.1.0-draft.2:Q596",
           "focus": "authentication pathways",
           "answer": "yes",
           "reason": "Separate profile-qualified assessments and limitations are retained; this route does not close the investigation"
@@ -891,8 +891,8 @@
           "reason": "Comparable metric and units need ordered measurements in the explicit baseline and observation intervals"
         },
         {
-          "nodeId": "Q558",
-          "questionId": "urn:tensor:event-profile:identity-workload-binding:0.1.0-draft.2:Q558",
+          "nodeId": "Q596",
+          "questionId": "urn:tensor:event-profile:identity-workload-binding:0.1.0-draft.2:Q596",
           "focus": "workload identity context",
           "answer": "yes",
           "reason": "Separate profile-qualified assessments and limitations are retained; this route does not close the investigation"
@@ -1299,8 +1299,8 @@
           "reason": "Comparable metric and units need ordered measurements in the explicit baseline and observation intervals"
         },
         {
-          "nodeId": "Q559",
-          "questionId": "urn:tensor:event-profile:host-state:0.1.0-draft.2:Q559",
+          "nodeId": "Q597",
+          "questionId": "urn:tensor:event-profile:host-state:0.1.0-draft.2:Q597",
           "focus": "endpoint state changes",
           "answer": "yes",
           "reason": "Separate profile-qualified assessments and limitations are retained; this route does not close the investigation"
@@ -1707,8 +1707,8 @@
           "reason": "Comparable metric and units need ordered measurements in the explicit baseline and observation intervals"
         },
         {
-          "nodeId": "Q560",
-          "questionId": "urn:tensor:event-profile:network-configuration:0.1.0-draft.2:Q560",
+          "nodeId": "Q598",
+          "questionId": "urn:tensor:event-profile:network-configuration:0.1.0-draft.2:Q598",
           "focus": "control-plane actions",
           "answer": "yes",
           "reason": "Separate profile-qualified assessments and limitations are retained; this route does not close the investigation"
@@ -2115,8 +2115,8 @@
           "reason": "Comparable metric and units need ordered measurements in the explicit baseline and observation intervals"
         },
         {
-          "nodeId": "Q560",
-          "questionId": "urn:tensor:event-profile:network-sensor-coverage:0.1.0-draft.2:Q560",
+          "nodeId": "Q598",
+          "questionId": "urn:tensor:event-profile:network-sensor-coverage:0.1.0-draft.2:Q598",
           "focus": "transport metadata",
           "answer": "yes",
           "reason": "Separate profile-qualified assessments and limitations are retained; this route does not close the investigation"
@@ -2523,8 +2523,8 @@
           "reason": "Comparable metric and units need ordered measurements in the explicit baseline and observation intervals"
         },
         {
-          "nodeId": "Q561",
-          "questionId": "urn:tensor:event-profile:cloud-data-access:0.1.0-draft.2:Q561",
+          "nodeId": "Q599",
+          "questionId": "urn:tensor:event-profile:cloud-data-access:0.1.0-draft.2:Q599",
           "focus": "data access traces",
           "answer": "yes",
           "reason": "Separate profile-qualified assessments and limitations are retained; this route does not close the investigation"
@@ -2931,8 +2931,8 @@
           "reason": "Comparable metric and units need ordered measurements in the explicit baseline and observation intervals"
         },
         {
-          "nodeId": "Q561",
-          "questionId": "urn:tensor:event-profile:cloud-resource-state:0.1.0-draft.2:Q561",
+          "nodeId": "Q599",
+          "questionId": "urn:tensor:event-profile:cloud-resource-state:0.1.0-draft.2:Q599",
           "focus": "control-plane actions",
           "answer": "yes",
           "reason": "Separate profile-qualified assessments and limitations are retained; this route does not close the investigation"
@@ -3339,8 +3339,8 @@
           "reason": "Comparable metric and units need ordered measurements in the explicit baseline and observation intervals"
         },
         {
-          "nodeId": "Q562",
-          "questionId": "urn:tensor:event-profile:email-mailbox-rule:0.1.0-draft.2:Q562",
+          "nodeId": "Q600",
+          "questionId": "urn:tensor:event-profile:email-mailbox-rule:0.1.0-draft.2:Q600",
           "focus": "control-plane actions",
           "answer": "yes",
           "reason": "Separate profile-qualified assessments and limitations are retained; this route does not close the investigation"
@@ -3747,8 +3747,8 @@
           "reason": "Comparable metric and units need ordered measurements in the explicit baseline and observation intervals"
         },
         {
-          "nodeId": "Q562",
-          "questionId": "urn:tensor:event-profile:email-mailbox-access:0.1.0-draft.2:Q562",
+          "nodeId": "Q600",
+          "questionId": "urn:tensor:event-profile:email-mailbox-access:0.1.0-draft.2:Q600",
           "focus": "privileged access events",
           "answer": "yes",
           "reason": "Separate profile-qualified assessments and limitations are retained; this route does not close the investigation"
@@ -4155,8 +4155,8 @@
           "reason": "Comparable metric and units need ordered measurements in the explicit baseline and observation intervals"
         },
         {
-          "nodeId": "Q562",
-          "questionId": "urn:tensor:event-profile:email-collaboration-artifact:0.1.0-draft.2:Q562",
+          "nodeId": "Q600",
+          "questionId": "urn:tensor:event-profile:email-collaboration-artifact:0.1.0-draft.2:Q600",
           "focus": "collaboration artifacts",
           "answer": "yes",
           "reason": "Separate profile-qualified assessments and limitations are retained; this route does not close the investigation"
@@ -4563,8 +4563,8 @@
           "reason": "Comparable metric and units need ordered measurements in the explicit baseline and observation intervals"
         },
         {
-          "nodeId": "Q563",
-          "questionId": "urn:tensor:event-profile:application-state:0.1.0-draft.2:Q563",
+          "nodeId": "Q601",
+          "questionId": "urn:tensor:event-profile:application-state:0.1.0-draft.2:Q601",
           "focus": "endpoint state changes",
           "answer": "yes",
           "reason": "Separate profile-qualified assessments and limitations are retained; this route does not close the investigation"
@@ -4971,8 +4971,8 @@
           "reason": "Comparable metric and units need ordered measurements in the explicit baseline and observation intervals"
         },
         {
-          "nodeId": "Q563",
-          "questionId": "urn:tensor:event-profile:application-session:0.1.0-draft.2:Q563",
+          "nodeId": "Q601",
+          "questionId": "urn:tensor:event-profile:application-session:0.1.0-draft.2:Q601",
           "focus": "session anomalies",
           "answer": "yes",
           "reason": "Separate profile-qualified assessments and limitations are retained; this route does not close the investigation"
@@ -5379,8 +5379,8 @@
           "reason": "Comparable metric and units need ordered measurements in the explicit baseline and observation intervals"
         },
         {
-          "nodeId": "Q563",
-          "questionId": "urn:tensor:event-profile:application-agent-action:0.1.0-draft.2:Q563",
+          "nodeId": "Q601",
+          "questionId": "urn:tensor:event-profile:application-agent-action:0.1.0-draft.2:Q601",
           "focus": "api invocation patterns",
           "answer": "yes",
           "reason": "Separate profile-qualified assessments and limitations are retained; this route does not close the investigation"
@@ -5787,8 +5787,8 @@
           "reason": "Comparable metric and units need ordered measurements in the explicit baseline and observation intervals"
         },
         {
-          "nodeId": "Q588",
-          "questionId": "urn:tensor:event-profile:file-deletion:0.1.0-draft.2:Q588",
+          "nodeId": "Q602",
+          "questionId": "urn:tensor:event-profile:file-deletion:0.1.0-draft.2:Q602",
           "focus": "content lineage",
           "answer": "yes",
           "reason": "Separate profile-qualified assessments and limitations are retained; this route does not close the investigation"
@@ -6195,8 +6195,8 @@
           "reason": "Comparable metric and units need ordered measurements in the explicit baseline and observation intervals"
         },
         {
-          "nodeId": "Q588",
-          "questionId": "urn:tensor:event-profile:file-historical-lineage:0.1.0-draft.2:Q588",
+          "nodeId": "Q602",
+          "questionId": "urn:tensor:event-profile:file-historical-lineage:0.1.0-draft.2:Q602",
           "focus": "content lineage",
           "answer": "yes",
           "reason": "Separate profile-qualified assessments and limitations are retained; this route does not close the investigation"
@@ -6603,8 +6603,8 @@
           "reason": "Comparable metric and units need ordered measurements in the explicit baseline and observation intervals"
         },
         {
-          "nodeId": "Q588",
-          "questionId": "urn:tensor:event-profile:file-unavailable-content:0.1.0-draft.2:Q588",
+          "nodeId": "Q602",
+          "questionId": "urn:tensor:event-profile:file-unavailable-content:0.1.0-draft.2:Q602",
           "focus": "artifact provenance",
           "answer": "yes",
           "reason": "Separate profile-qualified assessments and limitations are retained; this route does not close the investigation"

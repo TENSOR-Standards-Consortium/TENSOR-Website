@@ -10,22 +10,22 @@
     {
       "command": "npm run check",
       "status": "pass",
-      "nodeTests": 169,
+      "nodeTests": 176,
       "coreExamples": 2,
-      "crossDomainCases": 3,
-      "walkthroughFrames": 24,
-      "datasetInventory": "30 exact artifacts"
+      "crossDomainCases": 4,
+      "walkthroughFrames": 33,
+      "datasetInventory": "33 exact artifacts"
     },
     {
       "command": "python3 -m unittest discover -s tests/legacy -q",
       "status": "pass",
-      "tests": 223
+      "tests": 230
     },
     {
       "command": "python3 scripts/restore_original_questions.py --check",
       "status": "pass",
       "questions": 609,
-      "routes": 2131
+      "routes": 1743
     },
     {
       "command": "python3 scripts/build_event_profiles.py --check",
@@ -45,7 +45,8 @@
     {
       "command": "python3 scripts/verify_semantic_review.py",
       "status": "pass",
-      "qualifiedDefinitions": 567
+      "qualifiedDefinitions": 567,
+      "scope": "Historical October 13 AI review verified against archived exact inputs; it does not approve the current repair."
     },
     {
       "command": "python3 scripts/validate_release_contract.py",
@@ -55,6 +56,7 @@
   "limits": [
     "Author-side checks and fictional supplied observations do not establish evidence truth or institutional approval.",
     "Independent implementation exchange, CASE/UCO loss analysis and authorized field validation remain open.",
-    "No invitations or formal review window have been initiated."
+    "No invitations or formal review window have been initiated.",
+    "The 16 October answer/context repair is author reviewed. Independent external review of these new routes remains pending."
   ]
 }

@@ -43,7 +43,7 @@ test('coverage ledger is pinned to both graph artifacts and records all original
   const analysis = await read('graphs/working/reviews/2026-10-12-restoration/analysis.json');
   const routing=await read('graphs/working/reviews/2026-10-13-routing/review.json');
   const semantic=await read('graphs/working/reviews/2026-10-13-semantic/review.json');
-  assert.equal(semantic.graphSha256,ledger.working.sha256);
+  assert.equal(semantic.graphSha256,createHash('sha256').update(await bytes('archives/0.20261013b/tensor.core.graph.json')).digest('hex'));
   assert.equal(semantic.status,'separate-ai-review-complete');
   assert.equal(semantic.institutionalApproval,false);
   assert.equal(routing.graphSha256,'4943feee2af28d414fcfd98194e63d196bee529ce8f85117aed4932d977e4d5e');
@@ -57,7 +57,7 @@ test('coverage ledger is pinned to both graph artifacts and records all original
   assert.equal(review.summary.questions, graphs.working.nodes.length);
   assert.equal(review.summary.routes,routing.summary.retainedContinuationRoutes);
   assert.equal(semantic.criteriaSha256,
-    createHash('sha256').update(await bytes('graphs/working/entry-evidence-criteria.json')).digest('hex'));
+    createHash('sha256').update(await bytes('archives/0.20261013b/entry-evidence-criteria.json')).digest('hex'));
   const targets = new Map(graphs.working.nodes.map(n => [n.id, n]));
   for (const row of analysis.questions) {
     const lineage=ledger.originalQuestions.find(r=>r.sourceId===row.sourceId);
@@ -67,21 +67,35 @@ test('coverage ledger is pinned to both graph artifacts and records all original
   }
 });
 
-test('current semantic review covers every displayed item and mirrors pinned final ledgers',async()=>{
+test('historical semantic review mirrors its exact archived graph and pinned final ledgers',async()=>{
+ const historical=await read('archives/0.20261013b/tensor.core.graph.json');
  const prefix='graphs/working/reviews/2026-10-13-semantic/';
  const review=await read(prefix+'review.json');
  assert.equal(review.counts.nodes,graphs.working.nodes.length);
- assert.equal(review.counts.edges,graphs.working.edges.length);
- assert.equal(review.definitionsSha256,createHash('sha256').update(await bytes('graphs/working/event-profiles/definitions.json')).digest('hex'));
+ assert.equal(review.counts.edges,historical.edges.length);
+ assert.notEqual(review.definitionsSha256,createHash('sha256').update(await bytes('graphs/working/event-profiles/definitions.json')).digest('hex'),'Historical approval cannot pin the current artifact');
  for(const row of review.domains){
   const ledger=await read(prefix+'items/'+row.id+'.json');
   assert.deepEqual(new Set(ledger.nodes.map(n=>n.id)),new Set(graphs.working.nodes.filter(n=>n.category===row.domain).map(n=>n.id)));
   const ids=new Set(ledger.nodes.map(n=>n.id));
-  assert.deepEqual(new Set(ledger.edges.map(e=>e.id)),new Set(graphs.working.edges.filter(e=>ids.has(e.source)).map(e=>e.id)));
+  assert.deepEqual(new Set(ledger.edges.map(e=>e.id)),new Set(historical.edges.filter(e=>ids.has(e.source)).map(e=>e.id)));
   assert.ok([...ledger.nodes,...ledger.edges,...ledger.profileDefinitions].every(i=>i.verdict==='accept'));
   for(const kind of ['items','challenges']){
    const file=kind+'/'+row.id+'.json';
    assert.equal(createHash('sha256').update(await bytes(prefix+file)).digest('hex'),review.ledgerPins[file]);
   }
  }
+});
+
+
+test('current answer-route review accounts for every shared destination without claiming independent approval',async()=>{
+ const review=await read('graphs/working/reviews/2026-10-16-contextual-routing/review.json');
+ assert.equal(review.graphSha256,createHash('sha256').update(await bytes('graphs/working/tensor.core.graph.json')).digest('hex'));
+ assert.equal(review.counts.questions,graphs.working.nodes.length);assert.equal(review.counts.routes,graphs.working.edges.length);
+ assert.equal(review.reviewedSharedPairs.length,602);assert.equal(review.institutionalApproval,false);
+ assert.equal(review.status,'author-repaired-external-review-pending');
+ const targets=new Map();for(const e of graphs.working.edges){const key=e.source+'|'+e.target;targets.set(key,[...(targets.get(key)||[]),e.decision]);}
+ const shared=[...targets].filter(([,answers])=>answers.length>1);
+ assert.deepEqual(new Set(shared.map(([key])=>key)),new Set(review.currentSharedPairs.map(r=>r.source+'|'+r.target)));
+ assert.ok(shared.every(([,answers])=>answers.length===2));
 });

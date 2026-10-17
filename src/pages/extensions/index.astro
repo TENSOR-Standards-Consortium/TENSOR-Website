@@ -22,7 +22,7 @@ const jsonLd = {
     <h2>Graphs built above TENSOR</h2>
     <p>TENSOR separates shared investigation knowledge from product knowledge and organizational process. Vendors and organizations can add their own graphs, evidence mappings, and workflows above the public foundation.</p>
     <p>A vendor layer describes how a product supports an investigation. An organization layer describes how the same findings fit local policy and operations. Both retain the identity and meaning of the public questions they extend.</p>
-    <div class="cta-group"><Button variant="primary" href={'/studio/?graph=0.20261013b&example=cloud-layers&node=Q4'}>Open the layering example</Button><Button variant="secondary" href="/examples/layers/cloud-investigation.layers.json" download>Download example layers</Button></div>
+    <div class="cta-group"><Button variant="primary" href={'/studio/?graph=0.20261016a&example=cloud-layers&node=Q4'}>Open the layering example</Button><Button variant="secondary" href="/examples/layers/cloud-investigation.layers.json" download>Download example layers</Button></div>
 
     <h2>Layer responsibilities</h2>
     <ReferenceTable label="Layer responsibilities"><thead><tr><th>Layer</th><th>Typical graph content</th><th>Example</th></tr></thead><tbody>
@@ -34,9 +34,9 @@ const jsonLd = {
     <p>Organization-specific graph content and case evidence can remain access-controlled. Public Core provides the common model; the surrounding implementation controls access, storage, and execution.</p>
 
     <h2>Cloud investigation example</h2>
-    <p>The example layers extend question <code>Q4</code> in current graph <code>0.20261013b</code>. The vendor layer adds an audit-export check. The organization layer adds a policy-review question. Each layer can be enabled separately; the public question and its original routes remain intact.</p>
+    <p>The example layers extend question <code>Q4</code> in current graph <code>0.20261016a</code>. The vendor layer adds an audit-export check. The organization layer adds a policy-review question. Each layer can be enabled separately; the public question and its original routes remain intact.</p>
     <ol>
-      <li><a href="/studio/?graph=0.20261013b&amp;example=cloud-layers&amp;node=Q4">Open the example in Graph Studio</a>. Both layers load with the current public graph.</li>
+      <li><a href="/studio/?graph=0.20261016a&amp;example=cloud-layers&amp;node=Q4">Open the example in Graph Studio</a>. Both layers load with the current public graph.</li>
       <li>Inspect <code>Q4</code> and the added questions <code>Q9001</code> and <code>Q9002</code>. The Layer pack lists the owner and type of each layer.</li>
       <li>Toggle either layer to compare the combined graph with the public foundation.</li>
       <li>Export the merged graph or layer pack. The original question fields and layer provenance remain distinguishable in the JSON.</li>

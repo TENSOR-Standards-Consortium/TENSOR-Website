@@ -1,0 +1,523 @@
+{
+  "id": "urn:tensor:example:parallel-followup:composed-definition",
+  "version": "1.3.0",
+  "publicationStatus": "draft",
+  "title": "Parallel leads and a return to identity",
+  "contractRef": {
+    "proposal": "0.1.0",
+    "bindingVersion": "0.1.0-draft.1",
+    "status": "candidate; unratified"
+  },
+  "questions": [
+    {
+      "id": "urn:tensor:example:parallel-followup:public:question-1",
+      "prompt": "Was a successful sign-in recorded for the bound principal and interval?",
+      "proposition": "Was a successful sign-in recorded for the bound principal and interval? Apply only to the resolved subject and interval; a different context requires a separate question instance.",
+      "parameters": {
+        "subject": {
+          "type": "URI",
+          "required": true,
+          "bindsTo": "subject:subject"
+        },
+        "window": {
+          "type": "timeContext",
+          "required": true,
+          "bindsTo": "timeContext"
+        }
+      },
+      "applicabilityCriteria": "Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.",
+      "assessmentCriteria": {
+        "yes": "A validated success record matches the exact principal and interval.",
+        "no": "Complete authoritative coverage contradicts this exact success proposition.",
+        "unknown": "Identity, event meaning, provenance or coverage is unresolved."
+      },
+      "evidenceRequirements": [
+        "Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.",
+        "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
+      ],
+      "metadata": {
+        "title": "Assess the bound sign-in",
+        "displayId": "S1",
+        "domain": "Identity",
+        "layerId": "public",
+        "layerVersion": "1.3.0",
+        "archetype": "detect"
+      }
+    },
+    {
+      "id": "urn:tensor:example:parallel-followup:public:question-2",
+      "prompt": "Did the bound session create the forwarding rule?",
+      "proposition": "Did the bound session create the forwarding rule? Apply only to the resolved subject and interval; a different context requires a separate question instance.",
+      "parameters": {
+        "subject": {
+          "type": "URI",
+          "required": true,
+          "bindsTo": "subject:subject"
+        },
+        "window": {
+          "type": "timeContext",
+          "required": true,
+          "bindsTo": "timeContext"
+        }
+      },
+      "applicabilityCriteria": "Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.",
+      "assessmentCriteria": {
+        "yes": "Independent validated session and rule discriminators support this relationship.",
+        "no": "Validated discriminators contradict this particular relationship.",
+        "unknown": "The endpoint relationship or record basis is unresolved."
+      },
+      "evidenceRequirements": [
+        "Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.",
+        "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
+      ],
+      "metadata": {
+        "title": "Trace the mailbox change",
+        "displayId": "S2",
+        "domain": "Email",
+        "layerId": "public",
+        "layerVersion": "1.3.0",
+        "archetype": "correlate"
+      }
+    },
+    {
+      "id": "urn:tensor:example:parallel-followup:public:question-3",
+      "prompt": "Was the reporting bucket object read in this exact cloud context?",
+      "proposition": "Was the reporting bucket object read in this exact cloud context? Apply only to the resolved subject and interval; a different context requires a separate question instance.",
+      "parameters": {
+        "subject": {
+          "type": "URI",
+          "required": true,
+          "bindsTo": "subject:subject"
+        },
+        "window": {
+          "type": "timeContext",
+          "required": true,
+          "bindsTo": "timeContext"
+        }
+      },
+      "applicabilityCriteria": "Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.",
+      "assessmentCriteria": {
+        "yes": "A validated completed-read record matches the exact object and interval.",
+        "no": "Complete applicable authoritative read coverage establishes this bounded absence.",
+        "unknown": "Logging, object binding or coverage is missing."
+      },
+      "evidenceRequirements": [
+        "Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.",
+        "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
+      ],
+      "metadata": {
+        "title": "Reject the proposed cloud read",
+        "displayId": "S3",
+        "domain": "Cloud",
+        "layerId": "public",
+        "layerVersion": "1.3.0",
+        "archetype": "correlate"
+      }
+    },
+    {
+      "id": "urn:tensor:example:parallel-followup:vendor:question-4",
+      "prompt": "Did the named process execute the attachment on the finance workstation?",
+      "proposition": "Did the named process execute the attachment on the finance workstation? Apply only to the resolved subject and interval; a different context requires a separate question instance.",
+      "parameters": {
+        "subject": {
+          "type": "URI",
+          "required": true,
+          "bindsTo": "subject:subject"
+        },
+        "window": {
+          "type": "timeContext",
+          "required": true,
+          "bindsTo": "timeContext"
+        }
+      },
+      "applicabilityCriteria": "Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.",
+      "assessmentCriteria": {
+        "yes": "Validated process-instance and digest discriminators support the execution.",
+        "no": "Validated process or digest evidence contradicts the exact execution.",
+        "unknown": "Process identity, digest, provenance or start semantics are unresolved."
+      },
+      "evidenceRequirements": [
+        "Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.",
+        "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
+      ],
+      "metadata": {
+        "title": "Bind the endpoint execution",
+        "displayId": "S4",
+        "domain": "Host",
+        "layerId": "vendor",
+        "layerVersion": "1.3.0",
+        "archetype": "correlate"
+      }
+    },
+    {
+      "id": "urn:tensor:example:parallel-followup:public:question-5",
+      "prompt": "Are the retained attachment bytes equal to the mailbox attachment bytes?",
+      "proposition": "Are the retained attachment bytes equal to the mailbox attachment bytes? Apply only to the resolved subject and interval; a different context requires a separate question instance.",
+      "parameters": {
+        "subject": {
+          "type": "URI",
+          "required": true,
+          "bindsTo": "subject:subject"
+        },
+        "window": {
+          "type": "timeContext",
+          "required": true,
+          "bindsTo": "timeContext"
+        }
+      },
+      "applicabilityCriteria": "Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.",
+      "assessmentCriteria": {
+        "yes": "Independent byte acquisitions with matching digests and sizes support equality.",
+        "no": "Verified byte or digest evidence contradicts equality.",
+        "unknown": "One acquisition or its provenance is missing."
+      },
+      "evidenceRequirements": [
+        "Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.",
+        "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
+      ],
+      "metadata": {
+        "title": "Retain the attachment gap",
+        "displayId": "S5",
+        "domain": "File",
+        "layerId": "public",
+        "layerVersion": "1.3.0",
+        "archetype": "correlate"
+      }
+    },
+    {
+      "id": "urn:tensor:example:parallel-followup:public:question-6",
+      "prompt": "Did the finance workstation process originate the bound outbound flow?",
+      "proposition": "Did the finance workstation process originate the bound outbound flow? Apply only to the resolved subject and interval; a different context requires a separate question instance.",
+      "parameters": {
+        "subject": {
+          "type": "URI",
+          "required": true,
+          "bindsTo": "subject:subject"
+        },
+        "window": {
+          "type": "timeContext",
+          "required": true,
+          "bindsTo": "timeContext"
+        }
+      },
+      "applicabilityCriteria": "Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.",
+      "assessmentCriteria": {
+        "yes": "Independent validated endpoint and gateway discriminators support the named relationship.",
+        "no": "Validated chronology, socket or NAT evidence contradicts the relationship.",
+        "unknown": "A shared address or missing mapping cannot resolve the relationship."
+      },
+      "evidenceRequirements": [
+        "Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.",
+        "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
+      ],
+      "metadata": {
+        "title": "Assess the network pivot",
+        "displayId": "S6",
+        "domain": "Network",
+        "layerId": "public",
+        "layerVersion": "1.3.0",
+        "archetype": "correlate"
+      }
+    },
+    {
+      "id": "urn:tensor:example:parallel-followup:company:question-7",
+      "prompt": "Was this external report request approved under APP-09?",
+      "proposition": "Was this external report request approved under APP-09? Apply only to the resolved subject and interval; a different context requires a separate question instance.",
+      "parameters": {
+        "subject": {
+          "type": "URI",
+          "required": true,
+          "bindsTo": "subject:subject"
+        },
+        "window": {
+          "type": "timeContext",
+          "required": true,
+          "bindsTo": "timeContext"
+        }
+      },
+      "applicabilityCriteria": "Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.",
+      "assessmentCriteria": {
+        "yes": "An effective approval covers this exact request and interval.",
+        "no": "The effective policy applies and complete authoritative coverage establishes the missing approval.",
+        "unknown": "Policy applicability, register coverage or request identity is unresolved."
+      },
+      "evidenceRequirements": [
+        "Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.",
+        "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
+      ],
+      "metadata": {
+        "title": "Keep company approval separate",
+        "displayId": "S7",
+        "domain": "Application",
+        "layerId": "company",
+        "layerVersion": "1.3.0",
+        "archetype": "classify"
+      }
+    },
+    {
+      "id": "urn:tensor:example:parallel-followup:public:question-9",
+      "prompt": "Does the handoff retain the separate contexts, findings and open questions?",
+      "proposition": "Does the handoff retain the separate contexts, findings and open questions? Apply only to the resolved subject and interval; a different context requires a separate question instance.",
+      "parameters": {
+        "subject": {
+          "type": "URI",
+          "required": true,
+          "bindsTo": "subject:subject"
+        },
+        "window": {
+          "type": "timeContext",
+          "required": true,
+          "bindsTo": "timeContext"
+        }
+      },
+      "applicabilityCriteria": "Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.",
+      "assessmentCriteria": {
+        "yes": "The distinct contexts, actual answers, inputs and limitations are retained.",
+        "no": "A context, answer or material limitation is demonstrably lost.",
+        "unknown": "The retained record is insufficient to assess completeness."
+      },
+      "evidenceRequirements": [
+        "Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.",
+        "Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit."
+      ],
+      "metadata": {
+        "title": "Hand off both branches and the return",
+        "displayId": "S9",
+        "domain": "Identity",
+        "layerId": "public",
+        "layerVersion": "1.3.0",
+        "archetype": "terminal"
+      }
+    }
+  ],
+  "transitions": [
+    {
+      "id": "urn:tensor:example:parallel-followup:route-1-2-yes",
+      "sourceQuestionId": "urn:tensor:example:parallel-followup:public:question-1",
+      "targetQuestionId": "urn:tensor:example:parallel-followup:public:question-2",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "The yes source assessment permits opening this separate question: Did the bound session create the forwarding rule? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:parallel-followup:route-1-3-yes",
+      "sourceQuestionId": "urn:tensor:example:parallel-followup:public:question-1",
+      "targetQuestionId": "urn:tensor:example:parallel-followup:public:question-3",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "The yes source assessment permits opening this separate question: Was the reporting bucket object read in this exact cloud context? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:parallel-followup:route-1-9-no",
+      "sourceQuestionId": "urn:tensor:example:parallel-followup:public:question-1",
+      "targetQuestionId": "urn:tensor:example:parallel-followup:public:question-9",
+      "guardOutcome": "no",
+      "metadata": {
+        "meaning": "The no source assessment permits opening this separate question: Does the handoff retain the separate contexts, findings and open questions? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:parallel-followup:route-1-9-unknown",
+      "sourceQuestionId": "urn:tensor:example:parallel-followup:public:question-1",
+      "targetQuestionId": "urn:tensor:example:parallel-followup:public:question-9",
+      "guardOutcome": "unknown",
+      "metadata": {
+        "meaning": "The unknown source assessment permits opening this separate question: Does the handoff retain the separate contexts, findings and open questions? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:parallel-followup:route-2-4-yes",
+      "sourceQuestionId": "urn:tensor:example:parallel-followup:public:question-2",
+      "targetQuestionId": "urn:tensor:example:parallel-followup:vendor:question-4",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "The yes source assessment permits opening this separate question: Did the named process execute the attachment on the finance workstation? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:parallel-followup:route-2-5-yes",
+      "sourceQuestionId": "urn:tensor:example:parallel-followup:public:question-2",
+      "targetQuestionId": "urn:tensor:example:parallel-followup:public:question-5",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "The yes source assessment permits opening this separate question: Are the retained attachment bytes equal to the mailbox attachment bytes? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:parallel-followup:route-2-9-no",
+      "sourceQuestionId": "urn:tensor:example:parallel-followup:public:question-2",
+      "targetQuestionId": "urn:tensor:example:parallel-followup:public:question-9",
+      "guardOutcome": "no",
+      "metadata": {
+        "meaning": "The no source assessment permits opening this separate question: Does the handoff retain the separate contexts, findings and open questions? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:parallel-followup:route-2-9-unknown",
+      "sourceQuestionId": "urn:tensor:example:parallel-followup:public:question-2",
+      "targetQuestionId": "urn:tensor:example:parallel-followup:public:question-9",
+      "guardOutcome": "unknown",
+      "metadata": {
+        "meaning": "The unknown source assessment permits opening this separate question: Does the handoff retain the separate contexts, findings and open questions? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:parallel-followup:route-4-6-yes",
+      "sourceQuestionId": "urn:tensor:example:parallel-followup:vendor:question-4",
+      "targetQuestionId": "urn:tensor:example:parallel-followup:public:question-6",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "The yes source assessment permits opening this separate question: Did the finance workstation process originate the bound outbound flow? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:parallel-followup:route-4-9-no",
+      "sourceQuestionId": "urn:tensor:example:parallel-followup:vendor:question-4",
+      "targetQuestionId": "urn:tensor:example:parallel-followup:public:question-9",
+      "guardOutcome": "no",
+      "metadata": {
+        "meaning": "The no source assessment permits opening this separate question: Does the handoff retain the separate contexts, findings and open questions? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:parallel-followup:route-4-9-unknown",
+      "sourceQuestionId": "urn:tensor:example:parallel-followup:vendor:question-4",
+      "targetQuestionId": "urn:tensor:example:parallel-followup:public:question-9",
+      "guardOutcome": "unknown",
+      "metadata": {
+        "meaning": "The unknown source assessment permits opening this separate question: Does the handoff retain the separate contexts, findings and open questions? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:parallel-followup:route-6-7-yes",
+      "sourceQuestionId": "urn:tensor:example:parallel-followup:public:question-6",
+      "targetQuestionId": "urn:tensor:example:parallel-followup:company:question-7",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "The yes source assessment permits opening this separate question: Was this external report request approved under APP-09? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:parallel-followup:route-6-9-no",
+      "sourceQuestionId": "urn:tensor:example:parallel-followup:public:question-6",
+      "targetQuestionId": "urn:tensor:example:parallel-followup:public:question-9",
+      "guardOutcome": "no",
+      "metadata": {
+        "meaning": "The no source assessment permits opening this separate question: Does the handoff retain the separate contexts, findings and open questions? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:parallel-followup:route-6-9-unknown",
+      "sourceQuestionId": "urn:tensor:example:parallel-followup:public:question-6",
+      "targetQuestionId": "urn:tensor:example:parallel-followup:public:question-9",
+      "guardOutcome": "unknown",
+      "metadata": {
+        "meaning": "The unknown source assessment permits opening this separate question: Does the handoff retain the separate contexts, findings and open questions? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:parallel-followup:route-7-8-no",
+      "sourceQuestionId": "urn:tensor:example:parallel-followup:company:question-7",
+      "targetQuestionId": "urn:tensor:example:parallel-followup:public:question-1",
+      "guardOutcome": "no",
+      "metadata": {
+        "meaning": "The no source assessment permits opening this separate question: Was a successful sign-in recorded for the bound principal and interval? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:parallel-followup:route-7-9-yes",
+      "sourceQuestionId": "urn:tensor:example:parallel-followup:company:question-7",
+      "targetQuestionId": "urn:tensor:example:parallel-followup:public:question-9",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "The yes source assessment permits opening this separate question: Does the handoff retain the separate contexts, findings and open questions? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:parallel-followup:route-7-9-unknown",
+      "sourceQuestionId": "urn:tensor:example:parallel-followup:company:question-7",
+      "targetQuestionId": "urn:tensor:example:parallel-followup:public:question-9",
+      "guardOutcome": "unknown",
+      "metadata": {
+        "meaning": "The unknown source assessment permits opening this separate question: Does the handoff retain the separate contexts, findings and open questions? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:parallel-followup:route-8-9-yes",
+      "sourceQuestionId": "urn:tensor:example:parallel-followup:public:question-1",
+      "targetQuestionId": "urn:tensor:example:parallel-followup:public:question-9",
+      "guardOutcome": "yes",
+      "metadata": {
+        "meaning": "The yes source assessment permits opening this separate question: Does the handoff retain the separate contexts, findings and open questions? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:parallel-followup:route-8-9-no",
+      "sourceQuestionId": "urn:tensor:example:parallel-followup:public:question-1",
+      "targetQuestionId": "urn:tensor:example:parallel-followup:public:question-9",
+      "guardOutcome": "no",
+      "metadata": {
+        "meaning": "The no source assessment permits opening this separate question: Does the handoff retain the separate contexts, findings and open questions? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    },
+    {
+      "id": "urn:tensor:example:parallel-followup:route-8-9-unknown",
+      "sourceQuestionId": "urn:tensor:example:parallel-followup:public:question-1",
+      "targetQuestionId": "urn:tensor:example:parallel-followup:public:question-9",
+      "guardOutcome": "unknown",
+      "metadata": {
+        "meaning": "The unknown source assessment permits opening this separate question: Does the handoff retain the separate contexts, findings and open questions? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.",
+        "selection": "A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection."
+      }
+    }
+  ],
+  "entryQuestionIds": [
+    "urn:tensor:example:parallel-followup:public:question-1"
+  ],
+  "dependencies": [],
+  "metadata": {
+    "illustrative": true,
+    "layers": [
+      {
+        "id": "public",
+        "label": "Public investigation questions",
+        "owner": "TENSOR Standards Consortium",
+        "version": "1.3.0"
+      },
+      {
+        "id": "vendor",
+        "label": "Example vendor telemetry graph",
+        "owner": "Fictional telemetry vendor",
+        "version": "1.3.0"
+      },
+      {
+        "id": "company",
+        "label": "Example company policy graph",
+        "owner": "Fictional company",
+        "version": "1.3.0"
+      }
+    ],
+    "composition": "Case-specific questions composed in one pinned artifact. These are additional example definitions, not routes added to the public working or published graph."
+  }
+}

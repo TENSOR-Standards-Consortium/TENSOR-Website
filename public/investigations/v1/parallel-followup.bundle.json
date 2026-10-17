@@ -1,0 +1,1417 @@
+{
+  "format": "tensor-investigation-bundle",
+  "bindingVersion": "0.1.0-draft.1",
+  "record": {
+    "snapshotId": "urn:tensor:example:parallel-followup:snapshot-1",
+    "investigationId": "urn:tensor:example:parallel-followup:investigation",
+    "contractRef": {
+      "proposal": "0.1.0",
+      "bindingVersion": "0.1.0-draft.1",
+      "status": "candidate; unratified"
+    },
+    "producer": {
+      "label": "TENSOR illustrative investigation authoring",
+      "version": "1.3.0",
+      "implementationStatus": "Fictional example, not an operational deployment"
+    },
+    "recordedAt": "2026-10-13T09:30:49.000Z",
+    "scope": {
+      "purpose": "Follow independently assessed SOC leads without merging subjects, time intervals, policy or unanswered questions.",
+      "subjectBoundary": [
+        "urn:tensor:example:parallel-followup:signin-morgan",
+        "urn:tensor:example:parallel-followup:mail-rule",
+        "urn:tensor:example:parallel-followup:cloud-read",
+        "urn:tensor:example:parallel-followup:host-process",
+        "urn:tensor:example:parallel-followup:attachment",
+        "urn:tensor:example:parallel-followup:network-flow",
+        "urn:tensor:example:parallel-followup:app-request",
+        "urn:tensor:example:parallel-followup:signin-workload",
+        "urn:tensor:example:parallel-followup:case-review"
+      ]
+    },
+    "definitionReferences": [
+      {
+        "id": "urn:tensor:example:parallel-followup:composed-definition",
+        "version": "1.3.0",
+        "sha256": "4ba233fe797fc39786e5ad4bd4cf43c2b2a92be9c7ab5bdd89ce9a92fb3b9c51",
+        "artifact": "parallel-followup.definition.json"
+      }
+    ],
+    "dependencies": [],
+    "entries": [
+      {
+        "id": "urn:tensor:example:parallel-followup:actor-analyst",
+        "type": "Actor",
+        "recordedAt": "2026-10-13T09:30:00.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-analyst"
+        },
+        "kind": "human",
+        "label": "SOC analyst",
+        "identityStatus": "selfDeclared"
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:actor-agent",
+        "type": "Actor",
+        "recordedAt": "2026-10-13T09:30:01.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-agent"
+        },
+        "kind": "agent",
+        "label": "Assisting investigation agent",
+        "identityStatus": "selfDeclared"
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:actor-responder",
+        "type": "Actor",
+        "recordedAt": "2026-10-13T09:30:02.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-responder"
+        },
+        "kind": "human",
+        "label": "On-duty response lead",
+        "identityStatus": "selfDeclared"
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:policy",
+        "type": "PolicyReference",
+        "recordedAt": "2026-10-13T09:30:03.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-analyst"
+        },
+        "policyIdentity": "urn:tensor:example:parallel-followup:company-response-policy",
+        "version": "1.3.0",
+        "effectiveTime": {
+          "status": "known",
+          "start": "2026-10-01T00:00:00Z"
+        },
+        "applicableScope": "Follow independently assessed SOC leads without merging subjects, time intervals, policy or unanswered questions.",
+        "locatorAbsentReason": "Fictional example policy; conditions are retained here.",
+        "conditions": "APP-09 requires an exception for an external report request. The register covers this exact request and interval. Technical findings do not grant response authority."
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:authority",
+        "type": "AuthorityAssertion",
+        "recordedAt": "2026-10-13T09:30:04.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-responder"
+        },
+        "issuerId": "urn:tensor:example:parallel-followup:actor-responder",
+        "granteeId": "urn:tensor:example:parallel-followup:actor-responder",
+        "permittedOperation": "Retain the investigation for review; no containment action is selected",
+        "scope": "Follow independently assessed SOC leads without merging subjects, time intervals, policy or unanswered questions.",
+        "validityStatus": {
+          "status": "claimedValid",
+          "reason": "The example asserts this actor is the designated on-duty responder."
+        },
+        "basisReferences": [
+          "urn:tensor:example:parallel-followup:policy"
+        ],
+        "receiverLocalVerification": "notPerformed"
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:instance-1",
+        "type": "QuestionInstance",
+        "recordedAt": "2026-10-13T09:30:05.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-analyst"
+        },
+        "definitionRef": {
+          "id": "urn:tensor:example:parallel-followup:composed-definition",
+          "version": "1.3.0",
+          "sha256": "4ba233fe797fc39786e5ad4bd4cf43c2b2a92be9c7ab5bdd89ce9a92fb3b9c51",
+          "artifact": "parallel-followup.definition.json"
+        },
+        "questionId": "urn:tensor:example:parallel-followup:public:question-1",
+        "metadata": {
+          "subjectLabels": {
+            "urn:tensor:example:parallel-followup:signin-morgan": "Morgan’s morning sign-in"
+          }
+        },
+        "subjectBindings": {
+          "subject": "urn:tensor:example:parallel-followup:signin-morgan"
+        },
+        "timeContext": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        },
+        "parameterBindings": {
+          "subject": "urn:tensor:example:parallel-followup:signin-morgan",
+          "window": {
+            "status": "bounded",
+            "start": "2026-10-13T08:35:00Z",
+            "end": "2026-10-13T09:00:00Z"
+          }
+        },
+        "origin": {
+          "kind": "entry",
+          "rationale": "Open the bounded example investigation."
+        }
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:evidence-1",
+        "type": "EvidenceReference",
+        "recordedAt": "2026-10-13T09:30:06.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-analyst"
+        },
+        "description": "P1 · A validated identity audit records Morgan’s successful sign-in at 08:42 UTC. Independently acquired mailbox and cloud records identify two leads with separate subjects.",
+        "source": {
+          "label": "Identity example evidence",
+          "provenanceStatus": "Authored fictional evidence; no real incident source is authenticated"
+        },
+        "availability": "unavailable",
+        "locatorAbsentReason": "The example supplies observations and references, not real source evidence bytes."
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:observation-1",
+        "type": "Observation",
+        "recordedAt": "2026-10-13T09:30:07.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-analyst"
+        },
+        "statement": "P1 · A validated identity audit records Morgan’s successful sign-in at 08:42 UTC. Independently acquired mailbox and cloud records identify two leads with separate subjects.",
+        "evidenceRefIds": [
+          "urn:tensor:example:parallel-followup:evidence-1"
+        ],
+        "method": "Authored observation; discriminator and collection limits are described in the statement.",
+        "eventTime": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        }
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:assessment-1",
+        "type": "Assessment",
+        "recordedAt": "2026-10-13T09:30:08.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:parallel-followup:instance-1",
+        "applicability": {
+          "status": "applicable",
+          "rationale": "The declared subject, interval, and required parameters are resolved."
+        },
+        "outcome": "yes",
+        "rationale": "A validated success record matches the exact principal and interval. The mailbox and cloud leads need their own assessments.",
+        "inputs": [
+          {
+            "entryId": "urn:tensor:example:parallel-followup:observation-1",
+            "role": "supports"
+          }
+        ],
+        "method": "Authored example applies the pinned question criteria to retained illustrative observations."
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:decision-1",
+        "type": "Decision",
+        "recordedAt": "2026-10-13T09:30:09.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:parallel-followup:instance-1",
+        "selectedAssessmentId": "urn:tensor:example:parallel-followup:assessment-1",
+        "selectedInputIds": [
+          "urn:tensor:example:parallel-followup:assessment-1"
+        ],
+        "disposition": "transition",
+        "rationale": "Open 2 independently assessed leads; retain this yes answer and the unselected alternatives.",
+        "policyStatus": {
+          "status": "notApplicable"
+        },
+        "authorityStatus": {
+          "status": "notApplicable"
+        },
+        "limitations": [
+          "The mailbox and cloud leads need their own assessments."
+        ],
+        "selections": [
+          {
+            "transitionId": "urn:tensor:example:parallel-followup:route-1-2-yes",
+            "targetInstanceId": "urn:tensor:example:parallel-followup:instance-2"
+          },
+          {
+            "transitionId": "urn:tensor:example:parallel-followup:route-1-3-yes",
+            "targetInstanceId": "urn:tensor:example:parallel-followup:instance-3"
+          }
+        ]
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:instance-2",
+        "type": "QuestionInstance",
+        "recordedAt": "2026-10-13T09:30:10.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-agent"
+        },
+        "definitionRef": {
+          "id": "urn:tensor:example:parallel-followup:composed-definition",
+          "version": "1.3.0",
+          "sha256": "4ba233fe797fc39786e5ad4bd4cf43c2b2a92be9c7ab5bdd89ce9a92fb3b9c51",
+          "artifact": "parallel-followup.definition.json"
+        },
+        "questionId": "urn:tensor:example:parallel-followup:public:question-2",
+        "metadata": {
+          "subjectLabels": {
+            "urn:tensor:example:parallel-followup:mail-rule": "Morgan’s forwarding rule"
+          }
+        },
+        "subjectBindings": {
+          "subject": "urn:tensor:example:parallel-followup:mail-rule"
+        },
+        "timeContext": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        },
+        "parameterBindings": {
+          "subject": "urn:tensor:example:parallel-followup:mail-rule",
+          "window": {
+            "status": "bounded",
+            "start": "2026-10-13T08:35:00Z",
+            "end": "2026-10-13T09:00:00Z"
+          }
+        },
+        "origin": {
+          "kind": "transition",
+          "rationale": "Explicitly selected investigative lead; target evidence and subject remain separate.",
+          "originDecisionId": "urn:tensor:example:parallel-followup:decision-1"
+        }
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:instance-3",
+        "type": "QuestionInstance",
+        "recordedAt": "2026-10-13T09:30:11.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-analyst"
+        },
+        "definitionRef": {
+          "id": "urn:tensor:example:parallel-followup:composed-definition",
+          "version": "1.3.0",
+          "sha256": "4ba233fe797fc39786e5ad4bd4cf43c2b2a92be9c7ab5bdd89ce9a92fb3b9c51",
+          "artifact": "parallel-followup.definition.json"
+        },
+        "questionId": "urn:tensor:example:parallel-followup:public:question-3",
+        "metadata": {
+          "subjectLabels": {
+            "urn:tensor:example:parallel-followup:cloud-read": "Reporting bucket read"
+          }
+        },
+        "subjectBindings": {
+          "subject": "urn:tensor:example:parallel-followup:cloud-read"
+        },
+        "timeContext": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        },
+        "parameterBindings": {
+          "subject": "urn:tensor:example:parallel-followup:cloud-read",
+          "window": {
+            "status": "bounded",
+            "start": "2026-10-13T08:35:00Z",
+            "end": "2026-10-13T09:00:00Z"
+          }
+        },
+        "origin": {
+          "kind": "transition",
+          "rationale": "Explicitly selected investigative lead; target evidence and subject remain separate.",
+          "originDecisionId": "urn:tensor:example:parallel-followup:decision-1"
+        }
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:evidence-2",
+        "type": "EvidenceReference",
+        "recordedAt": "2026-10-13T09:30:12.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-agent"
+        },
+        "description": "P2 · A mailbox change receipt and identity audit share a discriminating session binding; the rule is created at 08:47 UTC. Endpoint and attachment observations open separate leads.",
+        "source": {
+          "label": "Email example evidence",
+          "provenanceStatus": "Authored fictional evidence; no real incident source is authenticated"
+        },
+        "availability": "unavailable",
+        "locatorAbsentReason": "The example supplies observations and references, not real source evidence bytes."
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:observation-2",
+        "type": "Observation",
+        "recordedAt": "2026-10-13T09:30:13.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-agent"
+        },
+        "statement": "P2 · A mailbox change receipt and identity audit share a discriminating session binding; the rule is created at 08:47 UTC. Endpoint and attachment observations open separate leads.",
+        "evidenceRefIds": [
+          "urn:tensor:example:parallel-followup:evidence-2"
+        ],
+        "method": "Authored observation; discriminator and collection limits are described in the statement.",
+        "eventTime": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        }
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:assessment-2",
+        "type": "Assessment",
+        "recordedAt": "2026-10-13T09:30:14.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-agent"
+        },
+        "targetInstanceId": "urn:tensor:example:parallel-followup:instance-2",
+        "applicability": {
+          "status": "applicable",
+          "rationale": "The declared subject, interval, and required parameters are resolved."
+        },
+        "outcome": "yes",
+        "rationale": "Independent validated session and rule discriminators support this relationship. Rule creation does not establish delivery or intent.",
+        "inputs": [
+          {
+            "entryId": "urn:tensor:example:parallel-followup:observation-2",
+            "role": "supports"
+          },
+          {
+            "entryId": "urn:tensor:example:parallel-followup:assessment-1",
+            "role": "context"
+          }
+        ],
+        "method": "Authored example applies the pinned question criteria to retained illustrative observations."
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:decision-2",
+        "type": "Decision",
+        "recordedAt": "2026-10-13T09:30:15.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:parallel-followup:instance-2",
+        "selectedAssessmentId": "urn:tensor:example:parallel-followup:assessment-2",
+        "selectedInputIds": [
+          "urn:tensor:example:parallel-followup:assessment-2"
+        ],
+        "disposition": "transition",
+        "rationale": "Open 2 independently assessed leads; retain this yes answer and the unselected alternatives.",
+        "policyStatus": {
+          "status": "notApplicable"
+        },
+        "authorityStatus": {
+          "status": "notApplicable"
+        },
+        "limitations": [
+          "Rule creation does not establish delivery or intent."
+        ],
+        "selections": [
+          {
+            "transitionId": "urn:tensor:example:parallel-followup:route-2-4-yes",
+            "targetInstanceId": "urn:tensor:example:parallel-followup:instance-4"
+          },
+          {
+            "transitionId": "urn:tensor:example:parallel-followup:route-2-5-yes",
+            "targetInstanceId": "urn:tensor:example:parallel-followup:instance-5"
+          }
+        ]
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:instance-4",
+        "type": "QuestionInstance",
+        "recordedAt": "2026-10-13T09:30:16.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-agent"
+        },
+        "definitionRef": {
+          "id": "urn:tensor:example:parallel-followup:composed-definition",
+          "version": "1.3.0",
+          "sha256": "4ba233fe797fc39786e5ad4bd4cf43c2b2a92be9c7ab5bdd89ce9a92fb3b9c51",
+          "artifact": "parallel-followup.definition.json"
+        },
+        "questionId": "urn:tensor:example:parallel-followup:vendor:question-4",
+        "metadata": {
+          "subjectLabels": {
+            "urn:tensor:example:parallel-followup:host-process": "Finance workstation process"
+          }
+        },
+        "subjectBindings": {
+          "subject": "urn:tensor:example:parallel-followup:host-process"
+        },
+        "timeContext": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        },
+        "parameterBindings": {
+          "subject": "urn:tensor:example:parallel-followup:host-process",
+          "window": {
+            "status": "bounded",
+            "start": "2026-10-13T08:35:00Z",
+            "end": "2026-10-13T09:00:00Z"
+          }
+        },
+        "origin": {
+          "kind": "transition",
+          "rationale": "Explicitly selected investigative lead; target evidence and subject remain separate.",
+          "originDecisionId": "urn:tensor:example:parallel-followup:decision-2"
+        }
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:instance-5",
+        "type": "QuestionInstance",
+        "recordedAt": "2026-10-13T09:30:17.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-agent"
+        },
+        "definitionRef": {
+          "id": "urn:tensor:example:parallel-followup:composed-definition",
+          "version": "1.3.0",
+          "sha256": "4ba233fe797fc39786e5ad4bd4cf43c2b2a92be9c7ab5bdd89ce9a92fb3b9c51",
+          "artifact": "parallel-followup.definition.json"
+        },
+        "questionId": "urn:tensor:example:parallel-followup:public:question-5",
+        "metadata": {
+          "subjectLabels": {
+            "urn:tensor:example:parallel-followup:attachment": "Attachment on the finance workstation"
+          }
+        },
+        "subjectBindings": {
+          "subject": "urn:tensor:example:parallel-followup:attachment"
+        },
+        "timeContext": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        },
+        "parameterBindings": {
+          "subject": "urn:tensor:example:parallel-followup:attachment",
+          "window": {
+            "status": "bounded",
+            "start": "2026-10-13T08:35:00Z",
+            "end": "2026-10-13T09:00:00Z"
+          }
+        },
+        "origin": {
+          "kind": "transition",
+          "rationale": "Explicitly selected investigative lead; target evidence and subject remain separate.",
+          "originDecisionId": "urn:tensor:example:parallel-followup:decision-2"
+        }
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:evidence-3",
+        "type": "EvidenceReference",
+        "recordedAt": "2026-10-13T09:30:18.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-analyst"
+        },
+        "description": "P3 · Complete authoritative object-read coverage for the tenant, object and interval contains no matching read; receipt and coverage boundaries are retained.",
+        "source": {
+          "label": "Cloud example evidence",
+          "provenanceStatus": "Authored fictional evidence; no real incident source is authenticated"
+        },
+        "availability": "unavailable",
+        "locatorAbsentReason": "The example supplies observations and references, not real source evidence bytes."
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:observation-3",
+        "type": "Observation",
+        "recordedAt": "2026-10-13T09:30:19.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-analyst"
+        },
+        "statement": "P3 · Complete authoritative object-read coverage for the tenant, object and interval contains no matching read; receipt and coverage boundaries are retained.",
+        "evidenceRefIds": [
+          "urn:tensor:example:parallel-followup:evidence-3"
+        ],
+        "method": "Authored observation; discriminator and collection limits are described in the statement.",
+        "eventTime": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        }
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:assessment-3",
+        "type": "Assessment",
+        "recordedAt": "2026-10-13T09:30:20.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:parallel-followup:instance-3",
+        "applicability": {
+          "status": "applicable",
+          "rationale": "The declared subject, interval, and required parameters are resolved."
+        },
+        "outcome": "no",
+        "rationale": "Complete applicable authoritative read coverage establishes this bounded absence. This negative read finding does not close the mailbox or endpoint branch.",
+        "inputs": [
+          {
+            "entryId": "urn:tensor:example:parallel-followup:observation-3",
+            "role": "contradicts"
+          },
+          {
+            "entryId": "urn:tensor:example:parallel-followup:assessment-1",
+            "role": "context"
+          }
+        ],
+        "method": "Authored example applies the pinned question criteria to retained illustrative observations."
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:decision-3",
+        "type": "Decision",
+        "recordedAt": "2026-10-13T09:30:21.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:parallel-followup:instance-3",
+        "selectedAssessmentId": "urn:tensor:example:parallel-followup:assessment-3",
+        "selectedInputIds": [
+          "urn:tensor:example:parallel-followup:assessment-3"
+        ],
+        "disposition": "retain",
+        "rationale": "Retain this assessment and its limitations; no additional route is selected by this decision.",
+        "policyStatus": {
+          "status": "notApplicable"
+        },
+        "authorityStatus": {
+          "status": "notApplicable"
+        },
+        "limitations": [
+          "This negative read finding does not close the mailbox or endpoint branch."
+        ]
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:evidence-4",
+        "type": "EvidenceReference",
+        "recordedAt": "2026-10-13T09:30:22.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-agent"
+        },
+        "description": "P4 · The fictional vendor adapter retains independent process-start and artifact digest receipts with an exact host/process binding.",
+        "source": {
+          "label": "Host example evidence",
+          "provenanceStatus": "Authored fictional evidence; no real incident source is authenticated"
+        },
+        "availability": "unavailable",
+        "locatorAbsentReason": "The example supplies observations and references, not real source evidence bytes."
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:observation-4",
+        "type": "Observation",
+        "recordedAt": "2026-10-13T09:30:23.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-agent"
+        },
+        "statement": "P4 · The fictional vendor adapter retains independent process-start and artifact digest receipts with an exact host/process binding.",
+        "evidenceRefIds": [
+          "urn:tensor:example:parallel-followup:evidence-4"
+        ],
+        "method": "Authored observation; discriminator and collection limits are described in the statement.",
+        "eventTime": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        }
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:assessment-4",
+        "type": "Assessment",
+        "recordedAt": "2026-10-13T09:30:24.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-agent"
+        },
+        "targetInstanceId": "urn:tensor:example:parallel-followup:instance-4",
+        "applicability": {
+          "status": "applicable",
+          "rationale": "The declared subject, interval, and required parameters are resolved."
+        },
+        "outcome": "yes",
+        "rationale": "Validated process-instance and digest discriminators support the execution. Adapter interpretation is explicit; a process label alone is insufficient.",
+        "inputs": [
+          {
+            "entryId": "urn:tensor:example:parallel-followup:observation-4",
+            "role": "supports"
+          },
+          {
+            "entryId": "urn:tensor:example:parallel-followup:assessment-2",
+            "role": "context"
+          }
+        ],
+        "method": "Authored example applies the pinned question criteria to retained illustrative observations."
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:decision-4",
+        "type": "Decision",
+        "recordedAt": "2026-10-13T09:30:25.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:parallel-followup:instance-4",
+        "selectedAssessmentId": "urn:tensor:example:parallel-followup:assessment-4",
+        "selectedInputIds": [
+          "urn:tensor:example:parallel-followup:assessment-4"
+        ],
+        "disposition": "transition",
+        "rationale": "Open 1 independently assessed lead; retain this yes answer and the unselected alternatives.",
+        "policyStatus": {
+          "status": "notApplicable"
+        },
+        "authorityStatus": {
+          "status": "notApplicable"
+        },
+        "limitations": [
+          "Adapter interpretation is explicit; a process label alone is insufficient."
+        ],
+        "selections": [
+          {
+            "transitionId": "urn:tensor:example:parallel-followup:route-4-6-yes",
+            "targetInstanceId": "urn:tensor:example:parallel-followup:instance-6"
+          }
+        ]
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:instance-6",
+        "type": "QuestionInstance",
+        "recordedAt": "2026-10-13T09:30:26.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-agent"
+        },
+        "definitionRef": {
+          "id": "urn:tensor:example:parallel-followup:composed-definition",
+          "version": "1.3.0",
+          "sha256": "4ba233fe797fc39786e5ad4bd4cf43c2b2a92be9c7ab5bdd89ce9a92fb3b9c51",
+          "artifact": "parallel-followup.definition.json"
+        },
+        "questionId": "urn:tensor:example:parallel-followup:public:question-6",
+        "metadata": {
+          "subjectLabels": {
+            "urn:tensor:example:parallel-followup:network-flow": "Outbound workstation flow"
+          }
+        },
+        "subjectBindings": {
+          "subject": "urn:tensor:example:parallel-followup:network-flow"
+        },
+        "timeContext": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        },
+        "parameterBindings": {
+          "subject": "urn:tensor:example:parallel-followup:network-flow",
+          "window": {
+            "status": "bounded",
+            "start": "2026-10-13T08:35:00Z",
+            "end": "2026-10-13T09:00:00Z"
+          }
+        },
+        "origin": {
+          "kind": "transition",
+          "rationale": "Explicitly selected investigative lead; target evidence and subject remain separate.",
+          "originDecisionId": "urn:tensor:example:parallel-followup:decision-4"
+        }
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:evidence-5",
+        "type": "EvidenceReference",
+        "recordedAt": "2026-10-13T09:30:27.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-agent"
+        },
+        "description": "P5 · Endpoint bytes are retained, but the independent mailbox attachment acquisition is missing.",
+        "source": {
+          "label": "File example evidence",
+          "provenanceStatus": "Authored fictional evidence; no real incident source is authenticated"
+        },
+        "availability": "unavailable",
+        "locatorAbsentReason": "The example supplies observations and references, not real source evidence bytes."
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:observation-5",
+        "type": "Observation",
+        "recordedAt": "2026-10-13T09:30:28.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-agent"
+        },
+        "statement": "P5 · Endpoint bytes are retained, but the independent mailbox attachment acquisition is missing.",
+        "evidenceRefIds": [
+          "urn:tensor:example:parallel-followup:evidence-5"
+        ],
+        "method": "Authored observation; discriminator and collection limits are described in the statement.",
+        "eventTime": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        }
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:assessment-5",
+        "type": "Assessment",
+        "recordedAt": "2026-10-13T09:30:29.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-agent"
+        },
+        "targetInstanceId": "urn:tensor:example:parallel-followup:instance-5",
+        "applicability": {
+          "status": "applicable",
+          "rationale": "The declared subject, interval, and required parameters are resolved."
+        },
+        "outcome": "unknown",
+        "rationale": "One acquisition or its provenance is missing. The host execution remains supported; byte equality remains unresolved.",
+        "inputs": [
+          {
+            "entryId": "urn:tensor:example:parallel-followup:observation-5",
+            "role": "context"
+          },
+          {
+            "entryId": "urn:tensor:example:parallel-followup:assessment-2",
+            "role": "context"
+          }
+        ],
+        "method": "Authored example applies the pinned question criteria to retained illustrative observations.",
+        "unknownReasons": [
+          {
+            "code": "insufficient",
+            "explanation": "One acquisition or its provenance is missing. The host execution remains supported; byte equality remains unresolved."
+          }
+        ]
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:decision-5",
+        "type": "Decision",
+        "recordedAt": "2026-10-13T09:30:30.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:parallel-followup:instance-5",
+        "selectedAssessmentId": "urn:tensor:example:parallel-followup:assessment-5",
+        "selectedInputIds": [
+          "urn:tensor:example:parallel-followup:assessment-5"
+        ],
+        "disposition": "retain",
+        "rationale": "Retain this assessment and its limitations; no additional route is selected by this decision.",
+        "policyStatus": {
+          "status": "notApplicable"
+        },
+        "authorityStatus": {
+          "status": "notApplicable"
+        },
+        "limitations": [
+          "The host execution remains supported; byte equality remains unresolved."
+        ]
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:evidence-6",
+        "type": "EvidenceReference",
+        "recordedAt": "2026-10-13T09:30:31.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-agent"
+        },
+        "description": "P6 · Independent endpoint socket and gateway records agree on process instance, five-tuple, NAT mapping and bounded clocks.",
+        "source": {
+          "label": "Network example evidence",
+          "provenanceStatus": "Authored fictional evidence; no real incident source is authenticated"
+        },
+        "availability": "unavailable",
+        "locatorAbsentReason": "The example supplies observations and references, not real source evidence bytes."
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:observation-6",
+        "type": "Observation",
+        "recordedAt": "2026-10-13T09:30:32.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-agent"
+        },
+        "statement": "P6 · Independent endpoint socket and gateway records agree on process instance, five-tuple, NAT mapping and bounded clocks.",
+        "evidenceRefIds": [
+          "urn:tensor:example:parallel-followup:evidence-6"
+        ],
+        "method": "Authored observation; discriminator and collection limits are described in the statement.",
+        "eventTime": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        }
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:assessment-6",
+        "type": "Assessment",
+        "recordedAt": "2026-10-13T09:30:33.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-agent"
+        },
+        "targetInstanceId": "urn:tensor:example:parallel-followup:instance-6",
+        "applicability": {
+          "status": "applicable",
+          "rationale": "The declared subject, interval, and required parameters are resolved."
+        },
+        "outcome": "yes",
+        "rationale": "Independent validated endpoint and gateway discriminators support the named relationship. A flow does not establish which report bytes were delivered.",
+        "inputs": [
+          {
+            "entryId": "urn:tensor:example:parallel-followup:observation-6",
+            "role": "supports"
+          },
+          {
+            "entryId": "urn:tensor:example:parallel-followup:assessment-4",
+            "role": "context"
+          }
+        ],
+        "method": "Authored example applies the pinned question criteria to retained illustrative observations."
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:decision-6",
+        "type": "Decision",
+        "recordedAt": "2026-10-13T09:30:34.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:parallel-followup:instance-6",
+        "selectedAssessmentId": "urn:tensor:example:parallel-followup:assessment-6",
+        "selectedInputIds": [
+          "urn:tensor:example:parallel-followup:assessment-6"
+        ],
+        "disposition": "transition",
+        "rationale": "Open 1 independently assessed lead; retain this yes answer and the unselected alternatives.",
+        "policyStatus": {
+          "status": "notApplicable"
+        },
+        "authorityStatus": {
+          "status": "notApplicable"
+        },
+        "limitations": [
+          "A flow does not establish which report bytes were delivered."
+        ],
+        "selections": [
+          {
+            "transitionId": "urn:tensor:example:parallel-followup:route-6-7-yes",
+            "targetInstanceId": "urn:tensor:example:parallel-followup:instance-7"
+          }
+        ]
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:instance-7",
+        "type": "QuestionInstance",
+        "recordedAt": "2026-10-13T09:30:35.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-analyst"
+        },
+        "definitionRef": {
+          "id": "urn:tensor:example:parallel-followup:composed-definition",
+          "version": "1.3.0",
+          "sha256": "4ba233fe797fc39786e5ad4bd4cf43c2b2a92be9c7ab5bdd89ce9a92fb3b9c51",
+          "artifact": "parallel-followup.definition.json"
+        },
+        "questionId": "urn:tensor:example:parallel-followup:company:question-7",
+        "metadata": {
+          "subjectLabels": {
+            "urn:tensor:example:parallel-followup:app-request": "Report gateway request"
+          }
+        },
+        "subjectBindings": {
+          "subject": "urn:tensor:example:parallel-followup:app-request"
+        },
+        "timeContext": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        },
+        "parameterBindings": {
+          "subject": "urn:tensor:example:parallel-followup:app-request",
+          "window": {
+            "status": "bounded",
+            "start": "2026-10-13T08:35:00Z",
+            "end": "2026-10-13T09:00:00Z"
+          }
+        },
+        "origin": {
+          "kind": "transition",
+          "rationale": "Explicitly selected investigative lead; target evidence and subject remain separate.",
+          "originDecisionId": "urn:tensor:example:parallel-followup:decision-6"
+        }
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:evidence-7",
+        "type": "EvidenceReference",
+        "recordedAt": "2026-10-13T09:30:36.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-analyst"
+        },
+        "description": "P7 · APP-09 applies; the complete authoritative exception register has no approval for this exact request. A separately acquired gateway authentication receipt names the reporting workload’s later sign-in.",
+        "source": {
+          "label": "Application example evidence",
+          "provenanceStatus": "Authored fictional evidence; no real incident source is authenticated"
+        },
+        "availability": "unavailable",
+        "locatorAbsentReason": "The example supplies observations and references, not real source evidence bytes."
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:observation-7",
+        "type": "Observation",
+        "recordedAt": "2026-10-13T09:30:37.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-analyst"
+        },
+        "statement": "P7 · APP-09 applies; the complete authoritative exception register has no approval for this exact request. A separately acquired gateway authentication receipt names the reporting workload’s later sign-in.",
+        "evidenceRefIds": [
+          "urn:tensor:example:parallel-followup:evidence-7"
+        ],
+        "method": "Authored observation; discriminator and collection limits are described in the statement.",
+        "eventTime": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:00:00Z"
+        }
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:assessment-7",
+        "type": "Assessment",
+        "recordedAt": "2026-10-13T09:30:38.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:parallel-followup:instance-7",
+        "applicability": {
+          "status": "applicable",
+          "rationale": "The declared subject, interval, and required parameters are resolved."
+        },
+        "outcome": "no",
+        "rationale": "The effective policy applies and complete authoritative coverage establishes the missing approval. The policy result does not prove maliciousness. The new identity lead has its own discovery receipt.",
+        "inputs": [
+          {
+            "entryId": "urn:tensor:example:parallel-followup:observation-7",
+            "role": "contradicts"
+          },
+          {
+            "entryId": "urn:tensor:example:parallel-followup:assessment-6",
+            "role": "context"
+          }
+        ],
+        "method": "Authored example applies the pinned question criteria to retained illustrative observations.",
+        "policyBinding": {
+          "policyRefId": "urn:tensor:example:parallel-followup:policy",
+          "parameterBindings": {}
+        }
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:decision-7",
+        "type": "Decision",
+        "recordedAt": "2026-10-13T09:30:39.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:parallel-followup:instance-7",
+        "selectedAssessmentId": "urn:tensor:example:parallel-followup:assessment-7",
+        "selectedInputIds": [
+          "urn:tensor:example:parallel-followup:assessment-7"
+        ],
+        "disposition": "transition",
+        "rationale": "Open 1 independently assessed lead; retain this no answer and the unselected alternatives.",
+        "policyStatus": {
+          "status": "referenced",
+          "policyRefIds": [
+            "urn:tensor:example:parallel-followup:policy"
+          ]
+        },
+        "authorityStatus": {
+          "status": "notApplicable"
+        },
+        "limitations": [
+          "The policy result does not prove maliciousness. The new identity lead has its own discovery receipt."
+        ],
+        "selections": [
+          {
+            "transitionId": "urn:tensor:example:parallel-followup:route-7-8-no",
+            "targetInstanceId": "urn:tensor:example:parallel-followup:instance-8"
+          }
+        ]
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:instance-8",
+        "type": "QuestionInstance",
+        "recordedAt": "2026-10-13T09:30:40.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-agent"
+        },
+        "definitionRef": {
+          "id": "urn:tensor:example:parallel-followup:composed-definition",
+          "version": "1.3.0",
+          "sha256": "4ba233fe797fc39786e5ad4bd4cf43c2b2a92be9c7ab5bdd89ce9a92fb3b9c51",
+          "artifact": "parallel-followup.definition.json"
+        },
+        "questionId": "urn:tensor:example:parallel-followup:public:question-1",
+        "metadata": {
+          "subjectLabels": {
+            "urn:tensor:example:parallel-followup:signin-workload": "Reporting workload’s later sign-in"
+          }
+        },
+        "subjectBindings": {
+          "subject": "urn:tensor:example:parallel-followup:signin-workload"
+        },
+        "timeContext": {
+          "status": "bounded",
+          "start": "2026-10-13T09:10:00Z",
+          "end": "2026-10-13T09:20:00Z"
+        },
+        "parameterBindings": {
+          "subject": "urn:tensor:example:parallel-followup:signin-workload",
+          "window": {
+            "status": "bounded",
+            "start": "2026-10-13T09:10:00Z",
+            "end": "2026-10-13T09:20:00Z"
+          }
+        },
+        "origin": {
+          "kind": "transition",
+          "rationale": "Explicitly selected investigative lead; target evidence and subject remain separate.",
+          "originDecisionId": "urn:tensor:example:parallel-followup:decision-7"
+        }
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:evidence-8",
+        "type": "EvidenceReference",
+        "recordedAt": "2026-10-13T09:30:41.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-agent"
+        },
+        "description": "P8 · An independently retained issuer record establishes the reporting workload’s sign-in at 09:12 UTC. This is a different principal and later interval from Morgan’s sign-in.",
+        "source": {
+          "label": "Identity example evidence",
+          "provenanceStatus": "Authored fictional evidence; no real incident source is authenticated"
+        },
+        "availability": "unavailable",
+        "locatorAbsentReason": "The example supplies observations and references, not real source evidence bytes."
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:observation-8",
+        "type": "Observation",
+        "recordedAt": "2026-10-13T09:30:42.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-agent"
+        },
+        "statement": "P8 · An independently retained issuer record establishes the reporting workload’s sign-in at 09:12 UTC. This is a different principal and later interval from Morgan’s sign-in.",
+        "evidenceRefIds": [
+          "urn:tensor:example:parallel-followup:evidence-8"
+        ],
+        "method": "Authored observation; discriminator and collection limits are described in the statement.",
+        "eventTime": {
+          "status": "bounded",
+          "start": "2026-10-13T09:10:00Z",
+          "end": "2026-10-13T09:20:00Z"
+        }
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:assessment-8",
+        "type": "Assessment",
+        "recordedAt": "2026-10-13T09:30:43.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-agent"
+        },
+        "targetInstanceId": "urn:tensor:example:parallel-followup:instance-8",
+        "applicability": {
+          "status": "applicable",
+          "rationale": "The declared subject, interval, and required parameters are resolved."
+        },
+        "outcome": "yes",
+        "rationale": "A validated success record matches the exact principal and interval. This fresh occurrence does not revise Morgan’s earlier assessment.",
+        "inputs": [
+          {
+            "entryId": "urn:tensor:example:parallel-followup:observation-8",
+            "role": "supports"
+          },
+          {
+            "entryId": "urn:tensor:example:parallel-followup:assessment-7",
+            "role": "context"
+          }
+        ],
+        "method": "Authored example applies the pinned question criteria to retained illustrative observations."
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:decision-8",
+        "type": "Decision",
+        "recordedAt": "2026-10-13T09:30:44.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:parallel-followup:instance-8",
+        "selectedAssessmentId": "urn:tensor:example:parallel-followup:assessment-8",
+        "selectedInputIds": [
+          "urn:tensor:example:parallel-followup:assessment-8"
+        ],
+        "disposition": "transition",
+        "rationale": "Open 1 independently assessed lead; retain this yes answer and the unselected alternatives.",
+        "policyStatus": {
+          "status": "notApplicable"
+        },
+        "authorityStatus": {
+          "status": "notApplicable"
+        },
+        "limitations": [
+          "This fresh occurrence does not revise Morgan’s earlier assessment."
+        ],
+        "selections": [
+          {
+            "transitionId": "urn:tensor:example:parallel-followup:route-8-9-yes",
+            "targetInstanceId": "urn:tensor:example:parallel-followup:instance-9"
+          }
+        ]
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:instance-9",
+        "type": "QuestionInstance",
+        "recordedAt": "2026-10-13T09:30:45.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-analyst"
+        },
+        "definitionRef": {
+          "id": "urn:tensor:example:parallel-followup:composed-definition",
+          "version": "1.3.0",
+          "sha256": "4ba233fe797fc39786e5ad4bd4cf43c2b2a92be9c7ab5bdd89ce9a92fb3b9c51",
+          "artifact": "parallel-followup.definition.json"
+        },
+        "questionId": "urn:tensor:example:parallel-followup:public:question-9",
+        "metadata": {
+          "subjectLabels": {
+            "urn:tensor:example:parallel-followup:case-review": "Seven-domain investigation record"
+          }
+        },
+        "subjectBindings": {
+          "subject": "urn:tensor:example:parallel-followup:case-review"
+        },
+        "timeContext": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:20:00Z"
+        },
+        "parameterBindings": {
+          "subject": "urn:tensor:example:parallel-followup:case-review",
+          "window": {
+            "status": "bounded",
+            "start": "2026-10-13T08:35:00Z",
+            "end": "2026-10-13T09:20:00Z"
+          }
+        },
+        "origin": {
+          "kind": "transition",
+          "rationale": "Explicitly selected investigative lead; target evidence and subject remain separate.",
+          "originDecisionId": "urn:tensor:example:parallel-followup:decision-8"
+        }
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:evidence-9",
+        "type": "EvidenceReference",
+        "recordedAt": "2026-10-13T09:30:46.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-analyst"
+        },
+        "description": "P9 · The review cites P1–P8, both identity occurrences with distinct subjects and intervals, the cloud negative, attachment gap, vendor mapping and company policy result.",
+        "source": {
+          "label": "Identity example evidence",
+          "provenanceStatus": "Authored fictional evidence; no real incident source is authenticated"
+        },
+        "availability": "unavailable",
+        "locatorAbsentReason": "The example supplies observations and references, not real source evidence bytes."
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:observation-9",
+        "type": "Observation",
+        "recordedAt": "2026-10-13T09:30:47.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-analyst"
+        },
+        "statement": "P9 · The review cites P1–P8, both identity occurrences with distinct subjects and intervals, the cloud negative, attachment gap, vendor mapping and company policy result.",
+        "evidenceRefIds": [
+          "urn:tensor:example:parallel-followup:evidence-9"
+        ],
+        "method": "Authored observation; discriminator and collection limits are described in the statement.",
+        "eventTime": {
+          "status": "bounded",
+          "start": "2026-10-13T08:35:00Z",
+          "end": "2026-10-13T09:20:00Z"
+        }
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:assessment-9",
+        "type": "Assessment",
+        "recordedAt": "2026-10-13T09:30:48.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:parallel-followup:instance-9",
+        "applicability": {
+          "status": "applicable",
+          "rationale": "The declared subject, interval, and required parameters are resolved."
+        },
+        "outcome": "yes",
+        "rationale": "The distinct contexts, actual answers, inputs and limitations are retained. No incident closure or response execution is asserted.",
+        "inputs": [
+          {
+            "entryId": "urn:tensor:example:parallel-followup:observation-9",
+            "role": "supports"
+          },
+          {
+            "entryId": "urn:tensor:example:parallel-followup:assessment-1",
+            "role": "context"
+          },
+          {
+            "entryId": "urn:tensor:example:parallel-followup:assessment-2",
+            "role": "context"
+          },
+          {
+            "entryId": "urn:tensor:example:parallel-followup:assessment-3",
+            "role": "context"
+          },
+          {
+            "entryId": "urn:tensor:example:parallel-followup:assessment-4",
+            "role": "context"
+          },
+          {
+            "entryId": "urn:tensor:example:parallel-followup:assessment-5",
+            "role": "context"
+          },
+          {
+            "entryId": "urn:tensor:example:parallel-followup:assessment-6",
+            "role": "context"
+          },
+          {
+            "entryId": "urn:tensor:example:parallel-followup:assessment-7",
+            "role": "context"
+          },
+          {
+            "entryId": "urn:tensor:example:parallel-followup:assessment-8",
+            "role": "context"
+          }
+        ],
+        "method": "Authored example applies the pinned question criteria to retained illustrative observations."
+      },
+      {
+        "id": "urn:tensor:example:parallel-followup:decision-9",
+        "type": "Decision",
+        "recordedAt": "2026-10-13T09:30:49.000Z",
+        "attribution": {
+          "actorId": "urn:tensor:example:parallel-followup:actor-analyst"
+        },
+        "targetInstanceId": "urn:tensor:example:parallel-followup:instance-9",
+        "selectedAssessmentId": "urn:tensor:example:parallel-followup:assessment-9",
+        "selectedInputIds": [
+          "urn:tensor:example:parallel-followup:assessment-1",
+          "urn:tensor:example:parallel-followup:assessment-2",
+          "urn:tensor:example:parallel-followup:assessment-3",
+          "urn:tensor:example:parallel-followup:assessment-4",
+          "urn:tensor:example:parallel-followup:assessment-5",
+          "urn:tensor:example:parallel-followup:assessment-6",
+          "urn:tensor:example:parallel-followup:assessment-7",
+          "urn:tensor:example:parallel-followup:assessment-8",
+          "urn:tensor:example:parallel-followup:assessment-9"
+        ],
+        "disposition": "handoff",
+        "rationale": "Hand off the separate findings, retained revisions, open evidence gaps and planned response.",
+        "policyStatus": {
+          "status": "notApplicable"
+        },
+        "authorityStatus": {
+          "status": "notApplicable"
+        },
+        "limitations": [
+          "No incident closure or response execution is asserted."
+        ]
+      }
+    ],
+    "completeness": {
+      "exchangeScope": "full",
+      "meaning": "All referenced Core entries and exact definition bytes are included; actual source evidence bytes do not exist in this fictional example."
+    },
+    "omissions": [],
+    "losses": [],
+    "view": {
+      "mode": "historical"
+    },
+    "metadata": {
+      "illustrative": true,
+      "walkthrough": {
+        "format": "tensor-example-walkthrough",
+        "version": 1,
+        "id": "parallel-followup",
+        "title": "Parallel leads and a return to identity",
+        "description": "A SOC investigation across all seven domains, with two open branches, a bounded negative finding, an evidence gap, and a new identity context.",
+        "domains": [
+          "Identity",
+          "Email",
+          "Cloud",
+          "Host",
+          "File",
+          "Network",
+          "Application"
+        ],
+        "frames": [
+          {
+            "title": "Open two independent leads",
+            "assessmentId": "urn:tensor:example:parallel-followup:assessment-1",
+            "decisionId": "urn:tensor:example:parallel-followup:decision-1",
+            "through": 12,
+            "limitation": "The mailbox and cloud leads need their own assessments."
+          },
+          {
+            "title": "Trace the mailbox change",
+            "assessmentId": "urn:tensor:example:parallel-followup:assessment-2",
+            "decisionId": "urn:tensor:example:parallel-followup:decision-2",
+            "through": 18,
+            "limitation": "Rule creation does not establish delivery or intent."
+          },
+          {
+            "title": "Reject the proposed cloud read",
+            "assessmentId": "urn:tensor:example:parallel-followup:assessment-3",
+            "decisionId": "urn:tensor:example:parallel-followup:decision-3",
+            "through": 22,
+            "limitation": "This negative read finding does not close the mailbox or endpoint branch."
+          },
+          {
+            "title": "Bind the endpoint execution",
+            "assessmentId": "urn:tensor:example:parallel-followup:assessment-4",
+            "decisionId": "urn:tensor:example:parallel-followup:decision-4",
+            "through": 27,
+            "limitation": "Adapter interpretation is explicit; a process label alone is insufficient."
+          },
+          {
+            "title": "Retain the attachment gap",
+            "assessmentId": "urn:tensor:example:parallel-followup:assessment-5",
+            "decisionId": "urn:tensor:example:parallel-followup:decision-5",
+            "through": 31,
+            "limitation": "The host execution remains supported; byte equality remains unresolved."
+          },
+          {
+            "title": "Assess the network pivot",
+            "assessmentId": "urn:tensor:example:parallel-followup:assessment-6",
+            "decisionId": "urn:tensor:example:parallel-followup:decision-6",
+            "through": 36,
+            "limitation": "A flow does not establish which report bytes were delivered."
+          },
+          {
+            "title": "Keep company approval separate",
+            "assessmentId": "urn:tensor:example:parallel-followup:assessment-7",
+            "decisionId": "urn:tensor:example:parallel-followup:decision-7",
+            "through": 41,
+            "limitation": "The policy result does not prove maliciousness. The new identity lead has its own discovery receipt."
+          },
+          {
+            "title": "Return with a different identity context",
+            "assessmentId": "urn:tensor:example:parallel-followup:assessment-8",
+            "decisionId": "urn:tensor:example:parallel-followup:decision-8",
+            "through": 46,
+            "limitation": "This fresh occurrence does not revise Morgan’s earlier assessment."
+          },
+          {
+            "title": "Hand off both branches and the return",
+            "assessmentId": "urn:tensor:example:parallel-followup:assessment-9",
+            "decisionId": "urn:tensor:example:parallel-followup:decision-9",
+            "through": 50,
+            "limitation": "No incident closure or response execution is asserted."
+          }
+        ]
+      }
+    }
+  },
+  "definitions": [
+    {
+      "path": "parallel-followup.definition.json",
+      "content": "{\n  \"id\": \"urn:tensor:example:parallel-followup:composed-definition\",\n  \"version\": \"1.3.0\",\n  \"publicationStatus\": \"draft\",\n  \"title\": \"Parallel leads and a return to identity\",\n  \"contractRef\": {\n    \"proposal\": \"0.1.0\",\n    \"bindingVersion\": \"0.1.0-draft.1\",\n    \"status\": \"candidate; unratified\"\n  },\n  \"questions\": [\n    {\n      \"id\": \"urn:tensor:example:parallel-followup:public:question-1\",\n      \"prompt\": \"Was a successful sign-in recorded for the bound principal and interval?\",\n      \"proposition\": \"Was a successful sign-in recorded for the bound principal and interval? Apply only to the resolved subject and interval; a different context requires a separate question instance.\",\n      \"parameters\": {\n        \"subject\": {\n          \"type\": \"URI\",\n          \"required\": true,\n          \"bindsTo\": \"subject:subject\"\n        },\n        \"window\": {\n          \"type\": \"timeContext\",\n          \"required\": true,\n          \"bindsTo\": \"timeContext\"\n        }\n      },\n      \"applicabilityCriteria\": \"Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.\",\n      \"assessmentCriteria\": {\n        \"yes\": \"A validated success record matches the exact principal and interval.\",\n        \"no\": \"Complete authoritative coverage contradicts this exact success proposition.\",\n        \"unknown\": \"Identity, event meaning, provenance or coverage is unresolved.\"\n      },\n      \"evidenceRequirements\": [\n        \"Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.\",\n        \"Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit.\"\n      ],\n      \"metadata\": {\n        \"title\": \"Assess the bound sign-in\",\n        \"displayId\": \"S1\",\n        \"domain\": \"Identity\",\n        \"layerId\": \"public\",\n        \"layerVersion\": \"1.3.0\",\n        \"archetype\": \"detect\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:parallel-followup:public:question-2\",\n      \"prompt\": \"Did the bound session create the forwarding rule?\",\n      \"proposition\": \"Did the bound session create the forwarding rule? Apply only to the resolved subject and interval; a different context requires a separate question instance.\",\n      \"parameters\": {\n        \"subject\": {\n          \"type\": \"URI\",\n          \"required\": true,\n          \"bindsTo\": \"subject:subject\"\n        },\n        \"window\": {\n          \"type\": \"timeContext\",\n          \"required\": true,\n          \"bindsTo\": \"timeContext\"\n        }\n      },\n      \"applicabilityCriteria\": \"Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.\",\n      \"assessmentCriteria\": {\n        \"yes\": \"Independent validated session and rule discriminators support this relationship.\",\n        \"no\": \"Validated discriminators contradict this particular relationship.\",\n        \"unknown\": \"The endpoint relationship or record basis is unresolved.\"\n      },\n      \"evidenceRequirements\": [\n        \"Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.\",\n        \"Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit.\"\n      ],\n      \"metadata\": {\n        \"title\": \"Trace the mailbox change\",\n        \"displayId\": \"S2\",\n        \"domain\": \"Email\",\n        \"layerId\": \"public\",\n        \"layerVersion\": \"1.3.0\",\n        \"archetype\": \"correlate\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:parallel-followup:public:question-3\",\n      \"prompt\": \"Was the reporting bucket object read in this exact cloud context?\",\n      \"proposition\": \"Was the reporting bucket object read in this exact cloud context? Apply only to the resolved subject and interval; a different context requires a separate question instance.\",\n      \"parameters\": {\n        \"subject\": {\n          \"type\": \"URI\",\n          \"required\": true,\n          \"bindsTo\": \"subject:subject\"\n        },\n        \"window\": {\n          \"type\": \"timeContext\",\n          \"required\": true,\n          \"bindsTo\": \"timeContext\"\n        }\n      },\n      \"applicabilityCriteria\": \"Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.\",\n      \"assessmentCriteria\": {\n        \"yes\": \"A validated completed-read record matches the exact object and interval.\",\n        \"no\": \"Complete applicable authoritative read coverage establishes this bounded absence.\",\n        \"unknown\": \"Logging, object binding or coverage is missing.\"\n      },\n      \"evidenceRequirements\": [\n        \"Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.\",\n        \"Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit.\"\n      ],\n      \"metadata\": {\n        \"title\": \"Reject the proposed cloud read\",\n        \"displayId\": \"S3\",\n        \"domain\": \"Cloud\",\n        \"layerId\": \"public\",\n        \"layerVersion\": \"1.3.0\",\n        \"archetype\": \"correlate\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:parallel-followup:vendor:question-4\",\n      \"prompt\": \"Did the named process execute the attachment on the finance workstation?\",\n      \"proposition\": \"Did the named process execute the attachment on the finance workstation? Apply only to the resolved subject and interval; a different context requires a separate question instance.\",\n      \"parameters\": {\n        \"subject\": {\n          \"type\": \"URI\",\n          \"required\": true,\n          \"bindsTo\": \"subject:subject\"\n        },\n        \"window\": {\n          \"type\": \"timeContext\",\n          \"required\": true,\n          \"bindsTo\": \"timeContext\"\n        }\n      },\n      \"applicabilityCriteria\": \"Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.\",\n      \"assessmentCriteria\": {\n        \"yes\": \"Validated process-instance and digest discriminators support the execution.\",\n        \"no\": \"Validated process or digest evidence contradicts the exact execution.\",\n        \"unknown\": \"Process identity, digest, provenance or start semantics are unresolved.\"\n      },\n      \"evidenceRequirements\": [\n        \"Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.\",\n        \"Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit.\"\n      ],\n      \"metadata\": {\n        \"title\": \"Bind the endpoint execution\",\n        \"displayId\": \"S4\",\n        \"domain\": \"Host\",\n        \"layerId\": \"vendor\",\n        \"layerVersion\": \"1.3.0\",\n        \"archetype\": \"correlate\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:parallel-followup:public:question-5\",\n      \"prompt\": \"Are the retained attachment bytes equal to the mailbox attachment bytes?\",\n      \"proposition\": \"Are the retained attachment bytes equal to the mailbox attachment bytes? Apply only to the resolved subject and interval; a different context requires a separate question instance.\",\n      \"parameters\": {\n        \"subject\": {\n          \"type\": \"URI\",\n          \"required\": true,\n          \"bindsTo\": \"subject:subject\"\n        },\n        \"window\": {\n          \"type\": \"timeContext\",\n          \"required\": true,\n          \"bindsTo\": \"timeContext\"\n        }\n      },\n      \"applicabilityCriteria\": \"Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.\",\n      \"assessmentCriteria\": {\n        \"yes\": \"Independent byte acquisitions with matching digests and sizes support equality.\",\n        \"no\": \"Verified byte or digest evidence contradicts equality.\",\n        \"unknown\": \"One acquisition or its provenance is missing.\"\n      },\n      \"evidenceRequirements\": [\n        \"Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.\",\n        \"Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit.\"\n      ],\n      \"metadata\": {\n        \"title\": \"Retain the attachment gap\",\n        \"displayId\": \"S5\",\n        \"domain\": \"File\",\n        \"layerId\": \"public\",\n        \"layerVersion\": \"1.3.0\",\n        \"archetype\": \"correlate\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:parallel-followup:public:question-6\",\n      \"prompt\": \"Did the finance workstation process originate the bound outbound flow?\",\n      \"proposition\": \"Did the finance workstation process originate the bound outbound flow? Apply only to the resolved subject and interval; a different context requires a separate question instance.\",\n      \"parameters\": {\n        \"subject\": {\n          \"type\": \"URI\",\n          \"required\": true,\n          \"bindsTo\": \"subject:subject\"\n        },\n        \"window\": {\n          \"type\": \"timeContext\",\n          \"required\": true,\n          \"bindsTo\": \"timeContext\"\n        }\n      },\n      \"applicabilityCriteria\": \"Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.\",\n      \"assessmentCriteria\": {\n        \"yes\": \"Independent validated endpoint and gateway discriminators support the named relationship.\",\n        \"no\": \"Validated chronology, socket or NAT evidence contradicts the relationship.\",\n        \"unknown\": \"A shared address or missing mapping cannot resolve the relationship.\"\n      },\n      \"evidenceRequirements\": [\n        \"Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.\",\n        \"Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit.\"\n      ],\n      \"metadata\": {\n        \"title\": \"Assess the network pivot\",\n        \"displayId\": \"S6\",\n        \"domain\": \"Network\",\n        \"layerId\": \"public\",\n        \"layerVersion\": \"1.3.0\",\n        \"archetype\": \"correlate\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:parallel-followup:company:question-7\",\n      \"prompt\": \"Was this external report request approved under APP-09?\",\n      \"proposition\": \"Was this external report request approved under APP-09? Apply only to the resolved subject and interval; a different context requires a separate question instance.\",\n      \"parameters\": {\n        \"subject\": {\n          \"type\": \"URI\",\n          \"required\": true,\n          \"bindsTo\": \"subject:subject\"\n        },\n        \"window\": {\n          \"type\": \"timeContext\",\n          \"required\": true,\n          \"bindsTo\": \"timeContext\"\n        }\n      },\n      \"applicabilityCriteria\": \"Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.\",\n      \"assessmentCriteria\": {\n        \"yes\": \"An effective approval covers this exact request and interval.\",\n        \"no\": \"The effective policy applies and complete authoritative coverage establishes the missing approval.\",\n        \"unknown\": \"Policy applicability, register coverage or request identity is unresolved.\"\n      },\n      \"evidenceRequirements\": [\n        \"Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.\",\n        \"Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit.\"\n      ],\n      \"metadata\": {\n        \"title\": \"Keep company approval separate\",\n        \"displayId\": \"S7\",\n        \"domain\": \"Application\",\n        \"layerId\": \"company\",\n        \"layerVersion\": \"1.3.0\",\n        \"archetype\": \"classify\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:parallel-followup:public:question-9\",\n      \"prompt\": \"Does the handoff retain the separate contexts, findings and open questions?\",\n      \"proposition\": \"Does the handoff retain the separate contexts, findings and open questions? Apply only to the resolved subject and interval; a different context requires a separate question instance.\",\n      \"parameters\": {\n        \"subject\": {\n          \"type\": \"URI\",\n          \"required\": true,\n          \"bindsTo\": \"subject:subject\"\n        },\n        \"window\": {\n          \"type\": \"timeContext\",\n          \"required\": true,\n          \"bindsTo\": \"timeContext\"\n        }\n      },\n      \"applicabilityCriteria\": \"Applies only to the declared subject and interval with resolved parameters and the named evidence and policy context.\",\n      \"assessmentCriteria\": {\n        \"yes\": \"The distinct contexts, actual answers, inputs and limitations are retained.\",\n        \"no\": \"A context, answer or material limitation is demonstrably lost.\",\n        \"unknown\": \"The retained record is insufficient to assess completeness.\"\n      },\n      \"evidenceRequirements\": [\n        \"Retained source provenance and interpretation basis; exact subject and interval; falsifiable discriminators and alternatives.\",\n        \"Negative findings require authoritative observation or register coverage. Unknowns and separate policy, intent, execution, and delivery propositions remain explicit.\"\n      ],\n      \"metadata\": {\n        \"title\": \"Hand off both branches and the return\",\n        \"displayId\": \"S9\",\n        \"domain\": \"Identity\",\n        \"layerId\": \"public\",\n        \"layerVersion\": \"1.3.0\",\n        \"archetype\": \"terminal\"\n      }\n    }\n  ],\n  \"transitions\": [\n    {\n      \"id\": \"urn:tensor:example:parallel-followup:route-1-2-yes\",\n      \"sourceQuestionId\": \"urn:tensor:example:parallel-followup:public:question-1\",\n      \"targetQuestionId\": \"urn:tensor:example:parallel-followup:public:question-2\",\n      \"guardOutcome\": \"yes\",\n      \"metadata\": {\n        \"meaning\": \"The yes source assessment permits opening this separate question: Did the bound session create the forwarding rule? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.\",\n        \"selection\": \"A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:parallel-followup:route-1-3-yes\",\n      \"sourceQuestionId\": \"urn:tensor:example:parallel-followup:public:question-1\",\n      \"targetQuestionId\": \"urn:tensor:example:parallel-followup:public:question-3\",\n      \"guardOutcome\": \"yes\",\n      \"metadata\": {\n        \"meaning\": \"The yes source assessment permits opening this separate question: Was the reporting bucket object read in this exact cloud context? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.\",\n        \"selection\": \"A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:parallel-followup:route-1-9-no\",\n      \"sourceQuestionId\": \"urn:tensor:example:parallel-followup:public:question-1\",\n      \"targetQuestionId\": \"urn:tensor:example:parallel-followup:public:question-9\",\n      \"guardOutcome\": \"no\",\n      \"metadata\": {\n        \"meaning\": \"The no source assessment permits opening this separate question: Does the handoff retain the separate contexts, findings and open questions? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.\",\n        \"selection\": \"A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:parallel-followup:route-1-9-unknown\",\n      \"sourceQuestionId\": \"urn:tensor:example:parallel-followup:public:question-1\",\n      \"targetQuestionId\": \"urn:tensor:example:parallel-followup:public:question-9\",\n      \"guardOutcome\": \"unknown\",\n      \"metadata\": {\n        \"meaning\": \"The unknown source assessment permits opening this separate question: Does the handoff retain the separate contexts, findings and open questions? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.\",\n        \"selection\": \"A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:parallel-followup:route-2-4-yes\",\n      \"sourceQuestionId\": \"urn:tensor:example:parallel-followup:public:question-2\",\n      \"targetQuestionId\": \"urn:tensor:example:parallel-followup:vendor:question-4\",\n      \"guardOutcome\": \"yes\",\n      \"metadata\": {\n        \"meaning\": \"The yes source assessment permits opening this separate question: Did the named process execute the attachment on the finance workstation? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.\",\n        \"selection\": \"A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:parallel-followup:route-2-5-yes\",\n      \"sourceQuestionId\": \"urn:tensor:example:parallel-followup:public:question-2\",\n      \"targetQuestionId\": \"urn:tensor:example:parallel-followup:public:question-5\",\n      \"guardOutcome\": \"yes\",\n      \"metadata\": {\n        \"meaning\": \"The yes source assessment permits opening this separate question: Are the retained attachment bytes equal to the mailbox attachment bytes? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.\",\n        \"selection\": \"A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:parallel-followup:route-2-9-no\",\n      \"sourceQuestionId\": \"urn:tensor:example:parallel-followup:public:question-2\",\n      \"targetQuestionId\": \"urn:tensor:example:parallel-followup:public:question-9\",\n      \"guardOutcome\": \"no\",\n      \"metadata\": {\n        \"meaning\": \"The no source assessment permits opening this separate question: Does the handoff retain the separate contexts, findings and open questions? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.\",\n        \"selection\": \"A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:parallel-followup:route-2-9-unknown\",\n      \"sourceQuestionId\": \"urn:tensor:example:parallel-followup:public:question-2\",\n      \"targetQuestionId\": \"urn:tensor:example:parallel-followup:public:question-9\",\n      \"guardOutcome\": \"unknown\",\n      \"metadata\": {\n        \"meaning\": \"The unknown source assessment permits opening this separate question: Does the handoff retain the separate contexts, findings and open questions? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.\",\n        \"selection\": \"A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:parallel-followup:route-4-6-yes\",\n      \"sourceQuestionId\": \"urn:tensor:example:parallel-followup:vendor:question-4\",\n      \"targetQuestionId\": \"urn:tensor:example:parallel-followup:public:question-6\",\n      \"guardOutcome\": \"yes\",\n      \"metadata\": {\n        \"meaning\": \"The yes source assessment permits opening this separate question: Did the finance workstation process originate the bound outbound flow? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.\",\n        \"selection\": \"A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:parallel-followup:route-4-9-no\",\n      \"sourceQuestionId\": \"urn:tensor:example:parallel-followup:vendor:question-4\",\n      \"targetQuestionId\": \"urn:tensor:example:parallel-followup:public:question-9\",\n      \"guardOutcome\": \"no\",\n      \"metadata\": {\n        \"meaning\": \"The no source assessment permits opening this separate question: Does the handoff retain the separate contexts, findings and open questions? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.\",\n        \"selection\": \"A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:parallel-followup:route-4-9-unknown\",\n      \"sourceQuestionId\": \"urn:tensor:example:parallel-followup:vendor:question-4\",\n      \"targetQuestionId\": \"urn:tensor:example:parallel-followup:public:question-9\",\n      \"guardOutcome\": \"unknown\",\n      \"metadata\": {\n        \"meaning\": \"The unknown source assessment permits opening this separate question: Does the handoff retain the separate contexts, findings and open questions? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.\",\n        \"selection\": \"A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:parallel-followup:route-6-7-yes\",\n      \"sourceQuestionId\": \"urn:tensor:example:parallel-followup:public:question-6\",\n      \"targetQuestionId\": \"urn:tensor:example:parallel-followup:company:question-7\",\n      \"guardOutcome\": \"yes\",\n      \"metadata\": {\n        \"meaning\": \"The yes source assessment permits opening this separate question: Was this external report request approved under APP-09? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.\",\n        \"selection\": \"A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:parallel-followup:route-6-9-no\",\n      \"sourceQuestionId\": \"urn:tensor:example:parallel-followup:public:question-6\",\n      \"targetQuestionId\": \"urn:tensor:example:parallel-followup:public:question-9\",\n      \"guardOutcome\": \"no\",\n      \"metadata\": {\n        \"meaning\": \"The no source assessment permits opening this separate question: Does the handoff retain the separate contexts, findings and open questions? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.\",\n        \"selection\": \"A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:parallel-followup:route-6-9-unknown\",\n      \"sourceQuestionId\": \"urn:tensor:example:parallel-followup:public:question-6\",\n      \"targetQuestionId\": \"urn:tensor:example:parallel-followup:public:question-9\",\n      \"guardOutcome\": \"unknown\",\n      \"metadata\": {\n        \"meaning\": \"The unknown source assessment permits opening this separate question: Does the handoff retain the separate contexts, findings and open questions? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.\",\n        \"selection\": \"A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:parallel-followup:route-7-8-no\",\n      \"sourceQuestionId\": \"urn:tensor:example:parallel-followup:company:question-7\",\n      \"targetQuestionId\": \"urn:tensor:example:parallel-followup:public:question-1\",\n      \"guardOutcome\": \"no\",\n      \"metadata\": {\n        \"meaning\": \"The no source assessment permits opening this separate question: Was a successful sign-in recorded for the bound principal and interval? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.\",\n        \"selection\": \"A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:parallel-followup:route-7-9-yes\",\n      \"sourceQuestionId\": \"urn:tensor:example:parallel-followup:company:question-7\",\n      \"targetQuestionId\": \"urn:tensor:example:parallel-followup:public:question-9\",\n      \"guardOutcome\": \"yes\",\n      \"metadata\": {\n        \"meaning\": \"The yes source assessment permits opening this separate question: Does the handoff retain the separate contexts, findings and open questions? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.\",\n        \"selection\": \"A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:parallel-followup:route-7-9-unknown\",\n      \"sourceQuestionId\": \"urn:tensor:example:parallel-followup:company:question-7\",\n      \"targetQuestionId\": \"urn:tensor:example:parallel-followup:public:question-9\",\n      \"guardOutcome\": \"unknown\",\n      \"metadata\": {\n        \"meaning\": \"The unknown source assessment permits opening this separate question: Does the handoff retain the separate contexts, findings and open questions? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.\",\n        \"selection\": \"A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:parallel-followup:route-8-9-yes\",\n      \"sourceQuestionId\": \"urn:tensor:example:parallel-followup:public:question-1\",\n      \"targetQuestionId\": \"urn:tensor:example:parallel-followup:public:question-9\",\n      \"guardOutcome\": \"yes\",\n      \"metadata\": {\n        \"meaning\": \"The yes source assessment permits opening this separate question: Does the handoff retain the separate contexts, findings and open questions? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.\",\n        \"selection\": \"A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:parallel-followup:route-8-9-no\",\n      \"sourceQuestionId\": \"urn:tensor:example:parallel-followup:public:question-1\",\n      \"targetQuestionId\": \"urn:tensor:example:parallel-followup:public:question-9\",\n      \"guardOutcome\": \"no\",\n      \"metadata\": {\n        \"meaning\": \"The no source assessment permits opening this separate question: Does the handoff retain the separate contexts, findings and open questions? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.\",\n        \"selection\": \"A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection.\"\n      }\n    },\n    {\n      \"id\": \"urn:tensor:example:parallel-followup:route-8-9-unknown\",\n      \"sourceQuestionId\": \"urn:tensor:example:parallel-followup:public:question-1\",\n      \"targetQuestionId\": \"urn:tensor:example:parallel-followup:public:question-9\",\n      \"guardOutcome\": \"unknown\",\n      \"metadata\": {\n        \"meaning\": \"The unknown source assessment permits opening this separate question: Does the handoff retain the separate contexts, findings and open questions? Bind its own subject and evidence; no target answer, causal relationship or response permission is inherited.\",\n        \"selection\": \"A human or agent explicitly selects one or several eligible routes. An eligible option is not a recorded selection.\"\n      }\n    }\n  ],\n  \"entryQuestionIds\": [\n    \"urn:tensor:example:parallel-followup:public:question-1\"\n  ],\n  \"dependencies\": [],\n  \"metadata\": {\n    \"illustrative\": true,\n    \"layers\": [\n      {\n        \"id\": \"public\",\n        \"label\": \"Public investigation questions\",\n        \"owner\": \"TENSOR Standards Consortium\",\n        \"version\": \"1.3.0\"\n      },\n      {\n        \"id\": \"vendor\",\n        \"label\": \"Example vendor telemetry graph\",\n        \"owner\": \"Fictional telemetry vendor\",\n        \"version\": \"1.3.0\"\n      },\n      {\n        \"id\": \"company\",\n        \"label\": \"Example company policy graph\",\n        \"owner\": \"Fictional company\",\n        \"version\": \"1.3.0\"\n      }\n    ],\n    \"composition\": \"Case-specific questions composed in one pinned artifact. These are additional example definitions, not routes added to the public working or published graph.\"\n  }\n}\n"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "id": "urn:tensor:example:workload-cloud-egress:composed-definition",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "publicationStatus": "draft",
   "title": "Workload identity, cloud read, and network egress",
   "contractRef": {
@@ -12,7 +12,7 @@
     {
       "id": "urn:tensor:example:workload-cloud-egress:public:question-1",
       "prompt": "Was the workload token issued for the reporting workload?",
-      "proposition": "Was the workload token issued for the reporting workload? Bound subject: urn:tensor:example:workload-cloud-egress:job-17; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "proposition": "Was the workload token issued for the reporting workload? Apply only to the resolved subject and interval; a different context requires a separate question instance.",
       "parameters": {
         "subject": {
           "type": "URI",
@@ -40,14 +40,14 @@
         "displayId": "S1",
         "domain": "Identity",
         "layerId": "public",
-        "layerVersion": "1.2.0",
+        "layerVersion": "1.3.0",
         "archetype": "detect"
       }
     },
     {
       "id": "urn:tensor:example:workload-cloud-egress:public:question-2",
       "prompt": "Was the restricted report object read using the workload token?",
-      "proposition": "Was the restricted report object read using the workload token? Bound subject: urn:tensor:example:workload-cloud-egress:object-obj9; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "proposition": "Was the restricted report object read using the workload token? Apply only to the resolved subject and interval; a different context requires a separate question instance.",
       "parameters": {
         "subject": {
           "type": "URI",
@@ -75,14 +75,14 @@
         "displayId": "S2",
         "domain": "Cloud",
         "layerId": "public",
-        "layerVersion": "1.2.0",
+        "layerVersion": "1.3.0",
         "archetype": "correlate"
       }
     },
     {
       "id": "urn:tensor:example:workload-cloud-egress:vendor:question-3",
       "prompt": "Did the reporting workload runtime originate the outbound connection?",
-      "proposition": "Did the reporting workload runtime originate the outbound connection? Bound subject: urn:tensor:example:workload-cloud-egress:flow-f8; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "proposition": "Did the reporting workload runtime originate the outbound connection? Apply only to the resolved subject and interval; a different context requires a separate question instance.",
       "parameters": {
         "subject": {
           "type": "URI",
@@ -110,14 +110,14 @@
         "displayId": "S3",
         "domain": "Network",
         "layerId": "vendor",
-        "layerVersion": "1.2.0",
+        "layerVersion": "1.3.0",
         "archetype": "correlate"
       }
     },
     {
       "id": "urn:tensor:example:workload-cloud-egress:company:question-4",
       "prompt": "Did the approved ticket cover the reporting workload reading the restricted report object?",
-      "proposition": "Did the approved ticket cover the reporting workload reading the restricted report object? Bound subject: urn:tensor:example:workload-cloud-egress:object-obj9; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "proposition": "Did the approved ticket cover the reporting workload reading the restricted report object? Apply only to the resolved subject and interval; a different context requires a separate question instance.",
       "parameters": {
         "subject": {
           "type": "URI",
@@ -145,14 +145,14 @@
         "displayId": "S4",
         "domain": "Cloud",
         "layerId": "company",
-        "layerVersion": "1.2.0",
+        "layerVersion": "1.3.0",
         "archetype": "classify"
       }
     },
     {
       "id": "urn:tensor:example:workload-cloud-egress:public:question-5",
       "prompt": "Is delivery of the restricted report object’s content through the outbound connection established?",
-      "proposition": "Is delivery of the restricted report object’s content through the outbound connection established? Bound subject: urn:tensor:example:workload-cloud-egress:flow-f8; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "proposition": "Is delivery of the restricted report object’s content through the outbound connection established? Apply only to the resolved subject and interval; a different context requires a separate question instance.",
       "parameters": {
         "subject": {
           "type": "URI",
@@ -180,14 +180,14 @@
         "displayId": "S5",
         "domain": "Network",
         "layerId": "public",
-        "layerVersion": "1.2.0",
+        "layerVersion": "1.3.0",
         "archetype": "correlate"
       }
     },
     {
       "id": "urn:tensor:example:workload-cloud-egress:company:question-6",
       "prompt": "Does the proposed suspension of the reporting workload meet CLOUD-12’s scoped approval conditions?",
-      "proposition": "Does the proposed suspension of the reporting workload meet CLOUD-12’s scoped approval conditions? Bound subject: urn:tensor:example:workload-cloud-egress:job-17; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "proposition": "Does the proposed suspension of the reporting workload meet CLOUD-12’s scoped approval conditions? Apply only to the resolved subject and interval; a different context requires a separate question instance.",
       "parameters": {
         "subject": {
           "type": "URI",
@@ -215,14 +215,14 @@
         "displayId": "S6",
         "domain": "Cloud",
         "layerId": "company",
-        "layerVersion": "1.2.0",
+        "layerVersion": "1.3.0",
         "archetype": "classify"
       }
     },
     {
       "id": "urn:tensor:example:workload-cloud-egress:public:question-7",
       "prompt": "Does the handoff keep identity, object-read, flow, ticket, and delivery findings distinct?",
-      "proposition": "Does the handoff keep identity, object-read, flow, ticket, and delivery findings distinct? Bound subject: urn:tensor:example:workload-cloud-egress:flow-f8; interval [2026-10-13T08:35:00Z, 2026-10-13T09:00:00Z).",
+      "proposition": "Does the handoff keep identity, object-read, flow, ticket, and delivery findings distinct? Apply only to the resolved subject and interval; a different context requires a separate question instance.",
       "parameters": {
         "subject": {
           "type": "URI",
@@ -250,7 +250,7 @@
         "displayId": "S7",
         "domain": "Network",
         "layerId": "public",
-        "layerVersion": "1.2.0",
+        "layerVersion": "1.3.0",
         "archetype": "terminal"
       }
     }
@@ -498,19 +498,19 @@
         "id": "public",
         "label": "Public investigation questions",
         "owner": "TENSOR Standards Consortium",
-        "version": "1.2.0"
+        "version": "1.3.0"
       },
       {
         "id": "vendor",
         "label": "Example vendor telemetry graph",
         "owner": "Fictional telemetry vendor",
-        "version": "1.2.0"
+        "version": "1.3.0"
       },
       {
         "id": "company",
         "label": "Example company policy graph",
         "owner": "Fictional company",
-        "version": "1.2.0"
+        "version": "1.3.0"
       }
     ],
     "composition": "Case-specific questions composed in one pinned artifact. These are additional example definitions, not routes added to the public working or published graph."

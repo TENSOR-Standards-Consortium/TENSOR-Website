@@ -1,8 +1,9 @@
 // Authored, illustrative walkthroughs. These are definition-route demonstrations,
 // not incident records, Core exchange bundles, or independently verified findings.
-export const GUIDE_GRAPH_VERSION = '0.20261013b';
-export const GUIDE_GRAPH_SHA256 = '5bbe0573940a20d7efe4cf9b78ae76f4ac79a3771bd92f5b182f3e18961aa874';
-export const GUIDE_CRITERIA_SHA256 = 'bbf1faf9a29396cb327c8a8b178328bc8cda6f6b4b95828d43b801ee7cace21a';
+import dataset from '../../public/dataset/current.json' with {type:'json'};
+export const GUIDE_GRAPH_VERSION = dataset.graphVersion;
+export const GUIDE_GRAPH_SHA256 = dataset.files.find(f=>f.publicPath===dataset.graph).sha256;
+export const GUIDE_CRITERIA_SHA256 = dataset.files.find(f=>f.publicPath===dataset.criteria).sha256;
 export const GUIDE_PROVENANCE = 'TENSOR-authored illustrative evidence and assessments; no real incident data. Steps are presentation order, not event-time chronology. These guides demonstrate the working graph, not Core record conformance or investigation effectiveness.';
 const step = (questionId, outcome, title, evidence, rationale, limitation) => ({ questionId, outcome, title, evidence, rationale, limitation });
 export const GUIDES = [
@@ -59,18 +60,33 @@ export const GUIDES = [
   },
 ];
 
+// These are separately evidenced questions, not consequences of an unknown or
+// negative relationship/source answer. Timeline adjacency supplies no route.
+for (const guide of GUIDES) for (const entry of guide.steps) {
+  if (['Q430','Q509','Q425','Q492'].includes(entry.questionId)) {
+    entry.origin = 'newLead';
+    entry.discoveryBasis = 'Open this separately evidenced question with its own discriminator and bounds. Retain the earlier answer and its limitations.';
+  }
+  if (guide.id==='identity-session' && entry.questionId==='Q558') entry.origin='newLead';
+}
+
+export function routesForAnswer(graph,questionId,outcome) {
+  return graph.edges.filter(edge=>edge.source===questionId&&(outcome===undefined||edge.decision===outcome));
+}
+
 export function guideState(graph, guide, index, visibility = 'all') {
   const through = Math.max(0, Math.min(guide.steps.length - 1, index));
   const prefix = guide.steps.slice(0, through + 1);
   const currentId = prefix.at(-1).questionId;
   const visitedIds = prefix.map(s => s.questionId);
-  const nextEdges = graph.edges.filter(e => e.source === currentId);
+  const nextEdges = routesForAnswer(graph,currentId,prefix.at(-1).outcome);
   const nextIds = [...new Set(nextEdges.map(e => e.target))];
-  const selectedEdges = prefix.slice(0, -1).map((s, i) => {
+  const selectedEdges = prefix.slice(0, -1).flatMap((s, i) => {
+    if(prefix[i+1].origin==='newLead') return [];
     const id=`${s.questionId}-${s.outcome}-${prefix[i+1].questionId}`;
     const edge=graph.edges.find(e=>e.id===id);
     if(!edge)throw new Error('The authored continuation is not present in the pinned graph.');
-    return edge;
+    return [edge];
   });
   return { currentId, visitedIds, nextIds, selectedEdges, visibleIds: visibility === 'path' ? [...new Set([...visitedIds, ...nextIds])] : null };
 }

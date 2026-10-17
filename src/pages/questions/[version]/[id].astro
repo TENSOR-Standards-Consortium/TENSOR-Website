@@ -3,30 +3,31 @@ import ContentCard from '../../../components/ContentCard.astro';
 import DocumentLayout from '../../../layouts/DocumentLayout.astro';
 import { graph, criteria, dataset, questions, questionPath } from '../../../data/current-dataset';
 import { legacyGraph, legacyQuestions, LEGACY_VERSION, LEGACY_SHA256, LEGACY_DOWNLOAD, LEGACY_SOURCE } from '../../../data/legacy-questions';
+import { previousGraph, previousCriteria, PREVIOUS_VERSION, PREVIOUS_SHA256, PREVIOUS_DOWNLOAD } from '../../../data/previous-draft';
 
 export function getStaticPaths() {
-  return [{ data: graph, archive: false }, { data: legacyGraph, archive: true }].flatMap(({data,archive}) => data.nodes.map((question,index) => ({params:{version:data.version,id:question.id},props:{question,index,archive}})));
+  return [{ data: graph, archive: false }, { data: legacyGraph, archive: true }, { data:previousGraph,archive:true }].flatMap(({data,archive}) => data.nodes.map((question,index) => ({params:{version:data.version,id:question.id},props:{question,index,archive,data}})));
 }
-const { question, index, archive } = Astro.props;
-const data = archive ? legacyGraph : graph;
-const list = archive ? legacyQuestions : questions;
+const { question, index, archive, data } = Astro.props;
+const previous=data.version===PREVIOUS_VERSION;
+const list = data.nodes;
 const pathFor = (id: string) => `/questions/${data.version}/${encodeURIComponent(id)}/`;
 const byId = new Map(data.nodes.map(node=>[node.id,node]));
 const outgoing = data.edges.filter(edge=>edge.source===question.id);
 const incoming = data.edges.filter(edge=>edge.target===question.id);
-const evidence = archive ? null : criteria.nodes[question.id as keyof typeof criteria.nodes];
-const rule = evidence ? criteria.rules[evidence.rule as keyof typeof criteria.rules] : null;
-const digest = archive ? LEGACY_SHA256 : dataset.files.find(f=>f.publicPath===dataset.graph)!.sha256;
-const download = archive ? LEGACY_DOWNLOAD : dataset.graph;
+const evidence = archive ? previous?previousCriteria.nodes[question.id]:null : criteria.nodes[question.id as keyof typeof criteria.nodes];
+const rule = evidence ? (previous?previousCriteria:criteria).rules[evidence.rule as keyof typeof criteria.rules] : null;
+const digest = archive ? previous?PREVIOUS_SHA256:LEGACY_SHA256 : dataset.files.find(f=>f.publicPath===dataset.graph)!.sha256;
+const download = archive ? previous?PREVIOUS_DOWNLOAD:LEGACY_DOWNLOAD : dataset.graph;
 const citationUrl = new URL(pathFor(question.id),Astro.site || 'https://tensor-standards.pages.dev/').toString();
 ---
 <DocumentLayout title={archive ? `Archived · ${question.label}` : question.label} description={archive ? `Historical graph ${data.version}: ${question.text}` : question.text} canonicalPath={pathFor(question.id)}>
   <ContentCard as="article">
-    <p><a href={archive ? '/archives/0.20260206e/' : '/questions/'}>← {archive ? 'Archived question catalog' : 'Question catalog'}</a> · <a href={archive ? '/archives/' : `/graphs/?node=${encodeURIComponent(question.id)}`}>{archive ? 'Historical archives' : 'Open in the graph'}</a></p>
+    <p><a href={archive ? `/archives/${data.version}/` : '/questions/'}>← {archive ? 'Archived question catalog' : 'Question catalog'}</a> · <a href={archive ? '/archives/' : `/graphs/?node=${encodeURIComponent(question.id)}`}>{archive ? 'Historical archives' : 'Open in the graph'}</a></p>
     <p class="section-kicker">{archive ? 'Historical archive' : 'Current public dataset'} · {data.version}</p>
     <h2>{question.text}</h2>
     <dl class="question-facts"><div><dt>Domain</dt><dd>{question.category}</dd></div><div><dt>Stage</dt><dd>{question.archetype}</dd></div><div><dt>Entry point</dt><dd>{data.entryNodeIds.includes(question.id) ? 'Yes' : 'No'}</dd></div></dl>
-    {archive ? <p>This page preserves the original release for citation. <a href={questionPath(question.id)}>Read the current question</a> and its evidence criteria. The <a href={`/graphs/coverage/#${question.id}`}>coverage ledger</a> records the meaning changes.</p> : <p>The Atlas, Studio, profiles and review package use this same current dataset. A route opens another investigative question; it does not supply its answer. One answer can enable several independently bound routes.</p>}
+    {archive ? <p>This page preserves a historical graph for citation. It is not the current public dataset. <a href={questionPath(question.id)}>Read the current question</a> and its evidence criteria. The <a href={`/graphs/coverage/#${question.id}`}>coverage ledger</a> records the meaning changes.</p> : <p>The Atlas, Studio, profiles and review package use this same current dataset. A route opens another investigative question; it does not supply its answer. One answer can enable several independently bound routes.</p>}
     {rule && <><h2>Evidence criteria</h2><dl>{Object.entries(rule).map(([answer,text])=><div><dt>{answer}</dt><dd>{String(text)}</dd></div>)}</dl><h3>Bind before assessing</h3><p>{evidence?.boundSubjectFields.join(', ')} and the exact time interval.</p><details><summary>Required assessment record</summary><p>{evidence?.requiredAssessmentRecord.join(', ')}</p></details></>}
     <h2>{archive ? 'Archived' : 'Available'} outgoing routes</h2>
     {outgoing.length ? <ul class="route-list">{outgoing.map(edge=><li><strong>{edge.decision}</strong><div><a href={pathFor(edge.target)}>{byId.get(edge.target)?.text}</a><details class="edge-id"><summary>Exact route identity</summary><code>{edge.id}</code></details></div></li>)}</ul> : <p>This question has no outgoing routes. Investigation status and unresolved questions remain part of the record.</p>}
@@ -34,9 +35,9 @@ const citationUrl = new URL(pathFor(question.id),Astro.site || 'https://tensor-s
     <h2>Citation and source</h2>
     <blockquote>TENSOR, graph {data.version}, question {question.id}: “{question.text}” <a href={citationUrl}>{citationUrl}</a></blockquote>
     <p>Exact graph SHA-256: <code>{digest}</code></p>
-    <p><a href={download} download>Download the exact graph</a> · <a href={archive ? LEGACY_SOURCE : '/dataset/current.json'}>{archive ? 'Pinned historical source' : 'Current dataset inventory'}</a></p>
+    <p><a href={download} download>Download the exact graph</a> · <a href={archive ? previous?PREVIOUS_DOWNLOAD:LEGACY_SOURCE : '/dataset/current.json'}>{archive ? 'Pinned historical source' : 'Current dataset inventory'}</a></p>
     <p>Graph definitions describe reusable questions. The <a href="/core/">Core record binding</a> carries a particular investigation's subjects, evidence, assessments and revisions.</p>
-    <nav class="adjacent-questions" aria-label="Adjacent questions">{list[index-1]&&<a href={pathFor(list[index-1].id)}>← {list[index-1].label}</a>}<a href={archive ? '/archives/0.20260206e/' : '/questions/'}>All questions</a>{list[index+1]&&<a href={pathFor(list[index+1].id)}>{list[index+1].label} →</a>}</nav>
+    <nav class="adjacent-questions" aria-label="Adjacent questions">{list[index-1]&&<a href={pathFor(list[index-1].id)}>← {list[index-1].label}</a>}<a href={archive ? `/archives/${data.version}/` : '/questions/'}>All questions</a>{list[index+1]&&<a href={pathFor(list[index+1].id)}>{list[index+1].label} →</a>}</nav>
   </ContentCard>
 </DocumentLayout>
 <style>
