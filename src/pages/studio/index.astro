@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageIntro from '../../components/PageIntro.astro';
 import GraphExplorer from '../../components/GraphExplorer.jsx';
 import { absoluteUrl, seo } from '../../data/seo';
 
@@ -21,13 +22,14 @@ const jsonLd = {
   canonicalPath={meta.canonicalPath}
   ogType={meta.ogType}
   jsonLd={jsonLd}
+  hidePageTitle
 >
+  <PageIntro title="Graph Studio" eyebrow="Public graph / Vendor and company layers" workspace compact />
   <section class="studio-wrapper container">
     <div class="tensor-panel studio-intro-card">
-      <h2>Current graph and layer editor</h2>
-      <p>Graph Studio imports, combines, and exports public graphs with vendor and organization layers. The layer pack preserves product and policy annotations separately from the base question fields. Added questions and routes provide their own definitions.</p>
+      <p>Find an investigation question, inspect its routes, and add vendor or company layers. Imports and exports stay local to this browser.</p>
       <p><a href="/extensions/">Layering guide and formats</a> · <a href="/studio/?graph=0.20261016a&amp;example=cloud-layers&amp;node=Q4">Cloud layering example</a> · <a href="/examples/layers/cloud-investigation.layers.json" download>Example layer pack</a></p>
-      <p>This editor uses the same current public graph as the <a href="/graphs/">Atlas</a> and <a href="/review/">review package</a>. Its local checks cover node and route structure. The Atlas provides 3D views and guided investigations; the <a href="/investigation-lab/">Lab</a> provides Core record validation and exchange.</p>
+      <details><summary>Source and validation scope</summary><p>The same public graph is used in the <a href="/graphs/">Atlas</a> and <a href="/review/">review package</a>. Studio checks graph structure; the <a href="/investigation-lab/">Lab</a> checks Core investigation records.</p></details>
     </div>
 
     <GraphExplorer client:load />

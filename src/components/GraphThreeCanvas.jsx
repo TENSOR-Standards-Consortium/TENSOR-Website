@@ -32,6 +32,8 @@ export default function GraphThreeCanvas({ graph, view, selectedId, trace, onSel
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(42, 1, 1, 10000);
       const controls = new OrbitControls(camera, renderer.domElement);
+      controls.enableZoom=false;const wheelIntent=event=>{controls.enableZoom=event.ctrlKey||event.metaKey;},touchIntent=event=>{controls.enableZoom=event.touches.length>1;};
+      renderer.domElement.addEventListener('wheel',wheelIntent,{capture:true,passive:true});renderer.domElement.addEventListener('touchstart',touchIntent,{capture:true,passive:true});
       controls.enableDamping = false; controls.minDistance = 80; controls.maxDistance = 4300;
       controls.maxPolarAngle = Math.PI * .94; controls.enablePan = true;
       scene.add(new THREE.HemisphereLight(token('--light-sky'), token('--light-ground'), 1.7));
@@ -190,7 +192,7 @@ export default function GraphThreeCanvas({ graph, view, selectedId, trace, onSel
       renderer.domElement.addEventListener('pointerdown',pointerDown); renderer.domElement.addEventListener('pointerup',pointerUp); renderer.domElement.addEventListener('pointermove',pointerMove); renderer.domElement.addEventListener('pointerleave',pointerLeave); renderer.domElement.addEventListener('webglcontextlost',lost);
       engine.current = { update, home, focus, zoom: factor=>{ camera.position.sub(controls.target).multiplyScalar(factor).add(controls.target); controls.update(); requestRender(); }, orbit: delta=>{ const offset=camera.position.clone().sub(controls.target); offset.applyAxisAngle(new THREE.Vector3(0,1,0),delta); camera.position.copy(controls.target).add(offset); controls.update(); requestRender(); } };
       home(); update(); if(live.current.trace?.visibleIds) focus(); setReady(true);
-      teardown = () => { if(frame) cancelAnimationFrame(frame); resize.disconnect(); controls.removeEventListener('change',requestRender); controls.dispose(); renderer.domElement.removeEventListener('webglcontextlost',lost); clearRoutes(); scene.traverse(item => { if(item.geometry) item.geometry.dispose(); if(item.material) item.material.dispose(); }); glowTexture.dispose(); renderer.dispose(); renderer.forceContextLoss(); renderer.domElement.remove(); engine.current=null; };
+      teardown = () => { if(frame) cancelAnimationFrame(frame); resize.disconnect(); controls.removeEventListener('change',requestRender); controls.dispose();renderer.domElement.removeEventListener('wheel',wheelIntent,true);renderer.domElement.removeEventListener('touchstart',touchIntent,true); renderer.domElement.removeEventListener('webglcontextlost',lost); clearRoutes(); scene.traverse(item => { if(item.geometry) item.geometry.dispose(); if(item.material) item.material.dispose(); }); glowTexture.dispose(); renderer.dispose(); renderer.forceContextLoss(); renderer.domElement.remove(); engine.current=null; };
     }).catch(() => { if(!disposed) setError('3D could not start on this device. The atlas, timeline and question list remain available.'); });
     return () => { disposed=true; teardown(); };
   }, [graph, spatial]);
@@ -202,6 +204,6 @@ export default function GraphThreeCanvas({ graph, view, selectedId, trace, onSel
     {error && <div className="three-fallback"><p>{error}</p><button className="btn btn-primary" onClick={onFallback}>Return to atlas</button></div>}
     {hover && !error && <div className="three-tooltip" aria-hidden="true">{hover}</div>}
     <div className="atlas-camera-controls" role="group" aria-label="3D camera"><button className="btn btn-secondary" disabled={!ready} onClick={()=>engine.current?.home()}>Reset view</button><button className="btn btn-secondary" disabled={!ready||(!selectedId&&!trace)} onClick={()=>engine.current?.focus()}>{trace ? 'Focus path' : 'Focus selection'}</button><button className="btn btn-secondary" aria-label="Zoom in" disabled={!ready} onClick={()=>engine.current?.zoom(.75)}>+</button><button className="btn btn-secondary" aria-label="Zoom out" disabled={!ready} onClick={()=>engine.current?.zoom(1.3)}>−</button><button className="btn btn-secondary" aria-label={fullscreen ? 'Exit full screen' : 'Enter full screen'} onClick={async()=>{ try { if(document.fullscreenElement) await document.exitFullscreen(); else if(shell.current?.requestFullscreen) await shell.current.requestFullscreen(); else setNotice('Full screen is unavailable. The camera controls remain available.'); } catch { setNotice('Full screen is unavailable. The camera controls remain available.'); } }}>{fullscreen ? 'Exit ↙' : 'Expand ↗'}</button></div>
-    <div className="atlas-map-key"><span>Arrow = route</span><span className="tone-yes">yes</span><span className="tone-no">no</span><span className="tone-unknown">unknown · dashed</span><span>Drag to orbit · pinch to zoom</span></div>
+    <div className="atlas-map-key"><span>Arrow = route</span><span className="tone-yes">yes</span><span className="tone-no">no</span><span className="tone-unknown">unknown · dashed</span><span>Drag to orbit · Ctrl / ⌘ + wheel or pinch to zoom</span></div>
   </div>;
 }

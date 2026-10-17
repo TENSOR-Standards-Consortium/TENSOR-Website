@@ -1,0 +1,17 @@
+---
+import DocumentLayout from '../../layouts/DocumentLayout.astro';
+import ContentCard from '../../components/ContentCard.astro';
+import { referenceDocuments } from '../../lib/referenceDocuments.mjs';
+export async function getStaticPaths(){return (await referenceDocuments()).map(document=>({params:{document:document.slug},props:{document}}));}
+const { document }=Astro.props;
+---
+<DocumentLayout title={`${document.title} | TENSOR`} displayTitle={document.title} canonicalPath={document.path} description={`Read ${document.title} with section navigation and an exact source download.`}>
+  <ContentCard class="reference-reading">
+    <div class="document-source-bar"><a href="/docs/#reference-documents">All reference documents</a><a href={document.source} download>Download exact source · Markdown</a></div>
+    <nav class="document-source-bar" aria-label="Related reference resources"><a href="/read/founding/01-core-contract/">Core contract</a><a href="/read/core/0.1.0-draft.1/binding/">Binding rules</a><a href="/investigations/soc-signin/">Follow the SOC investigation</a></nav>
+    {document.historical&&<p class="reference-snapshot">Historical source snapshot. <a href="/review/">Use the current technical review package for current evaluation.</a></p>}
+    <span id={document.titleId}></span>
+    <div class="reference-markdown" set:html={document.html}></div>
+    <details class="reference-identity"><summary>Exact document identity</summary><p>Source: <code>{document.source}</code></p><p>SHA-256: <code>{document.sha256}</code></p><p>This reading page formats the source for the web. The source artifact and its published bytes are unchanged.</p></details>
+  </ContentCard>
+</DocumentLayout>

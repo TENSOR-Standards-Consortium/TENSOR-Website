@@ -13,6 +13,8 @@ const errors=[];page.on('pageerror',e=>errors.push(e.message));
 const introductionConsole=[];page.on('console',message=>{if(page.url().startsWith(base+'/start/')&&['error','warning'].includes(message.type()))introductionConsole.push({type:message.type(),text:message.text()});});
 const checks={base};
 const data=n=>n.data || n;
+const original=JSON.parse(await readFile('public/graphs/working/tensor.core.graph.json','utf8'));
+const layeredRouteCount=original.edges.length+2;
 async function capture(options){await page.locator('footer').scrollIntoViewIfNeeded();await page.locator('footer .brand-symbol').evaluate(async image=>{image.loading='eager';await image.decode();});await page.evaluate(()=>scrollTo(0,0));return page.screenshot(options);}
 try {
  await page.goto(base+'/');
@@ -77,10 +79,11 @@ try {
  await capture({path:output+'/layers.png',fullPage:true});
  await page.getByRole('link',{name:'Open the layering example',exact:true}).click();
  await page.waitForURL(/example=cloud-layers/);
+ await page.locator('.studio-layer-controls summary').click();
  await page.locator('.layer-item').nth(1).waitFor();
  await page.waitForFunction(()=>document.querySelector('#total-nodes').textContent==='611');
  assert.match(await page.locator('#schema-pill').textContent(),/pass|valid/i);
- assert.equal(await page.locator('#total-edges').textContent(),'2133');
+ assert.equal(await page.locator('#total-edges').textContent(),String(layeredRouteCount));
  const toggles=page.locator('.layer-item input[type=checkbox]');
  await toggles.nth(0).uncheck();
  await page.waitForFunction(()=>document.querySelector('#total-nodes').textContent==='610');
@@ -90,13 +93,13 @@ try {
  await page.waitForFunction(()=>document.querySelector('#total-nodes').textContent==='610');
  await toggles.nth(1).check();
  await page.waitForFunction(()=>document.querySelector('#total-nodes').textContent==='611');
+ await page.locator('.studio-advanced summary').click();
  const mergedDownload=page.waitForEvent('download');
  await page.locator('#export-merged-btn').click();
  const mergedFile=await mergedDownload;await mergedFile.saveAs(output+'/merged-example.json');
  const merged=JSON.parse(await readFile(output+'/merged-example.json','utf8'));
- const original=JSON.parse(await readFile('public/graphs/working/tensor.core.graph.json','utf8'));
  assert.equal(merged.nodes.length,611);
- assert.equal(merged.edges.length,2133);
+ assert.equal(merged.edges.length,layeredRouteCount);
  assert.deepEqual(merged.edges.slice(0,original.edges.length).map(data),original.edges.map(data));
  for(const raw of original.nodes){const found=data(merged.nodes.find(n=>data(n).id===data(raw).id));for(const [key,value] of Object.entries(data(raw))) { if(key==='extensions'){for(const [name,entry] of Object.entries(value))assert.deepEqual(found.extensions[name],entry);}else assert.deepEqual(found[key],value);}}
  assert.equal(data(merged.nodes.find(n=>data(n).id==='Q4')).extensions['tensor.studio:overlays'].length,2);
@@ -109,7 +112,7 @@ try {
  await page.locator('#layer-import-input').setInputFiles(output+'/exported-layers.json');
  await page.waitForFunction(()=>document.querySelector('#total-nodes').textContent==='611');
  checks.layerPackRoundTrip='passed';
- await page.goto(base+'/investigation-lab/');await page.locator('.il-case').first().click();await page.locator('.il-workbench').waitFor();
+ await page.goto(base+'/investigation-lab/');await page.locator('.il-case').filter({hasText:'An agent’s outbound transfer'}).click();await page.locator('.il-workbench').waitFor();
  assert.match(await page.locator('#il-validation-title').textContent(),/checks passed/i);
  const bundleDownload=page.waitForEvent('download');await page.getByRole('button',{name:'Download bundle ↓',exact:true}).click();const bundleFile=await bundleDownload;await bundleFile.saveAs(output+'/lab-bundle.json');
  const bundle=JSON.parse(await readFile(output+'/lab-bundle.json','utf8'));
@@ -131,7 +134,7 @@ try {
  checks.keyboardScrollableTableStates=tableStates;
  const failure=await browser.newPage({serviceWorkers:'block'});
  await failure.route('**/examples/layers/cloud-investigation.layers.json',route=>route.fulfill({status:404,body:'Unavailable example'}));
- await failure.goto(base+'/studio/?graph=0.20261013b&example=cloud-layers');
+ await failure.goto(base+'/studio/?example=cloud-layers');
  await failure.waitForFunction(()=>document.querySelector('#stats-pill')?.textContent.includes('Example layers unavailable'));
  assert.equal(await failure.locator('#total-nodes').textContent(),'609');
  assert.equal(await failure.locator('.layer-item').count(),0);

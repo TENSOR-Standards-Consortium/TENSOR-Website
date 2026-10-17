@@ -1,10 +1,12 @@
 ---
 import { resourceGroups } from '../lib/navigation';
 const pathname = Astro.url.pathname;
+const { currentTitle='Reference document' }=Astro.props;
 ---
 <div class="document-navigation">
-<p class="document-nav-hint">Standard resources <span aria-hidden="true">Scroll for more →</span></p>
-<nav class="document-nav" aria-label="Standard resources">
-  {resourceGroups.map(group => <div class="nav-group"><p>{group.title}</p><ul>{group.resources.map(item => <li><a href={item.url} aria-current={pathname === item.url ? 'page' : undefined}>{item.title}</a></li>)}</ul></div>)}
-</nav>
+  <a class="document-search-link" href="/docs/#reference-search">Search reference resources</a>
+  <nav class="document-nav document-nav-desktop" aria-label="Standard resources">
+    {resourceGroups.map(group=><div class="nav-group"><p>{group.title}</p><ul>{group.resources.map(item=><li><a href={item.url} aria-current={pathname===item.url?'page':undefined}>{item.title}</a></li>)}</ul></div>)}
+  </nav>
+  <details class="document-mobile-menu"><summary>{currentTitle==='Resources'?'Browse resources':`Resources · ${currentTitle}`}</summary><nav class="document-nav" aria-label="Standard resources on mobile">{resourceGroups.map(group=><div class="nav-group"><p>{group.title}</p><ul>{group.resources.map(item=><li><a href={item.url} aria-current={pathname===item.url?'page':undefined}>{item.title}</a></li>)}</ul></div>)}</nav></details>
 </div>

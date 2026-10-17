@@ -7,7 +7,18 @@ const { title, displayTitle = title.split(' | ')[0], ...props } = Astro.props;
 <BaseLayout {...props} title={title} hidePageTitle>
   <PageIntro title={displayTitle} eyebrow="TENSOR / Public investigation standard" />
   <div class="container document-layout">
-    <SectionNavigation />
-    <div class="document-content"><slot /></div>
+    <SectionNavigation currentTitle={displayTitle} />
+    <div class="document-content"><details class="document-page-index" hidden><summary>On this page</summary><nav aria-label="On this page"><ol></ol></nav></details><slot /></div>
   </div>
 </BaseLayout>
+<script>
+  const content=document.querySelector<HTMLElement>('.document-content'),contents=document.querySelector<HTMLElement>('.document-page-index');
+  if(content&&contents&&!location.pathname.startsWith('/questions/')){
+    const headings=[...content.querySelectorAll<HTMLHeadingElement>('h2')].filter(h=>!h.closest('details,.reference-search'));
+    if(headings.length>1){
+      const list=contents.querySelector('ol')!;
+      for(const heading of headings){if(!heading.id){const base=heading.textContent?.trim().toLowerCase().replace(/[^\p{L}\p{N}]+/gu,'-').replace(/^-|-$/g,'')||'section';let id=base,i=1;while(document.getElementById(id))id=`${base}-${i++}`;heading.id=id;}const item=document.createElement('li'),link=document.createElement('a');link.href='#'+encodeURIComponent(heading.id);link.textContent=heading.textContent;item.append(link);list.append(item);}
+      contents.hidden=false;(contents as HTMLDetailsElement).open=matchMedia('(min-width:851px)').matches;
+    }
+  }
+</script>

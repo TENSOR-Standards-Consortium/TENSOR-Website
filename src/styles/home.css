@@ -134,3 +134,11 @@
 
 .field-open:hover .field-links, .field-open:focus-visible .field-links { opacity: .3; }
 .field-links { transition: opacity 300ms var(--ease-out); }
+
+@media(min-width:761px) and (max-height:800px){
+ .hero-content { padding-top:2.5rem; padding-bottom:3rem; min-height:620px; }
+ .hero-title { font-size:clamp(3.25rem,5.7vw,5rem); }
+ .hero-kicker { margin-bottom:1.2rem; }
+ .hero-definition { margin-top:1.4rem; font-size:1rem; }
+ .hero-text .cta-group { margin-top:1.25rem; }
+}

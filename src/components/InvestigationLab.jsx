@@ -1,4 +1,4 @@
-import { subjectLabel, timeLabel, typeLabel, valueLabel } from '../lib/displayLabels.mjs';
+import { subjectLabel, timeLabel, typeLabel, valueLabel, dateTimeLabel, statusLabel } from '../lib/displayLabels.mjs';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { BINDING_VERSION, parseBundle, validateBundle } from '../vendor/tensor-core/index.mjs';
 import {
@@ -15,7 +15,7 @@ import { datasetArtifact } from '../lib/datasetArtifact.mjs';
 const PAGE_SIZE = 30;
 
 function Status({ value, children }) {
-  return <Badge value={value}>{children || asText(value)}</Badge>;
+  return <Badge value={value}>{children || statusLabel(asText(value))}</Badge>;
 }
 
 function JsonDetails({ value, label = 'Inspect complete JSON' }) {
@@ -45,9 +45,9 @@ function EntryCard({ entry, questions, entriesById, onInspect }) {
   const refs = { entriesById, questions, onInspect };
   const question = entry.type === 'QuestionInstance' ? questions.get(questionKey(entry.definitionRef, entry.questionId)) : null;
   return <article className="tensor-panel il-entry">
-    <div className="il-entry-top"><span className="il-eyebrow">{typeLabel(entry.type)}</span><Status value={entry.outcome || entry.stage || entry.availability || entry.status}>{asText(entry.outcome || entry.stage || entry.availability || entry.status || 'recorded')}</Status></div>
+    <div className="il-entry-top"><span className="il-eyebrow">{typeLabel(entry.type)}</span><Status value={entry.outcome || entry.stage || entry.availability || entry.status}>{statusLabel(asText(entry.outcome || entry.stage || entry.availability || entry.status || 'recorded'))}</Status></div>
     <h3>{question?.prompt ? asText(question.prompt) : entryTitle(entry, { questions, entriesById })}</h3>
-    <p className="il-attribution">{attributionLabel(entry, entriesById)}<span aria-hidden="true"> · </span><time>{asText(entry.recordedAt || 'Recorded time unspecified')}</time></p>
+    <p className="il-attribution">{attributionLabel(entry, entriesById)}<span aria-hidden="true"> · </span><time>{dateTimeLabel(entry.recordedAt || 'Recorded time unspecified')}</time></p>
     {entry.type === 'QuestionInstance' && <>
       {!question && <p className="il-caption">The pinned question is unavailable or ambiguous. Details are in the validation report and complete instance JSON.</p>}
       <dl className="il-fields"><Field label="Subject" value={subjectLabel(entry)} /><Field label="Time context" value={timeLabel(entry.timeContext)} /><Field label="Definition version" value={entry.definitionRef?.version} /><Field label="Domain" value={question?.metadata?.domain} /><Field label="Graph layer" value={question?.metadata?.layerId} /><Field label="Layer version" value={question?.metadata?.layerVersion} /><Field label="Origin" value={entry.origin?.rationale || entry.origin?.kind} /></dl>
@@ -117,6 +117,30 @@ export default function InvestigationLab() {
   const [paste, setPaste] = useState('');
   const operation = useRef(0);
   const contentRef = useRef(null);
+  const [inspectionTrail,setInspectionTrail]=useState([]);
+  const currentView=useRef(null);
+  currentView.current={section,query,selectedEntryId,page,caseStep};
+  function safeView(candidate,entryIndex,defaultSection='overview') {
+    const allowed=SECTIONS.some(s=>s.id===candidate?.section)&& (candidate.section!=='walkthrough'||bundle?.record?.metadata?.walkthrough?.format==='tensor-example-walkthrough');
+    const id=typeof candidate?.selectedEntryId==='string'&&entryIndex.get(candidate.selectedEntryId)?candidate.selectedEntryId:'';
+    return {section:id?'all':allowed?candidate.section:defaultSection,query:typeof candidate?.query==='string'?candidate.query.slice(0,2000):'',selectedEntryId:id,page:Number.isInteger(candidate?.page)&&candidate.page>=0?candidate.page:0,caseStep:Number.isInteger(candidate?.caseStep)&&candidate.caseStep>=0?candidate.caseStep:0};
+  }
+  function applyView(view,scroll=true) {
+    setSection(view.section);setQuery(view.query||'');setSelectedEntryId(view.selectedEntryId||'');setPage(view.page||0);setCaseStep(view.caseStep||0);
+    if(scroll)requestAnimationFrame(()=>{contentRef.current?.focus({preventScroll:true});if(Number.isFinite(view.scrollY))window.scrollTo({top:view.scrollY,behavior:'instant'});else contentRef.current?.scrollIntoView({block:'start',behavior:'instant'});});
+  }
+  function publicLocation(view,kind='pushState') {
+    if(source?.kind!=='synthetic')return;
+    const url=new URL(location.href);url.searchParams.set('case',source.caseId);url.searchParams.set('section',view.section);url.searchParams.set('step',String(view.caseStep||0));
+    if(view.selectedEntryId)url.searchParams.set('entry',view.selectedEntryId);else url.searchParams.delete('entry');
+    history[kind]({tensorLabView:{...view,caseId:source.caseId}},'',url);
+  }
+  function navigateView(view,remember=false) {
+    const before={...currentView.current,scrollY:window.scrollY};
+    if(remember)setInspectionTrail(previous=>[...previous,before]);
+    publicLocation(before,'replaceState');publicLocation(view);applyView(view);
+  }
+
   useEffect(()=>{if(bundle&&source?.walkthrough)window.requestAnimationFrame(()=>{contentRef.current?.focus({preventScroll:true});contentRef.current?.closest('.il-workbench')?.scrollIntoView({block:'start',behavior:'instant'});});},[bundle,source]);
   const autoOpened = useRef(false);
   useEffect(()=>{
@@ -132,15 +156,36 @@ export default function InvestigationLab() {
     return filterEntries(scoped, query, selectedEntryId);
   }, [entries, groups, section, query, selectedEntryId]);
 
+  useEffect(()=>{
+    const pop=event=>{
+      if(source?.kind!=='synthetic')return;
+      const params=new URLSearchParams(location.search);
+      if(params.get('case')!==source.caseId){const sample=CASES.find(c=>c.id===params.get('case'));if(sample)loadCase(sample);return;}
+      const candidate=event.state?.tensorLabView?.caseId===source.caseId?event.state.tensorLabView:{section:params.get('section'),selectedEntryId:params.get('entry'),caseStep:Number(params.get('step')||0)};
+      const view=safeView(candidate,entriesById,source.walkthrough?'walkthrough':'overview');
+      if(Number.isFinite(candidate.scrollY))view.scrollY=candidate.scrollY;
+      setInspectionTrail([]);applyView(view);
+    };
+    window.addEventListener('popstate',pop);return()=>window.removeEventListener('popstate',pop);
+  },[source,entriesById,bundle]);
+
   async function importText(text, nextSource, ticket) {
     validateImportSize(text);
     const parsed = parseBundle(text, { maxBytes: MAX_BUNDLE_BYTES });
     const [result, questionIndex] = await Promise.all([validateBundle(parsed, { maxBytes: MAX_BUNDLE_BYTES }), getDefinitionQuestions(parsed)]);
     if (ticket !== operation.current) return;
     setBundle(parsed); setReport(result); setSource(nextSource); setQuestions(questionIndex);
-    setSection(nextSource.walkthrough?'walkthrough':'overview'); setQuery(''); setSelectedEntryId(''); setPage(0);
-    const params=new URLSearchParams(window.location.search),requested=Number(params.get('step')||0);
-    setCaseStep(nextSource.caseId===params.get('case')&&Number.isInteger(requested)&&requested>=0?requested:0);
+    const params=new URLSearchParams(window.location.search),requested=Number(params.get('step')||0),matching=nextSource.kind==='synthetic'&&nextSource.caseId===params.get('case');
+    const entryId=matching&&typeof params.get('entry')==='string'&&indexEntries(getEntries(parsed)).get(params.get('entry'))?params.get('entry'):'';
+    const requestedSection=matching&&SECTIONS.some(s=>s.id===params.get('section'))?params.get('section'):null;
+    const nextSection=entryId?'all':requestedSection==='walkthrough'&&!nextSource.walkthrough?'overview':requestedSection||(nextSource.walkthrough?'walkthrough':'overview');
+    const nextStep=matching&&Number.isInteger(requested)&&requested>=0?requested:0;
+    setSection(nextSection);setQuery('');setSelectedEntryId(entryId);setPage(0);setInspectionTrail([]);setCaseStep(nextStep);
+    const url=new URL(location.href);
+    for(const key of ['case','step','section','entry'])url.searchParams.delete(key);
+    url.hash='';
+    if(nextSource.kind==='synthetic'){url.searchParams.set('case',nextSource.caseId);url.searchParams.set('step',String(nextStep));url.searchParams.set('section',nextSection);if(entryId)url.searchParams.set('entry',entryId);}
+    history.replaceState(null,'',url);
     setNotice(`Opened ${nextSource.label}. ${summarizeValidation(result).title}.`);
   }
 
@@ -184,21 +229,27 @@ export default function InvestigationLab() {
     setNotice(`Download prepared: ${name}`);
   }
 
-  function showSection(next) { setSection(next); setQuery(''); setSelectedEntryId(''); setPage(0); }
+  function showSection(next) {setInspectionTrail([]);navigateView({section:next,query:'',selectedEntryId:'',page:0,caseStep});}
   function inspectEntry(id) {
-    setSection('all'); setQuery(id); setSelectedEntryId(id); setPage(0);
-    window.requestAnimationFrame(() => contentRef.current?.focus({ preventScroll: false }));
+    if(!entriesById.get(id)||id===selectedEntryId)return;
+    navigateView({section:'all',query:'',selectedEntryId:id,page:0,caseStep},true);
   }
+  function returnToInspection() {
+    const previous=inspectionTrail.at(-1);if(!previous)return;
+    setInspectionTrail(trail=>trail.slice(0,-1));publicLocation(previous,'replaceState');applyView(previous);
+  }
+  function changeCaseStep(step){setCaseStep(step);publicLocation({...currentView.current,caseStep:step},'replaceState');}
 
   return <div className="tensor-investigation-lab" data-dataset-id={source?.kind === 'import' ? undefined : dataset.id} aria-busy={busy || !ready}>
-    <section className="tensor-panel il-start" aria-labelledby="il-start-title">
+    {!ready&&<div className="il-tool-fallback" role="status"><h2>Interactive tools are not ready</h2><p>The Lab requires JavaScript. If it is enabled, these tools may still be loading. If this message remains, reload the page or use the resources below.</p><div className="cta-group"><a href="/start/">Read the SOC investigation</a><a href="#il-downloads-title">Download example bundles</a><a href="/implement/">Implementation instructions</a></div></div>}
+    <section hidden={!ready} className="tensor-panel il-start" aria-labelledby="il-start-title">
       <div className="il-start-heading"><div><p className="il-eyebrow">Core investigation bundles</p><h2 id="il-start-title">Open an investigation</h2></div><span className="il-version">Core {BINDING_VERSION}</span></div>
       <p className="il-lead">Example investigations and local imports include questions, evidence, assessments, decisions, and retained history.</p>
       <p className="il-caption">Reference cases come from the <a href="/dataset/current.json">current public dataset</a>, shared with the graph and <a href="/review/">review package</a>. Local imports retain their own declared definitions.</p>
-      <details className="il-examples" open={!bundle}><summary>Example investigations · {CASES.length} cases</summary><div className="il-case-grid">{CASES.map((sample, index) => <button type="button" className={`il-case ${source?.label === sample.title ? 'is-selected' : ''}`} key={sample.id} disabled={busy || !ready} onClick={() => loadCase(sample)}><span className="il-case-number">0{index + 1} / EXAMPLE INVESTIGATION</span><strong>{sample.title}</strong><span>{sample.description}</span><span className="il-case-action">Open reference case <span aria-hidden="true">↗</span></span></button>)}</div></details>
+      <details className="il-examples" open={!bundle}><summary>Example investigations · {CASES.length} cases</summary><div className="il-case-grid">{CASES.map((sample, index) => <button type="button" className={`il-case ${source?.label === sample.title ? 'is-selected' : ''}`} key={sample.id} disabled={busy || !ready} onClick={() => loadCase(sample)}><span className="il-case-number">{index===0?'START HERE':sample.walkthrough?'CASE WALKTHROUGH':'ADVANCED · BINDING EXAMPLE'}</span><strong>{sample.title}</strong><span>{sample.description}</span><span className="il-case-action">Open reference case <span aria-hidden="true">↗</span></span></button>)}</div></details>
       <div className="il-import-row"><div><label htmlFor="il-bundle-file" className="il-file-label">Import a local bundle</label><input id="il-bundle-file" type="file" accept=".json,application/json" onChange={importFile} disabled={busy || !ready} aria-describedby="il-privacy" /></div><p id="il-privacy">JSON · up to 2 MiB · Browser-only processing, without upload, evidence retrieval, or action execution.</p></div>
       <details className="il-paste"><summary>Or paste bundle JSON</summary><form onSubmit={(event) => { event.preventDefault(); runOperation((ticket) => importText(paste, { label: 'Pasted bundle', kind: 'import' }, ticket)); }}><label htmlFor="il-json-paste">Bundle JSON to open</label><textarea id="il-json-paste" value={paste} onChange={(event) => setPaste(event.target.value)} spellCheck="false" rows={7} placeholder='{ "format": "tensor-investigation-bundle", … }' maxLength={MAX_BUNDLE_BYTES} /><button type="submit" className="btn btn-primary" disabled={busy || !ready || !paste.trim()}>Open pasted bundle</button></form></details>
-      <div className="il-live" aria-live="polite" aria-atomic="true">{!ready ? 'Preparing local tools…' : busy ? 'Validating bundle locally…' : notice}</div>
+      <div className="il-live" aria-live="polite" aria-atomic="true">{!ready ? '' : busy ? 'Validating bundle locally…' : notice}</div>
       {error && <div className="il-error" role="alert"><strong>Could not open this bundle</strong><p>{error}</p>{bundle && <p>The previously opened record is unchanged.</p>}</div>}
     </section>
 
@@ -208,7 +259,8 @@ export default function InvestigationLab() {
       <div className="tensor-panel il-workbench">
         <nav className="il-sections" aria-label="Investigation sections">{SECTIONS.filter(item=>item.id!=='walkthrough'||bundle.record?.metadata?.walkthrough?.format==='tensor-example-walkthrough').map((item) => <button type="button" key={item.id} className={section === item.id ? 'is-active' : ''} aria-current={section === item.id ? 'page' : undefined} onClick={() => showSection(item.id)}><span>{item.label}</span>{!['overview', 'graph', 'walkthrough'].includes(item.id) && <span className="il-count">{item.id === 'all' || item.id === 'history' ? entries.length : (groups[item.id]?.length || 0)}</span>}</button>)}<p>Entries retain attribution and revision history.</p></nav>
         <section className="il-content" ref={contentRef} tabIndex={-1} aria-label={SECTIONS.find((item) => item.id === section)?.label || 'Record contents'}>
-          {section === 'walkthrough' ? <CaseInvestigation bundle={bundle} initialStep={caseStep} onStep={setCaseStep} publicCaseId={source.caseId} labMode onInspect={inspectEntry}/> : section === 'graph' ? <InvestigationGraph bundle={bundle} questions={questions} onInspect={inspectEntry} /> : section === 'overview' ? <>
+          {inspectionTrail.length>0&&<nav className="il-inspection-trail" aria-label="Inspection trail"><button className="btn btn-secondary" onClick={returnToInspection}>← Back to {inspectionTrail.at(-1).selectedEntryId?entryTitle(entriesById.get(inspectionTrail.at(-1).selectedEntryId),{questions,entriesById}):SECTIONS.find(s=>s.id===inspectionTrail.at(-1).section)?.label||'previous view'}</button><span>{inspectionTrail.length} linked {inspectionTrail.length===1?'entry':'entries'} followed</span></nav>}
+          {section === 'walkthrough' ? <CaseInvestigation bundle={bundle} initialStep={caseStep} onStep={changeCaseStep} publicCaseId={source.caseId} labMode onInspect={inspectEntry}/> : section === 'graph' ? <InvestigationGraph bundle={bundle} questions={questions} onInspect={inspectEntry} /> : section === 'overview' ? <>
             <div className="il-content-heading"><p className="il-eyebrow">Investigation context</p><h2>Scope and handoff</h2></div>
             <div className="il-overview-metrics"><div><strong>{entries.length}</strong><span>inspectable entries</span></div><div><strong>{groups.QuestionInstance?.length || 0}</strong><span>question instances</span></div><div><strong>{groups.Actor?.length || 0}</strong><span>actor entries</span></div></div>
             <article className="tensor-panel il-overview-card"><h3>Record boundary</h3><dl className="il-fields"><Field label="Purpose" value={bundle.record?.scope?.purpose} /><Field label="Subjects" value={[...new Set((groups.QuestionInstance || []).map(subjectLabel))]} /><Field label="Exchange scope" value={bundle.record?.completeness?.exchangeScope} /><Field label="Completeness meaning" value={bundle.record?.completeness?.meaning} /><Field label="Recorded at" value={bundle.record?.recordedAt} /><Field label="Producer" value={bundle.record?.producer} /></dl><JsonDetails value={{ investigationId: bundle.record?.investigationId, snapshotId: bundle.record?.snapshotId, scope: bundle.record?.scope }} label="Exact identities and complete scope" /></article>
@@ -221,7 +273,7 @@ export default function InvestigationLab() {
             <label className="il-search-label" htmlFor="il-entry-search">Find text or an entry ID</label><input id="il-entry-search" className="il-search" type="search" value={selectedEntryId ? '' : query} onChange={(event) => { setQuery(event.target.value); setSelectedEntryId(''); setPage(0); }} />
             <p className="il-results">{visible.length} {visible.length === 1 ? 'entry' : 'entries'}{selectedEntryId ? ' selected' : query ? ' matching the search' : ''}</p>
             {visible.length === 0 && <p className="il-empty">No matching entries in this section.</p>}
-            {section === 'history' ? <ol className="il-history" start={page * PAGE_SIZE + 1}>{visible.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE).map((entry, index) => <li key={index}><div><span className="il-eyebrow">{typeLabel(entry.type)}</span><time>{asText(entry.recordedAt)}</time></div><EntryReference id={entry.id} {...{ entriesById, questions, onInspect: inspectEntry }} /><p>{attributionLabel(entry, entriesById)}</p>{entry.supersedes && <p className="il-caption">Earlier entry retained · <EntryReference id={entry.supersedes.entryId} {...{ entriesById, questions, onInspect: inspectEntry }} /></p>}</li>)}</ol> : visible.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE).map((entry, index) => <EntryCard key={index} entry={entry} questions={questions} entriesById={entriesById} onInspect={inspectEntry} />)}
+            {section === 'history' ? <ol className="il-history" start={page * PAGE_SIZE + 1}>{visible.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE).map((entry, index) => <li key={index}><div><span className="il-eyebrow">{typeLabel(entry.type)}</span><time>{dateTimeLabel(entry.recordedAt)}</time></div><EntryReference id={entry.id} {...{ entriesById, questions, onInspect: inspectEntry }} /><p>{attributionLabel(entry, entriesById)}</p>{entry.supersedes && <p className="il-caption">Earlier entry retained · <EntryReference id={entry.supersedes.entryId} {...{ entriesById, questions, onInspect: inspectEntry }} /></p>}</li>)}</ol> : visible.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE).map((entry, index) => <EntryCard key={index} entry={entry} questions={questions} entriesById={entriesById} onInspect={inspectEntry} />)}
             {visible.length > PAGE_SIZE && <div className="il-pagination"><button type="button" className="btn btn-secondary" disabled={page === 0} onClick={() => setPage((value) => value - 1)}>Previous entries</button><span>Page {page + 1} of {Math.ceil(visible.length / PAGE_SIZE)}</span><button type="button" className="btn btn-secondary" disabled={(page + 1) * PAGE_SIZE >= visible.length} onClick={() => setPage((value) => value + 1)}>Next entries</button></div>}
           </>}
         </section>

@@ -97,3 +97,17 @@
 .case-context-inputs { margin-block: 1rem; padding: .75rem; border: 1px solid var(--line-soft); }
 .case-context-inputs li { margin-block: .65rem; }
 @media (max-width:600px) { .case-context-count { display:none; } }
+
+/* Keep reading and navigation together in both standalone and Lab workspaces. */
+.case-workspace.atlas { overflow: clip; }
+.case-controls { position: sticky; top: var(--sticky-header-height,88px); z-index: 8; background: var(--bg-input); border-bottom: 1px solid var(--line-soft); }
+.case-current-title { color: var(--text-secondary); font-size: .8rem; flex: 1; }
+.case-view-toggle { display: inline-flex; }
+.case-view-options { display: none; }
+.case-controls[data-open=true] .case-view-options { display: flex; width:100%; flex-wrap:wrap; gap:var(--space-2); }
+.case-current { scroll-margin-top: calc(var(--sticky-header-height,88px) + 80px); }
+.case-current .case-owner, .case-step-navigation span, .case-step-navigation small, .case-next-options button small { font-size: .75rem; }
+.case-reading-actions { display:flex; flex-wrap:wrap; gap:var(--space-2); border-top:1px solid var(--line-soft); margin-top:var(--space-4); padding-top:var(--space-3); }
+.case-reading-actions .btn { white-space:normal; text-align:left; }
+.case-reading-actions p { width:100%; }
+@media(max-width:600px){.case-current-title { display:none; } .case-current { font-size:.95rem; } .case-controls { top:var(--sticky-header-height,0px); }}

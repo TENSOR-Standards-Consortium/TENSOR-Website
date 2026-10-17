@@ -12,7 +12,7 @@ try{
  await page.goto(base+'/graphs/');
  await page.locator('[data-graph-ready=true]').waitFor();
  assert.equal(await page.locator('.atlas-stage').getAttribute('data-node-count'),'609');
- await page.getByRole('button',{name:'Follow an investigation',exact:true}).click();
+ await page.goto(base+'/graphs/?investigation='+GUIDES[0].id);
  for(const guide of GUIDES){
   await page.locator('#guide-select').selectOption(guide.id);
   for(const [i,step] of guide.steps.entries()){

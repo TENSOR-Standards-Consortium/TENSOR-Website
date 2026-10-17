@@ -1,0 +1,26 @@
+<section class="reference-search" id="reference-search" aria-labelledby="reference-search-title">
+  <h2 id="reference-search-title">Find a resource</h2>
+  <form role="search"><label for="reference-query">Search reference resources</label><input id="reference-query" type="search" placeholder="Try authority, vendor layers, or exchange" autocomplete="off" aria-describedby="reference-search-help" /></form>
+  <p id="reference-search-help">Search the guides, specification and review documents. <a href="/questions/">Search investigation questions separately.</a></p>
+  <p id="reference-search-status" role="status" aria-live="polite"></p><ul id="reference-search-results"></ul><button id="reference-search-more" class="btn btn-secondary" hidden>Show more results</button>
+  <noscript><p>Interactive search requires JavaScript. Browse the resource groups and reference documents below.</p></noscript>
+</section>
+<script>
+  const field=document.querySelector<HTMLInputElement>('#reference-query'),list=document.querySelector<HTMLUListElement>('#reference-search-results'),status=document.querySelector<HTMLElement>('#reference-search-status'),more=document.querySelector<HTMLButtonElement>('#reference-search-more');
+  let index:Promise<Array<{title:string,url:string,category:string,text:string}>>|undefined,sequence=0,limit=8;
+  async function search(reset=true){
+    if(!field||!list||!status||!more)return;
+    if(reset)limit=8;const ticket=++sequence,terms=field.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    if(!terms.length){list.replaceChildren();status.textContent='';more.hidden=true;return;}
+    try{
+      status.textContent='Searching resources…';
+      index ||= fetch('/reference-search.json',{credentials:'omit'}).then(response=>{if(!response.ok)throw new Error('Unavailable');return response.json();});
+      const rows=await index;if(ticket!==sequence)return;
+      const matches=rows.filter(row=>terms.every(term=>`${row.title} ${row.text}`.toLowerCase().includes(term))).sort((a,b)=>Number(a.category.startsWith('Historical'))-Number(b.category.startsWith('Historical'))||Number(!terms.every(t=>a.title.toLowerCase().includes(t)))-Number(!terms.every(t=>b.title.toLowerCase().includes(t))));
+      list.replaceChildren();
+      for(const row of matches.slice(0,limit)){if(!row.url.startsWith('/')||row.url.startsWith('//'))continue;const item=document.createElement('li'),link=document.createElement('a'),category=document.createElement('small');link.href=row.url;link.textContent=row.title;category.textContent=row.category;item.append(link,category);list.append(item);}
+      status.textContent=matches.length?`${matches.length} resources found · showing ${Math.min(matches.length,limit)}`:'No matching resources. Try a shorter phrase or browse the groups below.';more.hidden=matches.length<=limit;
+    }catch{if(ticket===sequence){index=undefined;status.textContent='Search is unavailable. Browse the resource groups below or reload to try again.';more.hidden=true;}}
+  }
+  field?.form?.addEventListener('submit',event=>{event.preventDefault();search();});field?.addEventListener('input',()=>search());more?.addEventListener('click',()=>{limit+=8;search(false);});
+</script>

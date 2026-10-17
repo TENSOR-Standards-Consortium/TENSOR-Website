@@ -14,11 +14,6 @@ const description = `Browse and cite the ${questions.length} questions in TENSOR
   <ContentCard>
     <p class="section-kicker">Current public dataset · {GRAPH_VERSION}</p>
     <h2>Investigation questions and evidence criteria</h2>
-    <p>This catalog uses the same {questions.length} questions and {graph.edges.length} routes as the Atlas, Graph Studio and current review package. Each question includes its evidence criteria, bindings and outgoing routes.</p>
-    <p>Explore these questions in the <a href="/graphs/">Atlas</a>, follow the <a href="/graphs/profiles/">event profiles</a>, or <a href="/review/">review the same dataset</a>. The <a href="/archives/">archive</a> preserves older releases for citation. Investigation records use the <a href="/core/">Core binding</a>.</p>
-    <p><a href={GRAPH_DOWNLOAD} download>Download the current graph JSON</a> · <a href={GRAPH_SOURCE}>Inspect the pinned repository source</a></p>
-    <details class="source-details"><summary>Dataset identity and graph digest</summary><p>Graph version: <code>{GRAPH_VERSION}</code><br />SHA-256 of the exact source bytes: <code class="digest">{GRAPH_SHA256}</code></p><p>The dataset inventory pins the graph, profiles and reference cases. Historical identifiers retain their original source context in the archive.</p></details>
-
     <form id="question-filters" role="search" hidden>
       <div><label for="question-query">Find a question</label><input id="question-query" type="search" placeholder="Question ID, wording, or archetype" autocomplete="off" /></div>
       <div><label for="question-category">Category</label><select id="question-category"><option value="">All categories</option>{categories.map((category) => <option value={category}>{category}</option>)}</select></div>
@@ -26,6 +21,11 @@ const description = `Browse and cite the ${questions.length} questions in TENSOR
     <p id="question-count" role="status" aria-live="polite">Showing {questions.length} questions.</p>
     <p id="question-empty" hidden>No questions match. Try a shorter phrase or another category.</p>
     <nav class="category-links" aria-label="Jump to a question category">{categories.map((category) => <a href={`#category-${category.toLowerCase()}`}>{category}</a>)}</nav>
+    <p>This catalog uses the same {questions.length} questions and {graph.edges.length} routes as the Atlas, Graph Studio and current review package. Each question includes its evidence criteria, bindings and outgoing routes.</p>
+    <p>Explore these questions in the <a href="/graphs/">Atlas</a>, follow the <a href="/graphs/profiles/">event profiles</a>, or <a href="/review/">review the same dataset</a>. The <a href="/archives/">archive</a> preserves older releases for citation. Investigation records use the <a href="/core/">Core binding</a>.</p>
+    <p><a href={GRAPH_DOWNLOAD} download>Download the current graph JSON</a> · <a href={GRAPH_SOURCE}>Inspect the pinned repository source</a></p>
+    <details class="source-details"><summary>Dataset identity and graph digest</summary><p>Graph version: <code>{GRAPH_VERSION}</code><br />SHA-256 of the exact source bytes: <code class="digest">{GRAPH_SHA256}</code></p><p>The dataset inventory pins the graph, profiles and reference cases. Historical identifiers retain their original source context in the archive.</p></details>
+
     <div id="question-library" data-dataset-id={dataset.id}>
       {categories.map((category) => (
         <section class="question-category" data-category={category} aria-labelledby={`category-${category.toLowerCase()}`}>

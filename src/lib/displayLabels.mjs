@@ -44,9 +44,22 @@ export function subjectLabel(entry) {
     return `${typeLabel(key)}: ${declared || (isReference ? unnamed : propertyLabel(value, unnamed))}`;
   }).join(' · ') || 'Subject not supplied';
 }
+export function statusLabel(value) {
+  const labels = { notApplicable: 'Not applicable', notRun: 'Not run', newLead: 'Separate lead', applicable: 'Applicable', bounded: 'Bounded', recorded: 'Recorded' };
+  return Object.hasOwn(labels,value) ? labels[value] : value;
+}
+const validTimestamp = value => typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T/.test(value) && Number.isFinite(Date.parse(value));
+export function dateTimeLabel(value) {
+  if (!validTimestamp(value)) return typeof value === 'string' ? value : '';
+  const date = new Date(value);
+  const day = new Intl.DateTimeFormat('en-GB', { timeZone: 'UTC', day: 'numeric', month: 'short', year: 'numeric' }).format(date);
+  const time = new Intl.DateTimeFormat('en-GB', { timeZone: 'UTC', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23' }).format(date);
+  return `${day}, ${time} UTC`;
+}
 export function timeLabel(context) {
   if (!context || typeof context !== 'object') return 'Time not supplied';
-  return [context.start, context.end].filter(v => typeof v === 'string').join(' – ') || propertyLabel(context.reason, typeLabel(context.status || 'Time not supplied'));
+  if(validTimestamp(context.start)&&validTimestamp(context.end)&&new Date(context.start).toISOString().slice(0,10)===new Date(context.end).toISOString().slice(0,10))return `${dateTimeLabel(context.start).replace(/ UTC$/, '')} – ${dateTimeLabel(context.end).split(', ')[1]}`;
+  return [context.start, context.end].filter(v => typeof v === 'string').map(dateTimeLabel).join(' – ') || propertyLabel(context.reason, statusLabel(context.status || 'Time not supplied'));
 }
 export function entryTitle(entry, { questions = new Map(), entriesById = new Map() } = {}) {
   if (entry?.type === 'QuestionInstance') {
@@ -56,7 +69,7 @@ export function entryTitle(entry, { questions = new Map(), entriesById = new Map
   if (entry?.type === 'Assessment' || entry?.type === 'Decision') {
     const target = entriesById.get(entry.targetInstanceId);
     const q = target?.type === 'QuestionInstance' && questions.get(questionKey(target.definitionRef, target.questionId));
-    if (q) return `${typeLabel(entry.type)} · ${entry.outcome || entry.disposition || 'Recorded'} · ${questionLabel(q)}${entry.recordedAt ? ` · ${entry.recordedAt}` : ''}`;
+    if (q) return `${typeLabel(entry.type)} · ${entry.outcome || entry.disposition || 'Recorded'} · ${questionLabel(q)}${entry.recordedAt ? ` · ${dateTimeLabel(entry.recordedAt)}` : ''}`;
   }
   for (const field of ['label', 'name', 'title', 'statement', 'operationDescription', 'description', 'rationale', 'permittedOperation']) {
     if (readable(entry?.[field])) return entry[field].trim();
@@ -70,9 +83,11 @@ export function entryTitle(entry, { questions = new Map(), entriesById = new Map
 
 export function valueLabel(value, depth = 0) {
   if (value === undefined || value === null) return '';
-  if (typeof value === 'string') return propertyLabel(value, 'Referenced item · see exact details');
+  if (typeof value === 'string') return validTimestamp(value) ? dateTimeLabel(value) : statusLabel(propertyLabel(value, 'Referenced item · see exact details'));
   if (typeof value !== 'object') return String(value);
   if (depth >= 3) return 'Additional properties · see exact details';
   if (Array.isArray(value)) return value.slice(0, 30).map(v => valueLabel(v, depth + 1)).join(' · ') + (value.length > 30 ? ' · More in exact details' : '');
-  return Object.entries(value).slice(0, 30).map(([key, v]) => `${typeLabel(key)}: ${/(?:^id$|Id$|Ids$)/.test(key) ? 'Referenced item · see exact details' : valueLabel(v, depth + 1)}`).join(' · ');
+  if (value.start || value.end) return timeLabel(value);
+  if (value.status && value.rationale && Object.keys(value).length === 2) return `${statusLabel(value.status)} · ${valueLabel(value.rationale, depth + 1)}`;
+  return Object.entries(value).slice(0, 30).map(([key, v]) => `${typeLabel(key).replace(/^./, c => c.toUpperCase())}: ${/(?:^id$|Id$|Ids$)/.test(key) ? 'Referenced item · see exact details' : valueLabel(v, depth + 1)}`).join(' · ');
 }
