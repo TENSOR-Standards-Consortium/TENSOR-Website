@@ -16,7 +16,13 @@ The project owner explicitly accepted these bootstrap roles on October 11, 2026 
 
 TENSOR remains a public standard initiative for all cyber investigations, usable by humans and agents. Vendor and business layers sit above Core. Long-term accounts, branding, contacts and stewardship belong to TENSOR rather than a founder's employer, consultancy or commercial product. Temporary support creates no continuing affiliation or ownership right.
 
-All three operational roles currently concentrate in one founder. The author and reviewer of a change must not be counted as independent merely because different tools or agents were used. No external reviews, partnerships or representative governance are claimed. The steward's project affiliation is TENSOR Standards Consortium; a separate interests/conflicts declaration remains pending owner confirmation. This is not a declaration that there are no conflicts.
+All three operational roles currently concentrate in one founder. The author and reviewer of a change must not be counted as independent merely because different tools or agents were used. No external reviews, partnerships or representative governance are claimed. The steward's project affiliation is TENSOR Standards Consortium.
+
+### Founder declaration, October 17, 2026
+
+John Schieferle Uhlenbrock confirms that he is not seeking or retaining a commercial stake or exclusive proprietary IP interest in TENSOR. His intent is for TENSOR to serve the public as a shared standard for all cyber investigations, usable by humans and agents. Vendor and company layers may build on the public Core; they do not acquire ownership or control of that Core.
+
+This records the founder's stated interests in TENSOR. It is not a blanket declaration about every outside activity, an assignment of copyright, or a change to the existing licenses. Any relevant conflict arising during review or a project decision must still be disclosed and recorded. Proposed governance and rights policies remain subject to their public adoption process.
 
 ## Contact, findings and escalation
 
