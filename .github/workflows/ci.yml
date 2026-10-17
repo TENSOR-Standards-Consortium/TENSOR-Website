@@ -28,5 +28,7 @@ jobs:
         run: npm ci
       - name: Run full dependency audit
         run: npm audit
+      - name: Test private credential handoff safeguards
+        run: python3 -m unittest discover -s tests/ops -q
       - name: Check, test, build and inspect generated security policies
         run: npm run validate

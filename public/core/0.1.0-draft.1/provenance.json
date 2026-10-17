@@ -3,7 +3,7 @@
   "manifestVersion": 1,
   "bindingVersion": "0.1.0-draft.1",
   "sourceRepository": "https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework",
-  "sourceCommit": "0b0168f626a9c2a52a9a2833207a5fab678260cc",
+  "sourceCommit": "e25b2086a20c00d962c459fa432ad07aa326bdf7",
   "sourceDirty": false,
   "foundingSource": "framework-repository",
   "files": [
@@ -142,8 +142,8 @@
     {
       "source": "docs/stewardship.md",
       "target": "public/docs/stewardship.md",
-      "sha256": "f711bcb5ba7be5e1a9a8f6104c124f93cf4ea950c848aa02ae8323dce8422e35",
-      "bytes": 4568
+      "sha256": "130207c42bc4ae4bd3a56d2d353872517cd84888e1bb9c86a2d9273971536b17",
+      "bytes": 5230
     },
     {
       "source": "examples/layers/cloud-investigation.layers.json",
@@ -598,7 +598,7 @@
     {
       "source": "review/current/README.md",
       "target": "public/review/current/README.md",
-      "sha256": "2fff1ece4613182aafa930851e6bb1e599eb451b9ac2077fc99fef37a1e16ca6",
+      "sha256": "2b71148e65fc98f97b3b4862298379b7157a27b0228eaaf57970cc4dd6a07f9f",
       "bytes": 3600
     },
     {
@@ -610,26 +610,26 @@
     {
       "source": "review/current/manifest.json",
       "target": "public/review/current/manifest.json",
-      "sha256": "ad50d65bacc2f39ea623c27c29642ce27f2171a3fa1f267a5af0dbacf58e7cc9",
+      "sha256": "5a95cae2af126d29e9cb7f18d0bc9adcd0bdb30abb59f8929c4ea6386627fdf5",
       "bytes": 58909
     },
     {
       "source": "review/current/review-form.md",
       "target": "public/review/current/review-form.md",
-      "sha256": "db4a868b05acde28a477583325b7d64e1b1b485ef8813758afe1330e7456a3d1",
+      "sha256": "fe62309b05f2ba6e79bd976ef87de64dd72e7a1a73e8a9c777cb9c8096ceb18d",
       "bytes": 1020
     },
     {
       "source": "review/current/review-package.zip",
       "target": "public/review/current/review-package.zip",
-      "sha256": "cd08d7fce2dbe241b6e8207e39cad0ae90c2f34623dddbe725fe3535f2cd3be4",
-      "bytes": 3373631
+      "sha256": "20edfc7a40d0a03d105e3487599ba0f794afe470bc4b71f7bab2e01e7cb8a261",
+      "bytes": 3375115
     },
     {
       "source": "review/current/source.tar.gz",
       "target": "public/review/current/source.tar.gz",
-      "sha256": "75d157efbc613c82665a4ae6b800e0c731618dab0520d1750d5b969812d169fe",
-      "bytes": 3408459
+      "sha256": "07258baf63699d6ba4feadff1966b7d1e96a084eb18924fd3d07167e19fa55af",
+      "bytes": 3408684
     },
     {
       "source": "review/current/validation.json",
@@ -646,7 +646,7 @@
     {
       "source": "review/current/walkthrough.md",
       "target": "public/review/current/walkthrough.md",
-      "sha256": "8566611b626720942c4dd6cbd146a2a019fcd94d041acfc234ab4f36d95b6cee",
+      "sha256": "5da3eaa4489eee62f2a3f11e89edd007c4ae626ec96cc95a7058923e242024b8",
       "bytes": 2070
     },
     {

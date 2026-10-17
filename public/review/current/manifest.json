@@ -2,7 +2,7 @@
   "format": "tensor-current-review-package",
   "manifestVersion": 1,
   "sourceRepository": "https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework",
-  "sourceCommit": "106fe87159f37a18d8ecebd9db009a0c8c03dd0d",
+  "sourceCommit": "ee2e7285c77ce60e8ab41aa94c9ac97b7c69fef3",
   "dataset": {
     "id": "urn:tensor:dataset:sha256:ae1b56d7b19ab3c4f94229a5f816e375b216200314c53219c0dcbd0ecf6df536",
     "graphVersion": "0.20261016a",
@@ -19,8 +19,8 @@
   "scope": "The current public dataset, identical for implementers, visitors and reviewers. Generated review/current packaging is excluded from its own source archive.",
   "archive": {
     "path": "source.tar.gz",
-    "bytes": 3408459,
-    "sha256": "75d157efbc613c82665a4ae6b800e0c731618dab0520d1750d5b969812d169fe"
+    "bytes": 3408684,
+    "sha256": "07258baf63699d6ba4feadff1966b7d1e96a084eb18924fd3d07167e19fa55af"
   },
   "files": [
     {
@@ -245,8 +245,8 @@
     },
     {
       "path": "docs/next-stage-plan.md",
-      "bytes": 9221,
-      "sha256": "9d35a7beb28e8c1d42eb8be63aea7a046158ee84e9d6d968f3ad65adc22d151b"
+      "bytes": 9472,
+      "sha256": "b3edbf1be45c48c99c42721f0effb2441432fd5fc1d575ba8fb5e043067d7aab"
     },
     {
       "path": "docs/release-checklist.md",
@@ -265,8 +265,8 @@
     },
     {
       "path": "docs/stewardship.md",
-      "bytes": 4568,
-      "sha256": "f711bcb5ba7be5e1a9a8f6104c124f93cf4ea950c848aa02ae8323dce8422e35"
+      "bytes": 5230,
+      "sha256": "130207c42bc4ae4bd3a56d2d353872517cd84888e1bb9c86a2d9273971536b17"
     },
     {
       "path": "drafts/core/ENTRY-REVIEW.md",
