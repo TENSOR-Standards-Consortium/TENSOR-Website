@@ -96,3 +96,4 @@
 .case-context-choices [aria-pressed="true"] { color: var(--accent-secondary); text-decoration: underline; }
 .case-context-inputs { margin-block: 1rem; padding: .75rem; border: 1px solid var(--line-soft); }
 .case-context-inputs li { margin-block: .65rem; }
+@media (max-width:600px) { .case-context-count { display:none; } }
