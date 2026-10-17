@@ -1,9 +1,15 @@
 name: Deploy Cloudflare Pages
+run-name: ${{ inputs.rotation_check && format('Pages credential check {0}', inputs.rotation_check) || 'Deploy Cloudflare Pages' }}
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      rotation_check:
+        description: Non-secret receipt identifier for the local credential-rotation helper
+        required: false
+        type: string
 
 permissions:
   contents: read

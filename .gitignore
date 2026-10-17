@@ -19,3 +19,4 @@ dist/
 # Logs / temp
 *.log
 tmp/
+__pycache__/

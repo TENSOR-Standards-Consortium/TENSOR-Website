@@ -20,6 +20,20 @@ The temporary account-owned token grants **Pages Write only in the dedicated TEN
 
 GitHub environment variables are referenced through the `vars` context, and secrets must be created explicitly for the environment. Configure and review them using [GitHub's environment management guidance](https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/manage-environments).
 
+### Private local rotation helper, October 17, 2026
+
+Run `python3 scripts/rotate-pages-token.py` in a local Terminal on the maintainer's computer, with Python 3.10+ and the authenticated GitHub CLI available. The helper is specific to this repository, `tensor-production`, the dedicated TENSOR account and its existing Pages project. It does not create accounts, change destinations or request broader access.
+
+1. Sign in to Cloudflare and use the [prefilled account-owned Pages token form](https://dash.cloudflare.com/?to=/07163d912c7affd851cd295e78bc72b1/api-tokens&permissionGroupKeys=%5B%7B%22key%22%3A%22page%22%2C%22type%22%3A%22edit%22%7D%5D&name=TENSOR%20Pages%20deploy%20rotation). Review the summary: **Cloudflare Pages: Edit only, TENSOR Standards Consortium account only**, no additional permissions. Choose an expiration within 90 days (for an October 17 creation, January 14, 2027 is within that limit). A template prefills choices; it does not prove the final scope.
+2. Create and copy the token yourself. Paste it only at the helper's hidden Terminal prompt. Do not paste it into chat, an argument, an environment variable, a file or an agent-visible browser field. The helper refuses piped input and an echoed fallback.
+3. The helper verifies active status, a bounded expiration and access to the exact production Pages project before replacing `TENSOR_CLOUDFLARE_API_TOKEN`. The GitHub CLI encrypts the secret locally and receives its value over stdin. Provider/CLI error bodies are suppressed; no token value is printed or deliberately persisted. The value exists briefly in local process memory; secure memory erasure is not claimed.
+4. A unique, non-secret check ID selects the exact manually dispatched deployment. The helper waits for success and compares live provenance with the deployed commit's pinned provenance. A status-only receipt is written to `~/Library/Logs/TENSOR/pages-token-rotation.json`. Failure or interruption may leave the secret updated; inspect the receipt and Actions before retrying, and keep the old token active.
+5. Only after the replacement is proven, revoke the old temporary proof token in Cloudflare. Do not revoke the new token. The helper cannot revoke other tokens, and never claims that retirement is complete.
+
+Project access proves usability, not absence of other permissions: the human must inspect the creation summary. Cloudflare's [account-token creation API](https://developers.cloudflare.com/fundamentals/api/how-to/create-via-api/) requires separate token-management access. Do not add that permission to a Pages deployment token to make it self-rotating. The [template documentation](https://developers.cloudflare.com/fundamentals/api/how-to/account-owned-token-template/) describes the prefilled form.
+
+The helper's safeguards are tested with `python3 -m unittest discover -s tests/ops -q` in website CI. Those tests use fake credentials and mocked providers; they do not establish a completed live rotation. The October 18 expiry remains open until an actual replacement deployment and old-token retirement are recorded.
+
 The `main` branch requires a pull request, the GitHub Actions `validate` check against an up-to-date branch, and resolution of review conversations; the rule applies to administrators and disallows force-pushes and deletion. Independent approving reviews are not yet required because an independent maintainer has not accepted that role. CODEOWNERS names the existing administrator rather than nonexistent accounts or teams. Private vulnerability reporting, secret-scanning push protection and Dependabot security updates are enabled. These controls do not establish independent governance or a staffed security response service.
 
 | Setting | Required value |
