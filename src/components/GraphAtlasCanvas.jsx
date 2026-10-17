@@ -25,6 +25,8 @@ export default function GraphAtlasCanvas({ graph, layout, selectedId, view, onSe
   useEffect(() => {
     const wheelIntent=event=>cy.current?.userZoomingEnabled(event.ctrlKey||event.metaKey);
     const touchIntent=event=>cy.current?.userZoomingEnabled(event.touches.length>1);
+    // Register before Cytoscape's capture listeners so each gesture uses its own modifiers.
+    const container=host.current;container?.addEventListener('wheel',wheelIntent,{capture:true,passive:true});container?.addEventListener('touchstart',touchIntent,{capture:true,passive:true});
     let disposed = false, observer, frame;
     setHovered(null); setRenderedLayout(null); setStatus('Preparing the complete map…');
     import('cytoscape').then(({ default: cytoscape }) => {
@@ -88,10 +90,9 @@ export default function GraphAtlasCanvas({ graph, layout, selectedId, view, onSe
         sync();
       });
       observer.observe(host.current);
-      host.current.addEventListener('wheel',wheelIntent,{capture:true,passive:true});host.current.addEventListener('touchstart',touchIntent,{capture:true,passive:true});
       sync(); setRenderedLayout(layout); setStatus(graph.occurrences?`${graph.nodes.filter(n=>n.instance).length} bound contexts · ${graph.nodes.filter(n=>n.preview).length} unselected options · retained view`:`${graph.nodes.length} questions · ${graph.edges.length.toLocaleString()} routes · complete graph loaded`);
     }).catch(() => { if (!disposed) setStatus('Map unavailable. Open Questions or the complete text view below; every question and route remains available.'); });
-    return () => { host.current?.removeEventListener('wheel',wheelIntent,true);host.current?.removeEventListener('touchstart',touchIntent,true);disposed = true; if (frame) cancelAnimationFrame(frame); observer?.disconnect(); cy.current?.destroy(); cy.current = null; };
+    return () => { container?.removeEventListener('wheel',wheelIntent,true);container?.removeEventListener('touchstart',touchIntent,true);disposed = true; if (frame) cancelAnimationFrame(frame); observer?.disconnect(); cy.current?.destroy(); cy.current = null; };
   }, [graph, layout]);
   useEffect(() => {
     const instance = cy.current;

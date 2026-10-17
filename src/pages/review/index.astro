@@ -29,10 +29,12 @@ if (snapshot.dataset.id !== dataset.id) throw new Error('Review and public datas
     <h2>Review workflow</h2>
     <ol><li><strong>Understand:</strong> read <a href="/start/">TENSOR in five minutes</a> and follow the SOC investigation into the graph and Lab.</li><li><strong>Challenge meaning:</strong> examine the <a href="/questions/">question catalog</a>, evidence criteria and <a href="/graphs/review/">item-level review</a>. Check unknowns, bounded negative findings, multiple routes and cross-domain leads.</li><li><strong>Check layers:</strong> inspect <a href="/extensions/">vendor and organization additions</a> without changing public question meaning or treating policy as an investigative fact.</li><li><strong>Exchange:</strong> independently read, export and reimport cases; report preserved, unsupported and lost meaning.</li><li><strong>Return findings:</strong> cite the dataset digest, exact question/profile/requirement, reproduction and untested scope.</li></ol>
     <h2>Reproduce the same source</h2>
-    <p>Extract the ZIP into an empty directory. Verify its source archive before extraction, then verify the extracted files. The package uses Node.js 24.21.0 and Python 3.11 or later.</p>
+    <p>Extract the ZIP into an empty directory. The archive supports standalone Core checks. Full reproduction uses a verified clone with Git history because the Python preservation checks read earlier commits. The package uses Node.js 24.21.0 and Python 3.11 or later; the <a href="/read/review/current/README/">review brief</a> gives both workflows.</p>
     <pre><code>{`python3 verify-snapshot.py
-python3 verify-snapshot.py /absolute/path/to/extracted-source
-cd /absolute/path/to/extracted-source
+git clone https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework.git TENSOR-review
+git -C TENSOR-review checkout --detach ${snapshot.sourceCommit}
+python3 verify-snapshot.py TENSOR-review
+cd TENSOR-review
 npm ci
 npm run check
 node scripts/build_dataset.mjs --check
