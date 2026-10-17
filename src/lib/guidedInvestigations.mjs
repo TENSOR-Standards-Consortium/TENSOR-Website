@@ -70,12 +70,16 @@ for (const guide of GUIDES) for (const entry of guide.steps) {
   if (guide.id==='identity-session' && entry.questionId==='Q558') entry.origin='newLead';
 }
 
+export function routesForAnswer(graph,questionId,outcome) {
+  return graph.edges.filter(edge=>edge.source===questionId&&(outcome===undefined||edge.decision===outcome));
+}
+
 export function guideState(graph, guide, index, visibility = 'all') {
   const through = Math.max(0, Math.min(guide.steps.length - 1, index));
   const prefix = guide.steps.slice(0, through + 1);
   const currentId = prefix.at(-1).questionId;
   const visitedIds = prefix.map(s => s.questionId);
-  const nextEdges = graph.edges.filter(e => e.source === currentId && e.decision === prefix.at(-1).outcome);
+  const nextEdges = routesForAnswer(graph,currentId,prefix.at(-1).outcome);
   const nextIds = [...new Set(nextEdges.map(e => e.target))];
   const selectedEdges = prefix.slice(0, -1).flatMap((s, i) => {
     if(prefix[i+1].origin==='newLead') return [];

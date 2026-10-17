@@ -1,13 +1,13 @@
 import { questionLabel } from '../lib/displayLabels.mjs';
 import { useEffect, useRef } from 'react';
 import { Badge } from './WorkspaceUI.jsx';
-import { GUIDES, GUIDE_PROVENANCE, GUIDE_GRAPH_SHA256, GUIDE_CRITERIA_SHA256 } from '../lib/guidedInvestigations.mjs';
+import { GUIDES, routesForAnswer, GUIDE_PROVENANCE, GUIDE_GRAPH_SHA256, GUIDE_CRITERIA_SHA256 } from '../lib/guidedInvestigations.mjs';
 import catalog from '../../public/investigations/v1/catalog.json';
 
 export default function InvestigationTimeline({ guides = GUIDES, profileContext = null, guide, index, playing, setPlaying, advance, chooseGuide, graph, criteria, inspect, speed, setSpeed }) {
   const current = guide.steps[index];
   const question = graph.nodes.find(n => n.id === current.questionId);
-  const nextRoutes = graph.edges.filter(e => e.source === current.questionId && e.decision === current.outcome);
+  const nextRoutes = routesForAnswer(graph,current.questionId,current.outcome);
   const discoveries=question.extensions?.['tensor:discoveryOptions']||[];
   const active = useRef(null);
   useEffect(() => {
