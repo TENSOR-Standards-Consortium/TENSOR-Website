@@ -1,4 +1,4 @@
-import { questionLabel } from './displayLabels.mjs';
+import { questionLabel, subjectLabel } from './displayLabels.mjs';
 import { parseJSON } from '../vendor/tensor-core/json.mjs';
 import { indexEntries, getEntries, MAX_BUNDLE_BYTES } from './investigationLab.mjs';
 import { DOMAINS, STAGES, DOMAIN_COLORS } from './graphAtlas.mjs';
@@ -57,12 +57,13 @@ export function caseLayout(graph,portrait=false) {
   }
   const rows=new Map();for(const n of graph.nodes){const d=depth.get(n.id);if(!rows.has(d))rows.set(d,[]);rows.get(d).push(n);}
   const maxWidth=Math.max(...[...rows.values()].map(row=>row.length)),width=portrait?340:Math.max(640,maxWidth*300+80);
-  const positions=new Map();let y=110;
+  const heights=new Map(graph.nodes.map(n=>[n.id,Math.max(100,32+18*(n.displayLabel||n.title||n.label).split('\n').reduce((sum,line)=>sum+Math.max(1,Math.ceil(line.length/22)),0))]));
+  const positions=new Map();let y=70;
   for(const [,row] of [...rows].sort((a,b)=>a[0]-b[0])) {
-    row.forEach((n,i)=>positions.set(n.id,{x:portrait?170:width/2+(i-(row.length-1)/2)*300,y:portrait?y+i*170:y}));
-    y+=portrait?row.length*170:185;
+    if(portrait){for(const n of row){const h=heights.get(n.id);y+=h/2;positions.set(n.id,{x:170,y});y+=h/2+90;}}
+    else{const h=Math.max(...row.map(n=>heights.get(n.id)));y+=h/2;row.forEach((n,i)=>positions.set(n.id,{x:width/2+(i-(row.length-1)/2)*300,y}));y+=h/2+100;}
   }
-  const nodes=graph.nodes.map(node=>({...node,color:DOMAIN_COLORS[DOMAINS.indexOf(node.category)],position:positions.get(node.id)}));
+  const nodes=graph.nodes.map(node=>({...node,color:DOMAIN_COLORS[DOMAINS.indexOf(node.category)],cardHeight:heights.get(node.id),position:positions.get(node.id)}));
   return {nodes,width,height:y,laneHeight:185,stageWidth:300,orientation:portrait?'portrait':'wide',domainWidth:300,stageHeight:185};
 }
 
@@ -92,4 +93,53 @@ export function caseTrace(model,index,visibility='all',layers=['public','vendor'
   const visibleIds=model.graph.nodes.filter(n=>layers.includes(n.layerId)&&(visibility==='all'||visitedIds.includes(n.id)||frontier.includes(n.id))).map(n=>n.id);
   const visibleEdgeIds=visibility==='path'?[...new Set([...selectedEdges.map(e=>e.id),...model.graph.edges.filter(e=>e.source===current.node.id&&e.decision===current.assessment.outcome).map(e=>e.id)])]:null;
   return {currentId:current.node.id,visitedIds,nextIds:frontier,selectedEdges,openLeadIds,openLeadInstances,unresolvedIds,unresolvedAssessmentIds,visibleEdgeIds,visibleIds:visibility==='all'&&['public','vendor','company'].every(id=>layers.includes(id))?null:visibleIds};
+}
+
+// Render retained question occurrences, rather than merging different subjects
+// or visits under a reusable definition. Future entries are never inspected.
+export function caseOccurrenceView(model,index,visibility='all',layers=['public','vendor','company']) {
+  const frame=model.frames[Math.max(0,Math.min(index,model.frames.length-1))];
+  const retained=model.entries.slice(0,frame.through), retainedIds=new Set(retained.map(e=>e.id));
+  const instances=retained.filter(e=>e.type==='QuestionInstance');
+  const assessments=retained.filter(e=>e.type==='Assessment'),superseded=new Set(assessments.map(e=>e.supersedes?.entryId).filter(Boolean));
+  const nodes=instances.map(instance=>{
+    const base=model.instances.get(instance.id);
+    const visits=instances.filter(other=>other.questionId===instance.questionId);
+    const visit=visits.findIndex(other=>other.id===instance.id)+1;
+    const contextLabel=subjectLabel(instance).replace(/^subject: /,'');
+    const active=assessments.filter(a=>a.targetInstanceId===instance.id&&!superseded.has(a.id));
+    const outcomes=[...new Set(active.map(a=>a.outcome||a.applicability.status))];
+    const assessmentSummary=outcomes.length===0?'Awaiting assessment':outcomes.length===1?outcomes[0]:`Separate assessments: ${outcomes.join(' / ')}`;
+    const revision=assessments.some(a=>a.targetInstanceId===instance.id&&superseded.has(a.id));
+    return {...base,id:instance.id,definitionNodeId:base.id,instance,assessmentSummary,occurrenceLabel:visits.length>1?`${contextLabel} · Context ${visit}`:undefined,
+      displayLabel:`${base.category} · ${base.layerId}\n${base.title}\n${contextLabel}${visits.length>1?` · Context ${visit}`:''}\n${assessmentSummary}${revision?' · Earlier assessment retained':''}`};
+  });
+  const edges=[],selectedEdges=[],open=new Set(),assessed=new Set();
+  for(const assessment of assessments)assessed.add(assessment.targetInstanceId);
+  for(const decision of retained.filter(e=>e.type==='Decision')) {
+    const assessment=model.byId.get(decision.selectedAssessmentId);
+    for(const selection of decision.selections||[]) {
+      const declared=model.graph.edges.find(e=>e.id===selection.transitionId);
+      if(!declared||!retainedIds.has(selection.targetInstanceId)||!retainedIds.has(assessment?.id)||declared.decision!==assessment.outcome)continue;
+      const edge={...declared,id:`${decision.id}|${selection.targetInstanceId}`,transitionId:declared.id,
+        source:decision.targetInstanceId,target:selection.targetInstanceId,selectedAssessmentId:decision.selectedAssessmentId,recorded:true};
+      edges.push(edge);selectedEdges.push(edge);
+      if(!assessed.has(selection.targetInstanceId))open.add(selection.targetInstanceId);
+    }
+  }
+  // Unselected options have neutral preview nodes. They never reuse another
+  // subject's assessed occurrence or expose a future target instance.
+  const nextIds=[];
+  for(const declared of model.graph.edges.filter(e=>e.source===frame.node.id&&e.decision===frame.assessment.outcome)) {
+    const recorded=selectedEdges.find(e=>e.source===frame.instance.id&&e.selectedAssessmentId===frame.assessment.id&&e.transitionId===declared.id);
+    if(recorded){nextIds.push(recorded.target);continue;}
+    const base=model.graph.nodes.find(n=>n.id===declared.target),id=`option:${frame.instance.id}:${declared.id}`;
+    nodes.push({...base,id,definitionNodeId:base.id,preview:true,displayLabel:`${base.category} · ${base.layerId}\n${base.title}\nUnselected · bind a new context`});
+    edges.push({...declared,id:`preview:${id}`,source:frame.instance.id,target:id});nextIds.push(id);
+  }
+  const unresolvedIds=assessments.filter(e=>e.outcome==='unknown'&&!superseded.has(e.id)).map(e=>e.targetInstanceId);
+  const visitedIds=[...assessed],frontier=[...new Set([...open,...nextIds])];
+  const visibleIds=nodes.filter(n=>layers.includes(n.layerId)&&(visibility==='all'||visitedIds.includes(n.id)||frontier.includes(n.id))).map(n=>n.id);
+  return {graph:{...model.graph,occurrences:true,nodes,edges,layoutEdgeIds:selectedEdges.map(e=>e.id),entryNodeIds:instances.filter(i=>i.origin.kind!=='transition').map(i=>i.id)},
+    trace:{currentId:frame.instance.id,visitedIds,nextIds:frontier,selectedEdges,unresolvedIds,visibleIds,visibleEdgeIds:edges.map(e=>e.id)}};
 }

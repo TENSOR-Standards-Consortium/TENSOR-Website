@@ -1,8 +1,8 @@
 # TENSOR current technical review
 
-This package contains the **same current public reference dataset** used by the website, graph, profiles and Lab examples. There is no reviewer-only graph. The public graph has 609 questions and 2131 routes across 7 domains, with 16 event profiles, 567 qualified definitions and 3 cross-domain reference cases.
+This package contains the **same current public reference dataset** used by the website, graph, profiles and Lab examples. There is no reviewer-only graph. The public graph has 609 questions and 1743 routes across 7 domains, with 16 event profiles, 567 qualified definitions and 4 cross-domain reference cases.
 
-Graph: **0.20261013b**. Dataset: **urn:tensor:dataset:sha256:48840d95be44369a0d8beb34bd25aefadc21567ad316bfe5b5e295739c5551ad**. Exact source: **a1cc5eb9bd72dc014ae95f738e4b5dba31a69d6b**. `dataset.json` identifies every active artifact and its SHA-256. Graph and Core schema versions describe their respective formats; case records and vendor/company layers are contexts and additions, not alternate public datasets.
+Graph: **0.20261016a**. Dataset: **urn:tensor:dataset:sha256:ae1b56d7b19ab3c4f94229a5f816e375b216200314c53219c0dcbd0ecf6df536**. Exact source: **3990297f1120a61de65fc4f9e1d1e9da13cce681**. `dataset.json` identifies every active artifact and its SHA-256. Graph and Core schema versions describe their respective formats; case records and vendor/company layers are contexts and additions, not alternate public datasets.
 
 Download [the ZIP](review-package.zip). Extract it into an empty directory. Verify the source archive before extracting it with `python3 verify-snapshot.py`, then verify an extracted source directory with `python3 verify-snapshot.py /absolute/path/to/source`. The archive contains committed source at the identified commit, excluding generated `review/current` packaging to avoid recursion. Historical releases and the earlier review snapshot remain archives.
 

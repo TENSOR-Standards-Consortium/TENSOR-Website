@@ -18,8 +18,9 @@ const REVIEW = 'review/current';
 const ARCHIVED_REVIEW = 'review/2026-10-11.1';
 const INVESTIGATIONS = 'examples/investigations/v1';
 const INVESTIGATION_TARGET = 'public/investigations/v1';
-const INVESTIGATION_FILES = ['README.md', 'catalog.json', 'manifest.json', ...['soc-signin', 'workload-cloud-egress', 'attachment-host-tool'].flatMap(id => [`${id}.bundle.json`, `${id}.definition.json`])];
+const INVESTIGATION_FILES = ['README.md', 'catalog.json', 'manifest.json', ...['soc-signin', 'workload-cloud-egress', 'attachment-host-tool','parallel-followup'].flatMap(id => [`${id}.bundle.json`, `${id}.definition.json`])];
 const WORKING = ['tensor.core.graph.json', 'entry-evidence-criteria.json', 'source/entry_nodes.json', 'coverage-inventory.json',
+  'reviews/2026-10-16-contextual-routing/README.md', 'reviews/2026-10-16-contextual-routing/review.json',
   'reviews/2026-10-13-semantic/README.md', 'reviews/2026-10-13-semantic/review.json',
   ...['identity','host','network','cloud','email','application','file','cross-domain'].flatMap(id => [`reviews/2026-10-13-semantic/items/${id}.json`, `reviews/2026-10-13-semantic/challenges/${id}.json`]),
   'reviews/2026-10-13-routing/README.md', 'reviews/2026-10-13-routing/review.json',
@@ -42,7 +43,7 @@ const FOUNDING_FILES = [
 ];
 const LICENSE_TARGETS = ['src/vendor/tensor-core/LICENSE', `${PUBLIC_CORE}/LICENSE`];
 const OWNED_FILES = ['public/assets/data/core.schema.json'];
-const OWNED_ROOTS = ['src/vendor/tensor-core', PUBLIC_CORE, 'public/founding', 'public/legacy/0.20260206e', 'public/review/2026-10-11.1', 'public/review/current', 'public/dataset', 'public/examples/layers', 'public/docs', WORKING_TARGET, INVESTIGATION_TARGET];
+const OWNED_ROOTS = ['src/vendor/tensor-core', PUBLIC_CORE, 'public/founding', 'public/legacy/0.20260206e', 'public/archives/0.20261013b', 'public/review/2026-10-11.1', 'public/review/current', 'public/dataset', 'public/examples/layers', 'public/docs', WORKING_TARGET, INVESTIGATION_TARGET];
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const fail = (message) => { throw new Error(message); };
 const lexicalOrder = (a, b) => a < b ? -1 : a > b ? 1 : 0;
@@ -116,6 +117,8 @@ async function sourceSnapshot(options) {
     ...DOCUMENTS.map((name) => ({ source: `${CORE}/${name}`, target: `${PUBLIC_CORE}/${name}` })),
     ...FOUNDING_FILES.map((name) => ({ source: `${FOUNDING}/${name}`, readRoot: foundingRoot, readPath: `${foundingPrefix}${name}`, target: `public/founding/${name}` })),
     { source: LEGACY, target: LEGACY_TARGET },
+    { source: 'drafts/core/reviews/2026-10-16-contextual-routing/baseline/drafts/core/tensor.core.graph.json', target: 'public/archives/0.20261013b/tensor.core.graph.json' },
+    { source: 'drafts/core/reviews/2026-10-16-contextual-routing/baseline/drafts/core/entry-evidence-criteria.json', target: 'public/archives/0.20261013b/entry-evidence-criteria.json' },
     { source: 'dataset/current.json', target: 'public/dataset/current.json' },
     ...WORKING.map((name) => ({ source: `drafts/core/${name}`, target: `${WORKING_TARGET}/${name}` })),
     ...INVESTIGATION_FILES.map(name => ({ source: `${INVESTIGATIONS}/${name}`, target: `${INVESTIGATION_TARGET}/${name}` })),

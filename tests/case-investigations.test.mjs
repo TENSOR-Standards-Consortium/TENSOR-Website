@@ -1,9 +1,10 @@
 import test from 'node:test';
+import {compactQuestionLabel} from '../src/lib/displayLabels.mjs';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { validateBundle } from '../src/vendor/tensor-core/index.mjs';
-import { caseModel, caseTrace, caseLayout } from '../src/lib/caseInvestigations.mjs';
+import { caseModel, caseTrace, caseLayout, caseOccurrenceView } from '../src/lib/caseInvestigations.mjs';
 const read=async name=>JSON.parse(await readFile(new URL(`../public/investigations/v1/${name}.bundle.json`,import.meta.url),'utf8'));
 const soc=await read('soc-signin'),attachment=await read('attachment-host-tool');
 test('case projection uses actual definitions, attributed assessments, and explicit recorded selections',()=>{
@@ -63,4 +64,58 @@ test('optional walkthrough metadata cannot invent or mispair record entries',()=
   const old=structuredClone(soc);delete old.record.metadata.walkthrough;assert.equal(caseModel(old),null);
   const labels=structuredClone(soc);labels.record.metadata.walkthrough.title={invalid:true};assert.throws(()=>caseModel(labels));
   const domains=structuredClone(soc);domains.record.metadata.walkthrough.domains={unsupported:true};assert.deepEqual(caseModel(domains).domains,['Identity','Email']);
+});
+
+
+test('seven-domain occurrence view keeps returns, parallel branches and retained unknowns separate',async()=>{
+  const bundle=await read('parallel-followup'),model=caseModel(bundle);
+  assert.equal(new Set(model.graph.nodes.map(n=>n.category)).size,7);
+  assert.equal(model.frames.length,9);
+  const first=model.frames[0],returned=model.frames[7];
+  assert.equal(first.node.id,returned.node.id,'A reusable question, not a duplicate definition');
+  assert.notEqual(first.instance.id,returned.instance.id);
+  assert.notDeepEqual(first.instance.subjectBindings,returned.instance.subjectBindings);
+  assert.notDeepEqual(first.instance.timeContext,returned.instance.timeContext);
+  const initial=caseOccurrenceView(model,0,'all');
+  assert.ok(!initial.graph.nodes.some(n=>n.instance?.id===returned.instance.id),'Future subject context is not revealed');
+  const parallel=caseOccurrenceView(model,1,'path');
+  assert.equal(parallel.trace.nextIds.filter(id=>!parallel.trace.visitedIds.includes(id)&&!id.startsWith('option:')).length,3);
+  const complete=caseOccurrenceView(model,8,'all');
+  assert.equal(complete.graph.nodes.filter(n=>n.definitionNodeId===first.node.id&&!n.preview).length,2);
+  const labels=complete.graph.nodes.filter(n=>n.definitionNodeId===first.node.id&&!n.preview).map(n=>compactQuestionLabel(n));
+  assert.equal(new Set(labels).size,2);assert.ok(labels.some(label=>label.includes('Morgan'))&&labels.some(label=>label.includes('workload')));
+  assert.ok(complete.trace.visitedIds.includes(first.instance.id));
+  assert.ok(complete.trace.visitedIds.includes(returned.instance.id));
+  assert.equal(complete.graph.nodes.find(n=>n.id===model.frames[2].instance.id).assessmentSummary,'no');
+  assert.equal(complete.graph.nodes.find(n=>n.id===model.frames[4].instance.id).assessmentSummary,'unknown');
+  assert.ok(complete.trace.unresolvedIds.includes(model.frames[4].instance.id),'The other branch keeps its attachment gap');
+  assert.ok(complete.trace.selectedEdges.some(e=>e.target===returned.instance.id));
+  const layout=caseLayout(complete.graph),byId=new Map(layout.nodes.map(n=>[n.id,n]));
+  assert.ok(byId.get(returned.instance.id).position.y>byId.get(first.instance.id).position.y,'A return is a distinct causal occurrence, not a collapsed cycle');
+  assert.equal((await validateBundle(bundle)).status,'pass');
+});
+
+test('occurrence previews never borrow another subject answer or relabel historical revision selections',()=>{
+  const model=caseModel(attachment),early=model.frames.findIndex(f=>f.assessment.outcome==='unknown'&&f.node.id==='S5');
+  const revised=caseOccurrenceView(model,early+1,'all');
+  const historical=revised.trace.selectedEdges.filter(e=>e.source===model.frames[early].instance.id);
+  assert.ok(historical.length>0&&historical.every(e=>e.decision==='unknown'));
+  for(const preview of revised.graph.nodes.filter(n=>n.preview))assert.equal(preview.instance,undefined);
+  assert.ok(!revised.trace.unresolvedIds.includes(model.frames[early].instance.id));
+});
+
+
+test('a same-answer revision keeps earlier selections historical and offers fresh unselected contexts',async()=>{
+  const bundle=structuredClone(attachment),entries=bundle.record.entries;
+  const later=entries.find(e=>e.type==='Assessment'&&e.id.endsWith(':assessment-5'));
+  later.outcome='unknown';later.rationale='The later acquisition still lacks the required discriminator.';
+  later.unknownReasons=[{code:'insufficient',explanation:later.rationale}];
+  assert.equal((await validateBundle(bundle)).status,'pass');
+  const model=caseModel(bundle),index=model.frames.findIndex(f=>f.assessment.id===later.id);
+  const view=caseOccurrenceView(model,index,'all');
+  const history=view.trace.selectedEdges.filter(e=>e.source===model.frames[index].instance.id);
+  assert.equal(history.length,2);assert.ok(history.every(e=>e.selectedAssessmentId!==later.id));
+  const previews=view.graph.edges.filter(e=>!e.recorded&&e.source===model.frames[index].instance.id);
+  assert.equal(previews.length,2);assert.ok(previews.every(e=>e.target.startsWith('option:')));
+  assert.ok(previews.every(e=>!history.some(old=>old.target===e.target)));
 });

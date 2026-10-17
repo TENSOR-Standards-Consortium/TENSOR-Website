@@ -19,7 +19,7 @@ export function atlasLayout(graph, orientation = 'wide') {
   const width = narrow ? DOMAINS.length * domainWidth + 280 : STAGES.length * stageWidth + 220;
   const height = narrow ? STAGES.length * stageHeight + 100 : DOMAINS.length * laneHeight + 90;
   const nodes = graph.nodes.map((node) => {
-    const group = groups.get(`${node.category}:${node.archetype}`).slice().sort((a, b) => Number(a.id.slice(1)) - Number(b.id.slice(1)));
+    const group = groups.get(`${node.category}:${node.archetype}`).slice().sort((a, b) => a.id.localeCompare(b.id,'en',{numeric:true}));
     const i = group.findIndex((item) => item.id === node.id);
     const domain = DOMAINS.indexOf(node.category), stage = STAGES.indexOf(node.archetype);
     return { ...node, color: DOMAIN_COLORS[domain] || 'var(--domain-uncategorized)', position: narrow ? { x: 300 + Math.max(0, domain) * domainWidth + (i % portraitColumns) * 145, y: 120 + Math.max(0, stage) * stageHeight + Math.floor(i / portraitColumns) * 58 } : { x: 230 + Math.max(0, stage) * stageWidth + (i % columns) * 145, y: 92 + Math.max(0, domain) * laneHeight + Math.floor(i / columns) * 58 } };

@@ -2,7 +2,7 @@
   "format": "tensor-public-event-profiles",
   "version": "0.1.0-draft.2",
   "status": "author-tested-public-draft-external-review-pending",
-  "graphVersion": "0.20261013b",
+  "graphVersion": "0.20261016a",
   "schemaVersion": "0.20260206e",
   "interpretation": "Additive, explicitly profile-qualified question definitions above the unchanged Core binding. Draft.2 adds typed required facts, explicit content evidence dependencies, operation identities and separate fact-led assessments. Required profile dependencies must survive exchange; an unsupported profile is unresolved, not silently flattened.",
   "profiles": {
@@ -693,24 +693,24 @@
     "focusDisposition": "Every retained focus is explicitly open or assessed. Assessed requires a retained applicable nonterminal question; a generic event match or terminal alone does not assess a fixed evidence facet.",
     "hypothesisContext": "A supplied hypothesis and its actual answer remain separate. Independent fact-led scope, relation, source and effect may omit a hypothesis; omission is preserved without inventing an identifier."
   },
-  "graphSha256": "5bbe0573940a20d7efe4cf9b78ae76f4ac79a3771bd92f5b182f3e18961aa874",
-  "criteriaSha256": "bbf1faf9a29396cb327c8a8b178328bc8cda6f6b4b95828d43b801ee7cace21a",
+  "graphSha256": "72a4e8a80ae9b20538b80a282f96882b65595ff6887b7161cfc64fca3ba5dc55",
+  "criteriaSha256": "98df19d3f63ac91979376ffb9421058f2cb0ded7b43312f86057efe8febb7b3d",
   "baselineCommit": "78a275b127d2f24933c3ec16d9a2b0b1c38fb0af",
   "inputPins": {
     "scripts/event_profiles.py": "f5fe76851de59b3caf52a91ac458b8f7131be9375c8fad4176a205bf37d20211",
     "scripts/build_event_profiles.py": "46364065a5474ff3c1bd7185ecc175c696663404fbe0a7d1c467fc5167304f06",
     "drafts/core/event-profiles/catalog.source.json": "f4dca9a6e5b6939fb0eda1391b274105c120d07ebdfb590fe7995c697ad4bf93",
     "drafts/core/event-profiles/scenarios.source.json": "139b6e39172fbf2b4a09b4ab5169801e1646136191008fd2113dde923b5aed21",
-    "drafts/core/tensor.core.graph.json": "5bbe0573940a20d7efe4cf9b78ae76f4ac79a3771bd92f5b182f3e18961aa874",
-    "drafts/core/entry-evidence-criteria.json": "bbf1faf9a29396cb327c8a8b178328bc8cda6f6b4b95828d43b801ee7cace21a",
+    "drafts/core/tensor.core.graph.json": "72a4e8a80ae9b20538b80a282f96882b65595ff6887b7161cfc64fca3ba5dc55",
+    "drafts/core/entry-evidence-criteria.json": "98df19d3f63ac91979376ffb9421058f2cb0ded7b43312f86057efe8febb7b3d",
     "scripts/evaluate_event_profiles.py": "1bc8e65d2ec1ef03f46e522dd12f67a15cd8a5977a901aaf7a3f251fa9bd2df2",
     "scripts/evaluate_entry_scenarios.py": "3202d33efd8d8a4f36533e01eee359b3ea1213d8bd1a05e5d7705732e1c88a2a",
-    "tests/legacy/test_event_profiles.py": "6e1e46b0a10a493b36e82eff584dd00ae7d0649d1c61243166c9eb895ce8cfaf",
+    "tests/legacy/test_event_profiles.py": "5174083c5f409da8f7616710e680eea0287929205d67f7f36ab2e6dbd63e4801",
     "tests/legacy/test_semantic_profiles.py": "a3b16205cfec051c779b2f56ba0a3aaa977ad1422395ca77ce5b9254bfd8d6b9",
     "tests/legacy/test_semantic_base.py": "842b3a4c79f13fe875b0712eff93308816e5ca5b092d03461c1c57c58f98565a",
-    "tests/legacy/test_semantic_routing.py": "fa50ed17da506959162880d5edb3dc8950f8dec46bc0d2ea81bfe0099690102a",
+    "tests/legacy/test_semantic_routing.py": "a766ae936311b0466913d2ebb540a53e5380139658fe2078a7ce543221c34580",
     "scripts/restored_evidence.py": "3389bdb86e90fa13f27a997e5ce8f885dde735bddaa9109f423033270d24629b",
     "scripts/semantic_graph_review.py": "89f26ed10c33547eb4bfbfce100e9296371f73bf82f3446ef809439c013ea8ad",
-    "standards/graph-assurance-policy.md": "da3c29db8eb21822065a28c9b469d77d9320356fb0ce7c607efa8b75f5485f77"
+    "standards/graph-assurance-policy.md": "1ba4053a944fd197dafba67437ce78554da91aaf716e49a8587427ba54bf2807"
   }
 }

@@ -1,17 +1,17 @@
 {
   "format": "tensor-current-dataset",
   "manifestVersion": 1,
-  "id": "urn:tensor:dataset:sha256:48840d95be44369a0d8beb34bd25aefadc21567ad316bfe5b5e295739c5551ad",
-  "graphVersion": "0.20261013b",
+  "id": "urn:tensor:dataset:sha256:ae1b56d7b19ab3c4f94229a5f816e375b216200314c53219c0dcbd0ecf6df536",
+  "graphVersion": "0.20261016a",
   "graphSchemaVersion": "0.20260206e",
   "bindingVersion": "0.1.0-draft.1",
   "counts": {
     "questions": 609,
-    "routes": 2131,
+    "routes": 1743,
     "domains": 7,
     "eventProfiles": 16,
     "qualifiedDefinitions": 567,
-    "referenceCases": 3
+    "referenceCases": 4
   },
   "graphSchema": "/assets/data/core.schema.json",
   "graph": "/graphs/working/tensor.core.graph.json",
@@ -85,115 +85,133 @@
       "source": "drafts/core/coverage-inventory.json",
       "publicPath": "/graphs/working/coverage-inventory.json",
       "bytes": 1333875,
-      "sha256": "3c7f49649e08370324a9024d56e9b8871dba75b3a1084bb3419362e11804417b"
+      "sha256": "0924e5677961fca1d8eb77276c227810f9b948b3295b7a2c211cec12baf7a4d1"
     },
     {
       "source": "drafts/core/entry-evidence-criteria.json",
       "publicPath": "/graphs/working/entry-evidence-criteria.json",
-      "bytes": 560283,
-      "sha256": "bbf1faf9a29396cb327c8a8b178328bc8cda6f6b4b95828d43b801ee7cace21a"
+      "bytes": 560542,
+      "sha256": "98df19d3f63ac91979376ffb9421058f2cb0ded7b43312f86057efe8febb7b3d"
     },
     {
       "source": "drafts/core/event-profiles/catalog.json",
       "publicPath": "/graphs/working/event-profiles/catalog.json",
       "bytes": 32197,
-      "sha256": "970df04928781450e199f8cccccac763818428ecd1e78f939060138f9234eefd"
+      "sha256": "b19d845e0158f85155fef9e736c206775905537fc3246d784ff30067045f3582"
     },
     {
       "source": "drafts/core/event-profiles/definitions.json",
       "publicPath": "/graphs/working/event-profiles/definitions.json",
       "bytes": 403130,
-      "sha256": "d45fea46d5f5b786dd6a3f3059ddd7c4880c16d05691ac43b3ccb7916f1509e6"
+      "sha256": "a21f88a7f52145bbc642685cb232321b621df6359cdd08e3693098038a7c8196"
     },
     {
       "source": "drafts/core/event-profiles/scenarios.json",
       "publicPath": "/graphs/working/event-profiles/scenarios.json",
       "bytes": 1216933,
-      "sha256": "cb7d00b4f7a1f6d0c0bfca31621fa443e6956aedc467b63eb2c2458505d31703"
+      "sha256": "7a7ccb4a33fba6b9f96062505a2c355938085f91be04395e68810fc4cd11cfd8"
     },
     {
       "source": "drafts/core/event-profiles/validation.json",
       "publicPath": "/graphs/working/event-profiles/validation.json",
       "bytes": 280547,
-      "sha256": "3b3c0f68c3670632fb160fcb5d09c0108f16bf687392f5e48de75b19415029f4"
+      "sha256": "9981449833dfc16d7180318ee49f273510e4d0c367a5093e7526d1a65a60e3c3"
+    },
+    {
+      "source": "drafts/core/reviews/2026-10-16-contextual-routing/review.json",
+      "publicPath": "/graphs/working/reviews/2026-10-16-contextual-routing/review.json",
+      "bytes": 1200819,
+      "sha256": "586f93728adc34c324502ab4e537e2e74a74610c49c536166c9f0a2ff63e92c6"
     },
     {
       "source": "drafts/core/source/entry_nodes.json",
       "publicPath": "/graphs/working/source/entry_nodes.json",
-      "bytes": 4301,
-      "sha256": "70391e0f4c5771d3b85672aa081d43e575cbbeaddceb5ababbe16237d16b39f2"
+      "bytes": 4481,
+      "sha256": "25ed8ec9e299341e0c9894acd02412cdf9221c6343d94a99809e71ac2be6549f"
     },
     {
       "source": "drafts/core/tensor.core.graph.json",
       "publicPath": "/graphs/working/tensor.core.graph.json",
-      "bytes": 2554519,
-      "sha256": "5bbe0573940a20d7efe4cf9b78ae76f4ac79a3771bd92f5b182f3e18961aa874"
+      "bytes": 3607956,
+      "sha256": "72a4e8a80ae9b20538b80a282f96882b65595ff6887b7161cfc64fca3ba5dc55"
     },
     {
       "source": "examples/investigations/v1/attachment-host-tool.bundle.json",
       "publicPath": "/investigations/v1/attachment-host-tool.bundle.json",
-      "bytes": 110501,
-      "sha256": "c431fca46ec276ed804ad3a0c36e67bd69755a365b9cf00f26aa9d952cf91f35"
+      "bytes": 110361,
+      "sha256": "9d674c55e2730c5938162fe3fef31d77d2900135208c8a313cb7884bc6c1a591"
     },
     {
       "source": "examples/investigations/v1/attachment-host-tool.definition.json",
       "publicPath": "/investigations/v1/attachment-host-tool.definition.json",
-      "bytes": 40445,
-      "sha256": "054a7030e97938bd87eecd9c1998f93acb08e537c5febeda8765123a60ae0415"
+      "bytes": 40305,
+      "sha256": "52a54b85d9dbd87cb180e5f08e43bc85f9ee8a52fd5a7f3306b3b782e67c38d2"
     },
     {
       "source": "examples/investigations/v1/catalog.json",
       "publicPath": "/investigations/v1/catalog.json",
-      "bytes": 1547,
-      "sha256": "ff017fe9f9d380bf27ddcfe7dd3e05fa517000bfa99224d639fac1dafccf9267"
+      "bytes": 2119,
+      "sha256": "bdad9a9bb543cab2ee0c09bb435a7679b269daa327ac8e180d80df79e59b00ab"
     },
     {
       "source": "examples/investigations/v1/manifest.json",
       "publicPath": "/investigations/v1/manifest.json",
-      "bytes": 1038,
-      "sha256": "9996aa3b0611da49b9263c75316f86d2bc22d0c0378fde5194541e4d8f37677b"
+      "bytes": 1328,
+      "sha256": "00749553a4a0e96554bcf76ca86a2b8e083b9cd169e93bfdf20aa56f561758cd"
+    },
+    {
+      "source": "examples/investigations/v1/parallel-followup.bundle.json",
+      "publicPath": "/investigations/v1/parallel-followup.bundle.json",
+      "bytes": 90859,
+      "sha256": "9f3f487faae5ce273cc82509c302dd964c35ba1e13bb22c88560bc08f5e8fa1e"
+    },
+    {
+      "source": "examples/investigations/v1/parallel-followup.definition.json",
+      "publicPath": "/investigations/v1/parallel-followup.definition.json",
+      "bytes": 29024,
+      "sha256": "4ba233fe797fc39786e5ad4bd4cf43c2b2a92be9c7ab5bdd89ce9a92fb3b9c51"
     },
     {
       "source": "examples/investigations/v1/soc-signin.bundle.json",
       "publicPath": "/investigations/v1/soc-signin.bundle.json",
-      "bytes": 81491,
-      "sha256": "2e7a2141b68b0d7a987178090d884c600e652deb480de5a16260e464273bbd8d"
+      "bytes": 81476,
+      "sha256": "fd8b30d5882edff51b8598f817f92e6217c60bdb26d549afce9554419fd9c16c"
     },
     {
       "source": "examples/investigations/v1/soc-signin.definition.json",
       "publicPath": "/investigations/v1/soc-signin.definition.json",
-      "bytes": 31954,
-      "sha256": "41d1b13e4530b5bbc50284fde898b97a4f692f0dfef19f93e1eaa6d96d74854a"
+      "bytes": 31939,
+      "sha256": "09e17c6ffcddbcc6f1cd9eb3c2b7cee390d01a22e31c20451750668dedbd9d5a"
     },
     {
       "source": "examples/investigations/v1/workload-cloud-egress.bundle.json",
       "publicPath": "/investigations/v1/workload-cloud-egress.bundle.json",
-      "bytes": 82719,
-      "sha256": "9b6c7afb726ecccf042f323fc003c29ca93df6c0c7fed9ed0628ec357b0afdb1"
+      "bytes": 82629,
+      "sha256": "2eb2b1489117324cb5bf5befc985e02aecc0a11efa8c5286994c81846ebcc9b3"
     },
     {
       "source": "examples/investigations/v1/workload-cloud-egress.definition.json",
       "publicPath": "/investigations/v1/workload-cloud-egress.definition.json",
-      "bytes": 30946,
-      "sha256": "9eb50dc9c9a225f1da80006c6fe4b40c20fb1a2242d562c12c765b6d7a441ea2"
+      "bytes": 30856,
+      "sha256": "d4ad5050f70f25fe138e81e0c60dcb597de2d3926456cdf0bd02cb90b87214f7"
     },
     {
       "source": "examples/layers/cloud-investigation.layers.json",
       "publicPath": "/examples/layers/cloud-investigation.layers.json",
       "bytes": 4189,
-      "sha256": "58a0e69fb751a6834d1541b68c7767449041a8bc85acd96f1f1ddac01eb620b0"
+      "sha256": "a267983fa75fc85bc5666eb3a68da4daa3d37e8f4d2dded8fc32f9af77763176"
     },
     {
       "source": "examples/layers/organization-cloud.layer.json",
       "publicPath": "/examples/layers/organization-cloud.layer.json",
       "bytes": 2048,
-      "sha256": "48bded65d085fb0b0fb61d0751d6bf084e6dffcc89537effdbb8c11ab6d34ae6"
+      "sha256": "700a99fd67c5c2b51a1fae867239ffc926bb6aaeebf9ca66ed717cdd2b937cc8"
     },
     {
       "source": "examples/layers/vendor-cloud.layer.json",
       "publicPath": "/examples/layers/vendor-cloud.layer.json",
       "bytes": 1970,
-      "sha256": "da534394aa7c94a7b915ce7525de0fbd2f9cc1c414beb81a106c1385d6129311"
+      "sha256": "e9d217ab4ef8bf961f1b7ddc972b8e81b94a383d5627b56c18683a189521c666"
     },
     {
       "source": "releases/core/schemas/v0.20260206e/tensor.core.schema.json",

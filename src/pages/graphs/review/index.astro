@@ -3,6 +3,7 @@ import DocumentLayout from '../../../layouts/DocumentLayout.astro';
 import ContentCard from '../../../components/ContentCard.astro';
 import ReferenceTable from '../../../components/ReferenceTable.astro';
 import Button from '../../../components/Button.astro';
+import current from '../../../../public/graphs/working/reviews/2026-10-16-contextual-routing/review.json';
 import review from '../../../../public/graphs/working/reviews/2026-10-13-semantic/review.json';
 const resources = '/graphs/working/reviews/2026-10-13-semantic';
 ---
@@ -10,18 +11,20 @@ const resources = '/graphs/working/reviews/2026-10-13-semantic';
   <ContentCard>
     <p class="section-kicker">Working graph · Semantic review</p>
     <h2>Investigation meaning, question by question.</h2>
-    <p>The current review covers <strong>{review.counts.nodes} questions, {review.counts.edges.toLocaleString()} routes and {review.counts.qualifiedDefinitions} profile-qualified definitions</strong> across all seven domains. Separate AI reviewers assessed each item and tested realistic fictional investigations with independently declared expectations.</p>
-    <p><strong>{review.graphVersion} · {review.status === 'separate-ai-review-complete' ? 'Separate AI review complete' : 'Review in progress'}.</strong> These results concern the declared evidence contracts and supplied observations. Institutional approval, authenticated incident evidence and independent interoperability remain open.</p>
-    <div class="cta-group"><Button href="/graphs/" variant="primary">Explore the reviewed graph</Button><Button href="/investigations/" variant="secondary">Follow an investigation</Button></div>
-    <h2>Domain review records</h2>
+    <p>The current author repair retains <strong>{current.counts.questions} questions and {current.counts.routes.toLocaleString()} answer routes</strong> across all seven domains. Every one of the {current.counts.reviewedSharedDestinations} previously shared destinations has an answer-specific disposition. Independent discoveries are published separately from answer-driven arrows.</p>
+    <p><strong>{current.graphVersion} · External review pending.</strong> All three answers no longer converge on the same destination. Legitimate shared targets retain different source answers and their context. Loops use fresh question instances; parallel leads retain separate subjects, intervals and assessments.</p>
+    <p><a href="/graphs/working/reviews/2026-10-16-contextual-routing/review.json">Complete shared-destination ledger</a> · <a href="/graphs/working/reviews/2026-10-16-contextual-routing/README.md">Routing meaning and validation</a> · <a href="/investigations/parallel-followup/">Seven-domain investigation with a return visit</a></p>
+    <p>Author-side checks do not establish authenticated incident evidence, institutional approval or independent interoperability. The 13 October separate AI review below concerns the <a href="/archives/0.20261013b/">archived baseline</a>; it does not approve this routing repair.</p>
+    <div class="cta-group"><Button href="/graphs/" variant="primary">Explore the current graph</Button><Button href="/investigations/" variant="secondary">Follow an investigation</Button></div>
+    <h2>Historical domain review records · 13 October</h2>
     <ReferenceTable label="Complete item review by domain"><thead><tr><th>Domain</th><th>Questions</th><th>Routes</th><th>Qualified definitions</th><th>Evidence</th></tr></thead><tbody>{review.domains.map(row => <tr><th>{row.domain}</th><td>{row.nodes}</td><td>{row.edges}</td><td>{row.qualifiedDefinitions}</td><td><a href={`${resources}/items/${row.id}.json`} download>Item ledger</a> · <a href={`${resources}/challenges/${row.id}.json`} download>Challenges</a></td></tr>)}</tbody></ReferenceTable>
     <p>The additional <a href={`${resources}/items/cross-domain.json`} download>routing review</a> checks every added investigative lead. Its <a href={`${resources}/challenges/cross-domain.json`} download>challenge receipt</a> records source preservation, independent material, qualified profiles, cross-domain discovery and partial unknown contexts.</p>
     <h2>Evidence rules carried through every route</h2>
     <ul><li>Missing identities, uncertain clocks and unavailable material stay unknown. Copied observations cannot become independent witnesses.</li><li>A refuted hypothesis does not erase an observed event or prevent another independently evidenced question.</li><li>Every relationship retains its own endpoints and time context. Technical metrics use comparable units and a separately bounded baseline.</li><li>Handoffs preserve actual answers, exact hypothesis meaning, evidence focus and open questions. A route endpoint does not close the investigation.</li><li>Public questions assess investigative facts. Vendor acquisition and tool graphs, company policy, approvals and business decisions remain separate layers.</li></ul>
-    <p>All 588 original IDs and 21 repair questions remain available. Repeated predicates and aliases are recorded as maintenance limits, not counted as proof of distinct capabilities or universal coverage. Schema, published releases and earlier review snapshots retain their existing bytes. The current review package contains this same public dataset.</p>
+    <p>All 588 original IDs and 21 repair questions remain available. Repeated predicates and aliases are recorded as maintenance limits, not counted as proof of distinct capabilities or universal coverage. Schema, published releases and earlier review snapshots retain their existing bytes. The current review package contains the same current public dataset.</p>
     <h2>Reproduce or inspect</h2>
     <p><a href={`${resources}/README.md`}>Method, repairs and reproduction steps</a> · <a href={`${resources}/review.json`} download>Complete receipt and source pins</a> · <a href="/graphs/coverage/">Original-question lineage</a> · <a href="/graphs/profiles/">Event-profile contracts</a></p>
     <p><a href="/extensions/">Vendor and organization layering</a> · <a href="/review/">Current technical review package</a></p>
-    <details><summary>Exact reviewed graph identity</summary><p>Graph: <code>{review.graphSha256}</code></p><p>Criteria: <code>{review.criteriaSha256}</code></p><p>Qualified definitions: <code>{review.definitionsSha256}</code></p></details>
+    <details><summary>Historical reviewed graph identity</summary><p>Graph: <code>{review.graphSha256}</code></p><p>Criteria: <code>{review.criteriaSha256}</code></p><p>Qualified definitions: <code>{review.definitionsSha256}</code></p></details>
   </ContentCard>
 </DocumentLayout>

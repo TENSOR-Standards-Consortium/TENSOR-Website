@@ -16,8 +16,8 @@ test('every guide is pinned to exact definitions and criteria, with declared out
       assert.ok(graph.nodes.some(n=>n.id===step.questionId));
       assert.ok(criteria.rules[criteria.nodes[step.questionId].rule][step.outcome]);
       assert.ok(step.evidence && step.rationale && step.limitation);
-      if(i<guide.steps.length-1) assert.ok(graph.edges.some(e=>e.source===step.questionId && e.target===guide.steps[i+1].questionId && e.decision===step.outcome),`${guide.id}: ${step.questionId} ${step.outcome}`);
-      else assert.equal(graph.edges.filter(e=>e.source===step.questionId).length,0);
+      if(i<guide.steps.length-1 && guide.steps[i+1].origin!=='newLead') assert.ok(graph.edges.some(e=>e.source===step.questionId && e.target===guide.steps[i+1].questionId && e.decision===step.outcome),`${guide.id}: ${step.questionId} ${step.outcome}`);
+      else if(i===guide.steps.length-1) assert.equal(graph.edges.filter(e=>e.source===step.questionId).length,0);
     });
   }
 });
@@ -25,7 +25,7 @@ test('progressive visibility reveals only visited definitions and declared next 
   for(const guide of GUIDES) for(let i=0;i<guide.steps.length;i++) {
     const state=guideState(graph,guide,i,'path');
     assert.deepEqual(state.visitedIds,guide.steps.slice(0,i+1).map(s=>s.questionId));
-    assert.deepEqual(new Set(state.nextIds),new Set(graph.edges.filter(e=>e.source===guide.steps[i].questionId).map(e=>e.target)));
+    assert.deepEqual(new Set(state.nextIds),new Set(graph.edges.filter(e=>e.source===guide.steps[i].questionId&&e.decision===guide.steps[i].outcome).map(e=>e.target)));
     assert.deepEqual(new Set(state.visibleIds),new Set([...state.visitedIds,...state.nextIds]));
     for(const edge of state.selectedEdges) assert.ok(graph.edges.some(e=>e.source===edge.source&&e.target===edge.target&&e.decision===edge.decision));
     assert.equal(guideState(graph,guide,i,'all').visibleIds,null);

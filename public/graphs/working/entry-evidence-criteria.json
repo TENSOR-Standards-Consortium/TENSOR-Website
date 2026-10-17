@@ -1,5 +1,5 @@
 {
-  "graphVersion": "0.20261013b",
+  "graphVersion": "0.20261016a",
   "schemaVersion": "0.20260206e",
   "scope": "All active draft routes: bound event matching, validation, one declared technical hypothesis, scope, explicit relationships, technical source attribution, observed metric effects and qualified endings. No case closure, action authorization, actor intent, complete population discovery or independent authenticity verification is established.",
   "bindingRules": [
@@ -17457,7 +17457,7 @@
       "sourceFacetRole": "historical-source-label-only"
     }
   },
-  "graphSha256": "5bbe0573940a20d7efe4cf9b78ae76f4ac79a3771bd92f5b182f3e18961aa874",
+  "graphSha256": "72a4e8a80ae9b20538b80a282f96882b65595ff6887b7161cfc64fca3ba5dc55",
   "restoration": {
     "profile": "tensor-restored-evidence/2",
     "baseNodeIds": [
@@ -18453,5 +18453,10 @@
     "baselineCommit": "e6ced17aeaa1cf1d8be31ba1fbd24bf96d0890e0",
     "reviewDocument": "reviews/2026-10-13-semantic/README.md",
     "scope": "Separate AI item review and independently authored challenges; not institutional approval, authenticated logs or universal effectiveness."
+  },
+  "contextualRouting": {
+    "id": "tensor-contextual-routing/1",
+    "document": "reviews/2026-10-16-contextual-routing/README.md",
+    "scope": "Author answer-route repairs and all shared-destination dispositions; independent external review pending."
   }
 }

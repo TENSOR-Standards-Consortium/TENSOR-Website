@@ -34,9 +34,9 @@ for(const [pid,profile] of Object.entries(catalog.profiles)){
    const current=p.locator('.timeline-entries li.is-current');
    assert.equal(await current.getAttribute('data-question-id'),nid);
    assert.equal(await current.locator('.tensor-badge').first().textContent(),outcome);
-   await current.locator('summary').click();
+   await current.locator('.timeline-question summary').click();
    assert.equal(await current.locator('.timeline-question code').last().textContent(),definitions.profiles[pid][nid].id);
-   await current.locator('summary').click();
+   await current.locator('.timeline-question summary').click();
    assert.equal((await cy()).nodes,609);
    if(index<c.expectedTrace.length-1)await p.getByRole('button',{name:'Next step',exact:true}).click();
    steps++;

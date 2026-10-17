@@ -21,9 +21,10 @@ export function questionLabel(node) {
   return 'Question description unavailable';
 }
 export function compactQuestionLabel(node, limit = 46) {
-  const full = propertyLabel(node?.question?.metadata?.title || node?.metadata?.title || node?.title, '') || questionLabel(node);
+  const full = propertyLabel(node?.occurrenceLabel || node?.question?.metadata?.title || node?.metadata?.title || node?.title, '') || questionLabel(node);
   const prefix = `${node?.category || ''}: `;
-  const label = full.startsWith(prefix) ? full.slice(prefix.length) : full;
+  const description = full.startsWith(prefix) ? full.slice(prefix.length) : full;
+  const label = node?.assessmentSummary?`${node.assessmentSummary} · ${description}`:description;
   if (label.length <= limit) return label;
   const shortened = label.slice(0, limit - 1);
   return shortened.slice(0, shortened.lastIndexOf(' ') > limit / 2 ? shortened.lastIndexOf(' ') : shortened.length) + '…';

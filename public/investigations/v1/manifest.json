@@ -1,33 +1,41 @@
 {
-  "version": "1.2.0",
+  "version": "1.3.0",
   "files": [
     {
       "path": "soc-signin.definition.json",
-      "sha256": "41d1b13e4530b5bbc50284fde898b97a4f692f0dfef19f93e1eaa6d96d74854a"
+      "sha256": "09e17c6ffcddbcc6f1cd9eb3c2b7cee390d01a22e31c20451750668dedbd9d5a"
     },
     {
       "path": "soc-signin.bundle.json",
-      "sha256": "2e7a2141b68b0d7a987178090d884c600e652deb480de5a16260e464273bbd8d"
+      "sha256": "fd8b30d5882edff51b8598f817f92e6217c60bdb26d549afce9554419fd9c16c"
     },
     {
       "path": "workload-cloud-egress.definition.json",
-      "sha256": "9eb50dc9c9a225f1da80006c6fe4b40c20fb1a2242d562c12c765b6d7a441ea2"
+      "sha256": "d4ad5050f70f25fe138e81e0c60dcb597de2d3926456cdf0bd02cb90b87214f7"
     },
     {
       "path": "workload-cloud-egress.bundle.json",
-      "sha256": "9b6c7afb726ecccf042f323fc003c29ca93df6c0c7fed9ed0628ec357b0afdb1"
+      "sha256": "2eb2b1489117324cb5bf5befc985e02aecc0a11efa8c5286994c81846ebcc9b3"
     },
     {
       "path": "attachment-host-tool.definition.json",
-      "sha256": "054a7030e97938bd87eecd9c1998f93acb08e537c5febeda8765123a60ae0415"
+      "sha256": "52a54b85d9dbd87cb180e5f08e43bc85f9ee8a52fd5a7f3306b3b782e67c38d2"
     },
     {
       "path": "attachment-host-tool.bundle.json",
-      "sha256": "c431fca46ec276ed804ad3a0c36e67bd69755a365b9cf00f26aa9d952cf91f35"
+      "sha256": "9d674c55e2730c5938162fe3fef31d77d2900135208c8a313cb7884bc6c1a591"
+    },
+    {
+      "path": "parallel-followup.definition.json",
+      "sha256": "4ba233fe797fc39786e5ad4bd4cf43c2b2a92be9c7ab5bdd89ce9a92fb3b9c51"
+    },
+    {
+      "path": "parallel-followup.bundle.json",
+      "sha256": "9f3f487faae5ce273cc82509c302dd964c35ba1e13bb22c88560bc08f5e8fa1e"
     },
     {
       "path": "catalog.json",
-      "sha256": "ff017fe9f9d380bf27ddcfe7dd3e05fa517000bfa99224d639fac1dafccf9267"
+      "sha256": "bdad9a9bb543cab2ee0c09bb435a7679b269daa327ac8e180d80df79e59b00ab"
     }
   ]
 }

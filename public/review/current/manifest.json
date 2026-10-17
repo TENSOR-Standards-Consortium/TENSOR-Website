@@ -2,25 +2,25 @@
   "format": "tensor-current-review-package",
   "manifestVersion": 1,
   "sourceRepository": "https://github.com/TENSOR-Standards-Consortium/TENSOR-Framework",
-  "sourceCommit": "a1cc5eb9bd72dc014ae95f738e4b5dba31a69d6b",
+  "sourceCommit": "3990297f1120a61de65fc4f9e1d1e9da13cce681",
   "dataset": {
-    "id": "urn:tensor:dataset:sha256:48840d95be44369a0d8beb34bd25aefadc21567ad316bfe5b5e295739c5551ad",
-    "graphVersion": "0.20261013b",
+    "id": "urn:tensor:dataset:sha256:ae1b56d7b19ab3c4f94229a5f816e375b216200314c53219c0dcbd0ecf6df536",
+    "graphVersion": "0.20261016a",
     "counts": {
       "questions": 609,
-      "routes": 2131,
+      "routes": 1743,
       "domains": 7,
       "eventProfiles": 16,
       "qualifiedDefinitions": 567,
-      "referenceCases": 3
+      "referenceCases": 4
     },
     "path": "dataset/current.json"
   },
   "scope": "The current public dataset, identical for implementers, visitors and reviewers. Generated review/current packaging is excluded from its own source archive.",
   "archive": {
     "path": "source.tar.gz",
-    "bytes": 2843652,
-    "sha256": "a7a04e8a0a3a66c138731d7e0020d98b2509847f3fa2fd3d069a0a71f9e22d88"
+    "bytes": 3407810,
+    "sha256": "90662713be32d1e6dd823c1097a83084f49e9fe074df362f8bbf87a780404c56"
   },
   "files": [
     {
@@ -220,8 +220,8 @@
     },
     {
       "path": "dataset/current.json",
-      "bytes": 8634,
-      "sha256": "9b400eaf8f417acde7365fd00706f9e8f59e6976472e7de8ce0a055835a050c2"
+      "bytes": 9464,
+      "sha256": "c9970236aa616a60f96830fbaa5321a208e3feb11e8a25cbc853fd4c35d8d2de"
     },
     {
       "path": "docs/adoption-plan.md",
@@ -281,12 +281,12 @@
     {
       "path": "drafts/core/coverage-inventory.json",
       "bytes": 1333875,
-      "sha256": "3c7f49649e08370324a9024d56e9b8871dba75b3a1084bb3419362e11804417b"
+      "sha256": "0924e5677961fca1d8eb77276c227810f9b948b3295b7a2c211cec12baf7a4d1"
     },
     {
       "path": "drafts/core/entry-evidence-criteria.json",
-      "bytes": 560283,
-      "sha256": "bbf1faf9a29396cb327c8a8b178328bc8cda6f6b4b95828d43b801ee7cace21a"
+      "bytes": 560542,
+      "sha256": "98df19d3f63ac91979376ffb9421058f2cb0ded7b43312f86057efe8febb7b3d"
     },
     {
       "path": "drafts/core/event-profiles/README.md",
@@ -296,7 +296,7 @@
     {
       "path": "drafts/core/event-profiles/catalog.json",
       "bytes": 32197,
-      "sha256": "970df04928781450e199f8cccccac763818428ecd1e78f939060138f9234eefd"
+      "sha256": "b19d845e0158f85155fef9e736c206775905537fc3246d784ff30067045f3582"
     },
     {
       "path": "drafts/core/event-profiles/catalog.source.json",
@@ -306,12 +306,12 @@
     {
       "path": "drafts/core/event-profiles/definitions.json",
       "bytes": 403130,
-      "sha256": "d45fea46d5f5b786dd6a3f3059ddd7c4880c16d05691ac43b3ccb7916f1509e6"
+      "sha256": "a21f88a7f52145bbc642685cb232321b621df6359cdd08e3693098038a7c8196"
     },
     {
       "path": "drafts/core/event-profiles/scenarios.json",
       "bytes": 1216933,
-      "sha256": "cb7d00b4f7a1f6d0c0bfca31621fa443e6956aedc467b63eb2c2458505d31703"
+      "sha256": "7a7ccb4a33fba6b9f96062505a2c355938085f91be04395e68810fc4cd11cfd8"
     },
     {
       "path": "drafts/core/event-profiles/scenarios.source.json",
@@ -321,7 +321,7 @@
     {
       "path": "drafts/core/event-profiles/validation.json",
       "bytes": 280547,
-      "sha256": "3b3c0f68c3670632fb160fcb5d09c0108f16bf687392f5e48de75b19415029f4"
+      "sha256": "9981449833dfc16d7180318ee49f273510e4d0c367a5093e7526d1a65a60e3c3"
     },
     {
       "path": "drafts/core/reviews/2026-02-12-final-core-pass-review.md",
@@ -679,29 +679,169 @@
       "sha256": "9e01bfb502821b57181c55d240cd0f9c46e77ac2acee9e88880ec8d46d2a8cc9"
     },
     {
-      "path": "drafts/core/scenarios/entry-evidence-cases.json",
+      "path": "drafts/core/reviews/2026-10-16-contextual-routing/README.md",
+      "bytes": 4861,
+      "sha256": "976fb73efb1349f7fd3986b8a729566418cbb14ad3f671f27053ad13ca543f19"
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-16-contextual-routing/baseline/drafts/core/entry-evidence-criteria.json",
+      "bytes": 560283,
+      "sha256": "bbf1faf9a29396cb327c8a8b178328bc8cda6f6b4b95828d43b801ee7cace21a"
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-16-contextual-routing/baseline/drafts/core/event-profiles/catalog.json",
+      "bytes": 32197,
+      "sha256": "970df04928781450e199f8cccccac763818428ecd1e78f939060138f9234eefd"
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-16-contextual-routing/baseline/drafts/core/event-profiles/catalog.source.json",
+      "bytes": 30267,
+      "sha256": "f4dca9a6e5b6939fb0eda1391b274105c120d07ebdfb590fe7995c697ad4bf93"
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-16-contextual-routing/baseline/drafts/core/event-profiles/definitions.json",
+      "bytes": 403130,
+      "sha256": "d45fea46d5f5b786dd6a3f3059ddd7c4880c16d05691ac43b3ccb7916f1509e6"
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-16-contextual-routing/baseline/drafts/core/event-profiles/scenarios.json",
+      "bytes": 1216933,
+      "sha256": "cb7d00b4f7a1f6d0c0bfca31621fa443e6956aedc467b63eb2c2458505d31703"
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-16-contextual-routing/baseline/drafts/core/event-profiles/scenarios.source.json",
+      "bytes": 20196,
+      "sha256": "139b6e39172fbf2b4a09b4ab5169801e1646136191008fd2113dde923b5aed21"
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-16-contextual-routing/baseline/drafts/core/event-profiles/validation.json",
+      "bytes": 280547,
+      "sha256": "3b3c0f68c3670632fb160fcb5d09c0108f16bf687392f5e48de75b19415029f4"
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-16-contextual-routing/baseline/drafts/core/scenarios/entry-evidence-cases.json",
       "bytes": 6105394,
       "sha256": "3acfa2c26a927bc2db698bf79c6c3104bb770fcbb43ebe0ed44f8f10f3f3911f"
     },
     {
+      "path": "drafts/core/reviews/2026-10-16-contextual-routing/baseline/drafts/core/tensor.core.graph.json",
+      "bytes": 2554519,
+      "sha256": "5bbe0573940a20d7efe4cf9b78ae76f4ac79a3771bd92f5b182f3e18961aa874"
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-16-contextual-routing/baseline/scripts/build_event_profiles.py",
+      "bytes": 15117,
+      "sha256": "46364065a5474ff3c1bd7185ecc175c696663404fbe0a7d1c467fc5167304f06"
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-16-contextual-routing/baseline/scripts/core_graph_pipeline.py",
+      "bytes": 32866,
+      "sha256": "9af3f63dc17ab07a7c94c17253a896a73209012423384c3fa0ea5c0be09c1962"
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-16-contextual-routing/baseline/scripts/evaluate_entry_scenarios.py",
+      "bytes": 30841,
+      "sha256": "3202d33efd8d8a4f36533e01eee359b3ea1213d8bd1a05e5d7705732e1c88a2a"
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-16-contextual-routing/baseline/scripts/event_profiles.py",
+      "bytes": 42180,
+      "sha256": "f5fe76851de59b3caf52a91ac458b8f7131be9375c8fad4176a205bf37d20211"
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-16-contextual-routing/baseline/scripts/graph_assurance_policy.py",
+      "bytes": 13451,
+      "sha256": "9d3857adcba1176d36baaa7d7a39b8b838cc8e8139e595adab0323836cd595a7"
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-16-contextual-routing/baseline/scripts/investigative_routing.py",
+      "bytes": 13235,
+      "sha256": "41eb4e9674f55de32ed16c0cf470d0fcebc5d4749cf00200f1cba7f93d7bafea"
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-16-contextual-routing/baseline/scripts/restore_original_questions.py",
+      "bytes": 41529,
+      "sha256": "d41f78f4a0cd99c4454c8155aeacb2fda6d4360f21106560acae19bd7e4c96e1"
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-16-contextual-routing/baseline/scripts/restored_evidence.py",
+      "bytes": 28409,
+      "sha256": "3389bdb86e90fa13f27a997e5ce8f885dde735bddaa9109f423033270d24629b"
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-16-contextual-routing/baseline/scripts/semantic_graph_review.py",
+      "bytes": 27851,
+      "sha256": "89f26ed10c33547eb4bfbfce100e9296371f73bf82f3446ef809439c013ea8ad"
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-16-contextual-routing/baseline/scripts/verify_semantic_review.py",
+      "bytes": 3640,
+      "sha256": "08dd78a1f10c25e12d536ae7bfc53eaf958d7930a5f2a0858d002a1c8d3f7d41"
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-16-contextual-routing/baseline/standards/graph-assurance-policy.md",
+      "bytes": 15670,
+      "sha256": "da3c29db8eb21822065a28c9b469d77d9320356fb0ce7c607efa8b75f5485f77"
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-16-contextual-routing/baseline/tests/legacy/test_independent_investigations.py",
+      "bytes": 43230,
+      "sha256": "267b9464f453c1995c73e397ced5d659943c70745828ce4ddad4f64e6091e2e5"
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-16-contextual-routing/baseline/tests/legacy/test_independent_routes.py",
+      "bytes": 10364,
+      "sha256": "8e6d3d66d20c167ddd2fbc21446d67948b57ba5b7a58b3bf6ef746fabd1e05d8"
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-16-contextual-routing/baseline/tests/legacy/test_semantic_base.py",
+      "bytes": 26705,
+      "sha256": "842b3a4c79f13fe875b0712eff93308816e5ca5b092d03461c1c57c58f98565a"
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-16-contextual-routing/baseline/tests/legacy/test_semantic_profiles.py",
+      "bytes": 31457,
+      "sha256": "a3b16205cfec051c779b2f56ba0a3aaa977ad1422395ca77ce5b9254bfd8d6b9"
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-16-contextual-routing/baseline/tests/legacy/test_semantic_review_receipts.py",
+      "bytes": 640,
+      "sha256": "87945a5faec2225722c6186a6886ae628b42cd6726b47362032d162f70546f8e"
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-16-contextual-routing/baseline/tests/legacy/test_semantic_routing.py",
+      "bytes": 25926,
+      "sha256": "fa50ed17da506959162880d5edb3dc8950f8dec46bc0d2ea81bfe0099690102a"
+    },
+    {
+      "path": "drafts/core/reviews/2026-10-16-contextual-routing/review.json",
+      "bytes": 1200819,
+      "sha256": "586f93728adc34c324502ab4e537e2e74a74610c49c536166c9f0a2ff63e92c6"
+    },
+    {
+      "path": "drafts/core/scenarios/entry-evidence-cases.json",
+      "bytes": 6732788,
+      "sha256": "a0954debb3839aa9e580ec109eca367ee356f34df45cec56489b01523aec7b64"
+    },
+    {
       "path": "drafts/core/source/edges.jsonl",
-      "bytes": 1626092,
-      "sha256": "8fbf2fbc0e37920421b8e4f55c6f0340b0a5557e866561b50906c9241609e956"
+      "bytes": 2187188,
+      "sha256": "78ae1c54c46040206e43163d293779895033c022c18d916056b1f009166fe31a"
     },
     {
       "path": "drafts/core/source/entry_nodes.json",
-      "bytes": 4301,
-      "sha256": "70391e0f4c5771d3b85672aa081d43e575cbbeaddceb5ababbe16237d16b39f2"
+      "bytes": 4481,
+      "sha256": "25ed8ec9e299341e0c9894acd02412cdf9221c6343d94a99809e71ac2be6549f"
     },
     {
       "path": "drafts/core/source/nodes.jsonl",
-      "bytes": 344405,
-      "sha256": "94d525fe37ddf9e1e7d239d2a8f7eaee3e897851626efdf4611e3b57fa0d35b0"
+      "bytes": 638017,
+      "sha256": "daa21775bf267c75cdd1ce19de17eb1fc70bbba41c08d5d358aafff2c72d2901"
     },
     {
       "path": "drafts/core/tensor.core.graph.json",
-      "bytes": 2554519,
-      "sha256": "5bbe0573940a20d7efe4cf9b78ae76f4ac79a3771bd92f5b182f3e18961aa874"
+      "bytes": 3607956,
+      "sha256": "72a4e8a80ae9b20538b80a282f96882b65595ff6887b7161cfc64fca3ba5dc55"
     },
     {
       "path": "drafts/core/tensor.core.schema.json",
@@ -710,78 +850,88 @@
     },
     {
       "path": "examples/investigations/v1/README.md",
-      "bytes": 3492,
-      "sha256": "22b77c076c247ce190ab157af8ce1a0dc33756927ac907e360bc61260c05ae05"
+      "bytes": 4165,
+      "sha256": "1c942c5e262ad18a7af44ab98d2f085fbf3e9aa7ca02b2a5281310f31d438571"
     },
     {
       "path": "examples/investigations/v1/attachment-host-tool.bundle.json",
-      "bytes": 110501,
-      "sha256": "c431fca46ec276ed804ad3a0c36e67bd69755a365b9cf00f26aa9d952cf91f35"
+      "bytes": 110361,
+      "sha256": "9d674c55e2730c5938162fe3fef31d77d2900135208c8a313cb7884bc6c1a591"
     },
     {
       "path": "examples/investigations/v1/attachment-host-tool.definition.json",
-      "bytes": 40445,
-      "sha256": "054a7030e97938bd87eecd9c1998f93acb08e537c5febeda8765123a60ae0415"
+      "bytes": 40305,
+      "sha256": "52a54b85d9dbd87cb180e5f08e43bc85f9ee8a52fd5a7f3306b3b782e67c38d2"
     },
     {
       "path": "examples/investigations/v1/build.mjs",
-      "bytes": 13359,
-      "sha256": "9f4e6742c9c6e992a91805823b20f0f2efe861ebfde6658dc09d2a6d6b1a3e6d"
+      "bytes": 13683,
+      "sha256": "d7c437b2e414e7fd7461be0c3fb8dd469af4904faabb1c70aa97d9372330fcf0"
     },
     {
       "path": "examples/investigations/v1/catalog.json",
-      "bytes": 1547,
-      "sha256": "ff017fe9f9d380bf27ddcfe7dd3e05fa517000bfa99224d639fac1dafccf9267"
+      "bytes": 2119,
+      "sha256": "bdad9a9bb543cab2ee0c09bb435a7679b269daa327ac8e180d80df79e59b00ab"
     },
     {
       "path": "examples/investigations/v1/manifest.json",
-      "bytes": 1038,
-      "sha256": "9996aa3b0611da49b9263c75316f86d2bc22d0c0378fde5194541e4d8f37677b"
+      "bytes": 1328,
+      "sha256": "00749553a4a0e96554bcf76ca86a2b8e083b9cd169e93bfdf20aa56f561758cd"
+    },
+    {
+      "path": "examples/investigations/v1/parallel-followup.bundle.json",
+      "bytes": 90859,
+      "sha256": "9f3f487faae5ce273cc82509c302dd964c35ba1e13bb22c88560bc08f5e8fa1e"
+    },
+    {
+      "path": "examples/investigations/v1/parallel-followup.definition.json",
+      "bytes": 29024,
+      "sha256": "4ba233fe797fc39786e5ad4bd4cf43c2b2a92be9c7ab5bdd89ce9a92fb3b9c51"
     },
     {
       "path": "examples/investigations/v1/routes.mjs",
-      "bytes": 1837,
-      "sha256": "89e7d02b0be5921429ef3855149633c6dc8ba0c6c0683864796dec0b0023efb5"
+      "bytes": 2293,
+      "sha256": "5964e8ec05034a9b40d5f2ccca5ec0a49b7c3263106f5d1b18f484b49d3faa53"
     },
     {
       "path": "examples/investigations/v1/scenarios.mjs",
-      "bytes": 20166,
-      "sha256": "1692cdbace1f2676aeebfa1103961bda5deaf06371fbbd4b066e0017e17f14c7"
+      "bytes": 27086,
+      "sha256": "7810ae14a084b84e6db4c8a6d381a595660caf1e5e20f49d47efd50c5d181d6a"
     },
     {
       "path": "examples/investigations/v1/soc-signin.bundle.json",
-      "bytes": 81491,
-      "sha256": "2e7a2141b68b0d7a987178090d884c600e652deb480de5a16260e464273bbd8d"
+      "bytes": 81476,
+      "sha256": "fd8b30d5882edff51b8598f817f92e6217c60bdb26d549afce9554419fd9c16c"
     },
     {
       "path": "examples/investigations/v1/soc-signin.definition.json",
-      "bytes": 31954,
-      "sha256": "41d1b13e4530b5bbc50284fde898b97a4f692f0dfef19f93e1eaa6d96d74854a"
+      "bytes": 31939,
+      "sha256": "09e17c6ffcddbcc6f1cd9eb3c2b7cee390d01a22e31c20451750668dedbd9d5a"
     },
     {
       "path": "examples/investigations/v1/workload-cloud-egress.bundle.json",
-      "bytes": 82719,
-      "sha256": "9b6c7afb726ecccf042f323fc003c29ca93df6c0c7fed9ed0628ec357b0afdb1"
+      "bytes": 82629,
+      "sha256": "2eb2b1489117324cb5bf5befc985e02aecc0a11efa8c5286994c81846ebcc9b3"
     },
     {
       "path": "examples/investigations/v1/workload-cloud-egress.definition.json",
-      "bytes": 30946,
-      "sha256": "9eb50dc9c9a225f1da80006c6fe4b40c20fb1a2242d562c12c765b6d7a441ea2"
+      "bytes": 30856,
+      "sha256": "d4ad5050f70f25fe138e81e0c60dcb597de2d3926456cdf0bd02cb90b87214f7"
     },
     {
       "path": "examples/layers/cloud-investigation.layers.json",
       "bytes": 4189,
-      "sha256": "58a0e69fb751a6834d1541b68c7767449041a8bc85acd96f1f1ddac01eb620b0"
+      "sha256": "a267983fa75fc85bc5666eb3a68da4daa3d37e8f4d2dded8fc32f9af77763176"
     },
     {
       "path": "examples/layers/organization-cloud.layer.json",
       "bytes": 2048,
-      "sha256": "48bded65d085fb0b0fb61d0751d6bf084e6dffcc89537effdbb8c11ab6d34ae6"
+      "sha256": "700a99fd67c5c2b51a1fae867239ffc926bb6aaeebf9ca66ed717cdd2b937cc8"
     },
     {
       "path": "examples/layers/vendor-cloud.layer.json",
       "bytes": 1970,
-      "sha256": "da534394aa7c94a7b915ce7525de0fbd2f9cc1c414beb81a106c1385d6129311"
+      "sha256": "e9d217ab4ef8bf961f1b7ddc972b8e81b94a383d5627b56c18683a189521c666"
     },
     {
       "path": "package-lock.json",
@@ -1120,13 +1270,13 @@
     },
     {
       "path": "review/templates/validation.json",
-      "bytes": 1718,
-      "sha256": "43977c8234a5f641b7e81ed88d4967d54dbbc48a8a4c49d40ceac1a8268b5106"
+      "bytes": 1977,
+      "sha256": "07bdcdfaf7522ed2e62f0655c2ee7083bd5ed8d40311f1fc8db3f0dfee9abfc9"
     },
     {
       "path": "review/templates/walkthrough.md",
-      "bytes": 1615,
-      "sha256": "8802009555c123c52990988c76e6eac0815f62f8071e8032fa67d74d8e510b65"
+      "bytes": 1838,
+      "sha256": "06c24a49aa5448d125a04c4e07d865e5d6755024cbbc299397696fcd47e81faf"
     },
     {
       "path": "scripts/audit_graph_coverage.py",
@@ -1145,13 +1295,18 @@
     },
     {
       "path": "scripts/build_dataset.mjs",
-      "bytes": 3918,
-      "sha256": "3ef754ae338b14cc29c4978219c7e90648a36d9b4dc501f3cdb29eb8f1ba725e"
+      "bytes": 4056,
+      "sha256": "89138ef11bf5626b0aaac5d02496105d21a6fa4010951b7f1dad4640489d87a5"
     },
     {
       "path": "scripts/build_event_profiles.py",
       "bytes": 15117,
       "sha256": "46364065a5474ff3c1bd7185ecc175c696663404fbe0a7d1c467fc5167304f06"
+    },
+    {
+      "path": "scripts/contextual_routing.py",
+      "bytes": 19914,
+      "sha256": "88c5563ea412ac977105e8bdc70d09925b84219509621dad7896b8b04aa6aa9e"
     },
     {
       "path": "scripts/core_graph_math_assurance.py",
@@ -1160,8 +1315,8 @@
     },
     {
       "path": "scripts/core_graph_pipeline.py",
-      "bytes": 32866,
-      "sha256": "9af3f63dc17ab07a7c94c17253a896a73209012423384c3fa0ea5c0be09c1962"
+      "bytes": 33207,
+      "sha256": "164c88767bf92f680a03d88cf33fdb6e32e3a0b207bda7de4590e4bf3e8ecb46"
     },
     {
       "path": "scripts/evaluate_entry_scenarios.py",
@@ -1185,8 +1340,8 @@
     },
     {
       "path": "scripts/graph_assurance_policy.py",
-      "bytes": 13451,
-      "sha256": "9d3857adcba1176d36baaa7d7a39b8b838cc8e8139e595adab0323836cd595a7"
+      "bytes": 13822,
+      "sha256": "046525d35613fb03303ca636f42f331a8f697c83affd206572b91826da9ccfe7"
     },
     {
       "path": "scripts/inventory_legacy_graph.py",
@@ -1195,13 +1350,13 @@
     },
     {
       "path": "scripts/investigative_routing.py",
-      "bytes": 13235,
-      "sha256": "41eb4e9674f55de32ed16c0cf470d0fcebc5d4749cf00200f1cba7f93d7bafea"
+      "bytes": 13736,
+      "sha256": "bbb4182b0f6a2944c7ae01b3b8cc5b793d17a90ae1fc5b3255beef08f701256b"
     },
     {
       "path": "scripts/lint_core_graph_quality.py",
-      "bytes": 11159,
-      "sha256": "c5fcf0d6850a064134196e885804c4dbacf5a3ecd7a38659f8b7f755513f0665"
+      "bytes": 11282,
+      "sha256": "97e21420b9037cd6643534886f3a273f54b681997a1152f75ce394c6b794d139"
     },
     {
       "path": "scripts/restoration_assurance.py",
@@ -1210,8 +1365,8 @@
     },
     {
       "path": "scripts/restore_original_questions.py",
-      "bytes": 41529,
-      "sha256": "d41f78f4a0cd99c4454c8155aeacb2fda6d4360f21106560acae19bd7e4c96e1"
+      "bytes": 41719,
+      "sha256": "a3a06c043306cd152c6e9899a944819a4500fc22273373b3ae10a06894f4dedd"
     },
     {
       "path": "scripts/restored_evidence.py",
@@ -1245,8 +1400,8 @@
     },
     {
       "path": "scripts/verify_semantic_review.py",
-      "bytes": 3640,
-      "sha256": "08dd78a1f10c25e12d536ae7bfc53eaf958d7930a5f2a0858d002a1c8d3f7d41"
+      "bytes": 3758,
+      "sha256": "e1e61e285d0831cd9ceb6c0c0961f84c196af169dc853b2ff1e5dbb4ad6ff6d4"
     },
     {
       "path": "standards/compatibility-policy.md",
@@ -1290,13 +1445,18 @@
     },
     {
       "path": "standards/graph-assurance-policy.md",
-      "bytes": 15670,
-      "sha256": "da3c29db8eb21822065a28c9b469d77d9320356fb0ce7c607efa8b75f5485f77"
+      "bytes": 16384,
+      "sha256": "1ba4053a944fd197dafba67437ce78554da91aaf716e49a8587427ba54bf2807"
     },
     {
       "path": "tests/core/README.md",
       "bytes": 2433,
       "sha256": "6ba37ce62d0336b7c134cf4c5e0785b6a9ee5e4fa34977479f30b8fdb4d3f469"
+    },
+    {
+      "path": "tests/core/contextual-investigations.test.mjs",
+      "bytes": 5207,
+      "sha256": "c82892d517d1703529f2cfecf1784578a67e500003b7f09527f83f9e34c596f1"
     },
     {
       "path": "tests/core/contract.test.mjs",
@@ -1339,6 +1499,11 @@
       "sha256": "eee0a3ef28283468eaf77db886382ba2c5483d2d89d6c2cb3dcddb34c4ad44b1"
     },
     {
+      "path": "tests/legacy/test_contextual_routing.py",
+      "bytes": 7613,
+      "sha256": "357e1c6e0506de3021b0e5fc3d8783852a24491114ea265c5840babce63dcb48"
+    },
+    {
       "path": "tests/legacy/test_current_review.py",
       "bytes": 4124,
       "sha256": "5a0594eef38a99df03bc94a7081a43aaf61d65feb70135f46326fb8893315273"
@@ -1350,8 +1515,8 @@
     },
     {
       "path": "tests/legacy/test_event_profiles.py",
-      "bytes": 27635,
-      "sha256": "6e1e46b0a10a493b36e82eff584dd00ae7d0649d1c61243166c9eb895ce8cfaf"
+      "bytes": 27728,
+      "sha256": "5174083c5f409da8f7616710e680eea0287929205d67f7f36ab2e6dbd63e4801"
     },
     {
       "path": "tests/legacy/test_graph_assurance_policy.py",
@@ -1365,18 +1530,18 @@
     },
     {
       "path": "tests/legacy/test_independent_investigations.py",
-      "bytes": 43230,
-      "sha256": "267b9464f453c1995c73e397ced5d659943c70745828ce4ddad4f64e6091e2e5"
+      "bytes": 43278,
+      "sha256": "bd9477bb67dcc545550e2baf5cfaa369157487c03ed125079e73ca0b7ba9b588"
     },
     {
       "path": "tests/legacy/test_independent_routes.py",
-      "bytes": 10364,
-      "sha256": "8e6d3d66d20c167ddd2fbc21446d67948b57ba5b7a58b3bf6ef746fabd1e05d8"
+      "bytes": 10752,
+      "sha256": "63efa3f5eee04c62b2518ea26e5c5f57b7ad6601fcb228a0ed6c42193b39347d"
     },
     {
       "path": "tests/legacy/test_investigative_routing.py",
-      "bytes": 9077,
-      "sha256": "c91d86b1631eb2b2d60a15721e1661176a5f0165d7d1d0f0e32008222652c746"
+      "bytes": 9305,
+      "sha256": "3a24df19fbae24865ddb6f5bb0361ef71ff9963c68a007141541acea77417a35"
     },
     {
       "path": "tests/legacy/test_legacy_preservation.py",
@@ -1385,8 +1550,8 @@
     },
     {
       "path": "tests/legacy/test_positive_evidence.py",
-      "bytes": 9049,
-      "sha256": "a0853a3cb67805da1819762abd108a92219f9de5818d48108c5d4e71baaeb98f"
+      "bytes": 9847,
+      "sha256": "ca3fb9e3d8ff5e1e69a1c837961379500bca8655befd7034a866f8c507481529"
     },
     {
       "path": "tests/legacy/test_restored_evidence.py",
@@ -1405,13 +1570,13 @@
     },
     {
       "path": "tests/legacy/test_semantic_review_receipts.py",
-      "bytes": 640,
-      "sha256": "87945a5faec2225722c6186a6886ae628b42cd6726b47362032d162f70546f8e"
+      "bytes": 638,
+      "sha256": "bc98cb930b1b7e1aab34a68acae9c1f388607503cba375a7b89f888d3f68105e"
     },
     {
       "path": "tests/legacy/test_semantic_routing.py",
-      "bytes": 25926,
-      "sha256": "fa50ed17da506959162880d5edb3dc8950f8dec46bc0d2ea81bfe0099690102a"
+      "bytes": 26084,
+      "sha256": "a766ae936311b0466913d2ebb540a53e5380139658fe2078a7ce543221c34580"
     }
   ]
 }

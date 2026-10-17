@@ -30,15 +30,15 @@ export default function GraphAtlasCanvas({ graph, layout, selectedId, view, onSe
       const css = getComputedStyle(host.current);
       const color = value => value.startsWith('var(') ? css.getPropertyValue(value.slice(4, -1)).trim() : value;
       const instance = cytoscape({ container: host.current, elements: [
-        ...layout.nodes.map((n) => ({ data: { id: n.id, displayLabel:n.displayLabel||compactQuestionLabel(n), title: `${n.category} · ${questionLabel(n)}`, color: color(n.color) }, position: n.position })),
+        ...layout.nodes.map((n) => ({ data: { id: n.id, displayLabel:n.displayLabel||compactQuestionLabel(n), title: `${n.category} · ${questionLabel(n)}`, cardHeight:n.cardHeight||120, color: color(n.color) }, position: n.position })),
         ...graph.edges.map((e, i) => ({ data: { id: `atlas-edge-${i}`, routeId:e.id, source: e.source, target: e.target, outcome: e.decision } })),
       ], layout: { name: 'preset', fit: false }, minZoom: .025, maxZoom: 3.5, boxSelectionEnabled: false, autoungrabify: true,
       style: [
-        { selector: 'node', style: { width: cardLabels?220:130, height:cardLabels?86:46, shape: 'round-rectangle', 'background-color': color('var(--bg-input)'), 'background-opacity': 1, 'border-width': 1.5, 'border-color': 'data(color)', label: 'data(displayLabel)', 'text-max-width': cardLabels?200:118, 'min-zoomed-font-size':cardLabels?0:7, color: color('var(--text-primary)'), 'font-family': 'JetBrains Mono, monospace', 'font-size':cardLabels?15:12, 'text-wrap':'wrap', 'font-weight': 500, 'text-valign': 'center', 'text-halign': 'center', 'text-outline-color': color('var(--bg-input)'), 'text-outline-width': 2 } },
+        { selector: 'node', style: { width: cardLabels?220:130, height:cardLabels?'data(cardHeight)':46, shape: 'round-rectangle', 'background-color': color('var(--bg-input)'), 'background-opacity': 1, 'border-width': 1.5, 'border-color': 'data(color)', label: 'data(displayLabel)', 'text-max-width': cardLabels?200:118, 'min-zoomed-font-size':cardLabels?0:7, color: color('var(--text-primary)'), 'font-family': cardLabels?css.getPropertyValue('--font-body').trim():'JetBrains Mono, monospace', 'font-size':cardLabels?14:12, 'text-wrap':'wrap', 'font-weight': 500, 'text-valign': 'center', 'text-halign': 'center', 'text-outline-color': color('var(--bg-input)'), 'text-outline-width': cardLabels?0:2 } },
         { selector: 'edge', style: { width: 1.1, opacity: .2, 'line-color': color('var(--graph-route)'), 'target-arrow-color': color('var(--graph-route)'), 'target-arrow-shape': 'triangle', 'arrow-scale': .7, 'curve-style': 'bezier' } },
         { selector: 'edge[outcome = "unknown"]', style: { 'line-style': 'dashed' } },
         { selector: '.neighbor', style: { 'border-width': 2.5, 'background-color': color('var(--bg-card-hover)'), 'z-index': 8 } },
-        { selector: 'node.selected', style: { 'border-color': color('var(--accent-primary)'), 'border-width': 4, width:cardLabels?230:140, height:cardLabels?92:50, 'background-color': color('var(--accent-selection)'), 'z-index': 10 } },
+        { selector: 'node.selected', style: { 'border-color': color('var(--accent-primary)'), 'border-width': 4, width:cardLabels?230:140, height:cardLabels?'data(cardHeight)':50, 'background-color': color('var(--accent-selection)'), 'z-index': 10 } },
         { selector: 'edge.connected', style: { width: 3.5, opacity: 1, label: 'data(outcome)', 'font-size': 14, color: color('var(--text-primary)'), 'text-background-color': color('var(--bg-app)'), 'text-background-opacity': 1, 'text-background-padding': 4, 'z-index': 9, 'text-rotation': 'autorotate' } },
         { selector: '.connected[outcome = "yes"]', style: { 'line-color': color('var(--accent-success)'), 'target-arrow-color': color('var(--accent-success)') } },
         { selector: '.connected[outcome = "no"]', style: { 'line-color': color('var(--accent-danger)'), 'target-arrow-color': color('var(--accent-danger)') } },
@@ -86,7 +86,7 @@ export default function GraphAtlasCanvas({ graph, layout, selectedId, view, onSe
         sync();
       });
       observer.observe(host.current);
-      sync(); setRenderedLayout(layout); setStatus(`${graph.nodes.length} questions · ${graph.edges.length.toLocaleString()} routes · complete graph loaded`);
+      sync(); setRenderedLayout(layout); setStatus(graph.occurrences?`${graph.nodes.filter(n=>n.instance).length} bound contexts · ${graph.nodes.filter(n=>n.preview).length} unselected options · retained view`:`${graph.nodes.length} questions · ${graph.edges.length.toLocaleString()} routes · complete graph loaded`);
     }).catch(() => { if (!disposed) setStatus('Map unavailable. Open Questions or the complete text view below; every question and route remains available.'); });
     return () => { disposed = true; if (frame) cancelAnimationFrame(frame); observer?.disconnect(); cy.current?.destroy(); cy.current = null; };
   }, [graph, layout]);

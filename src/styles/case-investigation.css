@@ -91,3 +91,8 @@
 .case-next-options > p { font-size: .75rem; color: var(--text-muted); }
 .case-alternatives { display: flex; align-items: center; gap: var(--space-2); font-size: .75rem; }
 @media (max-width: 600px) { .case-leads { padding: var(--space-1) var(--space-2); } .case-leads > div { flex-wrap: nowrap; gap: var(--space-2); } .case-lead-count { font-size: .8rem; white-space: nowrap; } .case-leads span { font-size: .65rem; } .case-leads > p { display: none; } .case-leads ul { max-height: 120px; overflow: auto; } .case-heading .section-kicker { display: none; } .case-heading { padding: var(--space-1) var(--space-2); } }
+.case-context { padding: .75rem 0; border-block: 1px solid var(--line-soft); overflow-wrap: anywhere; font-size: .85rem; }
+.case-context-choices { display: flex; flex-wrap: wrap; gap: .5rem 1rem; margin-block: 1rem; }
+.case-context-choices [aria-pressed="true"] { color: var(--accent-secondary); text-decoration: underline; }
+.case-context-inputs { margin-block: 1rem; padding: .75rem; border: 1px solid var(--line-soft); }
+.case-context-inputs li { margin-block: .65rem; }
