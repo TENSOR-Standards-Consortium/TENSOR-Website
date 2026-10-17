@@ -25,7 +25,7 @@ const context = { profileId: id, version: catalog.version, graphVersion: catalog
       <p>{profile.proposition}. Required subjects: <strong>{profile.bindings.join(', ')}</strong>, with an explicit time interval.</p>
       <p>Each walkthrough uses profile-qualified definitions with separate evidence and assessments. The timeline supports step-by-step and automatic playback in the Atlas and 3D views. “Whole graph + path” retains all nodes; “Path + next options” displays the route and its alternatives.</p>
       <ul>{profile.limitations.map(limit=><li>{limit}</li>)}</ul>
-      <p><a href="/graphs/profiles/">All event profiles</a> · <a href="/graphs/working/event-profiles/README.md">Contract and evaluation method</a> · <a href="/graphs/working/event-profiles/scenarios.json" download>Complete normalized scenario evidence</a> · <a href="/graphs/working/event-profiles/validation.json" download>Observed validation traces and pins</a></p>
+      <p><a href="/graphs/profiles/">All event profiles</a> · <a href="/read/graphs/working/event-profiles/README/">Contract and evaluation method</a> · <a href="/graphs/working/event-profiles/scenarios.json" download>Complete normalized scenario evidence</a> · <a href="/graphs/working/event-profiles/validation.json" download>Observed validation traces and pins</a></p>
       <details><summary>All nine investigation routes · complete text alternative</summary>{guides.map(guide=><section id={guide.id}><h3>{guide.title}</h3><p>{guide.description}</p><p>{guide.context}</p><ol>{guide.steps.map(step=><li><strong>{step.outcome}</strong><p>{step.predicate}</p><p>{step.rationale}</p><code>{step.definitionId}</code></li>)}</ol></section>)}</details>
     </ContentCard>
   </section>

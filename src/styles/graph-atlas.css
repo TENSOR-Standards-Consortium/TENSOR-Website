@@ -298,3 +298,8 @@
 
 .atlas-current-source { display:flex; align-items:center; gap:1rem; color:var(--accent-primary); border:1px solid var(--accent-primary); padding:.65rem 1rem; font-size:.8rem; }
 .atlas-current-source strong { font-family:var(--font-mono); font-size:1rem; }
+
+.atlas-definition-examples { padding:var(--space-3); border-top:1px solid var(--line-soft); font-size:.85rem; }
+.atlas-definition-examples summary { cursor:pointer; min-height:44px; }
+.atlas-definition-examples ul { list-style:none; }
+.atlas-definition-examples a { display:inline-flex; align-items:center; min-height:44px; }

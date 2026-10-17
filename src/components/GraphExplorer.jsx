@@ -1,6 +1,7 @@
 import currentDataset from '../../public/dataset/current.json';
 import { artifactDigest, datasetArtifact } from '../lib/datasetArtifact.mjs';
-import { questionLabel } from '../lib/displayLabels.mjs';
+import { studioPositions, studioNeighborhoodPositions } from '../lib/studioLayout.mjs';
+import { questionLabel, compactQuestionLabel } from '../lib/displayLabels.mjs';
 import { useEffect, useRef } from 'react';
 import { checkLayerBase, checkLegacyGraphStructure, mergeLegacyGraphWithLayers } from '../lib/legacyGraph.mjs';
 import { resolveApiOrigins } from '../lib/runtimeApi';
@@ -543,6 +544,7 @@ export default function GraphExplorer() {
       schemaImportInput: q('#schema-import-input'),
       layerImportInput: q('#layer-import-input'),
       searchInput: q('#search-input'),
+      searchResults: q('#studio-results'), searchCount:q('#studio-result-count'), resultPrevious:q('#studio-results-previous'),resultNext:q('#studio-results-next'), detailHeading:q('#studio-selection-heading'), backResults:q('#studio-back-results'), showMap:q('#studio-show-map'),
       layoutSelect: q('#layout-select'),
       decisionFilters: qa("#decision-filters input[type='checkbox']"),
       categoryFilters: q('#category-filters'),
@@ -573,6 +575,7 @@ export default function GraphExplorer() {
       selectedNodeId: null,
       focusMode: false,
       searchTerm: '',
+      resultPage:0,
       activeCategories: new Set(),
       activeDecisions: new Set(DEFAULT_DECISIONS),
       graphMeta: null,
@@ -725,13 +728,14 @@ export default function GraphExplorer() {
       selectors.detailEmpty.classList.remove('is-hidden');
       selectors.detailOutgoing.innerHTML = '';
       selectors.detailIncoming.innerHTML = '';
+      selectors.toggleFocusBtn.disabled=true;
     };
 
     const clearFocusMode = () => {
       if (!state.cy) {
         return;
       }
-      state.cy.elements().removeClass('is-dimmed');
+      state.cy.elements().removeClass('is-dimmed is-context-hidden');
     };
 
     const applyFocusMode = () => {
@@ -745,8 +749,11 @@ export default function GraphExplorer() {
       }
 
       const neighborhood = node.closedNeighborhood();
-      state.cy.elements().removeClass('is-dimmed');
-      state.cy.elements().not(neighborhood).addClass('is-dimmed');
+      state.cy.elements().removeClass('is-dimmed is-context-hidden');
+      state.cy.elements().not(neighborhood).addClass('is-context-hidden');
+      const positions=studioNeighborhoodPositions(neighborhood.nodes().map(node=>node.data()),state.selectedNodeId);
+      neighborhood.nodes().positions(node=>positions.get(node.id()));
+      state.cy.fit(neighborhood,40);
     };
 
     const buildDetailList = (listElement, edges, direction) => {
@@ -786,11 +793,8 @@ export default function GraphExplorer() {
             center: { eles: node },
             duration: 300,
           });
+          applyFilters();
           renderSelectionDetails();
-
-          if (state.focusMode) {
-            applyFocusMode();
-          }
         });
 
         const text = document.createElement('p');
@@ -816,9 +820,10 @@ export default function GraphExplorer() {
       selectors.detailNode.classList.remove('is-hidden');
       selectors.detailEmpty.classList.add('is-hidden');
 
+      selectors.toggleFocusBtn.disabled=false;
       selectors.detailId.textContent = node.id();
       selectors.detailCategory.textContent = node.data('category') || 'Uncategorized';
-      selectors.detailLabel.textContent = questionLabel(node.data());
+      selectors.detailLabel.textContent = node.data('originalLabel') || questionLabel(node.data());
       selectors.detailText.textContent = node.data('text') || '';
 
       buildDetailList(selectors.detailOutgoing, node.outgoers('edge').toArray(), 'out');
@@ -826,7 +831,7 @@ export default function GraphExplorer() {
     };
 
     const updateCanvasEmptyState = () => {
-      const visibleNodeCount = state.cy.nodes().filter((node) => !node.hasClass('is-hidden')).length;
+      const visibleNodeCount = state.cy.nodes().filter((node) => !node.hasClass('is-hidden')&&!node.hasClass('is-context-hidden')).length;
       selectors.canvasEmpty.classList.toggle('is-hidden', visibleNodeCount > 0);
     };
 
@@ -835,8 +840,8 @@ export default function GraphExplorer() {
         return;
       }
 
-      const visibleNodeCount = state.cy.nodes().filter((node) => !node.hasClass('is-hidden')).length;
-      const visibleEdgeCount = state.cy.edges().filter((edge) => !edge.hasClass('is-hidden')).length;
+      const visibleNodeCount = state.cy.nodes().filter((node) => !node.hasClass('is-hidden')&&!node.hasClass('is-context-hidden')).length;
+      const visibleEdgeCount = state.cy.edges().filter((edge) => !edge.hasClass('is-hidden')&&!edge.hasClass('is-context-hidden')&&[edge.source(),edge.target()].every(node=>!node.hasClass('is-hidden')&&!node.hasClass('is-context-hidden'))).length;
       const activeLayers = state.layers.filter((layer) => layer.enabled).length;
 
       selectors.totalNodes.textContent = String(state.mergedGraph.nodes.length);
@@ -864,7 +869,7 @@ export default function GraphExplorer() {
         const searchable = `${node.id()} ${node.data('label')} ${node.data('text')}`.toLowerCase();
         const matchesSearch = !lowerSearch || searchable.includes(lowerSearch);
 
-        const showNode = inCategory && matchesSearch;
+        const showNode = inCategory && (state.focusMode&&state.selectedNodeId || matchesSearch);
         node.toggleClass('is-hidden', !showNode);
 
         if (showNode) {
@@ -897,8 +902,11 @@ export default function GraphExplorer() {
         clearFocusMode();
       }
 
+      selectors.toggleFocusBtn.textContent=state.focusMode?'Clear focus':'Focus selection';
+      q('#studio-map-caption').textContent=state.focusMode?'Linked questions surround the selected question. Position is a display aid; only arrows assert routes.':'Domain and stage groups organize the overview. Select a question to read its local routes. Only arrows assert routes.';
       updateStats();
       updateCanvasEmptyState();
+      renderSearchResults();
     };
 
     const runLayout = (name) => {
@@ -906,6 +914,7 @@ export default function GraphExplorer() {
         return;
       }
 
+      if(name==='preset'){const positions=studioPositions(state.mergedGraph.nodes.map(getNodeData));state.cy.nodes().positions(node=>positions.get(node.id()));state.cy.fit(state.cy.elements(':visible'),40);return;}
       const base = {
         name,
         animate: true,
@@ -982,6 +991,8 @@ export default function GraphExplorer() {
             ...nodeData,
             category,
             label,
+            displayLabel:compactQuestionLabel({...nodeData,title:nodeData.label},64),
+            originalLabel:nodeData.label,
             color: CATEGORY_COLORS[category] || CATEGORY_COLORS.Uncategorized,
           },
         };
@@ -1011,12 +1022,14 @@ export default function GraphExplorer() {
       }
 
       const elements = mapGraphElements(graph);
+      const positions=studioPositions(graph.nodes.map(getNodeData));
+      elements.nodes.forEach(node=>{node.position=positions.get(node.data.id);});
 
       state.cy = cytoscape({
         container: selectors.canvas,
         elements: [...elements.nodes, ...elements.edges],
         layout: {
-          name: 'cose',
+          name: 'preset',
           animate: false,
           fit: true,
           padding: 42,
@@ -1029,17 +1042,19 @@ export default function GraphExplorer() {
             style: {
               'background-color': token('--bg-input'),
               color: token('--text-primary'),
-              label: 'data(label)',
-              'font-size': 10,
+              label: 'data(displayLabel)',
+              'font-size': 14,
+              'min-zoomed-font-size': 9,
               'font-family': 'Inter, system-ui, sans-serif',
               'text-wrap': 'wrap',
-              'text-max-width': 108,
+              'text-max-width': 155,
               'text-valign': 'center',
               'text-halign': 'center',
               'border-width': 1.4,
               'border-color': 'data(color)',
-              width: 40,
-              height: 40,
+              width: 175,
+              height: 70,
+              shape:'roundrectangle',
               'overlay-opacity': 0,
             },
           },
@@ -1054,6 +1069,7 @@ export default function GraphExplorer() {
               'arrow-scale': 0.8,
               opacity: 0.82,
               label: 'data(decision)',
+              'min-zoomed-font-size':9,
               'font-size': 8,
               color: token('--text-primary'),
               'text-background-color': token('--bg-app'),
@@ -1071,7 +1087,7 @@ export default function GraphExplorer() {
             },
           },
           {
-            selector: '.is-hidden',
+            selector: '.is-hidden, .is-context-hidden',
             style: {
               display: 'none',
             },
@@ -1083,18 +1099,17 @@ export default function GraphExplorer() {
             },
           },
         ],
-        minZoom: 0.2,
+        minZoom: 0.05,
         maxZoom: 2.5,
+        userZoomingEnabled:false,
       });
 
       state.cy.on('tap', 'node', (event) => {
         const node = event.target;
         state.selectedNodeId = node.id();
+        state.focusMode=true;
+        applyFilters();
         renderSelectionDetails();
-
-        if (state.focusMode) {
-          applyFocusMode();
-        }
       });
 
       state.cy.on('tap', (event) => {
@@ -1105,7 +1120,7 @@ export default function GraphExplorer() {
         state.selectedNodeId = null;
         state.focusMode = false;
         selectors.toggleFocusBtn.textContent = 'Focus Selection';
-        clearFocusMode();
+        clearFocusMode();applyFilters();runLayout(selectors.layoutSelect.value);
         renderSelectionDetails();
       });
     };
@@ -1568,10 +1583,41 @@ export default function GraphExplorer() {
 
     const importLayerFromFile = async (file) => appendLayers(await readJsonFile(file), file.name);
 
+    const selectResult=(id)=>{
+      if(!state.cy||state.cy.getElementById(id).empty())return;
+      state.selectedNodeId=id;state.focusMode=true;state.cy.nodes().unselect();state.cy.getElementById(id).select();applyFilters();renderSelectionDetails();
+      selectors.detailHeading.focus();selectors.detailHeading.scrollIntoView({block:'start',behavior:'instant'});
+    };
+    const renderSearchResults=()=>{
+      if(!state.mergedGraph)return;
+      const term=state.searchTerm.trim().toLowerCase();
+      const matches=state.mergedGraph.nodes.map(getNodeData).filter(n=>state.activeCategories.has(n.category)&&`${n.id} ${n.label} ${n.text}`.toLowerCase().includes(term));
+      state.resultPage=Math.min(state.resultPage,Math.max(0,Math.ceil(matches.length/12)-1));
+      selectors.searchCount.textContent=matches.length?`${matches.length} questions · ${state.resultPage*12+1}–${Math.min(matches.length,(state.resultPage+1)*12)} shown`:'No matching questions. Try another phrase or reset the filters.';
+      selectors.searchResults.replaceChildren();
+      for(const n of matches.slice(state.resultPage*12,(state.resultPage+1)*12)){
+        const li=document.createElement('li'),button=document.createElement('button'),name=document.createElement('span'),meta=document.createElement('small');
+        button.type='button';button.title=questionLabel(n);button.setAttribute('aria-pressed',String(state.selectedNodeId===n.id));button.dataset.questionId=n.id;
+        name.textContent=compactQuestionLabel({...n,title:n.label},75);button.setAttribute('aria-label',`${n.category}: ${questionLabel(n)} · ${n.archetype||'Additional question'}`);meta.textContent=`${n.category} · ${n.archetype||'Additional question'}`;
+        button.append(name,meta);button.addEventListener('click',()=>selectResult(n.id));li.append(button);selectors.searchResults.append(li);
+      }
+      selectors.resultPrevious.disabled=state.resultPage===0;selectors.resultNext.disabled=(state.resultPage+1)*12>=matches.length;
+    };
     const bindControls = () => {
+      q('#studio-import-layer-shortcut').addEventListener('click',()=>selectors.layerImportInput.click());
+      q('#studio-zoom-in').addEventListener('click',()=>{if(state.cy)state.cy.zoom({level:state.cy.zoom()*1.5,renderedPosition:{x:state.cy.width()/2,y:state.cy.height()/2}});});
+      q('#studio-zoom-out').addEventListener('click',()=>{if(state.cy)state.cy.zoom({level:state.cy.zoom()/1.5,renderedPosition:{x:state.cy.width()/2,y:state.cy.height()/2}});});
+      q('#studio-whole').addEventListener('click',()=>selectors.resetFiltersBtn.click());
+      selectors.resultPrevious.addEventListener('click',()=>{state.resultPage--;renderSearchResults();selectors.searchResults.querySelector('button')?.focus();});
+      selectors.resultNext.addEventListener('click',()=>{state.resultPage++;renderSearchResults();selectors.searchResults.querySelector('button')?.focus();});
+      selectors.searchInput.addEventListener('keydown',event=>{if(event.key==='Enter'){event.preventDefault();selectors.searchResults.querySelector('button')?.click();}});
+      selectors.backResults.addEventListener('click',()=>{selectors.searchInput.focus();selectors.searchInput.scrollIntoView({block:'center',behavior:'instant'});});
+      selectors.showMap.addEventListener('click',()=>{selectors.canvas.focus();selectors.canvas.scrollIntoView({block:'center',behavior:'instant'});});
       selectors.searchInput.addEventListener('input', (event) => {
-        state.searchTerm = event.target.value;
+        state.searchTerm = event.target.value;state.resultPage=0;state.focusMode=false;
         applyFilters();
+        if(!state.searchTerm.trim())runLayout(selectors.layoutSelect.value);
+        else {const nodes=state.cy?.nodes().filter(n=>!n.hasClass('is-hidden'));if(nodes?.length)state.cy.fit(nodes,46);}
       });
 
       selectors.layoutSelect.addEventListener('change', (event) => {
@@ -1592,7 +1638,7 @@ export default function GraphExplorer() {
 
       selectors.resetFiltersBtn.addEventListener('click', () => {
         state.searchTerm = '';
-        selectors.searchInput.value = '';
+        selectors.searchInput.value = '';state.resultPage=0;
 
         state.activeDecisions = new Set(DEFAULT_DECISIONS);
         selectors.decisionFilters.forEach((checkbox) => {
@@ -1617,7 +1663,7 @@ export default function GraphExplorer() {
           return;
         }
 
-        const visibleNodes = state.cy.nodes().filter((node) => !node.hasClass('is-hidden'));
+        const visibleNodes = state.cy.nodes().filter((node) => !node.hasClass('is-hidden')&&!node.hasClass('is-context-hidden'));
         if (visibleNodes.length > 0) {
           state.cy.fit(visibleNodes, 46);
         }
@@ -1631,11 +1677,8 @@ export default function GraphExplorer() {
         state.focusMode = !state.focusMode;
         selectors.toggleFocusBtn.textContent = state.focusMode ? 'Unfocus Selection' : 'Focus Selection';
 
-        if (state.focusMode) {
-          applyFocusMode();
-        } else {
-          clearFocusMode();
-        }
+        applyFilters();
+        if(!state.focusMode)runLayout(selectors.layoutSelect.value);
       });
 
       selectors.loadVersionsBtn.addEventListener('click', async () => {
@@ -1827,9 +1870,20 @@ export default function GraphExplorer() {
 
       <div className="studio-grid">
         <aside className="tensor-panel studio-panel controls-panel">
-          <h2>Graph controls</h2>
+          <h2>Find and inspect</h2>
 
-          <p className="studio-field">Current public source</p>
+          <label className="studio-field" htmlFor="search-input">Find a question</label>
+          <input id="search-input" type="search" placeholder="Search by ID, label, or text" />
+
+          <p id="studio-result-count" role="status">Loading questions…</p><ol id="studio-results" className="studio-results" aria-label="Matching questions"></ol><div className="studio-results-pages"><button className="btn btn-secondary" id="studio-results-previous" disabled>Previous results</button><button className="btn btn-secondary" id="studio-results-next" disabled>Next results</button></div>
+          <details className="studio-layer-controls">
+            <summary>Vendor and company layers</summary><p className="studio-field">Layer pack</p>
+          <div id="layer-empty" className="detail-empty">No custom layers loaded. The layering example is available from the guide.</div>
+          <div id="layer-list" className="layer-list"></div>
+            <button className="btn btn-secondary" type="button" id="studio-import-layer-shortcut">Add a layer</button>
+          </details>
+          <details className="studio-advanced">
+          <summary>Import, export and display settings</summary><p className="studio-field">Current public source</p>
           <div className="version-grid">
             <label htmlFor="graph-version-select">Graph version</label>
             <select id="graph-version-select"></select>
@@ -1860,12 +1914,9 @@ export default function GraphExplorer() {
           <input id="schema-import-input" type="file" accept="application/json,.json" className="is-hidden" />
           <input id="layer-import-input" type="file" accept="application/json,.json" className="is-hidden" />
 
-          <label className="studio-field" htmlFor="search-input">Find a question</label>
-          <input id="search-input" type="search" placeholder="Search by ID, label, or text" />
-
           <label className="studio-field" htmlFor="layout-select">Layout</label>
-          <select id="layout-select" defaultValue="cose">
-            <option value="cose">Organic (COSE)</option>
+          <select id="layout-select" defaultValue="preset">
+            <option value="preset">Domain and stage atlas</option><option value="cose">Organic clusters</option>
             <option value="breadthfirst">Tiered (Breadth First)</option>
             <option value="concentric">Concentric</option>
           </select>
@@ -1882,12 +1933,8 @@ export default function GraphExplorer() {
 
           <div className="button-row">
             <button className="btn btn-secondary" type="button" id="reset-filters-btn">Reset Filters</button>
-            <button className="btn btn-secondary" type="button" id="fit-graph-btn">Fit Graph</button>
           </div>
-          <div className="button-row button-row-single">
-            <button className="btn btn-secondary" type="button" id="toggle-focus-btn">Focus Selection</button>
-          </div>
-
+          </details>
           <div className="stats-grid">
             <div className="stat-card">
               <span>Total Nodes</span>
@@ -1907,13 +1954,10 @@ export default function GraphExplorer() {
             </div>
           </div>
 
-          <p className="studio-field">Layer pack</p>
-          <div id="layer-empty" className="detail-empty">No custom layers loaded. The layering example is available from the guide.</div>
-          <div id="layer-list" className="layer-list"></div>
         </aside>
 
         <section className="tensor-panel studio-canvas" aria-label="Graph canvas">
-          <div id="graph-canvas" className="graph-canvas"></div>
+          <div className="studio-camera" role="group" aria-label="Studio map controls"><button className="btn btn-secondary" id="studio-whole">All questions</button><button className="btn btn-secondary" id="fit-graph-btn">Fit Graph</button><button className="btn btn-secondary" id="toggle-focus-btn" disabled>Focus Selection</button><button className="btn btn-secondary" id="studio-zoom-in" aria-label="Zoom in">+</button><button className="btn btn-secondary" id="studio-zoom-out" aria-label="Zoom out">−</button></div><p className="studio-map-caption" id="studio-map-caption">Domain and stage groups organize the overview. Select a question to read its local routes. Only arrows assert routes.</p><div id="graph-canvas" className="graph-canvas" tabIndex={-1} role="img" aria-label="Graph overview. Use the matching question list to select and inspect questions with a keyboard."></div>
           <div className="canvas-empty is-hidden" id="canvas-empty">
             No questions match the current filters.
           </div>
@@ -1945,7 +1989,7 @@ export default function GraphExplorer() {
             <ul id="metrics-gates" className="release-notes"></ul>
           </div>
 
-          <h2>Selected question</h2>
+          <h2 id="studio-selection-heading" tabIndex={-1}>Selected question</h2><div className="cta-group"><button className="btn btn-secondary" id="studio-back-results">Back to search results</button><button className="btn btn-secondary" id="studio-show-map">Show on map</button></div>
           <div id="detail-empty" className="detail-empty">
             Select a node in the graph to inspect metadata and outgoing/incoming branches.
           </div>

@@ -94,3 +94,22 @@
  .footer-signature p { font-size: .6rem; padding-top: .5rem; }
  .footer-inner { flex-direction: column; gap: 1rem; }
 }
+/* Reference navigation stays oriented to the current document on small screens. */
+.document-search-link { display:block; padding:.65rem .75rem; min-height:44px; font-size:.8rem; color:var(--accent-primary); border:1px solid var(--line-soft); margin-bottom:var(--space-2); }
+.document-mobile-menu { display:none; }
+.document-page-index { border-block:1px solid var(--line-soft); padding:.65rem 0; margin-bottom:var(--space-4); }
+.document-page-index summary { min-height:44px; cursor:pointer; color:var(--accent-primary); }
+.document-page-index ol { display:flex; flex-wrap:wrap; list-style:none; gap:.4rem 1.3rem; padding-bottom:var(--space-2); }
+.document-page-index a { font-size:.85rem; display:inline-flex; align-items:center; min-height:32px; }
+.document-content :is(h2,h3,[id]) { scroll-margin-top:calc(var(--sticky-header-height,88px) + 20px); }
+@media(max-width:850px){
+ .document-layout { gap:var(--space-3); }
+ .document-navigation .document-nav-desktop { display:none; }
+ .document-mobile-menu { display:block; border:1px solid var(--line-soft); background:var(--bg-card); padding:var(--space-2); }
+ .document-mobile-menu summary { min-height:32px; cursor:pointer; font-size:.85rem; overflow-wrap:anywhere; }
+ .document-mobile-menu .document-nav { display:block; overflow:auto; max-height:55vh; padding:.7rem 0 0; }
+ .document-mobile-menu .document-nav p { display:block; margin-top:var(--space-3); }
+ .document-mobile-menu .document-nav ul { display:block; }
+ .document-mobile-menu .document-nav a { white-space:normal; border:0; min-height:44px; }
+ .document-page-index ol { display:block; }
+}

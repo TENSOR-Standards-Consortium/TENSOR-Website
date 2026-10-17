@@ -1,4 +1,7 @@
 (function initTensorClient() {
+  const header=document.querySelector?.('.site-header');
+  function measureHeader(){document.documentElement?.style?.setProperty('--sticky-header-height',header&&getComputedStyle(header).position==='sticky'?`${header.getBoundingClientRect().height}px`:'0px');}
+  measureHeader();if(header&&typeof ResizeObserver==='function')new ResizeObserver(measureHeader).observe(header);window.addEventListener('resize',measureHeader,{passive:true});
   const MAX_EVENTS = 32;
   let sentCount = 0;
 

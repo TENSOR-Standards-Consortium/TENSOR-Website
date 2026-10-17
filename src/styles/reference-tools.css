@@ -508,3 +508,22 @@
   font-size: 0.76rem;
 }
 
+
+/* Studio uses the shared atlas vocabulary and a keyboard-first question picker. */
+.studio-results { list-style:none; padding:0; margin-block:var(--space-2); max-height:260px; overflow:auto; }
+.studio-results button { display:grid; gap:.25rem; text-align:left; width:100%; min-height:54px; padding:.65rem; background:transparent; border:0; border-bottom:1px solid var(--line-soft); color:var(--text-primary); font-size:.82rem; }
+.studio-results button[aria-pressed=true] { background:var(--accent-soft); border-left:2px solid var(--accent-primary); }
+.studio-results small { color:var(--text-muted); font-size:.75rem; }
+#studio-result-count { font-size:.8rem; color:var(--text-secondary); margin-top:var(--space-2); }
+.studio-results-pages { display:flex; gap:var(--space-1); }
+.studio-results-pages .btn { flex:1; padding:.45rem; font-size:.75rem; }
+.studio-advanced, .studio-layer-controls { border-top:1px solid var(--line-soft); margin-top:var(--space-2); }
+.studio-advanced summary, .studio-layer-controls summary { min-height:44px; cursor:pointer; padding-block:.65rem; font-size:.85rem; color:var(--accent-primary); }
+.studio-map-caption { padding:.6rem; font-size:.8rem; color:var(--text-secondary); }
+.studio-canvas { position:relative; }
+#studio-selection-heading { scroll-margin-top:calc(var(--sticky-header-height,88px) + 24px); margin-top:var(--space-3); }
+.studio-status-row { font-size:.75rem; }
+@media(max-width:1140px){.studio-results { max-height:180px; } .studio-status-row { display:none; } .studio-intro-card { padding:var(--space-2); font-size:.85rem; } .studio-intro-card details { margin-top:var(--space-1); } .controls-panel .stats-grid { display:none; } .studio-wrapper { margin-top:var(--space-2); }}
+
+.studio-camera { display:flex; flex-wrap:wrap; gap:var(--space-1); padding:var(--space-2); }
+.studio-camera .btn { padding:.5rem .7rem; font-size:.8rem; }

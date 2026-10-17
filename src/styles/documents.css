@@ -210,3 +210,21 @@
 .prose-card table td { padding: .8rem .85rem; }
 .prose-card table th, .prose-card table td { border-color: var(--line-soft); }
 .signal-card, .citation-list li { padding: 1rem; }
+.reference-search { border:1px solid var(--line-soft); background:var(--bg-card); padding:var(--space-3); margin-block:var(--space-4); }
+.reference-search h2 { font-size:1.3rem; border:0; padding:0; margin:0 0 var(--space-2); }
+.reference-search label { display:block; margin-bottom:.4rem; }
+.reference-search input { width:100%; }
+.reference-search p, .reference-search small { font-size:.85rem; color:var(--text-muted); }
+.reference-search ul { list-style:none; margin:0; }
+.reference-search li { display:grid; gap:.2rem; padding:.65rem 0; border-bottom:1px solid var(--line-soft); }
+.reference-search li a { min-height:32px; display:inline-flex; align-items:center; }
+.document-source-bar { display:flex; flex-wrap:wrap; gap:var(--space-2) var(--space-4); margin-bottom:var(--space-4); font-size:.85rem; }
+.reference-reading { min-width:0; }
+.reference-markdown { overflow-wrap:anywhere; }
+.reference-markdown code { font-size:.85em; }
+.reference-markdown pre { overflow:auto; max-width:100%; }
+.reference-markdown h2 { scroll-margin-top:calc(var(--sticky-header-height,88px) + 20px); }
+.reference-identity { border-top:1px solid var(--line-soft); margin-top:var(--space-5); padding-top:var(--space-3); }
+.reference-identity summary, .reference-document-list summary { min-height:44px; cursor:pointer; color:var(--accent-primary); }
+.reference-snapshot { border-left:2px solid var(--accent-warning); padding-left:var(--space-3); }
+.reference-markdown > :is(p,ul,ol,blockquote,dl) { max-width:var(--reading-width); }

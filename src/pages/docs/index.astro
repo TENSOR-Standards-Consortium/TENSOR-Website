@@ -1,4 +1,6 @@
 ---
+import ReferenceSearch from '../../components/ReferenceSearch.astro';
+import { referenceDocuments } from '../../lib/referenceDocuments.mjs';
 import ReferenceTable from '../../components/ReferenceTable.astro';
 import { resourceGroups } from '../../lib/navigation';
 import ResourceCard from '../../components/ResourceCard.astro';
@@ -7,6 +9,7 @@ import DocumentLayout from '../../layouts/DocumentLayout.astro';
 import { absoluteUrl, seo } from '../../data/seo';
 
 const meta = seo.docs;
+const documents=await referenceDocuments();
 const siteUrl = Astro.site?.toString() || 'https://tensor-standards.pages.dev/';
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -22,11 +25,16 @@ const jsonLd = {
 <p class="section-kicker">Resource directory</p>
     <h2>Specification, tools, and implementation resources</h2>
     <p>TENSOR resources cover the public investigation model, domain graphs, vendor and organization layers, and record exchange. Core 0.1.0-draft.1 is the current implementation candidate.</p>
+    <ReferenceSearch />
     {resourceGroups.map(group => <section aria-label={group.title}><h2>{group.title}</h2><div class="resource-grid">{group.resources.map(item => <ResourceCard href={item.url} title={item.title}><p>{item.description}</p></ResourceCard>)}</div></section>)}
+    <h2 id="reference-documents">Read the reference documents</h2>
+    <p>Read source documents here with section navigation. Each page links to its exact original download.</p>
+    <details class="reference-document-list" open><summary>Specification, implementation and review documents</summary><ul>{documents.filter(d=>!d.historical).map(doc=><li><a href={doc.path}>{doc.title}</a></li>)}</ul></details>
+    <details class="reference-document-list"><summary>Historical review documents</summary><ul>{documents.filter(d=>d.historical).map(doc=><li><a href={doc.path}>{doc.title}</a></li>)}</ul></details>
     <h2>Direct downloads</h2>
     <ReferenceTable label="Direct downloads"><thead><tr><th>Artifact</th><th>Format</th></tr></thead><tbody>
-      <tr><td><a href="/founding/01-core-contract.md">Core contract · 38 requirements</a></td><td>Markdown</td></tr>
-      <tr><td><a href="/core/0.1.0-draft.1/binding.md">Core JSON binding</a></td><td>Markdown</td></tr>
+      <tr><td><a href="/founding/01-core-contract.md" download>Core contract · 38 requirements</a></td><td>Markdown</td></tr>
+      <tr><td><a href="/core/0.1.0-draft.1/binding.md" download>Core JSON binding</a></td><td>Markdown</td></tr>
       <tr><td><a href="/core/0.1.0-draft.1/examples/case-a.bundle.json" download>Agent-transfer investigation</a> · <a href="/core/0.1.0-draft.1/examples/case-b.bundle.json" download>Identity investigation</a></td><td>JSON bundles</td></tr>
       <tr><td><a href="/graphs/working/tensor.core.graph.json" download>Working question graph</a> · <a href="/graphs/working/entry-evidence-criteria.json" download>Evidence criteria</a></td><td>JSON</td></tr>
       <tr><td><a href="/examples/layers/cloud-investigation.layers.json" download>Vendor and organization layer example</a></td><td>JSON layer pack</td></tr>

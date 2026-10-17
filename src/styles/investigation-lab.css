@@ -143,3 +143,11 @@
   .il-pagination span { flex: 1 0 100%; order: -1; text-align: center; }
 }
 @media (prefers-reduced-motion: reduce) { .il-case { transition: none; } }
+
+.il-workbench { overflow: clip; }
+.il-inspection-trail { display:flex; align-items:center; flex-wrap:wrap; gap:var(--space-2); padding-bottom:var(--space-3); border-bottom:1px solid var(--line-soft); margin-bottom:var(--space-3); }
+.il-inspection-trail .btn { white-space:normal; text-align:left; max-width:100%; }
+.il-inspection-trail span { font-size:.8rem; color:var(--text-muted); }
+.il-tool-fallback { padding:var(--space-4); border:1px solid var(--line-soft); background:var(--bg-card); margin-block:var(--space-3); }
+.il-tool-fallback h2 { font-size:1.3rem; }
+.il-tool-fallback p { margin-block:var(--space-2); }

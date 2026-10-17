@@ -51,6 +51,7 @@ try {
   await page.getByRole('checkbox',{name:'Company',exact:true}).uncheck();assert.equal(await mini.count(),projected(0,['public']).trace.visibleIds.length);
   await page.getByRole('checkbox',{name:'Public',exact:true}).uncheck();assert.equal(await page.getByText('No question layers are visible.',{exact:true}).isVisible(),true);
   await page.getByRole('button',{name:'Show all layers',exact:true}).click();await ready();
+  await page.getByRole('button',{name:'Case view options',exact:true}).click();
   await page.getByRole('button',{name:'Path + open leads',exact:true}).click();await page.getByRole('button',{name:'Toggle overview map',exact:true}).click();const firstAssessment=source.record.entries.find(e=>e.id===frames[0].assessmentId),firstInstance=source.record.entries.find(e=>e.id===firstAssessment.targetInstanceId);
   const firstOptions=new Set(definition.transitions.filter(t=>t.sourceQuestionId===firstInstance.questionId&&t.guardOutcome===firstAssessment.outcome).map(t=>t.targetQuestionId));assert.equal(await mini.count(),caseOccurrenceView(model,0,'path').trace.visibleIds.length);
   await page.locator('.case-next-options button[data-route-status=recorded]').first().focus();await page.keyboard.press('Enter');

@@ -22,12 +22,12 @@ const jsonLd = {
     <h2>Implementation quick start</h2>
     <p>For an introduction to the model, <a href="/start/">TENSOR in five minutes</a> follows a SOC investigation before the technical workflow below.</p>
     <p>The reference implementation validates portable investigation bundles. A bundle contains an investigation record and the exact definitions referenced by that record. The browser and command-line tools use the same candidate binding.</p>
-    <div class="cta-group"><Button variant="primary" href="/investigation-lab/">Open Investigation Lab</Button><Button variant="secondary" href="/extensions/">Vendor and organization graphs</Button></div>
+    <div class="cta-group"><Button variant="primary" href="/investigation-lab/?case=soc-signin">Open the SOC case in the Lab</Button><Button variant="secondary" href="/extensions/">Vendor and organization graphs</Button></div>
 
     <h2>Browser workflow</h2>
     <ol>
-      <li>Open the <a href="/investigation-lab/">Investigation Lab</a> and select the agent-transfer or identity case.</li>
-      <li>Inspect Questions, Evidence, Assessments, Decisions, and History. The Recorded path view replays the entries and selected transitions.</li>
+      <li>Open the <a href="/investigation-lab/?case=soc-signin">SOC sign-in case in the Investigation Lab</a> and follow its walkthrough.</li>
+      <li>Inspect Questions, Evidence, Assessments, Decisions, and History. The advanced Entry replay view shows individual retained entries and selected transitions.</li>
       <li>Download the bundle and import that JSON file to inspect the retained record and validation result.</li>
     </ol>
     <p>Local files are processed in the browser without upload. The <a href="/core/0.1.0-draft.1/examples/case-a.bundle.json" download>agent-transfer bundle</a> and <a href="/core/0.1.0-draft.1/examples/case-b.bundle.json" download>identity bundle</a> are also available directly.</p>
@@ -57,7 +57,7 @@ node core/v0.1.0-draft.1/cli.mjs core/v0.1.0-draft.1/examples/case-a.bundle.json
 
     <h2>Artifacts and exchange</h2>
     <ul>
-      <li><a href="/core/0.1.0-draft.1/binding.md">Binding rules</a> define object identity, parameters, references, revisions, and extensions.</li>
+      <li><a href="/read/core/0.1.0-draft.1/binding/">Binding rules</a> define object identity, parameters, references, revisions, and extensions.</li>
       <li><a href="/schemas/">JSON Schemas</a> define structure; the semantic validator additionally checks references, pins, and transition selections.</li>
       <li>Evidence references can point to controlled stores. The receiving implementation manages evidence access and action authorization.</li>
       <li>Cross-tool exchange compares question context, evidence links, assessments, decisions, revisions, and declared losses.</li>
