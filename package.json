@@ -18,9 +18,9 @@
     "check:design": "node scripts/check-design-system.mjs"
   },
   "dependencies": {
-    "@astrojs/markdown-remark": "7.3.0",
+    "@astrojs/markdown-remark": "7.3.10",
     "@astrojs/react": "7.0.1",
-    "@astrojs/sitemap": "3.7.4",
+    "@astrojs/sitemap": "3.7.6",
     "astro": "7.3.8",
     "cytoscape": "3.33.3",
     "react": "^18.3.1",
